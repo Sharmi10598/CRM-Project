@@ -1,0 +1,21 @@
+// import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ultimate_bundle/helpers/constants.dart';
+import 'package:ultimate_bundle/helpers/textstyle.dart';
+import 'package:ultimate_bundle/src/furney/src/Api/local_api/LogoutApi/LogoutApi.dart';
+import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
+// import 'package:ultimate_bundle/src/furney/src/list_item/address_list.dart';
+import 'package:ultimate_bundle/src/furney/src/pages/sign_in/widgets/custom_elevatedBtn.dart';
+import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
+import 'package:ultimate_bundle/src/furney/src/widgets/appBar.dart';
+
+// part 'screens/edit_profile_screen.dart';
+part 'screens/profile_screen.dart';
+// part 'widgets/build_change_photo_profile.dart';
+// part 'widgets/build_list_tile.dart';
+// part 'widgets/build_title_address.dart';
+// part 'widgets/header_section.dart';

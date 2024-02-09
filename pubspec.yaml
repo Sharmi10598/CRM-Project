@@ -1,0 +1,100 @@
+name: ultimate_bundle
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.2.6
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  auto_size_text: ^3.0.0-nullsafety.0
+  # charts_flutter:
+  #   git:
+  #     url: git://github.com/google/charts.git
+  #     path: charts_flutter    
+  charts_flutter_new: ^0.12.0
+  chunked_stream: ^1.4.1
+  connectivity: ^3.0.6
+  path_provider: ^2.0.2
+  open_file: ^3.2.1
+  pdf: ^3.4.2
+  convex_bottom_bar: ^3.0.0
+  cupertino_icons: ^1.0.2
+  # device_info_plus: ^9.0.3
+  easy_pdf_viewer: ^1.0.1
+  # flutter_dynamic_icon: ^2.1.0
+  lazy_load_scrollview: ^1.3.0
+  # dynamic_icon_flutter: ^0.0.7
+  flutter_app_badger: ^1.5.0
+  # awesome_notifications: ^0.7.4+1
+  # flutter_app_icon_badge: ^2.0.0
+  file_picker: ^5.5.0
+  flutter:
+    sdk: flutter
+  flutter_feather_icons: ^2.0.0+1
+  flutter_localizations:
+    sdk: flutter
+  flutter_spinkit: ^5.1.0
+  flutter_swiper_null_safety: ^1.0.2 
+  font_awesome_flutter: ^10.5.0
+  geocoding: ^2.0.1
+  geolocator: ^10.0.1
+  get: ^4.6.5
+  google_fonts: ^5.1.0 
+  http: ^1.1.0
+  image_picker: ^1.0.4 
+  #intl: ^0.18.0
+  # local_auth: ^2.1.7 
+  platform_device_id_v3: ^1.0.0
+  flutter_excel: ^1.0.1
+  pin_code_fields: ^8.0.1
+  provider: ^6.0.0
+  quick_actions: ^1.0.6  
+  excel: ^2.0.4
+  share: ^2.0.4
+  shared_preferences: ^2.0.8
+  syncfusion_flutter_xlsio: ^23.1.43
+  # simple_animations: ^5.0.2
+  sqflite: ^2.0.1
+  timeline_tile: ^2.0.0
+  url_launcher: ^6.0.11
+  uuid: ^4.0.0
+  very_good_analysis: ^5.1.0  
+  webview_flutter: ^4.2.4
+  fluttertoast: ^8.1.0
+  flutter_local_notifications: ^15.1.1
+  firebase_messaging: ^14.1.2
+  firebase_core: ^2.3.0
+  google_maps_flutter: ^2.5.3
+  # workmanager: ^0.4.1
+
+dependency_overrides:
+  intl: ^0.17.0-nullsafety.2  
+#  test_api: ^0.5.2
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.0.5
+
+flutter_native_splash:
+  background_image: assets/CRM/newsplash.png
+  android: true
+  iOS: true 
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/CRM/main.png"
+
+flutter:
+  generate: true
+  uses-material-design: true
+  assets:
+    - assets/CRM/
+    - assets/fonts/
+  fonts:
+    - family: Segoe
+      fonts:
+        - asset: assets/fonts/SEGOEUIL.ttf

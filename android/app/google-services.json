@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "515450596796",
+    "project_id": "notifycrm-3ab40",
+    "storage_bucket": "notifycrm-3ab40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515450596796:android:9dd2ba9172b0d852070fb9",
+        "android_client_info": {
+          "package_name": "com.buson.crm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "515450596796-2dfifh93fi1n06mpk7o9nkb5d857mvp8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmptoZK38oThH4sDUeRxzF8_y8CvQVggY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515450596796-2dfifh93fi1n06mpk7o9nkb5d857mvp8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
