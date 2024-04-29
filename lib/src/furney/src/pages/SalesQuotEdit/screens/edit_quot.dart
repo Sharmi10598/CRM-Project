@@ -73,7 +73,7 @@ class EditDetailsState extends State<EditDetails> {
     return isaval;
   }
 
-  calucultaeDocVal() {
+  calucultaeDocVal() async {
     double basictotal = 0;
     double discVal = 0;
     double taxVal = 0;
@@ -85,10 +85,7 @@ class EditDetailsState extends State<EditDetails> {
     HeaderEditCreationState.discount = 0;
     HeaderEditCreationState.tax = 0;
     HeaderEditCreationState.total = 0;
-    String? valueChosedReason;
     String? taxCode;
-    double taxSelected = 0;
-    String? valueChossed;
 
     for (int ik = 0; ik < widget.getdocumentApprovalValue.length; ik++) {
       double ttaxTotal = 0;
@@ -106,39 +103,7 @@ class EditDetailsState extends State<EditDetails> {
                 )
             : widget.getdocumentApprovalValue[ik].taxCode!;
       }
-      if (taxCode == 'O0') {
-        // print("" + widget.getdocumentApprovalValue[ik].taxCode.toString());
-        valueChossed = 'O0 - 0 % Output VAT';
-        valueChosedReason = '0';
-        taxCode = 'O0';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason);
-      } else if (taxCode == 'O1') {
-        valueChossed = 'O1 - 18 % Output VAT';
-        valueChosedReason = '18';
-        taxCode = 'O1';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason);
-      } else if (taxCode == '01') {
-        //01
-        valueChossed = 'O1 - 18 % Output VAT';
-        valueChosedReason = '18';
-        taxCode = 'O1';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason);
-      } else if (taxCode == 'O3') {
-        valueChossed = 'O3 - Exempted Output VAT';
-        taxCode = 'O3';
-        valueChosedReason = '0';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason);
-      } else if (taxCode == 'X0') {
-        valueChossed = 'X0 - Exempt Output';
-        valueChosedReason = '0';
-        taxCode = 'X0';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason);
-      }
+      await getTaxRate(taxCode!);
 
       basictotal = basictotal +
           (widget.getdocumentApprovalValue[ik].quantity! *
@@ -174,6 +139,7 @@ class EditDetailsState extends State<EditDetails> {
               ? widget.getdocumentApprovalValue[ik].discountPercent!
               : 0;
     }
+
     HeaderEditCreationState.totalBeforeDiscount = basictotal;
     // HeaderEditCreationState.totalBeforeDiscount + basictotal;
     HeaderEditCreationState.discount = discVal;
@@ -182,6 +148,82 @@ class EditDetailsState extends State<EditDetails> {
     // HeaderEditCreationState.tax + taxVal;
     HeaderEditCreationState.total = netvalue;
     // HeaderEditCreationState.total + netvalue;
+  }
+
+  getTaxRate(String taxCode) {
+    String? valueChosedReason;
+    double taxSelected = 0;
+    String? valueChossed;
+
+    if (GetValues.countryCode!.toLowerCase() == 'tanzania') {
+      if (taxCode == 'O0') {
+        // print("" + widget.getdocumentApprovalValue[ik].taxCode.toString());
+        valueChossed = 'O0 - 0 % Output VAT';
+        valueChosedReason = '0';
+        taxCode = 'O0';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason);
+      } else if (taxCode == 'O1') {
+        valueChossed = 'O1 - 18 % Output VAT';
+        valueChosedReason = '18';
+        taxCode = 'O1';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason);
+      } else if (taxCode == '01') {
+        //01
+        valueChossed = 'O1 - 18 % Output VAT';
+        valueChosedReason = '18';
+        taxCode = 'O1';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason);
+      } else if (taxCode == 'O3') {
+        valueChossed = 'O3 - Exempted Output VAT';
+        taxCode = 'O3';
+        valueChosedReason = '0';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason);
+      } else if (taxCode == 'X0') {
+        valueChossed = 'X0 - Exempt Output';
+        valueChosedReason = '0';
+        taxCode = 'X0';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason);
+      }
+    } else {
+      if (taxCode == 'O0') {
+        // print("" + widget.getdocumentApprovalValue[ik].taxCode.toString());
+        valueChossed = 'O0 - 0 % Output VAT';
+        valueChosedReason = '0';
+        taxCode = 'O0';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason);
+      } else if (taxCode == 'O1') {
+        valueChossed = 'O1 - 16 % Output VAT';
+        valueChosedReason = '16';
+        taxCode = 'O1';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason);
+      } else if (taxCode == '01') {
+        //01
+        valueChossed = 'O1 - 16 % Output VAT';
+        valueChosedReason = '16';
+        taxCode = 'O1';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason);
+      } else if (taxCode == 'O3') {
+        valueChossed = 'O3 - Exempted Output VAT';
+        taxCode = 'O3';
+        valueChosedReason = '0';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason);
+      } else if (taxCode == 'X0') {
+        valueChossed = 'X0 - Exempt Output';
+        valueChosedReason = '0';
+        taxCode = 'X0';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason);
+      }
+    }
   }
 
   @override

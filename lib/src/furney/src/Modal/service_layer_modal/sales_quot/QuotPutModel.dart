@@ -3826,8 +3826,12 @@ class TaxExtension {
         packDescription: json['PackDescription'],
         brand: json['Brand'],
         shipUnitNo: json['ShipUnitNo'],
-        netWeight:json['NetWeight']!=null ?double.parse(json['NetWeight'].toString()):null,
-        grossWeight:json['GrossWeight']!=null ? double.parse(json['GrossWeight'].toString()):null,
+        netWeight: json['NetWeight'] != null
+            ? double.parse(json['NetWeight'].toString())
+            : null,
+        grossWeight: json['GrossWeight'] != null
+            ? double.parse(json['GrossWeight'].toString())
+            : null,
         streetS: json['StreetS'],
         blockS: json['BlockS'],
         buildingS: json['BuildingS'].toString(),

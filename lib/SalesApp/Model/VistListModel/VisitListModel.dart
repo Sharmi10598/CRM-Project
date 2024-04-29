@@ -21,7 +21,7 @@ class VistListModel {
   factory VistListModel.fromJson(String resp, int stcode) {
     if(stcode >= 200 && stcode <= 210){
     var jsons =   json.decode(resp) as Map<String, dynamic>;
-  log("json: "+jsons.toString());
+  log("visits json: "+jsons.toString());
         if (jsons['data'] != 'No data found') {
       var list = jsonDecode(jsons['data'] as String) as List; //jsonDecode
       List<GetVisitListData> dataList = list

@@ -278,6 +278,7 @@ class ClosedOrdersState extends State<ClosedOrders> {
             discounpercent: double.parse(value[it].discounpercent),
             taxCode: value[it].taxCode,
             wareHouseCode: value[it].wareHouseCose,
+            valueAFdisc: value[it].valueAFDisc,
             taxName: value[it].taxCodeName,
             taxPer: 0,
             carton: int.parse(value[it].carton.toString() == 'null'

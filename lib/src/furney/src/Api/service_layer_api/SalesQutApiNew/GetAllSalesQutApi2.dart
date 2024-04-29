@@ -20,13 +20,17 @@ class GetAllSalesQuaAPi {
           },
           body: json.encode({
             "constr":
-                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+                // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
             "query":
                 "[BZ_CRM_GET_QUOTATION_BY_SLPCODE] '${GetValues.slpCode}'", //'${GetValues.slpCode}'
           }));
           log(json.encode({
             "constr":
-                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+                // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
             "query":
                 "[BZ_CRM_GET_QUOTATION_BY_SLPCODE] '${GetValues.slpCode}'", //'${GetValues.slpCode}'
           }));

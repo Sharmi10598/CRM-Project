@@ -1,5 +1,7 @@
 // ignore_for_file: require_trailing_commas, prefer_const_literals_to_create_immutables, prefer_const_constructors, empty_catches, prefer_single_quotes, unawaited_futures, unused_local_variable, omit_local_variable_types, avoid_void_async, prefer_if_elements_to_conditional_expressions
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
@@ -22,14 +24,14 @@ class CreateOrderDetails extends StatefulWidget {
 }
 
 class CreateOrderDetailsState extends State<CreateOrderDetails> {
-   static bool isCameFromqutation = false;
-   
-   static bool isCameforapprovalsales = false;
+  static bool isCameFromqutation = false;
+
+  static bool isCameforapprovalsales = false;
   static bool contentAddItems = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   ApprovalDetailsValue? approvaldetailsvalue;
   List<DocumentApprovalValue> documentApprovalValue = [];
- 
+
   void currentDate() {
     final DateTime now = DateTime.now();
     setState(() {
@@ -59,34 +61,33 @@ class CreateOrderDetailsState extends State<CreateOrderDetails> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return Future.value(false);
     }
-     print("are you sure22");
-isCameFromqutation=false;
-isCameforapprovalsales=false;
- ContentOrderCreationState.isCalculated =false;
-     List<AddItem> itemsDetails2 = [];
+    print("are you sure22");
+    isCameFromqutation = false;
+    isCameforapprovalsales = false;
+    ContentOrderCreationState.isCalculated = false;
+    List<AddItem> itemsDetails2 = [];
     Get.offAllNamed<dynamic>(FurneyRoutes.newSalesOrders);
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     return Future.value(true);
   }
 
   LocationPermission? permission;
- static String? latitude;
- static String? longitude;
+  static String? latitude;
+  static String? longitude;
 
   @override
   void initState() {
     super.initState();
-  //   if(isCameFromqutation==true){
-  //  sotruethen();
-  //   }
+    //   if(isCameFromqutation==true){
+    //  sotruethen();
+    //   }
     // sotruethen();
     currentDate();
     getLocation();
     //checkPermision();
   }
 
- 
-   List<ValueData> filtervalues = [];    
+  List<ValueData> filtervalues = [];
 
   void getLocation() async {
     final bool checkper = await checkPermision();
@@ -112,11 +113,11 @@ isCameforapprovalsales=false;
   }
 
   Future<bool> checkPermision() async {
-    print("permission11 $permission");
+    log("permission11 $permission");
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      print("permission2 $permission");
+      log("permission2 $permission");
       // showsnb();
       return Future.value(false);
     } else if (permission == LocationPermission.deniedForever) {
@@ -131,7 +132,11 @@ isCameforapprovalsales=false;
       return Future.value(false);
     } else if (permission == LocationPermission.always) {
       permission = await Geolocator.requestPermission();
-      print("permission5 always  $permission");
+      log("permission6 always  $permission");
+      return Future.value(true);
+    } else if (permission == LocationPermission.whileInUse) {
+      permission = await Geolocator.requestPermission();
+      log("permission5 whileInUse  $permission");
       return Future.value(true);
     }
     return Future.value(false);
@@ -206,7 +211,6 @@ isCameforapprovalsales=false;
               child: TabBarView(
                   //  physics: const ScrollPhysics(parent: ),
                   children: [
-                    
                     isloading == true
                         ? lodingWid()
                         : const HeaderOrderCreation(),

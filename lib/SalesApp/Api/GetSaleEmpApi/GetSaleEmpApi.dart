@@ -17,19 +17,26 @@ class GetSaleEmpAPi {
           'content-type': 'application/json',
           },
          body: json.encode({
-              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+              "constr": 
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+              // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
               "query": "select slpcode, slpname from oslp where U_RepotingTo = '${GetValues.slpCode}'",//'${GetValues.slpCode}' 
           })
       );
      
       log(json.encode({
-              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+        
+              "constr":
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+              //"Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
               "query": "select slpcode, slpname from oslp where U_RepotingTo = '${GetValues.slpCode}'",
    }));
       // print('B1SESSION='+ GetValues.sessionID.toString());
       // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
-      print("customer details: " + json.decode(response.body).toString());
-      print(response.statusCode);
+      log("SaleEmpAPi details: " + json.decode(response.body).toString());
+      log("SaleEmpAPi::"+response.statusCode.toString());
       if (response.statusCode == 200) {
         return GetSalesEmpModel.fromJson( response.body,response.statusCode);
       } else {

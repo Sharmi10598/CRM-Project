@@ -18,6 +18,7 @@
   "dashboard":"DashBoard",
   "usd":"USD",
   "tzs":"TZS",
+  "zmw":"ZMW",
   "address_added": "Address added",
   "address_changed": "Address changed",
   "address_deleted": "Address deleted",

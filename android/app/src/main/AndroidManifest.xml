@@ -30,6 +30,9 @@
    <application
         android:label="CRM"
         android:icon="@mipmap/ic_launcher">
+        <meta-data 
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyA5hgVuwQMn60iwC7jh098QjJOT5T8Vwe0"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -55,15 +58,16 @@
               android:name="io.flutter.embedding.android.SplashScreenDrawable"
               android:resource="@drawable/launch_background"
               />
-               <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyA5hgVuwQMn60iwC7jh098QjJOT5T8Vwe0"/>
+               <!-- <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyA5hgVuwQMn60iwC7jh098QjJOT5T8Vwe0"/> -->
+                 
+               
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyCWujZEeeBofM8OKF4TfvL6OVq9zqg1ozg"/>
+      
         <!-- AIzaSyCWujZEeeBofM8OKF4TfvL6OVq9zqg1ozg -->
 
         <!-- Don't delete the meta-data below.

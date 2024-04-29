@@ -29,78 +29,81 @@ class _CheckinPageState extends State<CheckedINPage> {
     init();
     checkInternet();
   }
-List<CheckinModel> data = [];
-List<GetActivityApvdData> cust = [];
-  Future<void> checkInternet()async{
-      bool internet = await config.haveInterNet();
-      if(internet){
-     getActivityApi();
-      }else{
-        getValuesFromDB();
 
-      }}
-    Future<void>  getValuesFromDB()async{
-         loading = true;
- msg = '';
-        setState(() { });
- data =  await DataBaseHelper.getPostCheckinData();
- if(data.isNotEmpty){
-    cust =     await DataBaseHelper.getSlctCustData(data[0].clgcode);
-    checkedINData.add(GetCheckedINData(
-  CardCode: cust[0].CardCode, 
-  CardName: cust[0].CardName, 
-  VisitReg: cust[0].Name, 
-  CntctTime:int.parse(data[0].ActivityTime.replaceAll(":", "")), 
-  CntctDate: data[0].ActivityDate, 
-  ClgCode: data[0].clgcode, 
-  Details: cust[0].Details, 
-  CntctSbjct: 0,
-  ),);
-  if(checkedINData.isNotEmpty){
-          loading = false;
- msg = '';
-        setState(() { });
+  List<CheckinModel> data = [];
+  List<GetActivityApvdData> cust = [];
+  Future<void> checkInternet() async {
+    bool internet = await config.haveInterNet();
+    if (internet) {
+      getActivityApi();
+    } else {
+      getValuesFromDB();
+    }
   }
 
- }
-
+  Future<void> getValuesFromDB() async {
+    loading = true;
+    msg = '';
+    setState(() {});
+    data = await DataBaseHelper.getPostCheckinData();
+    if (data.isNotEmpty) {
+      cust = await DataBaseHelper.getSlctCustData(data[0].clgcode);
+      checkedINData.add(
+        GetCheckedINData(
+          CardCode: cust[0].CardCode,
+          CardName: cust[0].CardName,
+          VisitReg: cust[0].Name,
+          CntctTime: int.parse(data[0].ActivityTime.replaceAll(":", "")),
+          CntctDate: data[0].ActivityDate,
+          ClgCode: data[0].clgcode,
+          Details: cust[0].Details,
+          CntctSbjct: 0,
+        ),
+      );
+      if (checkedINData.isNotEmpty) {
+        loading = false;
+        msg = '';
+        setState(() {});
       }
-bool loading = false;
-String msg = '';
-List<GetCheckedINData> checkedINData = [];
- Future<void> getActivityApi()async{
-   loading = true;
-   msg = '';
-        setState(() { });
+    }
+  }
 
-    await GetCheckedINAPi.getGlobalData(GetValues.slpCode!,config.currentDateTimeServer()).then((value) {
-       if(value.statusCode! >= 200 && value.statusCode! <= 210){
-           loading = false;
-           msg = '';
-         setState(() { });
-        if(value.activitiesData!= null){
-        checkedINData = value.activitiesData!;          
-        }else {
-         DataBaseHelper.dltAlrchkddata().then((value){
-          Get.back<void>();
-         });
-        //     loading = false;
-        //    msg = 'No data found';
-        //  setState(() { });
+  bool loading = false;
+  String msg = '';
+  List<GetCheckedINData> checkedINData = [];
+  Future<void> getActivityApi() async {
+    loading = true;
+    msg = '';
+    setState(() {});
+
+    await GetCheckedINAPi.getGlobalData(
+            GetValues.slpCode!, config.currentDateTimeServer())
+        .then((value) {
+      if (value.statusCode! >= 200 && value.statusCode! <= 210) {
+        loading = false;
+        msg = '';
+        setState(() {});
+        if (value.activitiesData != null) {
+          checkedINData = value.activitiesData!;
+        } else {
+          DataBaseHelper.dltAlrchkddata().then((value) {
+            Get.back<void>();
+          });
+          //     loading = false;
+          //    msg = 'No data found';
+          //  setState(() { });
         }
-        }
-       else if(value.statusCode! >= 400 && value.statusCode! <= 410){
-          loading = false;
-           msg = 'Something went wrong...!!';
-         setState(() { });
-        }
-        else{
-          loading = false;
-           msg = 'Something went wrong...!!';
-         setState(() { });
-        }
+      } else if (value.statusCode! >= 400 && value.statusCode! <= 410) {
+        loading = false;
+        msg = 'Something went wrong...!!';
+        setState(() {});
+      } else {
+        loading = false;
+        msg = 'Something went wrong...!!';
+        setState(() {});
+      }
     });
- }
+  }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -121,103 +124,116 @@ List<GetCheckedINData> checkedINData = [];
 
   List<TextEditingController> mycontroller =
       List.generate(15, (i) => TextEditingController());
-      
+
   Future<bool> onbackpress() {
- 
-     Get.offAllNamed<dynamic>(FurneyRoutes.home);
-      return Future.value(true);
+    Get.offAllNamed<dynamic>(FurneyRoutes.home);
+    return Future.value(true);
   }
 
- Config  config = Config();
+  Config config = Config();
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return WillPopScope(
       onWillPop: onbackpress,
       child: Scaffold(
-          key: _scaffoldKey,
-          resizeToAvoidBottomInset: false,
-          drawer: drawer(context),
-          appBar: salesappBar(context, _scaffoldKey, widget.title),
-          body: 
-          (loading == true && msg.isEmpty && checkedINData.isEmpty )?
-          Center(child: CircularProgressIndicator()):
-          (loading == false && msg.isNotEmpty && checkedINData.isEmpty )?
-          Center(child: Text(msg))
-          :
-          Container(
-            width: Screens.width(context),
-            height: Screens.heigth(context),
-            padding: EdgeInsets.symmetric(
-                vertical: Screens.heigth(context) * 0.01,
-                horizontal: Screens.width(context) * 0.02,),
-            child: Column(
-              //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: Screens.heigth(context) * 0.01,
-                        horizontal: Screens.width(context) * 0.02,),
+        key: _scaffoldKey,
+        resizeToAvoidBottomInset: false,
+        drawer: drawer(context),
+        appBar: salesappBar(context, _scaffoldKey, widget.title),
+        body: (loading == true && msg.isEmpty && checkedINData.isEmpty)
+            ? Center(child: CircularProgressIndicator())
+            : (loading == false && msg.isNotEmpty && checkedINData.isEmpty)
+                ? Center(child: Text(msg))
+                : Container(
                     width: Screens.width(context),
-                    decoration: BoxDecoration(color: Colors.grey[200]),
+                    height: Screens.heigth(context),
+                    padding: EdgeInsets.symmetric(
+                      vertical: Screens.heigth(context) * 0.01,
+                      horizontal: Screens.width(context) * 0.02,
+                    ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          child: Text(checkedINData.isEmpty?'' : checkedINData[0].CardCode!),
+                          padding: EdgeInsets.symmetric(
+                            vertical: Screens.heigth(context) * 0.01,
+                            horizontal: Screens.width(context) * 0.02,
+                          ),
+                          width: Screens.width(context),
+                          decoration: BoxDecoration(color: Colors.grey[200]),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Text(checkedINData.isEmpty
+                                    ? ''
+                                    : checkedINData[0].CardCode!),
+                              ),
+                              SizedBox(
+                                height: Screens.heigth(context) * 0.01,
+                              ),
+                              Container(
+                                child: Text(checkedINData.isEmpty
+                                    ? ''
+                                    : checkedINData[0].CardName!),
+                              ),
+                              SizedBox(
+                                height: Screens.heigth(context) * 0.01,
+                              ),
+                              Container(
+                                child: Text(checkedINData.isEmpty
+                                    ? ''
+                                    : "Visit regarding " +
+                                        checkedINData[0].VisitReg!),
+                              ),
+                              SizedBox(
+                                height: Screens.heigth(context) * 0.01,
+                              ),
+                              Container(
+                                child: Text(checkedINData.isEmpty
+                                    ? ''
+                                    : "checked-in @ " +
+                                        config.alignDate(
+                                            checkedINData[0].CntctDate!) +
+                                        ' ' +
+                                        config.convertintToTime(
+                                            checkedINData[0].CntctTime!)),
+                              ),
+                              SizedBox(
+                                height: Screens.heigth(context) * 0.01,
+                              ),
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: Screens.heigth(context) * 0.01,
                         ),
-                          Container(
-                          child: Text(checkedINData.isEmpty?'' :checkedINData[0].CardName!),
+                        Container(
+                          width: Screens.width(context),
+                          color: Colors.grey[200],
+                          padding:
+                              EdgeInsets.symmetric(vertical: 1, horizontal: 10),
+                          child: Text(
+                              'Visit running since ' + mycontroller[1].text),
                         ),
+                        //  config.alignDate(checkedINData[0].CntctDate!) +' '+
+                        //  config.convertintToTime(checkedINData[0].CntctTime!))),
                         SizedBox(
                           height: Screens.heigth(context) * 0.01,
                         ),
-
-                          Container(
-                          child: Text(checkedINData.isEmpty?'' :"Visit regarding "+checkedINData[0].VisitReg!),
-                        ),
-                        SizedBox(
-                          height: Screens.heigth(context) * 0.01,
-                        ),
-
-                         Container(
-                          child: Text(checkedINData.isEmpty?'' :"checked-in @ "+ config.alignDate(checkedINData[0].CntctDate!) +' '+ config.convertintToTime(checkedINData[0].CntctTime!)),
-                        ),
-                        SizedBox(
-                          height: Screens.heigth(context) * 0.01,
-                        ),
+                        Container(
+                          child: CustomSpinkitdButton(
+                            onTap: () async {
+                              Get.toNamed<void>(FurneyRoutes.checkoutPage);
+                            },
+                            label: 'Check out',
+                          ),
+                        )
                       ],
-                    ),),
-                SizedBox(
-                  height: Screens.heigth(context) * 0.01,
-                ),
-                Container(
-                    width: Screens.width(context),
-                    color: Colors.grey[200],
-                    padding:
-                        EdgeInsets.symmetric(vertical: 1, horizontal: 10),
-                    child: Text('Visit running since '+ mycontroller[1].text),),
-                    //  config.alignDate(checkedINData[0].CntctDate!) +' '+ 
-                    //  config.convertintToTime(checkedINData[0].CntctTime!))),
-                SizedBox(
-                  height: Screens.heigth(context) * 0.01,
-                ),
-                Container(
-                  child: CustomSpinkitdButton(
-                    onTap: () async {
-                      Get.toNamed<void>(FurneyRoutes.checkoutPage);
-                    },
-                    label: 'Check out',
+                    ),
                   ),
-                )
-              ],
-            ),
-          ),),
+      ),
     );
   }
-
-
 }

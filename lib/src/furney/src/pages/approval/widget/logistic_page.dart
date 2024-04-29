@@ -500,15 +500,19 @@ class LogisticPageState extends State<LogisticPage> {
     }
     // print("sucesssssssssssssssssssss");
     else {
+      var uuid = Uuid();
+      String? uuidg = uuid.v1();
+      log(' GetValues.slpCode GetValues.slpCode::${GetValues.slpCode}');
       SalesQuotPostAPi.cardCodePost = HeaderCreationState.bpCode;
       SalesQuotPostAPi.docLineQout = ContentCreationState.itemsDetails;
       SalesQuotPostAPi.docDate = HeaderCreationState.currentDateTime.toString();
       SalesQuotPostAPi.dueDate = HeaderCreationState.currentDateTime.toString();
       SalesQuotPostAPi.remarks = HeaderCreationState.mycontroller[1].text;
-      var uuid = Uuid();
-      String? uuidg = uuid.v1();
-      SalesQuotPostAPi.method(uuidg);
-      await SalesQuotPostAPi.getGlobalData(uuidg).then((value) {
+      SalesQuotPostAPi.saelsPerCode = GetValues.slpCode;
+      SalesQuotPostAPi.deviceTransID = uuid.v1();
+
+      SalesQuotPostAPi.method();
+      await SalesQuotPostAPi.getGlobalData().then((value) {
         SalesOrderAfterAPi.baseEntry = value.docEntry.toString();
         log("object:" + value.statusCode.toString());
         log("docEntry:" + value.docEntry.toString());
@@ -563,25 +567,27 @@ class LogisticPageState extends State<LogisticPage> {
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       });
-      SalesOrderAfterAPi.sessionID = GetValues.sessionID;
-      SalesOrderAfterAPi.baseType = "23";
-      // SalesOrderAfterAPi.baseEntry = "12345";
+      if (schmDisableBtn == true) {
+        SalesOrderAfterAPi.sessionID = GetValues.sessionID;
+        SalesOrderAfterAPi.baseType = "23";
+        // SalesOrderAfterAPi.baseEntry = "12345";
 
-      // print("SO basetype: " + SalesOrderAfterAPi.baseType.toString());
-      // print("SO discper:" + SalesOrderAfterAPi.baseLineTo.toString());
-      // print("SO discper:" + SalesOrderAfterAPi.disValue.toString());
-      // print("SO discper:" + SalesOrderAfterAPi.discper.toString());
-      // print("SO schemeEntry:" + SalesOrderAfterAPi.schemeEntry.toString());
-      for (int i = 0; i < saleOrderdata.length; i++) {
-        SalesOrderAfterAPi.baseLineTo = saleOrderdata[i].lineNum.toString();
-        SalesOrderAfterAPi.disValue = saleOrderdata[i].discVal.toString();
-        SalesOrderAfterAPi.discper = saleOrderdata[i].discPer.toString();
-        SalesOrderAfterAPi.schemeEntry = saleOrderdata[i].schemeEntry;
-        await SalesOrderAfterAPi.getData(uuidg).then((value) async {
-          if (value.statusCode! >= 200 && value.statusCode! <= 210) {
-            print("Post Successfully..");
-          }
-        });
+        // print("SO basetype: " + SalesOrderAfterAPi.baseType.toString());
+        // print("SO discper:" + SalesOrderAfterAPi.baseLineTo.toString());
+        // print("SO discper:" + SalesOrderAfterAPi.disValue.toString());
+        // print("SO discper:" + SalesOrderAfterAPi.discper.toString());
+        // print("SO schemeEntry:" + SalesOrderAfterAPi.schemeEntry.toString());
+        for (int i = 0; i < saleOrderdata.length; i++) {
+          SalesOrderAfterAPi.baseLineTo = saleOrderdata[i].lineNum.toString();
+          SalesOrderAfterAPi.disValue = saleOrderdata[i].discVal.toString();
+          SalesOrderAfterAPi.discper = saleOrderdata[i].discPer.toString();
+          SalesOrderAfterAPi.schemeEntry = saleOrderdata[i].schemeEntry;
+          await SalesOrderAfterAPi.getData(uuidg).then((value) async {
+            if (value.statusCode! >= 200 && value.statusCode! <= 210) {
+              print("Post Successfully..");
+            }
+          });
+        }
       }
     }
   }

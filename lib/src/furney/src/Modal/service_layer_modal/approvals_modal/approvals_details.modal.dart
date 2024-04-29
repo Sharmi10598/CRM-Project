@@ -1596,13 +1596,14 @@ class ApprovalDetailsValue {
       uSupplierImage:
           json['U_Supplier_Image'] == null ? null : json['U_Supplier_Image'],
       uBolImage: json['U_BOL_Image'] == null ? null : json['U_BOL_Image'],
-      uOrderType: json['U_GP_Approval'] == null
+        uGpApproval: json['U_GP_Approval'] == null
           ? null
           : json['U_GP_Approval'].toString(),
       uTruckInternal: json['U_Truck_Internal'] == null
           ? null
           : json['U_Truck_Internal'].toString(),
-      uGpApproval:
+    
+      uOrderType:
           json['U_Order_Type'] == null ? null : json['U_Order_Type'].toString(),
       uSupplierName:
           json['U_SUPPLIER_NAME'] == null ? null : json['U_SUPPLIER_NAME'],

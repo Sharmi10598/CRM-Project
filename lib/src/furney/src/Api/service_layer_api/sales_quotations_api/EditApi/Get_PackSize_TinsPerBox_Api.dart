@@ -11,13 +11,17 @@ import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 class GetPackANDTinsPerBoxApi {
   static Future<GetPackSizeModel> getGlobalData(String? itemcode) async {
     try {
-      print("New:::$itemcode:::" + URL.dynamicUrl);
-      print(json.encode({
-        "constr":
-            "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
-        "query":
-            "select U_Pack_Size,U_Tins_Per_Box from oitm where itemcode='5000706C'"
-      }));
+      log("New:::$itemcode:::" + URL.dynamicUrl);
+      log("GetPackANDTinsPerBoxApi:::" +
+          json.encode({
+            "constr":
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+            // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+            "query":
+           "select U_Pack_Size,U_Tins_Per_Box from oitm where itemcode='$itemcode'"
+                // "select U_Pack_Size,U_Tins_Per_Box from oitm where itemcode='5000706C'"
+          }));
 
       final response = await http.post(Uri.parse(URL.dynamicUrl),
           headers: {
@@ -25,15 +29,18 @@ class GetPackANDTinsPerBoxApi {
           },
           body: json.encode({
             "constr":
-                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+            // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
             "query":
-                "select U_Pack_Size,U_Tins_Per_Box from oitm where itemcode='5000706C'"
+             "select U_Pack_Size,U_Tins_Per_Box from oitm where itemcode='$itemcode'"
+                // "select U_Pack_Size,U_Tins_Per_Box from oitm where itemcode='5000706C'"
           }));
 
       // print('B1SESSION='+ GetValues.sessionID.toString());
       // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
       // log("checkdddd innn: " + json.decode(response.body).toString());
-      print(response.statusCode);
+      print("statusCode::"+response.statusCode.toString());
       if (response.statusCode == 200) {
         return GetPackSizeModel.fromJson(response.body, response.statusCode);
       } else {

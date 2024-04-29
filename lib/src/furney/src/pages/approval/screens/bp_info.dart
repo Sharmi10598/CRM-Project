@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_redundant_argument_values, avoid_unnecessary_containers, require_trailing_commas, prefer_single_quotes, prefer_if_elements_to_conditional_expressions, prefer_is_empty, unnecessary_lambdas, prefer_interpolation_to_compose_strings
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -14,10 +16,11 @@ import 'package:ultimate_bundle/src/furney/src/pages/approval/widget/transaction
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/appBar.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 class BPInfo extends StatefulWidget {
-  const BPInfo({ required this.title, Key? key }) : super(key: key);
+  const BPInfo({required this.title, Key? key}) : super(key: key);
   final String title;
-  
+
   @override
   BPInfoState createState() => BPInfoState();
 }
@@ -31,38 +34,40 @@ class BPInfoState extends State<BPInfo> {
   //static List<CustomerDetailsValue> data=[];
   static int index = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool getdata1=false;
+  bool getdata1 = false;
   bool getdata2 = false;
   @override
   void initState() {
     super.initState();
     GeneralState.cardCode = cardCode;
     GeneralState.acntBalance = curentBalance;
-     GeneralState.slpName = slpName;
-      GeneralState.paymentTerms = paymentTerms;
-  print("CustomerDetailsAPi.cardCode: "+CustomerDetailsAPi.cardCode.toString());
+    GeneralState.slpName = slpName;
+    GeneralState.paymentTerms = paymentTerms;
+   
     CustomerDetailsAPi.getGlobalData().then((value) {
-      if(value.contactEmployees!.length>0){
-    print("contactEmployees: "+value.contactEmployees![0].name .toString());
+       log("CustomerDetailsAPi.length: " +
+       value.contactEmployees!.length.toString());
+      if (value.contactEmployees!.length > 0) {
+        log("contactEmployees: " + value.contactEmployees![0].name.toString());
       }
       setcutomerValue(value);
     });
   }
-  void  setcutomerValue(CustomerDetailsValue value){
-      AddressContactsState.customerDetailsValue = value;
-     GeneralState.customerDetailsValue =value;
-     Future.delayed(const Duration(seconds: 1),(){
-         setState(() {
-       getdata1=true;
-     });
-     
-     });
+
+  void setcutomerValue(CustomerDetailsValue value) {
+    AddressContactsState.customerDetailsValue = value;
+    GeneralState.customerDetailsValue = value;
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() {
+        getdata1 = true;
+      });
+    });
   }
   // void  setsalesPersonValue(SalesPersonModal value){
   //     setState(() {
   //          print(value.salesPersonvalue![0].slpName);
   //          GeneralState.salesPersonModal = value.salesPersonvalue;
-         
+
   //           Future.delayed(Duration(seconds: 1),(){
   //          getdata2=true;
   //           });
@@ -70,100 +75,106 @@ class BPInfoState extends State<BPInfo> {
   // }
   @override
   Widget build(BuildContext context) {
-     final theme = Theme.of(context);
-    return 
-   Scaffold(
-        key: _scaffoldKey,
-        appBar: appBar(context, _scaffoldKey, widget.title),
-        drawer: drawer(context),
-           backgroundColor: Colors.grey[200],
-        body:
-        // GeneralState.customerDetailsValue ==null &&  GeneralState.salesPersonModal!.isEmpty?
-         getdata1 == false ?
-        Center(
-              child: SpinKitThreeBounce(
-                size: Screens.heigth(context) * 0.06,
-                color: theme.primaryColor,
-              ),
-            )
-        : 
-        SafeArea(
-          child:
-              DefaultTabController(
-                   length: 3,
-                        initialIndex: 0,
-                child: SizedBox(
-                  width: Screens.width(context),
-                  height: Screens.heigth(context),
-                 // color: Colors.amber,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        // DefaultTabController(
-                        //   length: 3,
-                        //   initialIndex: 0,
-                        //   child:
-                        Row(
-                        //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    final theme = Theme.of(context);
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: appBar(context, _scaffoldKey, widget.title),
+      drawer: drawer(context),
+      backgroundColor: Colors.grey[200],
+      body:
+          // GeneralState.customerDetailsValue ==null &&  GeneralState.salesPersonModal!.isEmpty?
+          getdata1 == false
+              ? Center(
+                  child: SpinKitThreeBounce(
+                    size: Screens.heigth(context) * 0.06,
+                    color: theme.primaryColor,
+                  ),
+                )
+              : SafeArea(
+                  child: DefaultTabController(
+                    length: 3,
+                    initialIndex: 0,
+                    child: SizedBox(
+                      width: Screens.width(context),
+                      height: Screens.heigth(context),
+                      // color: Colors.amber,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            SizedBox(width:Screens.width(context)*0.1),
-                            SizedBox(
-                               width: Screens.width(context)*0.3,
-                              ///color: Colors.blueGrey,
-                              child: Icon(Icons.account_circle,
-                              size: Screens.heigth(context)*0.1,
-                              color: theme.primaryColor,
-                              ),
+                            // DefaultTabController(
+                            //   length: 3,
+                            //   initialIndex: 0,
+                            //   child:
+                            Row(
+                              //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SizedBox(width: Screens.width(context) * 0.1),
+                                SizedBox(
+                                  width: Screens.width(context) * 0.3,
+
+                                  ///color: Colors.blueGrey,
+                                  child: Icon(
+                                    Icons.account_circle,
+                                    size: Screens.heigth(context) * 0.1,
+                                    color: theme.primaryColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: Screens.width(context) * 0.5,
+                                  // color: Colors.green,
+                                  child: Text(
+                                    "$cardName\n$cardCode", // "${data[index].cardName.toString()}\n${data[index].cardCode}",
+                                    //"Maxi-Teq C20000 Custmer",
+                                    style: TextStyles.boldBlock1(context),
+                                  ),
+                                )
+                              ],
                             ),
+                            SizedBox(height: Screens.heigth(context) * 0.01),
+                            TabBar(
+                              labelStyle: TextStyles.bodytextBlack2(context),
+                              indicator: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(Const.space5),
+                                border: Border.all(color: theme.primaryColor),
+                                color: theme.primaryColor,
+                              ),
+                              labelColor: theme.colorScheme.background,
+                              unselectedLabelColor: theme.primaryColor,
+                              tabs: [
+                                Tab(
+                                    text:
+                                        AppLocalizations.of(context)!.general),
+                                Tab(
+                                    text: AppLocalizations.of(context)!
+                                        .addcontact),
+                                Tab(
+                                    text: AppLocalizations.of(context)!
+                                        .transactions),
+                              ],
+                            ),
+                            // ),
+                            SizedBox(height: Screens.heigth(context) * 0.01),
                             SizedBox(
-                              width: Screens.width(context)*0.5,
-                             // color: Colors.green,
-                              child: Text(  
-                               "$cardName\n$cardCode",// "${data[index].cardName.toString()}\n${data[index].cardCode}",
-                                //"Maxi-Teq C20000 Custmer",
-                                    style: TextStyles.boldBlock1(context),),
+                              width: Screens.width(context),
+                              height: Screens.heigth(context) * 0.71,
+                              child: const TabBarView(children: [
+                                General(),
+                                AddressContacts(),
+                                Transactions()
+                              ]),
                             )
                           ],
                         ),
-                        SizedBox(height:Screens.heigth(context)*0.01),
-                           TabBar(
-                            labelStyle: TextStyles.bodytextBlack2(context),
-                            indicator: BoxDecoration(
-                              borderRadius: BorderRadius.circular(Const.space5),
-                              border: Border.all(color: theme.primaryColor),
-                              color: theme.primaryColor,
-                            ),
-                            labelColor: theme.colorScheme.background,
-                            unselectedLabelColor: theme.primaryColor,
-                            tabs: [
-                              Tab(text: AppLocalizations.of(context)!.general),
-                              Tab(text: AppLocalizations.of(context)!.addcontact),
-                              Tab(text: AppLocalizations.of(context)!.transactions),
-                            ],
-                          ),
-                       // ),
-                    SizedBox(height:Screens.heigth(context)*0.01),
-                    SizedBox(
-                       width: Screens.width(context),
-                      height:Screens.heigth(context)*0.71 ,
-                      child:  const TabBarView(children: [
-                      General(),
-                     AddressContacts(),
-                     Transactions()
-                ]),
-                    )
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            
-            ),
-          );
+    );
   }
 
-    Future<void> makecall(String url) async {
+  Future<void> makecall(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -171,7 +182,7 @@ class BPInfoState extends State<BPInfo> {
     }
   }
 
-   Future<void> launchInWebViewWithJavaScript(String url) async {
+  Future<void> launchInWebViewWithJavaScript(String url) async {
     if (await canLaunch(url)) {
       await launch(
         url,
@@ -206,7 +217,8 @@ class BPInfoState extends State<BPInfo> {
   }
 
   Future<void> openMap(double latitude, double longitude) async {
-    final googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    final googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
     if (await canLaunch(googleUrl)) {
       await launch(googleUrl);
     } else {

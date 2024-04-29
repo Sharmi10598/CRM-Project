@@ -17,13 +17,17 @@ class GetAvaCardCodeAPi {
           'content-type': 'application/json',
           },
          body: json.encode({
-              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+              // "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
               "query": "select 'L' + Replicate('0',4-Len(max(LastCardCode)+1)) + convert(varchar,max(LastCardcode)+1) as lastcardcode from (select Case when Left(Cardcode,1) = 'L' then convert(int,Right(cardcode,len(CardCode)-1)) else  (convert(int,cardcode)) End lastcardcode from ocrd where CardType  = 'L') t",//'${GetValues.slpCode}'
           })
       );
 
       log("DataL "+json.encode({
-              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+              // "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
               "query": "select 'L' + Replicate('0',4-Len(max(LastCardCode)+1)) + convert(varchar,max(LastCardcode)+1) as lastcardcode from (select Case when Left(Cardcode,1) = 'L' then convert(int,Right(cardcode,len(CardCode)-1)) else  (convert(int,cardcode)) End lastcardcode from ocrd where CardType  = 'L') t"
           }));
      

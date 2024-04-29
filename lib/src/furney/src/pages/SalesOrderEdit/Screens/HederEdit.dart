@@ -38,7 +38,7 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
   static String paymentTerms ='';
   static String docNo = '0'; //
   static String contactPerson = ''; //
-  static String currency = 'TZS'; //
+  // static String currency = 'TZS'; //
   static String status = 'open'; //
   static String? salesEmp; //
   static double totalBeforeDiscount = 0; //
@@ -297,7 +297,8 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
                             width: Screens.width(context) * 0.83,
                             // color: Colors.blue,
                             child: Text(
-                              "$currency",
+                               GetValues.currency .toString(),
+                     
                               style: TextStyles.headlineBlack1(context),
                             ),
                           ),

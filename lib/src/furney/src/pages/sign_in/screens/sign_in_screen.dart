@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 part of '../sign_in_page.dart';
 
 class FurneySignInScreen extends StatefulWidget {
@@ -12,21 +14,30 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
   bool _isLoading = false;
   final bool _obscureText = true;
 
-  @override
-  void initState() {
-    super.initState();
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
-    errorText();
-    // ss();
-  }
-
   Future<SharedPreferences> pref = SharedPreferences.getInstance();
   List<GlobalKey<FormState>> formkey =
       List.generate(3, (i) => GlobalKey<FormState>());
   List<TextEditingController> mycontroller =
       List.generate(15, (i) => TextEditingController());
-  static String settingMsg = '';
+  static String? settingMsg;
+  disableKeyBoard(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _emailController = TextEditingController();
+      _passwordController = TextEditingController();
+      errorText();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -50,7 +61,7 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
                 _HeaderSection(),
                 SizedBox(height: Screens.heigth(context) * 0.04),
                 Text(
-                  settingMsg.isEmpty ? '' : settingMsg,
+                  settingMsg == null || settingMsg!.isEmpty ? '' : settingMsg!,
                   style:
                       theme.textTheme.bodyMedium?.copyWith(color: Colors.red),
                 ),
@@ -184,8 +195,11 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
                 // ),
 
                 CustomSpinkitdButton(
-                  onTap: () async {
-                    await setupValidation();
+                  onTap: () {
+                    setState(() {
+                      setupValidation();
+                      disableKeyBoard(context);
+                    });
 
                     // validate();
                     //callServiceLayerApi();
@@ -197,7 +211,7 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
                 const SizedBox(height: Const.space8),
                 const _BuildForgotPasswordButton(),
                 // _BuildSignUpButton()
-                SizedBox(height: Screens.heigth(context) * 0.15),
+                SizedBox(height: Screens.heigth(context) * 0.04),
 
                 InkWell(
                   onTap: () async {
@@ -210,18 +224,16 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
                               contentPadding: EdgeInsets.all(0),
                               content: SettingWidget(
                                 theme: theme,
-                                // formkey: formkey,
-                                // mycontroller: mycontroller,
                               ),
                             );
-                            // settingsMethod());
                           });
                         });
                   },
                   child: Container(
-                      width: Screens.width(context) * 0.1,
-                      alignment: Alignment.centerLeft,
-                      child: Icon(Icons.settings)),
+                    width: Screens.width(context) * 0.1,
+                    alignment: Alignment.centerLeft,
+                    child: Icon(Icons.settings),
+                  ),
                 )
               ],
             ),
@@ -398,20 +410,28 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
   // }
 
   errorText() async {
+    settingMsg = '';
     final pref2 = await pref;
-    if (pref2.getString('countryCode') == null ||
-        SettingWidgetState.mycontroller[3].text.isEmpty) {
-      settingMsg = 'Complete the setup..!!';
-    } else {
-      settingMsg = '';
-    }
+    log('SettingWidgetState.mycontroller::${SettingWidgetState.mycontroller[3].text}');
+    setState(() {
+      if (SettingWidgetState.mycontroller[3].text.isEmpty) {
+        log("countryCode:: ${pref2.getString('countryCode')}");
+        settingMsg = 'Complete the setup..!!';
+      } else {
+        setState(() {
+          settingMsg = '';
+        });
+      }
+    });
   }
 
   setupValidation() async {
     final pref2 = await pref;
 
-    if (pref2.getString('countryCode') == null) {
+    // if (pref2.getString('countryCode') == null) {
+    if (SettingWidgetState.mycontroller[3].text.isEmpty) {
       settingMsg = 'Complete the setup..!!';
+
       SettingWidgetState.mycontroller[3].text = '';
     } else {
       settingMsg = '';
@@ -427,6 +447,7 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
   }
 
   Future<void> validate() async {
+    log('message1');
     if (formkey[0].currentState!.validate()) {
       setState(() => _isLoading = true);
       var preff = await SharedPreferences.getInstance();
@@ -435,15 +456,17 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
       LoginUserAPi.deviceId = preff.getString('deviceID');
       LoginUserAPi.userCode = mycontroller[0].text;
       LoginUserAPi.password = mycontroller[1].text;
-      print('LoginUserAPi.userCode: ${LoginUserAPi.userCode}');
-      print('LoginUserAPi.userCode: ' + LoginUserAPi.password.toString());
-      print('LoginUserAPi.deviceId: ' + LoginUserAPi.deviceId.toString());
+      log('LoginUserAPi.userCode: ${LoginUserAPi.userCode}');
+      log('LoginUserAPi.password: ${LoginUserAPi.password}');
+      log('LoginUserAPi.deviceId: ${LoginUserAPi.deviceId}');
       await LoginUserAPi.getGlobalData(tokenFCM!).then((value) async {
         if (value.loginUserData != null) {
           setState(() => _isLoading = false);
           final pref2 = await pref;
           pref2.setString(
-              'UserName', value.loginUserData![0].userName.toString());
+            'UserName',
+            value.loginUserData![0].userName.toString(),
+          );
           pref2.setString(
               'userCode', value.loginUserData![0].userCode.toString());
           pref2.setString(
@@ -460,7 +483,7 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
               'sapPassword', value.loginUserData![0].sapPassword.toString());
           pref2.setString('sapUrl', value.loginUserData![0].sapUrl.toString());
           URL.url = value.loginUserData![0].sapUrl.toString();
-          print('url:' + URL.url);
+          print('url:${URL.url}');
           pref2.setString(
               'sapUserName', value.loginUserData![0].sapUserName.toString());
           pref2.setString(
@@ -474,10 +497,10 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
           pref2.setString('FCMToken', value.loginUserData![0].FCM.toString());
           pref2.setString(
               'U_CrpUsr', value.loginUserData![0].U_CrpUsr.toString());
-          Get.offAllNamed<dynamic>(FurneyRoutes.home);
+          // Get.offAllNamed<dynamic>(FurneyRoutes.home);
           // sapUserName = value.loginUserData![0].sapUserName.toString();
           // sapUserPass = value.loginUserData![0].sapPassword.toString();
-          // callServiceLayerApi();
+          callServiceLayerApi();
         } else if (value.loginUserData == null && value.status == false) {
           setState(() => _isLoading = false);
           const snackBar = SnackBar(
@@ -501,22 +524,22 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
-        print('Status: ' + value.status.toString());
+        print('Status: ${value.status}');
       });
     }
   }
 
   void callServiceLayerApi() {
-    PostLoginAPi.username = sapUserName; //'crmapp';//sapUserName;
-    PostLoginAPi.password =
+    PostSAPLoginAPi.username = sapUserName; //'crmapp';//sapUserName;
+    PostSAPLoginAPi.password =
         sapUserPass; //'Tanzania';sapUserPass;//Tanzania crmapp
-    PostLoginAPi.getGlobalData().then((value) async {
+    PostSAPLoginAPi.getGlobaldData().then((value) async {
       final pref2 = await pref;
       if (value.error == null) {
         await pref2.setString('sessionId', value.sessionId.toString());
         await pref2.setString(
             'sessionTimeout', value.sessionTimeout.toString());
-        print('session:' + value.sessionId.toString());
+        print('session:${value.sessionId}');
         Get.offAllNamed<dynamic>(FurneyRoutes.home);
         //    Future.delayed(const Duration(seconds: 2), () {
         //    setState(() => _isLoading = false);

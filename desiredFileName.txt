@@ -4,6 +4,7 @@
     "dashboard",
     "usd",
     "tzs",
+    "zmw",
     "notes",
     "customers",
     "userCode",

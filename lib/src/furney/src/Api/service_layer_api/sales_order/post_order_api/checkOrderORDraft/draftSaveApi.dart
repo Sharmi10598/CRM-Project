@@ -27,12 +27,12 @@ class DraftSaveAPi{
         },
       );
       if (response.statusCode == 200) {
-         print("res od: "+json.decode(response.body).toString());
-         print("res stcode: "+response.statusCode.toString());
+         print("DraftSaveAPi Res1: "+json.decode(response.body).toString());
+         print("DraftSaveAPi stcode1: "+response.statusCode.toString());
         return OrderORDraftModal.fromJson(json.decode(response.body)as Map<String,dynamic>);
       } else {
-         print('res od: '+json.decode(response.body).toString());
-         print("res stcode: "+response.statusCode.toString());
+         print('DraftSaveAPi Res2: '+json.decode(response.body).toString());
+         print("DraftSaveAPi stcode2: "+response.statusCode.toString());
         throw Exception('Restart the app or contact the admin!!..');
   //  return OrderORDraftModal.issue('Restart the app or contact the admin!!..');
       }

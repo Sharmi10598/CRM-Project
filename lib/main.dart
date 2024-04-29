@@ -28,6 +28,9 @@ import 'package:quick_actions/quick_actions.dart';
 import 'package:ultimate_bundle/helpers/LocalNotification.dart';
 import 'package:ultimate_bundle/helpers/constants.dart';
 
+import 'src/furney/src/pages/sign_in/sign_in_page.dart';
+import 'package:dio/dio.dart';
+
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -120,6 +123,16 @@ Future<void> onReciveFCM() async {
   });
 }
 
+class MyHttpOverrides extends HttpOverrides {
+  HttpClient client = HttpClient();
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -130,7 +143,7 @@ void main() async {
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(localNotificationService.channel);
   onReciveFCM();
-
+  HttpOverrides.global = new MyHttpOverrides();
   runApp(const MyApp());
 }
 
@@ -248,7 +261,7 @@ class MyHomePageState extends State<MyApp> {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            home: const FurneySplashScreen(),
+            home: FurneySplashScreen(),
           );
         },
       ),

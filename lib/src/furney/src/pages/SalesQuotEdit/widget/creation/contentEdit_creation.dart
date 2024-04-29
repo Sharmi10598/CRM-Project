@@ -95,6 +95,48 @@ class ContentEditCreationState extends State<ContentEditCreation> {
     }
   }
 
+  GetTaxNameZam(AddItem2? contentitemsDetails) {
+    log("contentitemsDetails!.taxCode" +
+        contentitemsDetails!.taxCode.toString());
+
+    if (contentitemsDetails!.taxCode == 'O0') {
+      valueChossed = 'O0 - 0 % Output VAT';
+      valueChosedReason = '0';
+      taxCode = 'O0';
+      taxSelected = 0.00;
+      taxSelected = double.parse(valueChosedReason.toString());
+    } else if (contentitemsDetails.taxCode == 'O1') {
+      //01
+      valueChossed = 'O1 - 16 % Output VAT';
+      valueChosedReason = '16';
+      taxCode = 'O1';
+      taxSelected = 0.00;
+      taxSelected = double.parse(valueChosedReason.toString());
+    } else if (contentitemsDetails.taxCode == '01') {
+      //01
+      valueChossed = 'O1 - 16 % Output VAT';
+      valueChosedReason = '16';
+      taxCode = 'O1';
+      taxSelected = 0.00;
+      taxSelected = double.parse(valueChosedReason.toString());
+    } else if (contentitemsDetails.taxCode == 'O3') {
+      valueChossed = 'O3 - Exempted Output VAT';
+      taxCode = 'O3';
+      valueChosedReason = '0';
+      taxSelected = 0.00;
+      taxSelected = double.parse(valueChosedReason.toString());
+    } else if (contentitemsDetails.taxCode == 'X0') {
+      valueChossed = 'X0 - Exempt Output';
+      valueChosedReason = '0';
+      taxCode = 'X0';
+      taxSelected = 0.00;
+      taxSelected = double.parse(valueChosedReason.toString());
+    }
+    return valueChossed == null || valueChossed!.isEmpty
+        ? ""
+        : valueChossed.toString();
+  }
+
   GetTaxName(AddItem2? contentitemsDetails) {
     if (contentitemsDetails!.taxCode == 'O0') {
       // print("" + contentitemsDetails[i].taxCode.toString());
@@ -135,7 +177,7 @@ class ContentEditCreationState extends State<ContentEditCreation> {
         : valueChossed.toString();
   }
 
-  getEditQuatationDetails() {
+  getEditQuatationDetails() async {
     contentitemsDetails = [];
 
     for (int i = 0; i < widget.getdocumentApprovalValue.length; i++) {
@@ -450,42 +492,11 @@ class ContentEditCreationState extends State<ContentEditCreation> {
       mycontroller[3].text = contentitemsDetails[ij].discount!.toString();
       mycontroller[2].text = contentitemsDetails[ij].qty!.toString();
 
-      if (contentitemsDetails[ij].taxCode == 'O0') {
-        // print("" + contentitemsDetails[i].taxCode.toString());
-        valueChossed = 'O0 - 0 % Output VAT';
-        valueChosedReason = '0';
-        taxCode = 'O0';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason.toString());
-      } else if (contentitemsDetails[ij].taxCode == 'O1') {
-        valueChossed = 'O1 - 18 % Output VAT';
-        valueChosedReason = '18';
-        taxCode = 'O1';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason.toString());
-      } else if (contentitemsDetails[ij].taxCode == '01') {
-        //01
-        valueChossed = 'O1 - 18 % Output VAT';
-        valueChosedReason = '18';
-        taxCode = 'O1';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason.toString());
-      } else if (contentitemsDetails[ij].taxCode == 'O3') {
-        valueChossed = 'O3 - Exempted Output VAT';
-        taxCode = 'O3';
-        valueChosedReason = '0';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason.toString());
-      } else if (contentitemsDetails[ij].taxCode == 'X0') {
-        valueChossed = 'X0 - Exempt Output';
-        valueChosedReason = '0';
-        taxCode = 'X0';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason.toString());
-      }
+      await getTaxRate(ij, contentitemsDetails[ij].taxCode.toString());
+
       //
 
-      GetPackANDTinsPerBoxApi.getGlobalData(contentitemsDetails[ij].itemCode)
+      await GetPackANDTinsPerBoxApi.getGlobalData(contentitemsDetails[ij].itemCode)
           .then((value) {
         if (value.statusCode! <= 210 && value.statusCode! >= 200) {
           log("PackSize::" + value.activitiesData![0].U_Pack_Size.toString());
@@ -502,14 +513,18 @@ class ContentEditCreationState extends State<ContentEditCreation> {
           // double.parse(mycontroller[1].text);
           final double qty = contentitemsDetails[ij].qty!;
           // double.parse(mycontroller[2].text);
-          final double discountper = double.parse(
-              mycontroller[3].text == '' ? '0' : mycontroller[3].text);
+          final double discountper =
+              double.parse(contentitemsDetails[ij].discounpercent.toString()
+                  // mycontroller[3].text == '' ? '0' : mycontroller[3].text
+                  );
           final double discount = (price * qty) * discountper / 100;
           final double taxper = taxSelected;
           final double tax = ((qty * price) - discount) * taxper / 100;
 
           double total = (price * qty) - discount;
           log("total1::::" + total.toString());
+
+          log("discount val::::" + discount.toString());
           total = total + tax;
           log("total2::::" + total.toString());
           int carton2 = 0;
@@ -539,6 +554,78 @@ class ContentEditCreationState extends State<ContentEditCreation> {
     res = tax / total * 100;
 
     return res;
+  }
+
+  getTaxRate(int ij, String taxCode) {
+    if (GetValues.countryCode!.toLowerCase() == 'tanzania') {
+      if (taxCode == 'O0') {
+        // print("" + contentitemsDetails[i].taxCode.toString());
+        valueChossed = 'O0 - 0 % Output VAT';
+        valueChosedReason = '0';
+        taxCode = 'O0';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason.toString());
+      } else if (taxCode == 'O1') {
+        valueChossed = 'O1 - 18 % Output VAT';
+        valueChosedReason = '18';
+        taxCode = 'O1';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason.toString());
+      } else if (taxCode == '01') {
+        //01
+        valueChossed = 'O1 - 18 % Output VAT';
+        valueChosedReason = '18';
+        taxCode = 'O1';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason.toString());
+      } else if (taxCode == 'O3') {
+        valueChossed = 'O3 - Exempted Output VAT';
+        taxCode = 'O3';
+        valueChosedReason = '0';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason.toString());
+      } else if (taxCode == 'X0') {
+        valueChossed = 'X0 - Exempt Output';
+        valueChosedReason = '0';
+        taxCode = 'X0';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason.toString());
+      }
+    } else {
+      if (taxCode == 'O0') {
+        // print("" + contentitemsDetails[i].taxCode.toString());
+        valueChossed = 'O0 - 0 % Output VAT';
+        valueChosedReason = '0';
+        taxCode = 'O0';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason.toString());
+      } else if (taxCode == 'O1') {
+        valueChossed = 'O1 - 16 % Output VAT';
+        valueChosedReason = '16';
+        taxCode = 'O1';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason.toString());
+      } else if (taxCode == '01') {
+        //01
+        valueChossed = 'O1 - 16 % Output VAT';
+        valueChosedReason = '16';
+        taxCode = 'O1';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason.toString());
+      } else if (taxCode == 'O3') {
+        valueChossed = 'O3 - Exempted Output VAT';
+        taxCode = 'O3';
+        valueChosedReason = '0';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason.toString());
+      } else if (taxCode == 'X0') {
+        valueChossed = 'X0 - Exempt Output';
+        valueChosedReason = '0';
+        taxCode = 'X0';
+        taxSelected = 0.00;
+        taxSelected = double.parse(valueChosedReason.toString());
+      }
+    }
   }
 
   String isTaxApplied(double total, double tax) {
@@ -571,7 +658,8 @@ class ContentEditCreationState extends State<ContentEditCreation> {
                 salesUnit: val.itemValueValue![i].salesUnit,
                 itemPrices: val.itemValueValue![i].itemPrices,
                 U_Pack_Size: val.itemValueValue![i].U_Pack_Size,
-                U_Tins_Per_Box: val.itemValueValue![i].U_Tins_Per_Box));
+                U_Tins_Per_Box: val.itemValueValue![i].U_Tins_Per_Box,
+                salesperCode: GetValues.slpCode));
           }
           swipeLoad = false;
           print('lenthofList: ' + lenthofList.toString());
@@ -969,7 +1057,10 @@ class ContentEditCreationState extends State<ContentEditCreation> {
                                       //  color: Colors.greenAccent,
                                       width: Screens.width(context) * 0.55,
                                       child: Text(
-                                        '${GetTaxName(contentitemsDetails[i])}',
+                                        GetValues.countryCode!.toLowerCase() ==
+                                                'tanzania'
+                                            ? '${GetTaxName(contentitemsDetails[i])}'
+                                            : '${GetTaxNameZam(contentitemsDetails[i])}',
                                         // TextStyles.splitValues(
                                         //     '${contentitemsDetails[i].total!}'), //'${quotDataFilter[i].DocNum}',
                                         style:
@@ -1056,46 +1147,87 @@ class ContentEditCreationState extends State<ContentEditCreation> {
                                           contentitemsDetails[i]
                                               .taxPer
                                               .toString());
-                                      if (contentitemsDetails[i].taxCode ==
-                                          'O0') {
-                                        // print("" + contentitemsDetails[i].taxCode.toString());
-                                        valueChossed = 'O0 - 0 % Output VAT';
-                                        valueChosedReason = '0';
-                                        taxCode = 'O0';
-                                        taxSelected = 0.00;
-                                        taxSelected = double.parse(
-                                            valueChosedReason.toString());
-                                      } else if (contentitemsDetails[i]
-                                              .taxCode ==
-                                          'O1') {
-                                        valueChossed = 'O1 - 18 % Output VAT';
-                                        valueChosedReason = '18';
-                                        taxCode = 'O1';
-                                        taxSelected = 0.00;
-                                        taxSelected = double.parse(
-                                            valueChosedReason.toString());
-                                      } else if (contentitemsDetails[i]
-                                              .taxCode ==
-                                          'O3') {
-                                        valueChossed =
-                                            'O3 - Exempted Output VAT';
-                                        taxCode = 'O3';
-                                        valueChosedReason = '0';
-                                        taxSelected = 0.00;
-                                        taxSelected = double.parse(
-                                            valueChosedReason.toString());
-                                      } else if (contentitemsDetails[i]
-                                              .taxCode ==
-                                          'X0') {
-                                        valueChossed = 'X0 - Exempt Output';
-                                        valueChosedReason = '0';
-                                        taxCode = 'X0';
-                                        taxSelected = 0.00;
-                                        taxSelected = double.parse(
-                                            valueChosedReason.toString());
+                                      if (GetValues.countryCode!
+                                              .toLowerCase() ==
+                                          'tanzania') {
+                                        if (contentitemsDetails[i].taxCode ==
+                                            'O0') {
+                                          // print("" + contentitemsDetails[i].taxCode.toString());
+                                          valueChossed = 'O0 - 0 % Output VAT';
+                                          valueChosedReason = '0';
+                                          taxCode = 'O0';
+                                          taxSelected = 0.00;
+                                          taxSelected = double.parse(
+                                              valueChosedReason.toString());
+                                        } else if (contentitemsDetails[i]
+                                                .taxCode ==
+                                            'O1') {
+                                          valueChossed = 'O1 - 18 % Output VAT';
+                                          valueChosedReason = '18';
+                                          taxCode = 'O1';
+                                          taxSelected = 0.00;
+                                          taxSelected = double.parse(
+                                              valueChosedReason.toString());
+                                        } else if (contentitemsDetails[i]
+                                                .taxCode ==
+                                            'O3') {
+                                          valueChossed =
+                                              'O3 - Exempted Output VAT';
+                                          taxCode = 'O3';
+                                          valueChosedReason = '0';
+                                          taxSelected = 0.00;
+                                          taxSelected = double.parse(
+                                              valueChosedReason.toString());
+                                        } else if (contentitemsDetails[i]
+                                                .taxCode ==
+                                            'X0') {
+                                          valueChossed = 'X0 - Exempt Output';
+                                          valueChosedReason = '0';
+                                          taxCode = 'X0';
+                                          taxSelected = 0.00;
+                                          taxSelected = double.parse(
+                                              valueChosedReason.toString());
+                                        }
+                                      } else {
+                                        if (contentitemsDetails[i].taxCode ==
+                                            'O0') {
+                                          // print("" + contentitemsDetails[i].taxCode.toString());
+                                          valueChossed = 'O0 - 0 % Output VAT';
+                                          valueChosedReason = '0';
+                                          taxCode = 'O0';
+                                          taxSelected = 0.00;
+                                          taxSelected = double.parse(
+                                              valueChosedReason.toString());
+                                        } else if (contentitemsDetails[i]
+                                                .taxCode ==
+                                            'O1') {
+                                          valueChossed = 'O1 - 16 % Output VAT';
+                                          valueChosedReason = '16';
+                                          taxCode = 'O1';
+                                          taxSelected = 0.00;
+                                          taxSelected = double.parse(
+                                              valueChosedReason.toString());
+                                        } else if (contentitemsDetails[i]
+                                                .taxCode ==
+                                            'O3') {
+                                          valueChossed =
+                                              'O3 - Exempted Output VAT';
+                                          taxCode = 'O3';
+                                          valueChosedReason = '0';
+                                          taxSelected = 0.00;
+                                          taxSelected = double.parse(
+                                              valueChosedReason.toString());
+                                        } else if (contentitemsDetails[i]
+                                                .taxCode ==
+                                            'X0') {
+                                          valueChossed = 'X0 - Exempt Output';
+                                          valueChosedReason = '0';
+                                          taxCode = 'X0';
+                                          taxSelected = 0.00;
+                                          taxSelected = double.parse(
+                                              valueChosedReason.toString());
+                                        }
                                       }
-
-//
                                       // valueChossed = contentitemsDetails[i]
                                       //         .valuechoosed
                                       //         .toString()
@@ -1966,64 +2098,132 @@ class ContentEditCreationState extends State<ContentEditCreation> {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(5)),
-                              child: DropdownButton(
-                                hint: Text(
-                                  "Select Tax: ",
-                                  style: TextStyles.bodytextBlack1(context),
-                                ),
-                                value: valueChossed,
-                                //dropdownColor:Colors.green,
-                                icon: Icon(Icons.arrow_drop_down),
-                                iconSize: 30,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 16),
-                                isExpanded: true,
-                                onChanged: (val) {
-                                  setState(() {
-                                    if (val == 'O0 - 0 % Output VAT') {
-                                      valueChosedReason = '0';
-                                      taxCode = 'O0';
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    } else if (val == 'O1 - 18 % Output VAT') {
-                                      valueChosedReason = '18';
-                                      taxCode = 'O1';
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    } else if (val ==
-                                        'O3 - Exempted Output VAT') {
-                                      taxCode = 'O3';
-                                      valueChosedReason = '0';
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    } else if (val == 'X0 - Exempt Output') {
-                                      valueChosedReason = '0';
-                                      taxCode = 'X0';
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    }
-                                    valueChossed = val.toString();
-
-                                    print(val.toString());
-                                    print("valavalaa: .........." +
-                                        valueChosedReason.toString());
-                                    print("taxSelected: .........." +
-                                        taxSelected.toString());
-                                    print("taxCode: .........." +
-                                        taxCode.toString());
-                                  });
-                                },
-                                items: taxData2.map((e) {
-                                  return DropdownMenuItem(
-                                      value: "${e['name']}",
-                                      child: Text(
-                                        e['name'].toString(),
+                              child: GetValues.countryCode!.toLowerCase() ==
+                                      'tanzania'
+                                  ? DropdownButton(
+                                      hint: Text(
+                                        "Select Tax: ",
                                         style:
-                                            TextStyles.headlineBlack1(context),
-                                      ));
-                                }).toList(),
-                              ),
+                                            TextStyles.bodytextBlack1(context),
+                                      ),
+                                      value: valueChossed,
+                                      //dropdownColor:Colors.green,
+                                      icon: Icon(Icons.arrow_drop_down),
+                                      iconSize: 30,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16),
+                                      isExpanded: true,
+                                      onChanged: (val) {
+                                        setState(() {
+                                          if (val == 'O0 - 0 % Output VAT') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'O0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O1 - 18 % Output VAT') {
+                                            valueChosedReason = '18';
+                                            taxCode = 'O1';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O3 - Exempted Output VAT') {
+                                            taxCode = 'O3';
+                                            valueChosedReason = '0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'X0 - Exempt Output') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'X0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          }
+
+                                          valueChossed = val.toString();
+
+                                          print(val.toString());
+                                          print("valavalaa: .........." +
+                                              valueChosedReason.toString());
+                                          print("taxSelected: .........." +
+                                              taxSelected.toString());
+                                          print("taxCode: .........." +
+                                              taxCode.toString());
+                                        });
+                                      },
+                                      items: taxData2.map((e) {
+                                        return DropdownMenuItem(
+                                            value: "${e['name']}",
+                                            child: Text(
+                                              e['name'].toString(),
+                                              style: TextStyles.headlineBlack1(
+                                                  context),
+                                            ));
+                                      }).toList(),
+                                    )
+                                  : DropdownButton(
+                                      hint: Text(
+                                        "Select Tax: ",
+                                        style:
+                                            TextStyles.bodytextBlack1(context),
+                                      ),
+                                      value: valueChossed,
+                                      //dropdownColor:Colors.green,
+                                      icon: Icon(Icons.arrow_drop_down),
+                                      iconSize: 30,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16),
+                                      isExpanded: true,
+                                      onChanged: (val) {
+                                        setState(() {
+                                          if (val == 'O0 - 0 % Output VAT') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'O0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O1 - 16 % Output VAT') {
+                                            valueChosedReason = '16';
+                                            taxCode = 'O1';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O3 - Exempted Output VAT') {
+                                            taxCode = 'O3';
+                                            valueChosedReason = '0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'X0 - Exempt Output') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'X0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          }
+
+                                          valueChossed = val.toString();
+
+                                          print(val.toString());
+                                          print("valavalaa: .........." +
+                                              valueChosedReason.toString());
+                                          print("taxSelected: .........." +
+                                              taxSelected.toString());
+                                          print("taxCode: .........." +
+                                              taxCode.toString());
+                                        });
+                                      },
+                                      items: taxData3.map((e) {
+                                        return DropdownMenuItem(
+                                            value: "${e['name']}",
+                                            child: Text(
+                                              e['name'].toString(),
+                                              style: TextStyles.headlineBlack1(
+                                                  context),
+                                            ));
+                                      }).toList(),
+                                    ),
                             ),
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -2193,67 +2393,132 @@ class ContentEditCreationState extends State<ContentEditCreation> {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(5)),
-                              child: DropdownButton(
-                                hint: Text(
-                                  "Select Tax: ",
-                                  style: TextStyles.bodytextBlack1(context),
-                                ),
-                                value: valueChossed,
-                                //dropdownColor:Colors.green,
-                                icon: Icon(Icons.arrow_drop_down),
-                                iconSize: 30,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 16),
-                                isExpanded: true,
-                                onChanged: (val) {
-                                  setState(() {
-                                    if (val == 'O0 - 0 % Output VAT') {
-                                      valueChosedReason = '0';
-                                      taxCode = 'O0';
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    } else if (val == 'O1 - 18 % Output VAT') {
-                                      valueChosedReason = '18';
-                                      taxCode = 'O1';
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    } else if (val ==
-                                        'O3 - Exempted Output VAT') {
-                                      taxCode = 'O3';
-                                      valueChosedReason = '0';
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    } else if (val == 'X0 - Exempt Output') {
-                                      valueChosedReason = '0';
-                                      taxCode = 'X0';
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    }
-                                    if ("null" == val) {
-                                      valueChossed = null;
-                                    } else {
-                                      valueChossed = val.toString();
-                                    }
-                                    log(val.toString());
-                                    log("valueChosedReason: .........." +
-                                        valueChosedReason.toString());
-                                    log("taxSelected: .........." +
-                                        taxSelected.toString());
-                                    log("taxCode: .........." +
-                                        taxCode.toString());
-                                  });
-                                },
-                                items: taxData2.map((e) {
-                                  return DropdownMenuItem(
-                                      value: "${e['name']}",
-                                      child: Text(
-                                        e['name'].toString(),
+                              child: GetValues.countryCode!.toLowerCase() ==
+                                      'tanzania'
+                                  ? DropdownButton(
+                                      hint: Text(
+                                        "Select Tax: ",
                                         style:
-                                            TextStyles.headlineBlack1(context),
-                                      ));
-                                }).toList(),
-                              ),
+                                            TextStyles.bodytextBlack1(context),
+                                      ),
+                                      value: valueChossed,
+                                      //dropdownColor:Colors.green,
+                                      icon: Icon(Icons.arrow_drop_down),
+                                      iconSize: 30,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16),
+                                      isExpanded: true,
+                                      onChanged: (val) {
+                                        setState(() {
+                                          if (val == 'O0 - 0 % Output VAT') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'O0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O1 - 18 % Output VAT') {
+                                            valueChosedReason = '18';
+                                            taxCode = 'O1';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O3 - Exempted Output VAT') {
+                                            taxCode = 'O3';
+                                            valueChosedReason = '0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'X0 - Exempt Output') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'X0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          }
+
+                                          valueChossed = val.toString();
+
+                                          print(val.toString());
+                                          print("valavalaa: .........." +
+                                              valueChosedReason.toString());
+                                          print("taxSelected: .........." +
+                                              taxSelected.toString());
+                                          print("taxCode: .........." +
+                                              taxCode.toString());
+                                        });
+                                      },
+                                      items: taxData2.map((e) {
+                                        return DropdownMenuItem(
+                                            value: "${e['name']}",
+                                            child: Text(
+                                              e['name'].toString(),
+                                              style: TextStyles.headlineBlack1(
+                                                  context),
+                                            ));
+                                      }).toList(),
+                                    )
+                                  : DropdownButton(
+                                      hint: Text(
+                                        "Select Tax: ",
+                                        style:
+                                            TextStyles.bodytextBlack1(context),
+                                      ),
+                                      value: valueChossed,
+                                      //dropdownColor:Colors.green,
+                                      icon: Icon(Icons.arrow_drop_down),
+                                      iconSize: 30,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16),
+                                      isExpanded: true,
+                                      onChanged: (val) {
+                                        setState(() {
+                                          if (val == 'O0 - 0 % Output VAT') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'O0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O1 - 16 % Output VAT') {
+                                            valueChosedReason = '16';
+                                            taxCode = 'O1';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O3 - Exempted Output VAT') {
+                                            taxCode = 'O3';
+                                            valueChosedReason = '0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'X0 - Exempt Output') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'X0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          }
+
+                                          valueChossed = val.toString();
+
+                                          print(val.toString());
+                                          print("valavalaa: .........." +
+                                              valueChosedReason.toString());
+                                          print("taxSelected: .........." +
+                                              taxSelected.toString());
+                                          print("taxCode: .........." +
+                                              taxCode.toString());
+                                        });
+                                      },
+                                      items: taxData3.map((e) {
+                                        return DropdownMenuItem(
+                                            value: "${e['name']}",
+                                            child: Text(
+                                              e['name'].toString(),
+                                              style: TextStyles.headlineBlack1(
+                                                  context),
+                                            ));
+                                      }).toList(),
+                                    ),
                             ),
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -2300,6 +2565,12 @@ class ContentEditCreationState extends State<ContentEditCreation> {
   List<Map<String, String>> taxData2 = [
     {"name": 'O0 - 0 % Output VAT'},
     {"name": "O1 - 18 % Output VAT"},
+    {"name": "O3 - Exempted Output VAT"},
+    {"name": "X0 - Exempt Output"},
+  ];
+  List<Map<String, String>> taxData3 = [
+    {"name": 'O0 - 0 % Output VAT'},
+    {"name": "O1 - 16 % Output VAT"},
     {"name": "O3 - Exempted Output VAT"},
     {"name": "X0 - Exempt Output"},
   ];
@@ -2371,19 +2642,33 @@ class ContentEditCreationState extends State<ContentEditCreation> {
   double discount = 0;
   void sumofTotal() {
     double basictotal = 0;
-    double discount = 0;
+    discount = 0;
+    grandtotal = 0;
     double tax = 0;
+    basictotal = 0;
+    discount = 0;
     setState(() {
       if (contentitemsDetails.isNotEmpty) {
         double taxxVal = 0;
+        double discountper = 0;
+        double discountxx = 0;
+
         for (int i = 0; i < contentitemsDetails.length; i++) {
           taxxVal = contentitemsDetails[i].tax != null
               ? contentitemsDetails[i].tax!
               : 0;
 
-          basictotal = basictotal + contentitemsDetails[i].total!.toDouble();
-          discount = discount + contentitemsDetails[i].discount!.toDouble();
+          discountper = contentitemsDetails[i].discountPercent!;
+          discountxx =
+              (contentitemsDetails[i].price! * contentitemsDetails[i].qty!) *
+                  discountper /
+                  100;
+          discount = discount + discountxx;
           tax = tax + taxxVal.toDouble();
+
+          basictotal = basictotal +
+              (contentitemsDetails[i].price! * contentitemsDetails[i].qty!);
+          // contentitemsDetails[i].total!.toDouble();
         }
         print("grandtotal: " + basictotal.toString());
 
@@ -2419,7 +2704,8 @@ class ContentEditCreationState extends State<ContentEditCreation> {
       if (!focus.hasPrimaryFocus) {
         focus.unfocus();
       }
-      log("Edit taxSelectedtaxSelected:::${taxSelected}");
+      log("Edit taxSelectedtaxSelected:::${contentitemsDetails[i].U_Pack_Size}");
+      log("Edit mycontroller[4]mycontroller[4]::: ${mycontroller[4].text}");
       final double price = double.parse(mycontroller[4].text);
       final double qty = double.parse(mycontroller[5].text);
       final double discountper = double.parse(mycontroller[6].text);
@@ -2432,8 +2718,7 @@ class ContentEditCreationState extends State<ContentEditCreation> {
       contentitemsDetails[i].price = price;
       contentitemsDetails[i].qty = qty;
       contentitemsDetails[i].quantity = qty;
-
-      contentitemsDetails[i].discount = discount;
+      contentitemsDetails[i].discount = discountper;
       contentitemsDetails[i].total = total;
       contentitemsDetails[i].tax = tax;
       contentitemsDetails[i].taxCode = taxCode.toString();
@@ -2942,7 +3227,7 @@ class AddItem2 {
       this.uIdentifier,
       this.warehouse,
       this.itemName,
-      this.discount,
+      required this.discount,
       this.qty,
       this.total,
       this.tax,
@@ -3491,7 +3776,7 @@ class AddItem3 {
       "TaxCode": taxCode.toString(),
       "Quantity": qty.toString(),
       "UnitPrice": price.toString(),
-      "Currency": "TZS",
+      "Currency": GetValues.currency.toString(),
       "ShipToCode": LogisticEditPageState.shipto.toString(),
       "valueAF": valueAF.toString(),
       "WarehouseCode": warehouse

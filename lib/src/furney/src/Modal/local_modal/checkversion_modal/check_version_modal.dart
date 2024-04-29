@@ -28,7 +28,7 @@ class CheckVersion {
   factory CheckVersion.fromJson(Map<String, dynamic> jsons) {
     if (jsons['data'] != null) {
       final list = jsonDecode(jsons['data'] as String) as List; //jsonDecode
-      print(list);
+      print("jsons['data']::"+list.toString());
       List<CheckVersionData> dataList = list
           .map((dynamic enquiries) => CheckVersionData.fromJson(enquiries))
           .toList();

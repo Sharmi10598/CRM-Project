@@ -17,7 +17,9 @@ class GetCountryHeadTokenAPi {
           'content-type': 'application/json',
           },
          body: json.encode({
-              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+              // "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
               "query":"SELECT FCMToken FROM CRM.DBO.USERS WHERE UserCode = 'Navdish'"
           })
       );

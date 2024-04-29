@@ -12,6 +12,7 @@ import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/approval/widget/logistic_page.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/customers/screens/customer_page.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/widget/creation/content_creation.dart';
+import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 import 'package:uuid/uuid.dart';
 
 class HeaderCreation extends StatefulWidget {
@@ -24,13 +25,13 @@ class HeaderCreation extends StatefulWidget {
 class HeaderCreationState extends State<HeaderCreation> {
   static String bpName = ''; //
   static String bpCode = '';
-   static String currentACbalance = ''; //
+  static String currentACbalance = ''; //
   static String ordersBal = '';
 
   ///
   static String docNo = '0'; //
   static String contactPerson = ''; //
-  static String currency = 'TZS'; //
+  // static String currency = 'TZS'; //
   static String status = 'open'; //
   static String salesEmp = ''; //
   static double totalBeforeDiscount = 0; //
@@ -38,7 +39,7 @@ class HeaderCreationState extends State<HeaderCreation> {
   static double discountpercent = 0;
   static double tax = 0;
   static double total = 0;
- static List<TextEditingController> mycontroller =
+  static List<TextEditingController> mycontroller =
       List.generate(15, (i) => TextEditingController());
   static String? currentDateTime;
   static PageController pageController = PageController();
@@ -47,6 +48,12 @@ class HeaderCreationState extends State<HeaderCreation> {
   //
   List<ContactEmployeValue> contactValue = [];
   List<ContactEmployeValue> filtercontactValue = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // mycontroller = List.generate(15, (i) => TextEditingController());
+  }
 
   void callapi() {
     ContactPersonsAPi.getGlobalData().then((value) {
@@ -56,7 +63,6 @@ class HeaderCreationState extends State<HeaderCreation> {
           filtercontactValue = contactValue;
           LogisticPageState.shipto = value.ShipToDefault.toString();
           LogisticPageState.billto = value.BilltoDefault.toString();
-        
         });
       }
     });
@@ -213,8 +219,8 @@ class HeaderCreationState extends State<HeaderCreation> {
                             width: Screens.width(context) * 0.83,
                             // color: Colors.blue,
                             child: Text(
-                              currency,
-                              style:TextStyles.headlineBlack1(context),
+                              GetValues.currency.toString(),
+                              style: TextStyles.headlineBlack1(context),
                             ),
                           ),
                         ],
@@ -327,14 +333,14 @@ class HeaderCreationState extends State<HeaderCreation> {
                           Text(
                             // AppLocalizations.of(context)!.docNo,
                             'Posting Date',
-                            style:TextStyles.boldPC1(context),
+                            style: TextStyles.boldPC1(context),
                           ),
                           SizedBox(
                             width: Screens.width(context) * 0.83,
                             // color: Colors.blue,
                             child: Text(
                               '$currentDateTime',
-                              style:TextStyles.headlineBlack1(context),
+                              style: TextStyles.headlineBlack1(context),
                             ),
                           ),
                         ],
@@ -376,7 +382,7 @@ class HeaderCreationState extends State<HeaderCreation> {
                             // color: Colors.blue,
                             child: Text(
                               '$currentDateTime',
-                              style:TextStyles.headlineBlack1(context),
+                              style: TextStyles.headlineBlack1(context),
                             ),
                           ),
                         ],
@@ -390,7 +396,7 @@ class HeaderCreationState extends State<HeaderCreation> {
                           Text(
                             // AppLocalizations.of(context)!.docNo,
                             'Remarks',
-                            style:TextStyles.boldPC1(context),
+                            style: TextStyles.boldPC1(context),
                           ),
                           SizedBox(
                             height: Screens.heigth(context) * 0.005,
@@ -446,15 +452,16 @@ class HeaderCreationState extends State<HeaderCreation> {
                           Text(
                             // AppLocalizations.of(context)!.docNo,
                             'Total Before Discount',
-                            style:TextStyles.boldPC1(context),
+                            style: TextStyles.boldPC1(context),
                           ),
                           SizedBox(
                             width: Screens.width(context) * 0.83,
                             // color: Colors.blue,
                             child: Text(
                               //"${totalBeforeDiscount.toStringAsFixed(2)}",
-                              TextStyles.splitValues(totalBeforeDiscount.toStringAsFixed(2)),
-                              style:TextStyles.headlineBlack1(context),
+                              TextStyles.splitValues(
+                                  totalBeforeDiscount.toStringAsFixed(2)),
+                              style: TextStyles.headlineBlack1(context),
                             ),
                           ),
                         ],
@@ -491,14 +498,15 @@ class HeaderCreationState extends State<HeaderCreation> {
                           Text(
                             // AppLocalizations.of(context)!.docNo,
                             'Discount',
-                            style:TextStyles.boldPC1(context),
+                            style: TextStyles.boldPC1(context),
                           ),
                           SizedBox(
                             width: Screens.width(context) * 0.83,
                             // color: Colors.blue,
                             child: Text(
-                             // "${discount.toStringAsFixed(2)}",
-                              TextStyles.splitValues(discount.toStringAsFixed(2)),
+                              // "${discount.toStringAsFixed(2)}",
+                              TextStyles.splitValues(
+                                  discount.toStringAsFixed(2)),
                               style: TextStyles.headlineBlack1(context),
                             ),
                           ),
@@ -521,7 +529,7 @@ class HeaderCreationState extends State<HeaderCreation> {
                             child: Text(
                               //"${tax.toStringAsFixed(2)}",
                               TextStyles.splitValues(tax.toStringAsFixed(2)),
-                              style:TextStyles.headlineBlack1(context),
+                              style: TextStyles.headlineBlack1(context),
                             ),
                           ),
                         ],
@@ -541,9 +549,9 @@ class HeaderCreationState extends State<HeaderCreation> {
                             width: Screens.width(context) * 0.83,
                             // color: Colors.blue,
                             child: Text(
-                            //  "${total.toStringAsFixed(2)}",
+                              //  "${total.toStringAsFixed(2)}",
                               TextStyles.splitValues(total.toStringAsFixed(2)),
-                              style:TextStyles.headlineBlack1(context),
+                              style: TextStyles.headlineBlack1(context),
                             ),
                           ),
                         ],
@@ -601,66 +609,67 @@ class HeaderCreationState extends State<HeaderCreation> {
       ),
     );
   }
+
   bool isLoading = false;
-  void  validateAndCallApi(){
-             if (bpCode == '') {
-                    const snackBar = SnackBar(
-                      duration: Duration(seconds: 5),
-                      backgroundColor: Colors.red,
-                      content: Text(
-                        'Please Choose Business Partner!!...',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  } else if (ContentCreationState. itemsDetails.length < 1) {
-                    const snackBar = SnackBar(
-                      duration: Duration(seconds: 5),
-                      backgroundColor: Colors.red,
-                      content: Text(
-                        'Please Add Items!!...',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
-                   else{
-                      setState(()=> isLoading = true);
-          SalesQuotPostAPi.cardCodePost = bpCode;
-          SalesQuotPostAPi.docLineQout =   ContentCreationState. itemsDetails; 
-          SalesQuotPostAPi.docDate =  currentDateTime.toString();
-          SalesQuotPostAPi.dueDate =  currentDateTime.toString();
-          SalesQuotPostAPi.remarks =  mycontroller[1].text;
-          print( 'remarks: ${SalesQuotPostAPi.remarks}');
-            final uuid = Uuid();
-       String ? uuidg = uuid.v1();
-      SalesQuotPostAPi.method(uuidg);
-                 SalesQuotPostAPi.getGlobalData(uuidg).then((value) {
-                 if(value.statusCode=='201' ||value.statusCode=='204'  ){
-                    setState(()=> isLoading = false);
-                     const snackBar = SnackBar(
-                      duration: Duration(seconds: 5),
-                      backgroundColor: Colors.green,
-                      content: Text(
-                        'Quotation Created Successfully!!...',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                     Get.offAllNamed<dynamic>(FurneyRoutes.salesQuotes);
-                 }else{
-                   setState(()=> isLoading = false);
-                      final snackBar = SnackBar(
-                      duration: Duration(seconds: 5),
-                      backgroundColor: Colors.red,
-                      content: Text(
-                        '${value.error!.message!.value}!!..',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                 }
-               });
+  void validateAndCallApi() {
+    if (bpCode == '') {
+      const snackBar = SnackBar(
+        duration: Duration(seconds: 5),
+        backgroundColor: Colors.red,
+        content: Text(
+          'Please Choose Business Partner!!...',
+          style: TextStyle(color: Colors.white),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else if (ContentCreationState.itemsDetails.length < 1) {
+      const snackBar = SnackBar(
+        duration: Duration(seconds: 5),
+        backgroundColor: Colors.red,
+        content: Text(
+          'Please Add Items!!...',
+          style: TextStyle(color: Colors.white),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      final uuid = Uuid();
+      String? uuidg = uuid.v1();
+      setState(() => isLoading = true);
+      SalesQuotPostAPi.cardCodePost = bpCode;
+      SalesQuotPostAPi.docLineQout = ContentCreationState.itemsDetails;
+      SalesQuotPostAPi.docDate = currentDateTime.toString();
+      SalesQuotPostAPi.dueDate = currentDateTime.toString();
+      SalesQuotPostAPi.remarks = mycontroller[1].text;
+      print('remarks: ${SalesQuotPostAPi.remarks}');
+      SalesQuotPostAPi.deviceTransID = uuid.v1();
+      SalesQuotPostAPi.method();
+      SalesQuotPostAPi.getGlobalData().then((value) {
+        if (value.statusCode == '201' || value.statusCode == '204') {
+          setState(() => isLoading = false);
+          const snackBar = SnackBar(
+            duration: Duration(seconds: 5),
+            backgroundColor: Colors.green,
+            content: Text(
+              'Quotation Created Successfully!!...',
+              style: TextStyle(color: Colors.white),
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          Get.offAllNamed<dynamic>(FurneyRoutes.salesQuotes);
+        } else {
+          setState(() => isLoading = false);
+          final snackBar = SnackBar(
+            duration: Duration(seconds: 5),
+            backgroundColor: Colors.red,
+            content: Text(
+              '${value.error!.message!.value}!!..',
+              style: TextStyle(color: Colors.white),
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      });
     }
   }
 }

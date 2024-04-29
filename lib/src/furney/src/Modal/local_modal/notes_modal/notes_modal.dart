@@ -12,12 +12,13 @@ NotesModal logindataFromJson(String str) =>
 //String logindataToJson(Logindata data) => json.encode(data.toJson());
 
 class NotesModal {
-  NotesModal(
-      {required this.status,
-      required this.message,
-      this.notesData,
-      this.error,
-      this.exception,});
+  NotesModal({
+    required this.status,
+    required this.message,
+    this.notesData,
+    this.error,
+    this.exception,
+  });
 
   bool? status;
   String? message;
@@ -46,12 +47,16 @@ class NotesModal {
     }
   }
   factory NotesModal.issue(String e) {
-    return NotesModal(status: null, message: null, error: e);
+    return NotesModal(status: null, message: null, error: e, notesData: null);
   }
 
   factory NotesModal.exception(String e) {
-    return NotesModal(status: null, message: null, error: e,
-    exception: e,
+    return NotesModal(
+      status: null,
+      message: null,
+      error: e,
+      notesData: null,
+      exception: e,
     );
   }
 }
@@ -59,25 +64,25 @@ class NotesModal {
 class NotesData {
   int? HeaderId;
   int? ChildId;
-   int? total;
+  int? total;
   int? read;
   String? MsgDescription;
-String? ViewedOn;
-String? IsSeen; 
- String? MsgHeading;
- String? CreatedDate;
- String?CreatedTime;
+  String? ViewedOn;
+  String? IsSeen;
+  String? MsgHeading;
+  String? CreatedDate;
+  String? CreatedTime;
   NotesData({
     this.HeaderId,
     this.ChildId,
     this.MsgDescription,
-   this. ViewedOn,
-   this. IsSeen,
-   this.MsgHeading,
-   this.total,
-   this.read,
-   this.CreatedDate,
-   this.CreatedTime,
+    this.ViewedOn,
+    this.IsSeen,
+    this.MsgHeading,
+    this.total,
+    this.read,
+    this.CreatedDate,
+    this.CreatedTime,
   });
 
   factory NotesData.fromJson(dynamic jsons) {
@@ -87,11 +92,11 @@ String? IsSeen;
       MsgDescription: jsons['MsgDescription'] as String,
       ViewedOn: jsons['ViewedOn'] as String,
       IsSeen: jsons['IsSeen'] as String,
-      MsgHeading:jsons['MsgHeading'] as String,
-      read:  jsons['Read'] as int,
-      total:  jsons['Total'] as int,
+      MsgHeading: jsons['MsgHeading'] as String,
+      read: jsons['Read'] as int,
+      total: jsons['Total'] as int,
       CreatedDate: jsons['CreatedDate'] as String,
-      CreatedTime:jsons['CreatedTime'] as String,
+      CreatedTime: jsons['CreatedTime'] as String,
     );
   }
 }

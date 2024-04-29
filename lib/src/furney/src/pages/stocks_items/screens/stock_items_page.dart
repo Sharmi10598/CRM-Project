@@ -8,6 +8,7 @@ import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ultimate_bundle/helpers/constants.dart';
 import 'package:ultimate_bundle/helpers/textstyle.dart';
+import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/SalesQutApiNew/GetAllSalesQutApi.dart';
 // import 'package:ultimate_bundle/src/furney/src/Api/Stock_Item_Api/stock_api.dart';
 // import 'package:ultimate_bundle/src/furney/src/Api/Stock_Item_Api/stock_warehouse_api.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/Stock_Item_Api/stock_api.dart';
@@ -40,46 +41,8 @@ class StockItemState extends State<StockItem> {
   @override
   void initState() {
     super.initState();
-    // StockItemAPi.getGlobalData().then((val) {
-    //   if(val.value!=null){
-    //     print(val.odatametadata);
-    //   // print("quantityOnStock: "+val.value![0].quantityOnStock.toString());
-    //    setState(() {
-    //    stock = val.value!;
-    //    stockFilter = stock;
-    //    });
-
-    //   }else{
-    //     print("error: "+val.error.toString());
-    //   }
-    // });
-    MainGroupAPi.getGlobalData().then((value) {
-      if (mounted) {
-        setState(() {
-          print(value.itemValueValue![0].code);
-          mainValueValue = value.itemValueValue!;
-        });
-      }
-    });
-
-    SubGroupAPi.getGlobalData().then((value) {
-      if (mounted) {
-        setState(() {
-          value.itemValueValue![0].code;
-          subValueValue = value.itemValueValue!;
-        });
-      }
-    });
-
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        if (mycontroller[0].text.isEmpty) {
-          if (StockItemAPi.nextLink != 'null') {
-            getmoredata();
-          }
-        }
-      }
+    setState(() {
+      CallGetGroupAPi();
     });
     log('stockFilterstockFilter:::${stockFilter.length}');
   }
@@ -88,6 +51,39 @@ class StockItemState extends State<StockItem> {
   void dispose() {
     super.dispose();
     scrollController.dispose();
+  }
+
+  CallGetGroupAPi() {
+    setState(() {
+      MainGroupAPi.getGlobalData().then((value) {
+        if (mounted) {
+          setState(() {
+            print(value.itemValueValue![0].code);
+            mainValueValue = value.itemValueValue!;
+          });
+        }
+      });
+
+      SubGroupAPi.getGlobalData().then((value) {
+        if (mounted) {
+          setState(() {
+            value.itemValueValue![0].code;
+            subValueValue = value.itemValueValue!;
+          });
+        }
+      });
+
+      scrollController.addListener(() {
+        if (scrollController.position.pixels ==
+            scrollController.position.maxScrollExtent) {
+          if (mycontroller[0].text.isEmpty) {
+            if (StockItemAPi.nextLink != 'null') {
+              getmoredata();
+            }
+          }
+        }
+      });
+    });
   }
 
   bool swipeLoad = false;
@@ -185,126 +181,139 @@ class StockItemState extends State<StockItem> {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    controller: scrollController,
-                    itemCount: stockFilter.length,
-                    itemBuilder: (BuildContext context, int i) {
-                      if (i == stockFilter.length - 1) {
-                        if (mycontroller[0].text.isEmpty) {
-                          if (StockItemAPi.nextLink != 'null') {
-                            print('1111111');
-                            return SpinKitThreeBounce(
-                              size: Screens.width(context) * 0.06,
-                              color: theme.primaryColor,
-                            );
-                          }
-                        }
-                      }
-                      return
-                          // Card(
-                          //child:
-                          InkWell(
-                        onTap: () {
-                          //   print('object');
-                          //   BPInfoState.data = customerDataFilter;
-                          //   GeneralState.datas = customerDataFilter;
+                erromsg.isNotEmpty
+                    ? Container(
+                        height: Screens.heigth(context) * 0.7,
+                        child: Center(child: Text('No data found..!!')))
+                    : Expanded(
+                        child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: stockFilter.length,
+                          itemBuilder: (BuildContext context, int i) {
+                            if (i == stockFilter.length - 1) {
+                              if (mycontroller[0].text.isEmpty) {
+                                if (StockItemAPi.nextLink != 'null') {
+                                  print('1111111');
+                                  return SpinKitThreeBounce(
+                                    size: Screens.width(context) * 0.06,
+                                    color: theme.primaryColor,
+                                  );
+                                }
+                              }
+                            }
+                            return
+                                // Card(
+                                //child:
+                                InkWell(
+                              onTap: () {
+                                //   print('object');
+                                //   BPInfoState.data = customerDataFilter;
+                                //   GeneralState.datas = customerDataFilter;
 
-                          StockWarehouseAPi.itemcode =
-                              stockFilter[i].itemCode.toString();
-                          StockWarehouseState.itemCode =
-                              stockFilter[i].itemCode.toString();
-                          StockWarehouseState.itemName =
-                              stockFilter[i].itemName.toString();
-                          StockWarehouseState.qty =
-                              stockFilter[i].quantityOnStock.toString();
-                          Get.toNamed<dynamic>(FurneyRoutes.stockWarehouse);
-                          //   // print("iiii: "+i.toString());
-                          //   GeneralState.index = i;
-                          //   BPInfoState.index = i;
-                        },
-                        child: Container(
-                          // height: Screens.heigth(context)*0.1,
-                          width: Screens.width(context),
-                          decoration: const BoxDecoration(
-                              // color:Colors.green,
-                              // borderRadius: BorderRadius.circular(Const.radius),
-                              // border: Border( bottom: BorderSide(color: Colors.grey),)
-                              ),
-                          padding: EdgeInsets.only(
-                            top: Screens.heigth(context) * 0.005,
-                            bottom: Screens.heigth(context) * 0.005,
-                            left: Screens.width(context) * 0.04,
-                            right: Screens.width(context) * 0.04,
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  //       Container(
-                                  //   width: Screens.width(context)*0.2,
-                                  //   //color: Colors.redAccent,
-                                  //   decoration: BoxDecoration(
+                                StockWarehouseAPi.itemcode =
+                                    stockFilter[i].itemCode.toString();
+                                StockWarehouseState.itemCode =
+                                    stockFilter[i].itemCode.toString();
+                                StockWarehouseState.itemName =
+                                    stockFilter[i].itemName.toString();
+                                StockWarehouseState.qty =
+                                    stockFilter[i].quantityOnStock.toString();
+                                Get.toNamed<dynamic>(
+                                    FurneyRoutes.stockWarehouse);
+                                //   // print("iiii: "+i.toString());
+                                //   GeneralState.index = i;
+                                //   BPInfoState.index = i;
+                              },
+                              child: Container(
+                                // height: Screens.heigth(context)*0.1,
+                                width: Screens.width(context),
+                                decoration: const BoxDecoration(
+                                    // color:Colors.green,
+                                    // borderRadius: BorderRadius.circular(Const.radius),
+                                    // border: Border( bottom: BorderSide(color: Colors.grey),)
+                                    ),
+                                padding: EdgeInsets.only(
+                                  top: Screens.heigth(context) * 0.005,
+                                  bottom: Screens.heigth(context) * 0.005,
+                                  left: Screens.width(context) * 0.04,
+                                  right: Screens.width(context) * 0.04,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        //       Container(
+                                        //   width: Screens.width(context)*0.2,
+                                        //   //color: Colors.redAccent,
+                                        //   decoration: BoxDecoration(
 
-                                  //   ),
-                                  //   child: Icon(Icons.list_alt,
-                                  //   color: Colors.red[400],
-                                  //   size: Screens.width(context)*0.1,
-                                  //   ),
-                                  // ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: Screens.width(context) * 0.9,
-                                        //    color: Colors.greenAccent,
-                                        child: Text(
-                                          stockFilter[i].itemCode.toString(),
-                                          style: TextStyles.boldPC1(context),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SizedBox(
-                                            width: Screens.width(context) * 0.7,
-                                            //    color: Colors.greenAccent,
-                                            child: Text(
-                                              stockFilter[i]
-                                                  .itemName
-                                                  .toString(),
-                                              style: TextStyles.headlineBlack1(
-                                                  context),
+                                        //   ),
+                                        //   child: Icon(Icons.list_alt,
+                                        //   color: Colors.red[400],
+                                        //   size: Screens.width(context)*0.1,
+                                        //   ),
+                                        // ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              width:
+                                                  Screens.width(context) * 0.9,
+                                              //    color: Colors.greenAccent,
+                                              child: Text(
+                                                stockFilter[i]
+                                                    .itemCode
+                                                    .toString(),
+                                                style:
+                                                    TextStyles.boldPC1(context),
+                                              ),
                                             ),
-                                          ),
-                                          //                SizedBox(width: Screens.width(context) * 0.05),
-                                          //         Container(
-                                          //           alignment: Alignment.bottomRight,
-                                          //    width: Screens.width(context)*0.2,
-                                          // //   color: Colors.redAccent,
-                                          //     child: Text(stockFilter[i].quantityOnStock.toString(),
-                                          //     style: TextStyles.headlineBlack1(context),
-                                          //     ),
-                                          //   ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width:
+                                                      Screens.width(context) *
+                                                          0.7,
+                                                  //    color: Colors.greenAccent,
+                                                  child: Text(
+                                                    stockFilter[i]
+                                                        .itemName
+                                                        .toString(),
+                                                    style: TextStyles
+                                                        .headlineBlack1(
+                                                            context),
+                                                  ),
+                                                ),
+                                                //                SizedBox(width: Screens.width(context) * 0.05),
+                                                //         Container(
+                                                //           alignment: Alignment.bottomRight,
+                                                //    width: Screens.width(context)*0.2,
+                                                // //   color: Colors.redAccent,
+                                                //     child: Text(stockFilter[i].quantityOnStock.toString(),
+                                                //     style: TextStyles.headlineBlack1(context),
+                                                //     ),
+                                                //   ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    const Divider(
+                                      thickness: 1.5,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              const Divider(
-                                thickness: 1.5,
-                              ),
-                            ],
-                          ),
+                              //    ),
+                            );
+                          },
                         ),
-                        //    ),
-                      );
-                    },
-                  ),
-                )
+                      )
               ],
             ),
     );
@@ -542,6 +551,7 @@ class StockItemState extends State<StockItem> {
     );
   }
 
+  String erromsg = '';
   bool error = false;
   void errorMsg() {
     setState(() {
@@ -560,20 +570,30 @@ class StockItemState extends State<StockItem> {
       StockItemAPi.searchData = mycontroller[1].text;
       StockItemAPi.pack = mycontroller[8].text;
       loadItemValues = true;
+      stockFilter = [];
+      erromsg = '';
       Navigator.pop(context);
       StockItemAPi.getGlobalData().then((value) {
-        setState(() {
-          print(value.value![0].itemName);
-          stock = value.value!;
-          stockFilter = stock;
-          log('value.nextURl:::' + value.nextURl.toString());
-          StockItemAPi.nextLink = value.nextURl;
-          loadItemValues = false;
-          print('nextLink: ' + StockItemAPi.nextLink.toString());
-          lenthofList = stockFilter.length;
-        });
+        if (value.value!.isNotEmpty) {
+          setState(() {
+            print(value.value![0].itemName);
+            stock = value.value!;
+            stockFilter = stock;
+            log('value.nextURl:::' + value.nextURl.toString());
+            StockItemAPi.nextLink = value.nextURl;
+            loadItemValues = false;
+            print('nextLink: ' + StockItemAPi.nextLink.toString());
+            lenthofList = stockFilter.length;
+          });
+        } else {
+          setState(() {
+            loadItemValues = false;
+            erromsg = 'No Data..!!';
+          });
+        }
       });
     });
+    loadItemValues = false;
   }
 
   int lenthofList = 0;

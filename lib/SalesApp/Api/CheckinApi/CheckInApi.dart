@@ -12,7 +12,7 @@ import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 class CheckinAPi {
   static Future<PatchVisitModel> getGlobalData(CheckinModel apdata) async {
     try {
-      log(URL.url + "Activities");
+      log("Activities::" + URL.url + "Activities");
       final response =
           await http.patch(Uri.parse(URL.url + "Activities(${apdata.clgcode})"),
               headers: {
@@ -30,16 +30,17 @@ class CheckinAPi {
                 "U_CheckinAdd": "${apdata.U_CheckinAdd}",
               }));
 
-      log('CheckinAPi::::'+json.encode({
-        "ActivityDate": "${apdata.ActivityDate}",
-        "ActivityTime": "${apdata.ActivityTime}",
-        "StartDate": "${apdata.StartDate}",
-        "StartTime": "${apdata.StartTime}",
-        "U_Latitude": "${apdata.U_Latitude}",
-        "U_Longitude": "${apdata.U_Longitude}",
-        "U_CheckedIn": "${apdata.U_CheckedIn}",
-        ".U_CheckinAdd": "${apdata.U_CheckinAdd}",
-      }));
+      log('CheckinAPi::::' +
+          json.encode({
+            "ActivityDate": "${apdata.ActivityDate}",
+            "ActivityTime": "${apdata.ActivityTime}",
+            "StartDate": "${apdata.StartDate}",
+            "StartTime": "${apdata.StartTime}",
+            "U_Latitude": "${apdata.U_Latitude}",
+            "U_Longitude": "${apdata.U_Longitude}",
+            "U_CheckedIn": "${apdata.U_CheckedIn}",
+            ".U_CheckinAdd": "${apdata.U_CheckinAdd}",
+          }));
       log("statuscode: " + response.statusCode.toString());
       return PatchVisitModel.fromJson(response.body, response.statusCode);
     } catch (e) {
@@ -62,8 +63,7 @@ class CheckinModel {
   String status;
 
   CheckinModel(
-      {
-      required this.U_CheckinAdd,
+      {required this.U_CheckinAdd,
       required this.clgcode,
       required this.ActivityDate,
       required this.ActivityTime,

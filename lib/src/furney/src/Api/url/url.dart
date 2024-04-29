@@ -1,9 +1,8 @@
 class URL {
   static String url = '';
-  //'http://102.69.164.12:50001/b1s/v1/';
   static String settingurl = 'http://102.69.167.106:80/Api/GetUrls/';
   static String urlLocal = '';
-  // 'http://102.69.167.106:80/Api/';-----old one
+  // 'http://102.69.167.106:80/Api/';-----old one Tanzania
   static String dynamicUrl = '';
   // 'http://102.69.167.106:1705/api/SellerKit';
   static String reportUrl = '';

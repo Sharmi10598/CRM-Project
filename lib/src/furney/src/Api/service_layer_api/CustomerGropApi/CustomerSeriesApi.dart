@@ -11,31 +11,31 @@ import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 class GetSeriesApiAPi {
   static Future<SeriesModel> getGlobalData() async {
     try {
-      final response = await http.post(
-        Uri.parse(URL.dynamicUrl),
-        headers: {
-          'content-type': 'application/json',
+      final response = await http.post(Uri.parse(URL.dynamicUrl),
+          headers: {
+            'content-type': 'application/json',
           },
-         body: json.encode({
-              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
-              "query": "Select Series, SeriesName From nnm1 Where ObjectCode = '2' And DocSubType = 'C'",
-          })
-      );
-     
+          body: json.encode({
+            "constr":
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",           
+            "query":
+                "Select Series, SeriesName From nnm1 Where ObjectCode = '2' And DocSubType = 'C'",
+          }));
+
       // print('B1SESSION='+ GetValues.sessionID.toString());
       // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
-       log("SERIES: " + json.decode(response.body).toString());
-       print(response.statusCode);
+      log("SERIES API: " + json.decode(response.body).toString());
+      print(response.statusCode);
       if (response.statusCode == 200) {
-        return SeriesModel.fromJson( response.body,response.statusCode);
+        return SeriesModel.fromJson(response.body, response.statusCode);
       } else {
         print("Exception: Error");
-        return SeriesModel.fromJson( response.body,response.statusCode);
+        return SeriesModel.fromJson(response.body, response.statusCode);
       }
     } catch (e) {
       print("Exception: $e");
       //  throw Exception("Exception: $e");
-      return SeriesModel.fromJson(e.toString(),500);
+      return SeriesModel.fromJson(e.toString(), 500);
     }
   }
 }

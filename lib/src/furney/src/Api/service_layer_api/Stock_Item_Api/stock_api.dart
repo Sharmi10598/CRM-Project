@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_single_quotes, prefer_interpolation_to_compose_strings, use_raw_strings
 
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
 import 'package:ultimate_bundle/src/furney/src/Modal/service_layer_modal/stock_item_modal.dart/stock_item_modal.dart';
@@ -30,7 +31,7 @@ class StockItemAPi {
       // print("content-type:application/json");
       // print("cookie:'B!SESION'"+GetValues.sessionID.toString());
       // print("prefer:odata.maxpagesize="+GetValues.maximumfetchValue.toString());
-      // log('json body: '+response.body.toString());
+      log('Stock response: '+response.body.toString());
       if (response.statusCode == 200) {
         print(json.decode(response.body));
         return StockItemModal.fromJson(

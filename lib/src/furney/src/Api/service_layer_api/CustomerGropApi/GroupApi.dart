@@ -18,14 +18,17 @@ class GetPaymentGroupAPi {
           'content-type': 'application/json',
           },
          body: json.encode({
-              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+              "constr": 
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+              // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
               "query": "Select GroupNum, PymntGroup from OCTG",
           })
       );
      
       // print('B1SESSION='+ GetValues.sessionID.toString());
       // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
-       log("Terieri : " + json.decode(response.body).toString());
+       log("PaymentGroupAPi: " + json.decode(response.body).toString());
        print(response.statusCode);
       if (response.statusCode == 200) {
         return GetPaymentGroupModel.fromJson( response.body,response.statusCode);

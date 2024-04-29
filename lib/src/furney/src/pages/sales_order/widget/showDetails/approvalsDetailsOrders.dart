@@ -56,6 +56,10 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
           // valuesReturn(value.approvalsvalue![0].ObjType.toString());
           approvalDetailsValue = value;
           documentApprovalValue = value.documentLines!;
+
+
+
+          
         });
       } else if (value.error != null) {
         final snackBar = SnackBar(
@@ -120,7 +124,7 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                           //color:Colors.red,
                           width: Screens.width(context),
                           // height: isCameFormSalesORder == false
-                              //  ? Screens.heigth(context) * 0.81
+                          //  ? Screens.heigth(context) * 0.81
                           //     : Screens.heigth(context) * 0.86,
                           child: SingleChildScrollView(
                             //scrollDirection: Axis.vertical,
@@ -133,7 +137,8 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                     //     FurneyRoutes.draftDetails);
                                   },
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Doc.type",
@@ -144,7 +149,8 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Container(
-                                            width: Screens.width(context) * 0.83,
+                                            width:
+                                                Screens.width(context) * 0.83,
                                             // color: Colors.blue,
                                             child: Text(
                                               "$docTypeName based on draft no. ${approvalDetailsValue!.docNum}", //${approvalDetailsValue!.DocNum}
@@ -180,7 +186,8 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                       // color: Colors.blue,
                                       child: Text(
                                         "Sales Doc",
-                                        style: TextStyles.headlineBlack1(context),
+                                        style:
+                                            TextStyles.headlineBlack1(context),
                                       ),
                                     ),
                                   ],
@@ -200,12 +207,13 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                       // color: Colors.blue,
                                       child: Text(
                                         " ",
-                                        style: TextStyles.headlineBlack1(context),
+                                        style:
+                                            TextStyles.headlineBlack1(context),
                                       ),
                                     ),
                                   ],
                                 ),
-                  
+
                                 SizedBox(
                                   height: Screens.heigth(context) * 0.01,
                                 ),
@@ -221,12 +229,13 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                       // color: Colors.blue,
                                       child: Text(
                                         "${approvalDetailsValue!.cardCode}",
-                                        style: TextStyles.headlineBlack1(context),
+                                        style:
+                                            TextStyles.headlineBlack1(context),
                                       ),
                                     ),
                                   ],
                                 ),
-                  
+
                                 SizedBox(
                                   height: Screens.heigth(context) * 0.01,
                                 ),
@@ -241,7 +250,8 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                       width: Screens.width(context) * 0.83,
                                       child: Text(
                                         "${approvalDetailsValue!.cardName}",
-                                        style: TextStyles.headlineBlack1(context),
+                                        style:
+                                            TextStyles.headlineBlack1(context),
                                       ),
                                     ),
                                   ],
@@ -261,7 +271,8 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                       // color: Colors.blue,
                                       child: Text(
                                         "${approvalDetailsValue!.docDate}",
-                                        style: TextStyles.headlineBlack1(context),
+                                        style:
+                                            TextStyles.headlineBlack1(context),
                                       ),
                                     ),
                                   ],
@@ -292,7 +303,7 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                 SizedBox(
                                   height: Screens.heigth(context) * 0.01,
                                 ),
-                  
+
                                 ///
                                 SizedBox(
                                   height: Screens.heigth(context) * 0.01,
@@ -310,7 +321,8 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                       // color: Colors.blue,
                                       child: Text(
                                         "${approvalDetailsValue!.uOrderType}",
-                                        style: TextStyles.headlineBlack1(context),
+                                        style:
+                                            TextStyles.headlineBlack1(context),
                                       ),
                                     ),
                                   ],
@@ -331,7 +343,8 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                       // color: Colors.blue,
                                       child: Text(
                                         "${approvalDetailsValue!.uGpApproval}",
-                                        style: TextStyles.headlineBlack1(context),
+                                        style:
+                                            TextStyles.headlineBlack1(context),
                                       ),
                                     ),
                                   ],
@@ -339,7 +352,7 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                 SizedBox(
                                   height: Screens.heigth(context) * 0.01,
                                 ),
-                  
+
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -353,7 +366,8 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                       // color: Colors.blue,
                                       child: Text(
                                         "${approvalDetailsValue!.uReceivedTime}",
-                                        style: TextStyles.headlineBlack1(context),
+                                        style:
+                                            TextStyles.headlineBlack1(context),
                                       ),
                                     ),
                                   ],
@@ -374,12 +388,13 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                       // color: Colors.blue,
                                       child: Text(
                                         "${approvalDetailsValue!.uOrderDate}",
-                                        style: TextStyles.headlineBlack1(context),
+                                        style:
+                                            TextStyles.headlineBlack1(context),
                                       ),
                                     ),
                                   ],
                                 ),
-                  
+
                                 ///
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -395,7 +410,8 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                         //" ${approvalDetailsValue!.vatSum}",
                                         TextStyles.splitValues(
                                             '${approvalDetailsValue!.vatSum}'),
-                                        style: TextStyles.headlineBlack1(context),
+                                        style:
+                                            TextStyles.headlineBlack1(context),
                                       ),
                                     ),
                                   ],
@@ -417,7 +433,8 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                         //  "${approvalDetailsValue!.docTotal}",
                                         TextStyles.splitValues(
                                             '${approvalDetailsValue!.docTotal}'),
-                                        style: TextStyles.headlineBlack1(context),
+                                        style:
+                                            TextStyles.headlineBlack1(context),
                                       ),
                                     ),
                                   ],
@@ -437,7 +454,8 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                       // color: Colors.blue,
                                       child: Text(
                                         " ${documentApprovalValue.length} Rows",
-                                        style: TextStyles.headlineBlack1(context),
+                                        style:
+                                            TextStyles.headlineBlack1(context),
                                       ),
                                     ),
                                   ],
@@ -447,10 +465,9 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                   thickness: 1.5,
                                 ),
                                 ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
+                                    physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    itemCount:
-                                        documentApprovalValue.length,
+                                    itemCount: documentApprovalValue.length,
                                     itemBuilder: (c, i) {
                                       return GestureDetector(
                                         onTap: () {
@@ -466,13 +483,12 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                             color: Colors.transparent,
                                             child: Column(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment
-                                                      .start,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   "${i + 1}:",
-                                                  style: TextStyles
-                                                      .boldPC1(context),
+                                                  style: TextStyles.boldPC1(
+                                                      context),
                                                 ),
                                                 Row(
                                                   mainAxisAlignment:
@@ -495,11 +511,10 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                                       child: Icon(
                                                         Icons
                                                             .navigate_next_outlined,
-                                                        color: theme
-                                                            .primaryColor,
-                                                        size: Screens
-                                                                .heigth(
-                                                                    context) *
+                                                        color:
+                                                            theme.primaryColor,
+                                                        size: Screens.heigth(
+                                                                context) *
                                                             0.06,
                                                       ),
                                                     )
@@ -514,142 +529,136 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                           ),
                         ),
                         //button
-                       isCameFormSalesORder == false
-                            ?
-                        Column(
-                          children: [
-                            // Container(
-                            //         // width: Screens.width(context),
-                            //         height: Screens.heigth(context) * 0.06,
-                            //         //color: Colors.green,
-                            //         child: CustomSpinkitdButton(
-                            //           onTap: () async {
-                            //              CreateOrderDetailsState.isCameforapprovalsales =true;
-                            //              LogisticOrderState.approvedocentry=approvalDetailsValue!.docEntry.toString();
-                            //               log("LLLLLLLLLLLLLLLLLLLLLLLL:::::::::"+approvalDetailsValue!.U_Order_Type.toString());
-                            //               log("LLLLLLLLLLLLLLLLLLLLLLLL:::::::::"+approvalDetailsValue!.U_GP_Approval.toString());
-                                         
-                            //              if(approvalDetailsValue!.U_Order_Type! =="Select"){
-                            //              LogisticOrderState.valueSelectedOrder2 = "0";
-                            //              } 
-                            //              if(approvalDetailsValue!.U_Order_Type! =="Normal"){
-                            //              LogisticOrderState.valueSelectedOrder2 = "1";
-                            //              } 
-                            //              if(approvalDetailsValue!.U_Order_Type! =="Depot transfer"){
-                            //              LogisticOrderState.valueSelectedOrder2 = "2";
-                            //              } 
-                            //              if(approvalDetailsValue!.U_Order_Type! =="Root Sale"){
-                            //              LogisticOrderState.valueSelectedOrder2 = "3";
-                            //              } 
-                            //              if(approvalDetailsValue!.U_Order_Type! =="Project sale"){
-                            //              LogisticOrderState.valueSelectedOrder2 = "4";
-                            //              } 
-                            //              if(approvalDetailsValue!.U_Order_Type! =="Special Order"){
-                            //              LogisticOrderState.valueSelectedOrder2 = "5";
-                            //              } 
-                                        
-                            //               if(approvalDetailsValue!.U_GP_Approval! == "NO"){
-                            //              LogisticOrderState. valueSelectedGPApproval2 = "0";
-                            //              } 
-                            //               if(approvalDetailsValue!.U_GP_Approval! == "Yes"){
-                            //              LogisticOrderState. valueSelectedGPApproval2 = "1";
-                            //              } 
-                                        
-                            //             // LogisticOrderState. valueSelectedOrder2 =null;
-                            //             //  LogisticOrderState. valueSelectedGPApproval2=null;
-                            //             //  LogisticOrderState.   orderrecTime="";
-                            //             HeaderOrderCreationState.bpCode =
-                            //           approvalDetailsValue!.cardCode!; //;;
-                            //       HeaderOrderCreationState.bpName =
-                            //           approvalDetailsValue!.cardName!;
-                            //       HeaderOrderCreationState.docNo =
-                            //           approvalDetailsValue!.DocNum!.toString();
-                            //           HeaderOrderCreationState.    salesEmp=GetValues.userName;
-                            //           HeaderOrderCreationState.tax=approvalDetailsValue!.vatSum!;
-                            //           HeaderOrderCreationState.total=approvalDetailsValue!.docTotal!;
-                            //           // approvalDetailsValue!.DocDate
-                            //           //  ;
-                            //           // LogisticOrderState. valueSelectedGPApproval2 = "0";
-                            //            LogisticOrderState. orderrecTime = approvalDetailsValue!.U_Received_Time!;
-                            //           ContentOrderCreationState.itemsDetails3
-                            //           .clear();
-                            //           for(int i=0;i<documentApprovalValue.length;i++){
+                        isCameFormSalesORder == false
+                            ? Column(
+                                children: [
+                                  // Container(
+                                  //         // width: Screens.width(context),
+                                  //         height: Screens.heigth(context) * 0.06,
+                                  //         //color: Colors.green,
+                                  //         child: CustomSpinkitdButton(
+                                  //           onTap: () async {
+                                  //              CreateOrderDetailsState.isCameforapprovalsales =true;
+                                  //              LogisticOrderState.approvedocentry=approvalDetailsValue!.docEntry.toString();
+                                  //               log("LLLLLLLLLLLLLLLLLLLLLLLL:::::::::"+approvalDetailsValue!.U_Order_Type.toString());
+                                  //               log("LLLLLLLLLLLLLLLLLLLLLLLL:::::::::"+approvalDetailsValue!.U_GP_Approval.toString());
 
-                            //             ContentOrderCreationState.itemsDetails3.add(AddItem(
-                            //               itemCode: documentApprovalValue[i].ItemCode!, 
-                            //               itemName: documentApprovalValue[i].ItemDescription!, 
-                            //               price: documentApprovalValue[i].Price, 
-                            //               discount: 0.00, 
-                            //               qty:int.parse(documentApprovalValue[
-                            //                         i]
-                            //                     .Quantity!
-                            //                     .toStringAsFixed(0)), 
-                            //               total:  documentApprovalValue[i].total, 
-                            //               tax: documentApprovalValue[i]
-                            //                     .TaxTotal, 
-                            //               valuechoosed: "", 
-                            //               discounpercent: 0.0, 
-                            //               taxCode: documentApprovalValue[
-                            //                         i]
-                            //                     .TaxCode, 
-                            //               taxPer: documentApprovalValue[
-                            //                         i]
-                            //                     .TaxTotal, 
-                            //               wareHouseCode: documentApprovalValue[i]
-                            //                         .warehouseCode, 
-                            //               taxName: ""
-                            //               ));
+                                  //              if(approvalDetailsValue!.U_Order_Type! =="Select"){
+                                  //              LogisticOrderState.valueSelectedOrder2 = "0";
+                                  //              }
+                                  //              if(approvalDetailsValue!.U_Order_Type! =="Normal"){
+                                  //              LogisticOrderState.valueSelectedOrder2 = "1";
+                                  //              }
+                                  //              if(approvalDetailsValue!.U_Order_Type! =="Depot transfer"){
+                                  //              LogisticOrderState.valueSelectedOrder2 = "2";
+                                  //              }
+                                  //              if(approvalDetailsValue!.U_Order_Type! =="Root Sale"){
+                                  //              LogisticOrderState.valueSelectedOrder2 = "3";
+                                  //              }
+                                  //              if(approvalDetailsValue!.U_Order_Type! =="Project sale"){
+                                  //              LogisticOrderState.valueSelectedOrder2 = "4";
+                                  //              }
+                                  //              if(approvalDetailsValue!.U_Order_Type! =="Special Order"){
+                                  //              LogisticOrderState.valueSelectedOrder2 = "5";
+                                  //              }
 
-                            //           }
+                                  //               if(approvalDetailsValue!.U_GP_Approval! == "NO"){
+                                  //              LogisticOrderState. valueSelectedGPApproval2 = "0";
+                                  //              }
+                                  //               if(approvalDetailsValue!.U_GP_Approval! == "Yes"){
+                                  //              LogisticOrderState. valueSelectedGPApproval2 = "1";
+                                  //              }
 
+                                  //             // LogisticOrderState. valueSelectedOrder2 =null;
+                                  //             //  LogisticOrderState. valueSelectedGPApproval2=null;
+                                  //             //  LogisticOrderState.   orderrecTime="";
+                                  //             HeaderOrderCreationState.bpCode =
+                                  //           approvalDetailsValue!.cardCode!; //;;
+                                  //       HeaderOrderCreationState.bpName =
+                                  //           approvalDetailsValue!.cardName!;
+                                  //       HeaderOrderCreationState.docNo =
+                                  //           approvalDetailsValue!.DocNum!.toString();
+                                  //           HeaderOrderCreationState.    salesEmp=GetValues.userName;
+                                  //           HeaderOrderCreationState.tax=approvalDetailsValue!.vatSum!;
+                                  //           HeaderOrderCreationState.total=approvalDetailsValue!.docTotal!;
+                                  //           // approvalDetailsValue!.DocDate
+                                  //           //  ;
+                                  //           // LogisticOrderState. valueSelectedGPApproval2 = "0";
+                                  //            LogisticOrderState. orderrecTime = approvalDetailsValue!.U_Received_Time!;
+                                  //           ContentOrderCreationState.itemsDetails3
+                                  //           .clear();
+                                  //           for(int i=0;i<documentApprovalValue.length;i++){
 
-                            //         Get.toNamed<dynamic>(
-                            //           FurneyRoutes.creationOrderDetails);
-                            //           },
-                            //           isLoading: isLoading,
-                            //           //  labelLoading: AppLocalizations.of(context)!.signing,
-                            //           label: 'Edit',
-                            //         ),
-                            //       ),
-                          SizedBox(
-                                height: Screens.heigth(context)*0.005,
-                              ),
-                         Container(
-                                // width: Screens.width(context),
-                                height: Screens.heigth(context) * 0.06,
-                                //color: Colors.green,
-                                child: CustomSpinkitdButton(
-                                  onTap: () async {
-                                    callServiceLayerApi();
-                                  },
-                                  isLoading: isLoading,
-                                  //  labelLoading: AppLocalizations.of(context)!.signing,
-                                  label: 'Save',
-                                ),
-                              ),
+                                  //             ContentOrderCreationState.itemsDetails3.add(AddItem(
+                                  //               itemCode: documentApprovalValue[i].ItemCode!,
+                                  //               itemName: documentApprovalValue[i].ItemDescription!,
+                                  //               price: documentApprovalValue[i].Price,
+                                  //               discount: 0.00,
+                                  //               qty:int.parse(documentApprovalValue[
+                                  //                         i]
+                                  //                     .Quantity!
+                                  //                     .toStringAsFixed(0)),
+                                  //               total:  documentApprovalValue[i].total,
+                                  //               tax: documentApprovalValue[i]
+                                  //                     .TaxTotal,
+                                  //               valuechoosed: "",
+                                  //               discounpercent: 0.0,
+                                  //               taxCode: documentApprovalValue[
+                                  //                         i]
+                                  //                     .TaxCode,
+                                  //               taxPer: documentApprovalValue[
+                                  //                         i]
+                                  //                     .TaxTotal,
+                                  //               wareHouseCode: documentApprovalValue[i]
+                                  //                         .warehouseCode,
+                                  //               taxName: ""
+                                  //               ));
 
+                                  //           }
 
-                               SizedBox(
-                                height: Screens.heigth(context)*0.005,
-                              ),
-                        //  Container(
-                        //         // width: Screens.width(context),
-                        //         height: Screens.heigth(context) * 0.06,
-                        //         //color: Colors.green,
-                        //         child: CustomSpinkitdButton(
-                        //           onTap: () async {
-                        //            gotoSalesOrderEditPage();
-                        //           },
-                        //           isLoading: isLoading,
-                        //           //  labelLoading: AppLocalizations.of(context)!.signing,
-                        //           label: 'Edit',
-                        //         ),
-                        //       ),
+                                  //         Get.toNamed<dynamic>(
+                                  //           FurneyRoutes.creationOrderDetails);
+                                  //           },
+                                  //           isLoading: isLoading,
+                                  //           //  labelLoading: AppLocalizations.of(context)!.signing,
+                                  //           label: 'Edit',
+                                  //         ),
+                                  //       ),
+                                  SizedBox(
+                                    height: Screens.heigth(context) * 0.005,
+                                  ),
+                                  Container(
+                                    // width: Screens.width(context),
+                                    height: Screens.heigth(context) * 0.06,
+                                    //color: Colors.green,
+                                    child: CustomSpinkitdButton(
+                                      onTap: () async {
+                                        callServiceLayerApi();
+                                      },
+                                      isLoading: isLoading,
+                                      //  labelLoading: AppLocalizations.of(context)!.signing,
+                                      label: 'Save',
+                                    ),
+                                  ),
 
-                             
-                          ],
-                        )
-                              
+                                  SizedBox(
+                                    height: Screens.heigth(context) * 0.005,
+                                  ),
+                                  //  Container(
+                                  //         // width: Screens.width(context),
+                                  //         height: Screens.heigth(context) * 0.06,
+                                  //         //color: Colors.green,
+                                  //         child: CustomSpinkitdButton(
+                                  //           onTap: () async {
+                                  //            gotoSalesOrderEditPage();
+                                  //           },
+                                  //           isLoading: isLoading,
+                                  //           //  labelLoading: AppLocalizations.of(context)!.signing,
+                                  //           label: 'Edit',
+                                  //         ),
+                                  //       ),
+                                ],
+                              )
                             : SizedBox(
                                 height: 2,
                               ),
@@ -660,70 +669,78 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
               ),
       ),
     );
-
-    
   }
 
-   void gotoSalesOrderEditPage() async{
+  void gotoSalesOrderEditPage() async {
     setValue();
-    Get.to(()=>EditORderDetails(
-      title: "Order Edit", 
-      DocEntry:  approvalDetailsValue!.docEntry!,
-       isAproved: true,));
+    Get.to(() => EditORderDetails(
+          title: "Order Edit",
+          DocEntry: approvalDetailsValue!.docEntry!,
+          isAproved: true,
+        ));
   }
 
-    void setValue(){
-   setState(() {
-                            final totaldiscnt =  approvalDetailsValue!.totalDiscount!;
-                            final vatsum =  approvalDetailsValue!.vatSum !;
-                            final totalbeforeDiscount =  approvalDetailsValue!.docTotal!-(totaldiscnt+vatsum);
-                           HeaderEditOrderPageState.docNo = approvalDetailsValue!.docNum .toString();  
-                           HeaderEditOrderPageState.bpName =   approvalDetailsValue!.cardName. toString();
-                         HeaderEditOrderPageState.bpCode =  approvalDetailsValue!.cardCode.toString();
-                           HeaderEditOrderPageState.currency =   approvalDetailsValue!.docCurrency.toString();//
-                          HeaderEditOrderPageState.currentDateTime =   approvalDetailsValue!.docDate.toString();
-                         HeaderEditOrderPageState.salesEmp = GetValues.slpCode;
-                            //approvalDetailsValue!. .toString();// map sales emp
-                           HeaderEditOrderPageState.totalBeforeDiscount = totalbeforeDiscount;
-                            HeaderEditOrderPageState.discount =  approvalDetailsValue!.totalDiscount!.toDouble();
-                            HeaderEditOrderPageState.tax =  approvalDetailsValue!.vatSum!;
-                            HeaderEditOrderPageState.total =  approvalDetailsValue!.docTotal!;
-            //cn
-            ContentOrderCreationState state = ContentOrderCreationState();
-            SalesDetailsQuotState sate2 = SalesDetailsQuotState();
-             ContentOrderEditState.itemsDetails3.clear();
-            for(int i=0; i< documentApprovalValue.length; i++){
-                ContentOrderEditState.itemsDetails3.add(
-              AddItem(
-                 itemCode:documentApprovalValue[i].itemCode!,
-                  itemName: documentApprovalValue[i].itemDescription!, 
-                 price:  documentApprovalValue[i].price,
-                 discount: 0, //
-                 qty: int.parse(documentApprovalValue[i].quantity!.toStringAsFixed(0)),
-                 total: documentApprovalValue[i].lineTotal, 
-                 tax:  documentApprovalValue[i].taxTotal,
-                 valuechoosed:  state.getTaxNane(documentApprovalValue[i].taxCode!.toString()),
-                 discounpercent:  documentApprovalValue[i].discountPercent, 
-                 taxCode:  documentApprovalValue[i].taxCode.toString(), 
-                 taxPer: sate2.caluclateTaxpercent(documentApprovalValue[i].lineTotal!,
-                  documentApprovalValue[i].taxTotal!), // val.documentLines![i].
-                 wareHouseCode:  documentApprovalValue[i].warehouseCode,
-                 taxName: state.getTaxNane(documentApprovalValue[i].taxCode!.toString()),
-                 basedocentry: documentApprovalValue[i].baseEntry.toString(),
-                 baseline: documentApprovalValue[i].baseLine.toString(),
-                 BaseType: double.parse(documentApprovalValue[i].baseType.toString())
-                  )//val.documentLines![i].
-             );
-            }
-  });}
+  void setValue() {
+    setState(() {
+      final totaldiscnt = approvalDetailsValue!.totalDiscount!;
+      final vatsum = approvalDetailsValue!.vatSum!;
+      final totalbeforeDiscount =
+          approvalDetailsValue!.docTotal! - (totaldiscnt + vatsum);
+      HeaderEditOrderPageState.docNo = approvalDetailsValue!.docNum.toString();
+      HeaderEditOrderPageState.bpName =
+          approvalDetailsValue!.cardName.toString();
+      HeaderEditOrderPageState.bpCode =
+          approvalDetailsValue!.cardCode.toString();
+      // HeaderEditOrderPageState.currency =
+      //     approvalDetailsValue!.docCurrency.toString(); //
+      HeaderEditOrderPageState.currentDateTime =
+          approvalDetailsValue!.docDate.toString();
+      HeaderEditOrderPageState.salesEmp = GetValues.slpCode;
+      //approvalDetailsValue!. .toString();// map sales emp
+      HeaderEditOrderPageState.totalBeforeDiscount = totalbeforeDiscount;
+      HeaderEditOrderPageState.discount =
+          approvalDetailsValue!.totalDiscount!.toDouble();
+      HeaderEditOrderPageState.tax = approvalDetailsValue!.vatSum!;
+      HeaderEditOrderPageState.total = approvalDetailsValue!.docTotal!;
+      //cn
+      ContentOrderCreationState state = ContentOrderCreationState();
+      SalesDetailsQuotState sate2 = SalesDetailsQuotState();
+      ContentOrderEditState.itemsDetails3.clear();
+      for (int i = 0; i < documentApprovalValue.length; i++) {
+        ContentOrderEditState.itemsDetails3.add(AddItem(
+                itemCode: documentApprovalValue[i].itemCode!,
+                itemName: documentApprovalValue[i].itemDescription!,
+                price: documentApprovalValue[i].price,
+                discount: 0, //
+                qty: int.parse(
+                    documentApprovalValue[i].quantity!.toStringAsFixed(0)),
+                total: documentApprovalValue[i].lineTotal,
+                tax: documentApprovalValue[i].taxTotal,
+                valuechoosed: state
+                    .getTaxNane(documentApprovalValue[i].taxCode!.toString()),
+                discounpercent: documentApprovalValue[i].discountPercent,
+                taxCode: documentApprovalValue[i].taxCode.toString(),
+                taxPer: sate2.caluclateTaxpercent(
+                    documentApprovalValue[i].lineTotal!,
+                    documentApprovalValue[i]
+                        .taxTotal!), // val.documentLines![i].
+                wareHouseCode: documentApprovalValue[i].warehouseCode,
+                taxName: state
+                    .getTaxNane(documentApprovalValue[i].taxCode!.toString()),
+                basedocentry: documentApprovalValue[i].baseEntry.toString(),
+                baseline: documentApprovalValue[i].baseLine.toString(),
+                BaseType: double.parse(documentApprovalValue[i]
+                    .baseType
+                    .toString())) //val.documentLines![i].
+            );
+      }
+    });
+  }
 
-  double getDiscount (double discountPercent, double unitPrice,double qty){
-
-   double discount = (unitPrice * qty) * ( discountPercent / 100);
-  return discount;
-   }
-
-
+  double getDiscount(double discountPercent, double unitPrice, double qty) {
+    double discount = (unitPrice * qty) * (discountPercent / 100);
+    return discount;
+  }
 
   void callServiceLayerApi() {
     if (mounted) {
@@ -770,6 +787,7 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
         });
+   
       });
     }
   }
@@ -848,7 +866,8 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10)), backgroundColor: btnColor == false
+                                            BorderRadius.circular(10)),
+                                    backgroundColor: btnColor == false
                                         ? Colors.green
                                         : Colors.red,
                                   ),
@@ -941,40 +960,40 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
     }
   }
 }
-  // else{
-                                    //    mycontroller[0].text = '';
-                                    //    completed = true;
-                                    //   Navigator.pop(context);
-                                    //   // print("did: " +
-                                    //   //     value.errorPatch!.message!.Value!
-                                    //           //.toString());
-                                    //   if (successString == 'Approved') {
-                                      
-                                    //     final snackBar = SnackBar(
-                                    //       duration: Duration(seconds: 3),
-                                    //       backgroundColor: Colors.green,
-                                    //       content: Text(
-                                    //         'successfully $successString',
-                                    //         style:
-                                    //             TextStyle(color: Colors.white),
-                                    //       ),
-                                    //     );
-                                    //     ScaffoldMessenger.of(context)
-                                    //         .showSnackBar(snackBar);
-                                             
-                                    //   } else if (successString ==
-                                    //       'Not Approved') {
-                                         
-                                    //     final snackBar = SnackBar(
-                                    //       duration: Duration(seconds: 3),
-                                    //       backgroundColor: Colors.red,
-                                    //       content: Text(
-                                    //         'successfully $successString',
-                                    //         style:
-                                    //             TextStyle(color: Colors.white),
-                                    //       ),
-                                    //     );
-                                    //     ScaffoldMessenger.of(context)
-                                    //         .showSnackBar(snackBar);
-                                    //   }
-                                    // }
+// else{
+//    mycontroller[0].text = '';
+//    completed = true;
+//   Navigator.pop(context);
+//   // print("did: " +
+//   //     value.errorPatch!.message!.Value!
+//           //.toString());
+//   if (successString == 'Approved') {
+
+//     final snackBar = SnackBar(
+//       duration: Duration(seconds: 3),
+//       backgroundColor: Colors.green,
+//       content: Text(
+//         'successfully $successString',
+//         style:
+//             TextStyle(color: Colors.white),
+//       ),
+//     );
+//     ScaffoldMessenger.of(context)
+//         .showSnackBar(snackBar);
+
+//   } else if (successString ==
+//       'Not Approved') {
+
+//     final snackBar = SnackBar(
+//       duration: Duration(seconds: 3),
+//       backgroundColor: Colors.red,
+//       content: Text(
+//         'successfully $successString',
+//         style:
+//             TextStyle(color: Colors.white),
+//       ),
+//     );
+//     ScaffoldMessenger.of(context)
+//         .showSnackBar(snackBar);
+//   }
+// }

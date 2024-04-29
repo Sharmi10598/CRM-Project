@@ -8,36 +8,40 @@ import 'package:ultimate_bundle/SalesApp/Model/ProjectModel/ProjectModel.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
-
 class GetActiveProjectAPi {
   static Future<GetActiveProject> getGlobalData() async {
     try {
-      final response = await http.post(
-        Uri.parse(URL.dynamicUrl),
-        headers: {
-          'content-type': 'application/json',
+      final response = await http.post(Uri.parse(URL.dynamicUrl),
+          headers: {
+            'content-type': 'application/json',
           },
-         body: json.encode({
-              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
-              "query": "Select name  from OPMG where STATUS not in ('P','T','F')",
-          })
-      );
+          body: json.encode({
+              "constr":"Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
 
-      log( json.encode({
-              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
-              "query": "Select name  from OPMG where STATUS not in ('P','T','F')",
+            // "constr":
+                // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+            "query": "Select name  from OPMG where STATUS not in ('P','T','F')",
           }));
-      print("test project name: "+response.statusCode.toString());
-      print("test project name: "+response.body);
+
+      log(json.encode({
+              "constr":"Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+        // "constr":
+        //     "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+        "query": "Select name  from OPMG where STATUS not in ('P','T','F')",
+      }));
+      // log("test project statusCode: " + response.statusCode.toString());
+      log("test project response: " + response.body);
 
       if (response.statusCode == 200) {
-        return GetActiveProject.fromJson( response.body,response.statusCode);
+        return GetActiveProject.fromJson(response.body, response.statusCode);
       } else {
-         throw Exception("Error!!...");
-       // return GetActiveProject.fromJson( response.body,response.statusCode);
+        throw Exception("Error!!...");
+        // return GetActiveProject.fromJson( response.body,response.statusCode);
       }
     } catch (e) {
-        throw Exception("Exception: $e");
+      log("wwwww22222::"+e.toString());
+      throw Exception("Exception: $e");
       //return GetActiveProject.fromJson(e.toString(),500);
     }
   }

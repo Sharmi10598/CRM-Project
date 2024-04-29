@@ -62,20 +62,19 @@ class ContentOrderEditState extends State<ContentOrderEdit> {
     // isCameforapprovalsales
     print(GetValues.branch);
 
- if(  CreateOrderDetailsState. isCameforapprovalsales==true){
-  log("GetValues.sapUserName:::::"+GetValues.sapUserName!.toString()); 
-   log("GetValues   UserName:::::"+GetValues.userName!.toString()); 
-setValuesToListPageapproval();
-}
-    if(CreateOrderDetailsState.isCameFromqutation==true &&  isCalculated == false){
-     
-
-     setValuesToListPagequotation2();
+    if (CreateOrderDetailsState.isCameforapprovalsales == true) {
+      log("GetValues.sapUserName:::::" + GetValues.sapUserName!.toString());
+      log("GetValues   UserName:::::" + GetValues.userName!.toString());
+      setValuesToListPageapproval();
+    }
+    if (CreateOrderDetailsState.isCameFromqutation == true &&
+        isCalculated == false) {
+      setValuesToListPagequotation2();
     }
 
-    if(itemsDetails3.length>0){
-  setValuesToListPageapproval();
-}
+    if (itemsDetails3.length > 0) {
+      setValuesToListPageapproval();
+    }
     // ItemsAPi.searchData = '';
     // ItemsAPi.getGlobalData().then((value) {
     //   if (value.itemValueValue!.isNotEmpty) {
@@ -125,32 +124,32 @@ setValuesToListPageapproval();
 
   bool swipeLoad = false;
 
-  Future<void> getmoredata() async{
+  Future<void> getmoredata() async {
     setState(() {
-     swipeLoad = true;
+      swipeLoad = true;
     });
-  await ItemsAPi.callNextLink().then((val) {
-       // minuslength = -1;
-        if (val.itemValueValue!.isNotEmpty) {
-          for (int i = 0; i < val.itemValueValue!.length; i++) {
-            filteritemValue.add(ItemValue(
-                itemCode: val.itemValueValue![i].itemCode,
-                itemName: val.itemValueValue![i].itemName,
-                odataetag: val.itemValueValue![i].odataetag,
-                salesUnit: val.itemValueValue![i].salesUnit,
-                itemPrices: val.itemValueValue![i].itemPrices,
-                U_Pack_Size: val.itemValueValue![i].U_Pack_Size,
-                U_Tins_Per_Box: val.itemValueValue![i].U_Tins_Per_Box));
-          }
-      setState(() {
+    await ItemsAPi.callNextLink().then((val) {
+      // minuslength = -1;
+      if (val.itemValueValue!.isNotEmpty) {
+        for (int i = 0; i < val.itemValueValue!.length; i++) {
+          filteritemValue.add(ItemValue(
+              itemCode: val.itemValueValue![i].itemCode,
+              itemName: val.itemValueValue![i].itemName,
+              odataetag: val.itemValueValue![i].odataetag,
+              salesUnit: val.itemValueValue![i].salesUnit,
+              itemPrices: val.itemValueValue![i].itemPrices,
+              U_Pack_Size: val.itemValueValue![i].U_Pack_Size,
+              U_Tins_Per_Box: val.itemValueValue![i].U_Tins_Per_Box,
+              salesperCode: GetValues.slpCode));
+        }
+        setState(() {
           swipeLoad = false;
           print('lenthofList: ' + lenthofList.toString());
           print('lennList: ' + filteritemValue.length.toString());
           print(val.nextLink);
-         // minuslength = 0;
-      });
-
-        }
+          // minuslength = 0;
+        });
+      }
     });
   }
 
@@ -244,7 +243,8 @@ setValuesToListPageapproval();
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)), backgroundColor: theme.primaryColor,
+                            borderRadius: BorderRadius.circular(5)),
+                        backgroundColor: theme.primaryColor,
                       ),
                       child: Icon(Icons.add)),
                 ),
@@ -253,7 +253,7 @@ setValuesToListPageapproval();
             SizedBox(
               height: Screens.heigth(context) * 0.01,
             ),
-          // CreateOrderDetailsState.isCameFromqutation==true?
+            // CreateOrderDetailsState.isCameFromqutation==true?
             Expanded(
                 child: ListView.builder(
                     padding: EdgeInsets.only(
@@ -263,10 +263,9 @@ setValuesToListPageapproval();
                     itemCount: itemsDetails.length,
                     itemBuilder: (c, i) {
                       return InkWell(
-                        onTap: (){
+                        onTap: () {
                           log("testtt: ${itemsDetails[i].discounpercent}");
-                        }
-                        ,
+                        },
                         child: Card(
                           child: Container(
                             padding: EdgeInsets.only(
@@ -323,8 +322,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.05,
                                         child: Text(
                                           ':', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                       SizedBox(
@@ -334,8 +333,8 @@ setValuesToListPageapproval();
                                           // '${itemsDetails[i].price}', //'${quotDataFilter[i].DocNum}',
                                           TextStyles.splitValues(
                                               '${itemsDetails[i].price!.toStringAsFixed(2)}'),
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                     ],
@@ -355,8 +354,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.25,
                                         child: Text(
                                           'Qty', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                       SizedBox(
@@ -364,8 +363,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.05,
                                         child: Text(
                                           ':', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                       SizedBox(
@@ -374,8 +373,8 @@ setValuesToListPageapproval();
                                         child: Text(
                                           '${itemsDetails[i].qty}', //'${quotDataFilter[i].DocNum}',
                                           // TextStyles.splitValues('${itemsDetails[i].qty}'),
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                     ],
@@ -396,8 +395,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.25,
                                         child: Text(
                                           'Discount %', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                       SizedBox(
@@ -405,8 +404,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.05,
                                         child: Text(
                                           ':', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                       SizedBox(
@@ -421,7 +420,8 @@ setValuesToListPageapproval();
                                                   : TextStyles.splitValues(
                                                           '${itemsDetails[i].discounpercent!}')
                                                       .replaceAll(
-                                                          new RegExp('^0+(?=.)'),
+                                                          new RegExp(
+                                                              '^0+(?=.)'),
                                                           ''),
                                               style: TextStyles.bodytextBlack1(
                                                   context),
@@ -490,8 +490,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.25,
                                         child: Text(
                                           'Value AF Disc', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                       SizedBox(
@@ -499,8 +499,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.05,
                                         child: Text(
                                           ':', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                       SizedBox(
@@ -510,8 +510,8 @@ setValuesToListPageapproval();
                                           TextStyles.splitValues(
                                               '${itemsDetails[i].valueAFdisc!.toStringAsFixed(2)}'),
                                           // TextStyles.splitValues('${itemsDetails[i].discount}'),
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                     ],
@@ -531,8 +531,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.25,
                                         child: Text(
                                           'Tax', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                       SizedBox(
@@ -540,8 +540,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.05,
                                         child: Text(
                                           ':', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                       SizedBox(
@@ -550,8 +550,8 @@ setValuesToListPageapproval();
                                         child: Text(
                                           // '${itemsDetails[i].total! - itemsDetails[i].discount!}', //'${quotDataFilter[i].DocNum}',
                                           '${itemsDetails[i].taxName}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                     ],
@@ -571,8 +571,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.25,
                                         child: Text(
                                           'Tax Amount', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                       SizedBox(
@@ -580,8 +580,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.05,
                                         child: Text(
                                           ':', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                       SizedBox(
@@ -592,8 +592,8 @@ setValuesToListPageapproval();
 
                                           TextStyles.splitValues(
                                               '${itemsDetails[i].tax!.toStringAsFixed(2)}'),
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                     ],
@@ -654,8 +654,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.25,
                                         child: Text(
                                           'Warehouse code', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                       SizedBox(
@@ -663,8 +663,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.05,
                                         child: Text(
                                           ':', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                       SizedBox(
@@ -672,8 +672,8 @@ setValuesToListPageapproval();
                                         width: Screens.width(context) * 0.2,
                                         child: Text(
                                           '${itemsDetails[i].wareHouseCode}', //'${quotDataFilter[i].DocNum}',
-                                          style:
-                                              TextStyles.bodytextBlack1(context),
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
                                         ),
                                       ),
                                     ],
@@ -745,13 +745,26 @@ setValuesToListPageapproval();
                                                 .toString());
                                         print("taxName: " +
                                             itemsDetails[i].taxName.toString());
-                                        if (itemsDetails[i]
-                                            .taxName
-                                            .toString()
-                                            .contains("18 %")) {
-                                          taxSelected = 0.00;
-                                          taxSelected = 18.0;
+                                        if (GetValues.countryCode!
+                                                .toLowerCase() ==
+                                            'tanzania') {
+                                          if (itemsDetails[i]
+                                              .taxName
+                                              .toString()
+                                              .contains("18 %")) {
+                                            taxSelected = 0.00;
+                                            taxSelected = 18.0;
+                                          }
+                                        } else {
+                                          if (itemsDetails[i]
+                                              .taxName
+                                              .toString()
+                                              .contains("16 %")) {
+                                            taxSelected = 0.00;
+                                            taxSelected = 18.0;
+                                          }
                                         }
+
                                         selectedtaxName =
                                             itemsDetails[i].taxName.toString();
                                         //itemsDetails[i].tax!;
@@ -761,7 +774,8 @@ setValuesToListPageapproval();
                                               itemsDetails[i].valuechoosed;
                                         } else if (itemsDetails[i].taxName !=
                                             null) {
-                                          valueChossed = itemsDetails[i].taxName;
+                                          valueChossed =
+                                              itemsDetails[i].taxName;
                                         }
                                         showBottomSheetUpdate(i, theme);
                                       },
@@ -949,15 +963,18 @@ setValuesToListPageapproval();
                           // height: Screens.heigth(context) * 0.72,
                           child: ListView.builder(
                               controller: scrollController,
-                              itemCount:swipeLoad == true?1: filteritemValue.length ,
-                              itemBuilder: (context, i) {//i == filteritemValue.length - 1
+                              itemCount: swipeLoad == true
+                                  ? 1
+                                  : filteritemValue.length,
+                              itemBuilder: (context, i) {
+                                //i == filteritemValue.length - 1
                                 if (swipeLoad == true) {
                                   if (mycontroller[0].text.isEmpty) {
                                     if (ItemsAPi.nextUrl != 'null') {
                                       print("1111111");
                                       return SizedBox(
                                         width: Screens.width(context),
-                                        height: Screens.heigth(context)*0.9,
+                                        height: Screens.heigth(context) * 0.9,
                                         child: Center(
                                           child: SpinKitThreeBounce(
                                             size: Screens.width(context) * 0.06,
@@ -979,7 +996,8 @@ setValuesToListPageapproval();
                                             HeaderEditOrderPageState.bpCode;
                                         SpecialDiscountAPi.itemCode =
                                             filteritemValue[i].itemCode;
-                                        print("ABBBVVV:::::+${SpecialDiscountAPi.cardCode}");
+                                        print(
+                                            "ABBBVVV2:::::+${SpecialDiscountAPi.cardCode}");
                                         print(SpecialDiscountAPi.itemCode);
                                         SpecialDiscountAPi.getGlobalData()
                                             .then((value) {
@@ -1307,7 +1325,7 @@ setValuesToListPageapproval();
                             SizedBox(
                               height: Screens.heigth(context) * 0.01,
                             ),
-                              SizedBox(
+                            SizedBox(
                               child: new TextFormField(
                                 controller: mycontroller[8],
                                 onChanged: (val) {},
@@ -1336,7 +1354,8 @@ setValuesToListPageapproval();
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(5)), backgroundColor: theme.primaryColor,
+                                              BorderRadius.circular(5)),
+                                      backgroundColor: theme.primaryColor,
                                     ),
                                     onPressed: () {
                                       setState(() {
@@ -1351,7 +1370,8 @@ setValuesToListPageapproval();
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(5)), backgroundColor: theme.primaryColor,
+                                              BorderRadius.circular(5)),
+                                      backgroundColor: theme.primaryColor,
                                     ),
                                     onPressed: () {
                                       setState(() {
@@ -1501,26 +1521,30 @@ setValuesToListPageapproval();
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } else {
       setState(() => isLoading = true);
-     SalesOrderPatchAPi.cardCodePost = carcode;
-     SalesOrderPatchAPi.cardNamePost = HeaderEditOrderPageState.bpName;
-     SalesOrderPatchAPi.docLineQout = itemsDetails;
-     SalesOrderPatchAPi.docDate =
+      SalesOrderPatchAPi.cardCodePost = carcode;
+      SalesOrderPatchAPi.cardNamePost = HeaderEditOrderPageState.bpName;
+      SalesOrderPatchAPi.docLineQout = itemsDetails;
+      SalesOrderPatchAPi.docDate =
           HeaderEditOrderPageState.currentDateTime.toString();
-     SalesOrderPatchAPi.dueDate =
+      SalesOrderPatchAPi.dueDate =
           HeaderEditOrderPageState.currentDateTime.toString();
-     SalesOrderPatchAPi.remarks = HeaderEditOrderPageState.mycontroller[1].text;
-     SalesOrderPatchAPi.orderDate = LogisticEditORderState.mycontroller[1].text;
-     SalesOrderPatchAPi.orderType = LogisticEditORderState.valueSelectedOrder;
-     SalesOrderPatchAPi.gpApproval = LogisticEditORderState.valueSelectedGPApproval;
-     SalesOrderPatchAPi.orderTime = LogisticEditORderState.mycontroller[0].text;
-     SalesOrderPatchAPi.custREfNo =
+      SalesOrderPatchAPi.remarks =
+          HeaderEditOrderPageState.mycontroller[1].text;
+      SalesOrderPatchAPi.orderDate =
+          LogisticEditORderState.mycontroller[1].text;
+      SalesOrderPatchAPi.orderType = LogisticEditORderState.valueSelectedOrder;
+      SalesOrderPatchAPi.gpApproval =
+          LogisticEditORderState.valueSelectedGPApproval;
+      SalesOrderPatchAPi.orderTime =
+          LogisticEditORderState.mycontroller[0].text;
+      SalesOrderPatchAPi.custREfNo =
           HeaderEditOrderPageState.mycontroller[0].text;
-     SalesOrderPatchAPi.deviceTransID = uuid.v1();
-     SalesOrderPatchAPi.deviceCode = GetValues.deviceID;
-      CheckOrderORDraftAPi.deviceTransID =SalesOrderPatchAPi.deviceTransID;
-      CheckOrderORDraftAPi.deviceCode =SalesOrderPatchAPi.deviceCode;
-      DraftSaveAPi.deviceCode =SalesOrderPatchAPi.deviceCode;
-      DraftSaveAPi.deviceTransID =SalesOrderPatchAPi.deviceTransID;
+      SalesOrderPatchAPi.deviceTransID = uuid.v1();
+      SalesOrderPatchAPi.deviceCode = GetValues.deviceID;
+      CheckOrderORDraftAPi.deviceTransID = SalesOrderPatchAPi.deviceTransID;
+      CheckOrderORDraftAPi.deviceCode = SalesOrderPatchAPi.deviceCode;
+      DraftSaveAPi.deviceCode = SalesOrderPatchAPi.deviceCode;
+      DraftSaveAPi.deviceTransID = SalesOrderPatchAPi.deviceTransID;
       currentDate();
       // callPostApi();
       double getcreditLimit;
@@ -1725,7 +1749,7 @@ setValuesToListPageapproval();
       List.generate(3, (i) => GlobalKey<FormState>());
   void showBottomSheetInsert(int i, ThemeData theme) {
     //nznznz
-valueChossed = null;
+    valueChossed = null;
     showModalBottomSheet<dynamic>(
         isScrollControlled: true,
         context: context,
@@ -1864,72 +1888,132 @@ valueChossed = null;
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(5)),
-                              child: DropdownButton(
-                                hint: Text(
-                                  "Select Tax: ",
-                                  style: TextStyles.bodytextBlack1(context),
-                                ),
-                                value: valueChossed,
-                                //dropdownColor:Colors.green,
-                                icon: Icon(Icons.arrow_drop_down),
-                                iconSize: 30,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 16),
-                                isExpanded: true,
-                                onChanged: (val) {
-                                  print(val);
-                                  setState(() {
-                                    if (val == 'O0 - 0 % Output VAT') {
-                                      selectedtaxName = 'O0 - 0 % Output VAT';
-                                      valueChosedReason = '0';
-                                      taxCode = 'O0';
-                                      taxSelected = 0.00;
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    } else if (val == 'O1 - 18 % Output VAT') {
-                                      selectedtaxName = 'O1 - 18 % Output VAT';
-                                      valueChosedReason = '18';
-                                      taxCode = 'O1';
-                                      taxSelected = 0.00;
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    } else if (val ==
-                                        'O3 - Exempted Output VAT') {
-                                      selectedtaxName =
-                                          'O3 - Exempted Output VAT';
-                                      taxCode = 'O3';
-                                      valueChosedReason = '0';
-                                      taxSelected = 0.00;
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    } else if (val == 'X0 - Exempt Output') {
-                                      selectedtaxName = 'X0 - Exempt Output';
-                                      valueChosedReason = '0';
-                                      taxCode = 'X0';
-                                      taxSelected = 0.00;
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    }
-
-                                    if('null'==val.toString()){
-                                      valueChossed = null;
-                                    }else{
-                                      valueChossed = val.toString();
-                                    }
-                                    
-                                  });
-                                },
-                                items: taxData2.map((e) {
-                                  return DropdownMenuItem(
-                                      value: "${e['name']}",
-                                      child: Text(
-                                        e['name'].toString(),
+                              child: GetValues.countryCode!.toLowerCase() ==
+                                      'tanzania'
+                                  ? DropdownButton(
+                                      hint: Text(
+                                        "Select Tax: ",
                                         style:
-                                            TextStyles.headlineBlack1(context),
-                                      ));
-                                }).toList(),
-                              ),
+                                            TextStyles.bodytextBlack1(context),
+                                      ),
+                                      value: valueChossed,
+                                      //dropdownColor:Colors.green,
+                                      icon: Icon(Icons.arrow_drop_down),
+                                      iconSize: 30,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16),
+                                      isExpanded: true,
+                                      onChanged: (val) {
+                                        setState(() {
+                                          if (val == 'O0 - 0 % Output VAT') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'O0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O1 - 18 % Output VAT') {
+                                            valueChosedReason = '18';
+                                            taxCode = 'O1';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O3 - Exempted Output VAT') {
+                                            taxCode = 'O3';
+                                            valueChosedReason = '0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'X0 - Exempt Output') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'X0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          }
+
+                                          valueChossed = val.toString();
+
+                                          print(val.toString());
+                                          print("valavalaa: .........." +
+                                              valueChosedReason.toString());
+                                          print("taxSelected: .........." +
+                                              taxSelected.toString());
+                                          print("taxCode: .........." +
+                                              taxCode.toString());
+                                        });
+                                      },
+                                      items: taxData2.map((e) {
+                                        return DropdownMenuItem(
+                                            value: "${e['name']}",
+                                            child: Text(
+                                              e['name'].toString(),
+                                              style: TextStyles.headlineBlack1(
+                                                  context),
+                                            ));
+                                      }).toList(),
+                                    )
+                                  : DropdownButton(
+                                      hint: Text(
+                                        "Select Tax: ",
+                                        style:
+                                            TextStyles.bodytextBlack1(context),
+                                      ),
+                                      value: valueChossed,
+                                      //dropdownColor:Colors.green,
+                                      icon: Icon(Icons.arrow_drop_down),
+                                      iconSize: 30,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16),
+                                      isExpanded: true,
+                                      onChanged: (val) {
+                                        setState(() {
+                                          if (val == 'O0 - 0 % Output VAT') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'O0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O1 - 16 % Output VAT') {
+                                            valueChosedReason = '16';
+                                            taxCode = 'O1';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O3 - Exempted Output VAT') {
+                                            taxCode = 'O3';
+                                            valueChosedReason = '0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'X0 - Exempt Output') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'X0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          }
+
+                                          valueChossed = val.toString();
+
+                                          print(val.toString());
+                                          print("valavalaa: .........." +
+                                              valueChosedReason.toString());
+                                          print("taxSelected: .........." +
+                                              taxSelected.toString());
+                                          print("taxCode: .........." +
+                                              taxCode.toString());
+                                        });
+                                      },
+                                      items: taxData3.map((e) {
+                                        return DropdownMenuItem(
+                                            value: "${e['name']}",
+                                            child: Text(
+                                              e['name'].toString(),
+                                              style: TextStyles.headlineBlack1(
+                                                  context),
+                                            ));
+                                      }).toList(),
+                                    ),
                             ),
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1937,7 +2021,8 @@ valueChossed = null;
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(5)), backgroundColor: theme.primaryColor,
+                                              BorderRadius.circular(5)),
+                                      backgroundColor: theme.primaryColor,
                                     ),
                                     onPressed: () {
                                       setState(() {
@@ -1952,7 +2037,8 @@ valueChossed = null;
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(5)), backgroundColor: theme.primaryColor,
+                                              BorderRadius.circular(5)),
+                                      backgroundColor: theme.primaryColor,
                                     ),
                                     onPressed: () {
                                       validation4Insert(context, i);
@@ -2098,70 +2184,132 @@ valueChossed = null;
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(5)),
-                              child: DropdownButton(
-                                hint: Text(
-                                  "Select Tax: ",
-                                  style: TextStyles.bodytextBlack1(context),
-                                ),
-                                value: valueChossed,
-                                //dropdownColor:Colors.green,
-                                icon: Icon(Icons.arrow_drop_down),
-                                iconSize: 30,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 16),
-                                isExpanded: true,
-                                onChanged: (val) {
-                                  setState(() {
-                                    if (val == 'O0 - 0 % Output VAT') {
-                                      selectedtaxName = 'O0 - 0 % Output VAT';
-                                      valueChosedReason = '0';
-                                      taxCode = 'O0';
-                                      taxSelected = 0.00;
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    } else if (val == 'O1 - 18 % Output VAT') {
-                                      selectedtaxName = 'O1 - 18 % Output VAT';
-                                      valueChosedReason = '18';
-                                      taxCode = 'O1';
-
-                                      taxSelected = 0.00;
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    } else if (val ==
-                                        'O3 - Exempted Output VAT') {
-                                      selectedtaxName =
-                                          'O3 - Exempted Output VAT';
-                                      taxCode = 'O3';
-                                      valueChosedReason = '0';
-                                      taxSelected = 0.00;
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    } else if (val == 'X0 - Exempt Output') {
-                                      selectedtaxName = 'X0 - Exempt Output';
-                                      valueChosedReason = '0';
-                                      taxCode = 'X0';
-                                      taxSelected = double.parse(
-                                          valueChosedReason.toString());
-                                    }
-                                    if('null'==  val.toString()){
-                                      valueChossed = null;
-                                    }else{
-                                        valueChossed = val.toString();
-                                    }
-                                    
-                                  });
-                                },
-                                items: taxData2.map((e) {
-                                  return DropdownMenuItem(
-                                      value: "${e['name']}",
-                                      child: Text(
-                                        e['name'].toString(),
+                              child: GetValues.countryCode!.toLowerCase() ==
+                                      'tanzania'
+                                  ? DropdownButton(
+                                      hint: Text(
+                                        "Select Tax: ",
                                         style:
-                                            TextStyles.headlineBlack1(context),
-                                      ));
-                                }).toList(),
-                              ),
+                                            TextStyles.bodytextBlack1(context),
+                                      ),
+                                      value: valueChossed,
+                                      //dropdownColor:Colors.green,
+                                      icon: Icon(Icons.arrow_drop_down),
+                                      iconSize: 30,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16),
+                                      isExpanded: true,
+                                      onChanged: (val) {
+                                        setState(() {
+                                          if (val == 'O0 - 0 % Output VAT') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'O0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O1 - 18 % Output VAT') {
+                                            valueChosedReason = '18';
+                                            taxCode = 'O1';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O3 - Exempted Output VAT') {
+                                            taxCode = 'O3';
+                                            valueChosedReason = '0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'X0 - Exempt Output') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'X0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          }
+
+                                          valueChossed = val.toString();
+
+                                          print(val.toString());
+                                          print("valavalaa: .........." +
+                                              valueChosedReason.toString());
+                                          print("taxSelected: .........." +
+                                              taxSelected.toString());
+                                          print("taxCode: .........." +
+                                              taxCode.toString());
+                                        });
+                                      },
+                                      items: taxData2.map((e) {
+                                        return DropdownMenuItem(
+                                            value: "${e['name']}",
+                                            child: Text(
+                                              e['name'].toString(),
+                                              style: TextStyles.headlineBlack1(
+                                                  context),
+                                            ));
+                                      }).toList(),
+                                    )
+                                  : DropdownButton(
+                                      hint: Text(
+                                        "Select Tax: ",
+                                        style:
+                                            TextStyles.bodytextBlack1(context),
+                                      ),
+                                      value: valueChossed,
+                                      //dropdownColor:Colors.green,
+                                      icon: Icon(Icons.arrow_drop_down),
+                                      iconSize: 30,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16),
+                                      isExpanded: true,
+                                      onChanged: (val) {
+                                        setState(() {
+                                          if (val == 'O0 - 0 % Output VAT') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'O0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O1 - 16 % Output VAT') {
+                                            valueChosedReason = '16';
+                                            taxCode = 'O1';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'O3 - Exempted Output VAT') {
+                                            taxCode = 'O3';
+                                            valueChosedReason = '0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          } else if (val ==
+                                              'X0 - Exempt Output') {
+                                            valueChosedReason = '0';
+                                            taxCode = 'X0';
+                                            taxSelected = double.parse(
+                                                valueChosedReason.toString());
+                                          }
+
+                                          valueChossed = val.toString();
+
+                                          print(val.toString());
+                                          print("valavalaa: .........." +
+                                              valueChosedReason.toString());
+                                          print("taxSelected: .........." +
+                                              taxSelected.toString());
+                                          print("taxCode: .........." +
+                                              taxCode.toString());
+                                        });
+                                      },
+                                      items: taxData3.map((e) {
+                                        return DropdownMenuItem(
+                                            value: "${e['name']}",
+                                            child: Text(
+                                              e['name'].toString(),
+                                              style: TextStyles.headlineBlack1(
+                                                  context),
+                                            ));
+                                      }).toList(),
+                                    ),
                             ),
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -2169,7 +2317,8 @@ valueChossed = null;
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(5)), backgroundColor: theme.primaryColor,
+                                              BorderRadius.circular(5)),
+                                      backgroundColor: theme.primaryColor,
                                     ),
                                     onPressed: () {
                                       setState(() {
@@ -2184,7 +2333,8 @@ valueChossed = null;
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(5)), backgroundColor: theme.primaryColor,
+                                              BorderRadius.circular(5)),
+                                      backgroundColor: theme.primaryColor,
                                     ),
                                     onPressed: () {
                                       validation4AlertUpdate(context, i);
@@ -2209,19 +2359,25 @@ valueChossed = null;
     {"name": "O3 - Exempted Output VAT"},
     {"name": "X0 - Exempt Output"},
   ];
+  List<Map<String, String>> taxData3 = [
+    {"name": 'O0 - 0 % Output VAT'},
+    {"name": "O1 - 16 % Output VAT"},
+    {"name": "O3 - Exempted Output VAT"},
+    {"name": "X0 - Exempt Output"},
+  ];
   String? valueChosedReason = '0';
   double taxSelected = 0;
 
   Future validation4Insert(BuildContext context, int i) async {
-    if(valueChossed == null){
+    if (valueChossed == null) {
       valueChossed = 'O0 - 0 % Output VAT';
     }
-   
+
     if (formkey[0].currentState!.validate()) {
-       Navigator.pop(context);
-    setState(() {
-      loadingscrn = true;
-    });
+      Navigator.pop(context);
+      setState(() {
+        loadingscrn = true;
+      });
       FocusScopeNode focus = FocusScope.of(context);
       if (!focus.hasPrimaryFocus) {
         focus.unfocus();
@@ -2264,166 +2420,186 @@ valueChossed = null;
     }
   }
 
-  void quotationforsale(){
+  void quotationforsale() {
     setValuesToListPagequotation2();
   }
-void setValuesToListPageapproval() {
-   
-  itemsDetails.clear();
-  for(int i=0;i<itemsDetails3.length; i++){
+
+  void setValuesToListPageapproval() {
+    itemsDetails.clear();
+    for (int i = 0; i < itemsDetails3.length; i++) {
       double price = itemsDetails3[i].price!;
-    int qty = itemsDetails3[i].qty!;
-    double discountper = itemsDetails3[i].discounpercent!;
-    double discount = (price * qty) * discountper / 100;
-    double taxper = itemsDetails3[i].taxPer!;
+      int qty = itemsDetails3[i].qty!;
+      double discountper = itemsDetails3[i].discounpercent!;
+      double discount = (price * qty) * discountper / 100;
+      double taxper = itemsDetails3[i].taxPer!;
 
-    double taxs = ((qty * price) - discount)* taxper / 100;
-  
-    double total = (qty * price)- discount; //- discount) + taxs
-    total=total+taxs;
+      double taxs = ((qty * price) - discount) * taxper / 100;
 
-    double bfd = (qty * price); 
+      double total = (qty * price) - discount; //- discount) + taxs
+      total = total + taxs;
 
+      double bfd = (qty * price);
 
-    int carton1 = 0;
-    print("tax: " + taxs.toStringAsFixed(0));
-    // if (filteritemValue[i].U_Pack_Size! < 10 &&
-    //     filteritemValue[i].U_Tins_Per_Box! > 0) {
-    //   carton1 = (qty / filteritemValue[i].U_Tins_Per_Box!).toInt();
-    //   // print("cartooooooone"+carton1.toString());
-    //   // print("cartooooooone"+carton1.toInt().toString());
-    // }
+      int carton1 = 0;
+      print("tax: " + taxs.toStringAsFixed(0));
+      // if (filteritemValue[i].U_Pack_Size! < 10 &&
+      //     filteritemValue[i].U_Tins_Per_Box! > 0) {
+      //   carton1 = (qty / filteritemValue[i].U_Tins_Per_Box!).toInt();
+      //   // print("cartooooooone"+carton1.toString());
+      //   // print("cartooooooone"+carton1.toInt().toString());
+      // }
 
-    double valueAFdisc1 = (qty * price) - discount;
-    itemsDetails.add(AddItem(
-        itemCode: itemsDetails3[i].itemCode.toString(),
-        itemName: itemsDetails3[i].itemName.toString(),
-        discount: discount,
-        price: price,
-        qty: qty,
-        total: total,
-        tax: taxs,
-        valueBFdisc: bfd,
-        valuechoosed: valueChossed,
-        taxCode: taxCode.toString(),
-        discounpercent: discountper.toDouble(),
-        wareHouseCode: itemsDetails3[i].wareHouseCode,
-        taxName: itemsDetails3[i].taxName,
-        carton: carton1,
-        U_Pack_Size: itemsDetails3[i].U_Pack_Size??0.0,
-        U_Tins_Per_Box: itemsDetails3[i].U_Tins_Per_Box??0,
-        valueAFdisc: valueAFdisc1,
-        taxPer: taxper,
-         basedocentry:itemsDetails3[i].basedocentry ,
-         baseline:itemsDetails3[i].baseline,
-        BaseType: itemsDetails3[i].BaseType
-                ));
-  
+      double valueAFdisc1 = (qty * price) - discount;
+      itemsDetails.add(AddItem(
+          itemCode: itemsDetails3[i].itemCode.toString(),
+          itemName: itemsDetails3[i].itemName.toString(),
+          discount: discount,
+          price: price,
+          qty: qty,
+          total: total,
+          tax: taxs,
+          valueBFdisc: bfd,
+          valuechoosed: valueChossed,
+          taxCode: taxCode.toString(),
+          discounpercent: discountper.toDouble(),
+          wareHouseCode: itemsDetails3[i].wareHouseCode,
+          taxName: itemsDetails3[i].taxName,
+          carton: carton1,
+          U_Pack_Size: itemsDetails3[i].U_Pack_Size ?? 0.0,
+          U_Tins_Per_Box: itemsDetails3[i].U_Tins_Per_Box ?? 0,
+          valueAFdisc: valueAFdisc1,
+          taxPer: taxper,
+          basedocentry: itemsDetails3[i].basedocentry,
+          baseline: itemsDetails3[i].baseline,
+          BaseType: itemsDetails3[i].BaseType));
 
-  
-    // pageController.animateToPage(--pageChanged,
-    //     duration: Duration(milliseconds: 250), curve: Curves.bounceIn);
-    sumofTotal();
-    setState(() {
-      // CreateOrderDetailsState.isCameFromqutation=false;
-      loadingscrn = false;
-    });
+      // pageController.animateToPage(--pageChanged,
+      //     duration: Duration(milliseconds: 250), curve: Curves.bounceIn);
+      sumofTotal();
+      setState(() {
+        // CreateOrderDetailsState.isCameFromqutation=false;
+        loadingscrn = false;
+      });
     }
     itemsDetails;
     itemsDetails3.clear();
   }
 
-void setValuesToListPagequotation2() {
-   
-  itemsDetails.clear();
-  for(int i=0;i<itemsDetails2.length; i++){
+  void setValuesToListPagequotation2() {
+    itemsDetails.clear();
+    for (int i = 0; i < itemsDetails2.length; i++) {
       double price = itemsDetails2[i].price!;
-    int qty = itemsDetails2[i].qty!;
-    double discountper = itemsDetails2[i].discounpercent!;
-    double discount = (price * qty) * discountper / 100;
-    double taxvalue = itemsDetails2[i].tax!;
+      int qty = itemsDetails2[i].qty!;
+      double discountper = itemsDetails2[i].discounpercent!;
+      double discount = (price * qty) * discountper / 100;
+      double taxvalue = itemsDetails2[i].tax!;
 
-   // double taxs = ((qty * price) - discount)* taxper / 100;
-  
-    double total = (qty * price)- discount; //- discount) + taxs
-    total=total+taxvalue;
+      // double taxs = ((qty * price) - discount)* taxper / 100;
 
-    double bfd = (qty * price); 
+      double total = (qty * price) - discount; //- discount) + taxs
+      total = total + taxvalue;
 
+      double bfd = (qty * price);
 
-    int carton1 = 0;
-    print("tax: " + taxvalue.toStringAsFixed(0));
-    // if (filteritemValue[i].U_Pack_Size! < 10 &&
-    //     filteritemValue[i].U_Tins_Per_Box! > 0) {
-    //   carton1 = (qty / filteritemValue[i].U_Tins_Per_Box!).toInt();
-    //   // print("cartooooooone"+carton1.toString());
-    //   // print("cartooooooone"+carton1.toInt().toString());
-    // }
+      int carton1 = 0;
+      print("tax: " + taxvalue.toStringAsFixed(0));
+      // if (filteritemValue[i].U_Pack_Size! < 10 &&
+      //     filteritemValue[i].U_Tins_Per_Box! > 0) {
+      //   carton1 = (qty / filteritemValue[i].U_Tins_Per_Box!).toInt();
+      //   // print("cartooooooone"+carton1.toString());
+      //   // print("cartooooooone"+carton1.toInt().toString());
+      // }
 
-    double valueAFdisc1 = (qty * price) - discount;
-    itemsDetails.add(AddItem(
-        itemCode: itemsDetails2[i].itemCode.toString(),
-        itemName: itemsDetails2[i].itemName.toString(),
-        discount: discount,
-        price: price,
-        qty: qty,
-        total: total,
-        tax: taxvalue,
-        valueBFdisc: bfd,
-        valuechoosed: valueChossed,
-        taxCode: itemsDetails2[i].taxCode,
-        discounpercent: discountper.toDouble(),
-        wareHouseCode: itemsDetails2[i].wareHouseCode,
-        taxName: getTaxNane(itemsDetails2[i].taxCode.toString()),
-        carton: carton1,
-        U_Pack_Size: itemsDetails2[i].U_Pack_Size??0.0,
-        U_Tins_Per_Box: itemsDetails2[i].U_Tins_Per_Box??0,
-        valueAFdisc: valueAFdisc1,
-        taxPer: itemsDetails2[i].taxPer,
-        basedocentry:itemsDetails2[i].basedocentry ,
-        baseline:itemsDetails2[i].baseline 
-         ));
-  
+      double valueAFdisc1 = (qty * price) - discount;
+      itemsDetails.add(AddItem(
+          itemCode: itemsDetails2[i].itemCode.toString(),
+          itemName: itemsDetails2[i].itemName.toString(),
+          discount: discount,
+          price: price,
+          qty: qty,
+          total: total,
+          tax: taxvalue,
+          valueBFdisc: bfd,
+          valuechoosed: valueChossed,
+          taxCode: itemsDetails2[i].taxCode,
+          discounpercent: discountper.toDouble(),
+          wareHouseCode: itemsDetails2[i].wareHouseCode,
+          taxName: GetValues.countryCode!.toLowerCase() == 'tanzania'
+              ? getTaxNane(itemsDetails2[i].taxCode.toString())
+              : getTaxNameZ(itemsDetails2[i].taxCode.toString()),
 
-  
-    // pageController.animateToPage(--pageChanged,
-    //     duration: Duration(milliseconds: 250), curve: Curves.bounceIn);
-  
-    setState(() {
-      // CreateOrderDetailsState.isCameFromqutation=false;
-      loadingscrn = false;
-    });
+          // getTaxNane(itemsDetails2[i].taxCode.toString()),
+          carton: carton1,
+          U_Pack_Size: itemsDetails2[i].U_Pack_Size ?? 0.0,
+          U_Tins_Per_Box: itemsDetails2[i].U_Tins_Per_Box ?? 0,
+          valueAFdisc: valueAFdisc1,
+          taxPer: itemsDetails2[i].taxPer,
+          basedocentry: itemsDetails2[i].basedocentry,
+          baseline: itemsDetails2[i].baseline));
+
+      // pageController.animateToPage(--pageChanged,
+      //     duration: Duration(milliseconds: 250), curve: Curves.bounceIn);
+
+      setState(() {
+        // CreateOrderDetailsState.isCameFromqutation=false;
+        loadingscrn = false;
+      });
     }
-        isCalculated = true;
-      sumofTotal();
+    isCalculated = true;
+    sumofTotal();
   }
 
- String getTaxNane(String code){
-  String res = '';
-  switch (code) {
-     case "O0":
-     res =  'O0 - 0 % Output VAT';
-     break;
+  String getTaxNane(String code) {
+    String res = '';
+    switch (code) {
+      case "O0":
+        res = 'O0 - 0 % Output VAT';
+        break;
 
-     case "O1":
-     res =  'O1 - 18 % Output VAT';
-     break;
+      case "O1":
+        res = 'O1 - 18 % Output VAT';
+        break;
 
-     case "O3":
-     res =  'O3 - Exempted Output VAT';
-     break;
+      case "O3":
+        res = 'O3 - Exempted Output VAT';
+        break;
 
-     case "0":
-     res =  'X0 - Exempt Output';
-     break;
+      case "0":
+        res = 'X0 - Exempt Output';
+        break;
 
-     case "null":
-     res =  'O0 - 0 % Output VAT';
-     break;
-  }
+      case "null":
+        res = 'O0 - 0 % Output VAT';
+        break;
+    }
     return res;
   }
 
+  String getTaxNameZ(String code) {
+    String res = '';
+    switch (code) {
+      case "O0":
+        res = 'O0 - 0 % Output VAT';
+        break;
+
+      case "O1":
+        res = 'O1 - 16 % Output VAT';
+        break;
+
+      case "O3":
+        res = 'O3 - Exempted Output VAT';
+        break;
+
+      case "0":
+        res = 'X0 - Exempt Output';
+        break;
+
+      case "null":
+        res = 'O0 - 0 % Output VAT';
+        break;
+    }
+    return res;
+  }
 
   void setValuesToListPage(int i) {
     double price = double.parse(mycontroller[1].text);
@@ -2433,15 +2609,15 @@ void setValuesToListPagequotation2() {
     double discount = (price * qty) * discountper / 100;
     double taxper = taxSelected;
 
-    double taxs = ((qty * price) - discount)* taxper / 100;
-    print("qty*price "+(qty * price).toString());
-    print("qty*price- discount: "+(qty * price- discount).toString());
-    print("qty*price- discount* taxper / 100 : "+((qty * price- discount)* taxper / 100).toString());
-    double total = (qty * price)- discount; //- discount) + taxs
-    total=total+taxs;
+    double taxs = ((qty * price) - discount) * taxper / 100;
+    print("qty*price " + (qty * price).toString());
+    print("qty*price- discount: " + (qty * price - discount).toString());
+    print("qty*price- discount* taxper / 100 : " +
+        ((qty * price - discount) * taxper / 100).toString());
+    double total = (qty * price) - discount; //- discount) + taxs
+    total = total + taxs;
 
-    double bfd = (qty * price); 
-
+    double bfd = (qty * price);
 
     int carton1 = 0;
     print("tax: " + taxs.toStringAsFixed(0));
@@ -2480,10 +2656,9 @@ void setValuesToListPagequotation2() {
     });
   }
 
-  String? taxCode ='O0';
+  String? taxCode = 'O0';
   double grandtotal = 0;
   double discount = 0;
-
 
   void sumofTotal() {
     double basictotal = 0;
@@ -2503,7 +2678,7 @@ void setValuesToListPagequotation2() {
         //total over
         HeaderEditOrderPageState.discount = discount;
         HeaderEditOrderPageState.tax = tax;
-        HeaderEditOrderPageState.total = basictotal ;
+        HeaderEditOrderPageState.total = basictotal;
         HeaderEditOrderPageState.totalBeforeDiscount = bfd;
       } else {
         setState(() {
@@ -2520,18 +2695,17 @@ void setValuesToListPagequotation2() {
   }
 
   Future validation4AlertUpdate(BuildContext context, int i) async {
-  
     if (formkey[1].currentState!.validate()) {
       FocusScopeNode focus = FocusScope.of(context);
       if (!focus.hasPrimaryFocus) {
         focus.unfocus();
       }
       currentDate2();
-        Navigator.pop(context);
-    setState(() {
-      loaditemPage = true;
-    });
-      SpecialDiscountAPi.itemCode =itemsDetails[i].itemCode;
+      Navigator.pop(context);
+      setState(() {
+        loaditemPage = true;
+      });
+      SpecialDiscountAPi.itemCode = itemsDetails[i].itemCode;
       DiscountAPi.getGlobalData(
               HeaderEditOrderPageState.bpCode,
               SpecialDiscountAPi.itemCode!,
@@ -2588,7 +2762,7 @@ void setValuesToListPagequotation2() {
     itemsDetails[i].valuechoosed = valueChossed.toString();
     itemsDetails[i].discounpercent = discountpers.toDouble(); //selectedtaxName
     itemsDetails[i].valueAFdisc = valueAFDisc;
-          itemsDetails[i].taxPer=taxper;
+    itemsDetails[i].taxPer = taxper;
 
     if (itemsDetails[i].U_Pack_Size! < 10 &&
         itemsDetails[i].U_Tins_Per_Box! > 0) {
@@ -2603,4 +2777,3 @@ void setValuesToListPagequotation2() {
     });
   }
 }
-

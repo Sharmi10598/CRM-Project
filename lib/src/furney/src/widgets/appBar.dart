@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
+import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
 AppBar appBar(
     BuildContext context, GlobalKey<ScaffoldState> key, String title) {
@@ -14,8 +15,6 @@ AppBar appBar(
   final width = MediaQuery.of(context).size.width;
   var isTSH = false;
   final theme = Theme.of(context);
-
-
 
   return AppBar(
       leading: GestureDetector(
@@ -64,22 +63,21 @@ AppBar appBar(
                             TextStyle(fontSize: Screens.width(context) * 0.04)),
                   ),
                   Switch(
-                       value: isTSH,
+                    value: isTSH,
                     onChanged: (value) {
-                      // log("value:::${value}");
                       setState(() {
                         isTSH = value;
-                      log("isTSH:::${isTSH}");
-
+                        log("isTSH D:::$isTSH");
                       });
                     },
                     // activeColor: theme.primaryColor,
                     // activeTrackColor: Colors.white,
                     inactiveTrackColor: theme.primaryColor,
-                 
                   ),
                   Text(
-                    AppLocalizations.of(context)!.tzs,
+                    GetValues.currency == 'TZS'
+                        ? AppLocalizations.of(context)!.tzs
+                        : AppLocalizations.of(context)!.zmw,
                     style: GoogleFonts.poppins(
                         color: Colors.white,
                         textStyle: TextStyle(

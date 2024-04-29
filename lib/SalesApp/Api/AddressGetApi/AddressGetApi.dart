@@ -17,7 +17,7 @@ class AddressMasterApi {
         Uri.parse(
             'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lan,$long&key=AIzaSyA5hgVuwQMn60iwC7jh098QjJOT5T8Vwe0'),
         headers: {
-          "content-type": "application/json",
+          'content-type': 'application/json',
         },
       );
       resCode = response.statusCode;

@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, require_trailing_commas, prefer_if_elements_to_conditional_expressions, prefer_single_quotes, prefer_final_locals, omit_local_variable_types, unnecessary_string_interpolations
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/route_manager.dart';
@@ -42,7 +44,7 @@ class HeaderOrderCreationState extends State<HeaderOrderCreation> {
   ///
   static String docNo = '0'; //
   static String contactPerson = ''; //
-  static String currency = 'TZS'; //
+  // static String currency = 'TZS'; //
   static String status = 'open'; //
   static String? salesEmp; //
   static double totalBeforeDiscount = 0; //
@@ -97,6 +99,7 @@ class HeaderOrderCreationState extends State<HeaderOrderCreation> {
 
       // (documentLines![i].lineTotal!));
       tax = tax + documentLines![i].tax!;
+      log("taxtaxvalll::${tax}");
       netvalue = (basictotal - discount) + tax;
       total = netvalue;
       //
@@ -335,7 +338,7 @@ class HeaderOrderCreationState extends State<HeaderOrderCreation> {
                             width: Screens.width(context) * 0.83,
                             // color: Colors.blue,
                             child: Text(
-                              "$currency",
+                              GetValues.currency.toString(),
                               style: TextStyles.headlineBlack1(context),
                             ),
                           ),

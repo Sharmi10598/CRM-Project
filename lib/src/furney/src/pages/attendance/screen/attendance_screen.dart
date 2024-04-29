@@ -614,7 +614,7 @@ class _AttendancePageState extends State<AttendancePage> {
                                       .then((value) {
                                     if (value.attendanceData![0].msg ==
                                         "Successfully Inserted") {
-                                      setState(() => _isLoading = false);
+                                      setState(() => _isLoading = true);
                                       const snackBar = SnackBar(
                                         backgroundColor: Colors.green,
                                         duration: Duration(seconds: 1),

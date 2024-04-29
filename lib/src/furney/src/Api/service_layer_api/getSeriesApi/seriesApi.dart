@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, prefer_single_quotes
 
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
 import 'package:ultimate_bundle/src/furney/src/Modal/service_layer_modal/seriesModal/seriesModal.dart';
@@ -28,9 +29,9 @@ class SeriesAPi{
             }
           }),
       );
+        // log("SeriesAPiiiiiiiii: ${json.decode(response.body)}");
           
       if (response.statusCode <= 210) {// || response.statusCode <= 210
-        print("SeriesAPiiiiiiiii: ${json.decode(response.body)}");
         print(response.statusCode);
         return SeriesModal.fromJson(json.decode(response.body)as Map<String,dynamic>);
       } else {

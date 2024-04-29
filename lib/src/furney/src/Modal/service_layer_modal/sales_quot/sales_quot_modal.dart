@@ -45,7 +45,7 @@ class SalesQuotModal {
   factory SalesQuotModal.issue(Map<String, dynamic> jsons) {
     return SalesQuotModal(
       odatametadata: null,
-      error: jsons['data'].toString(),
+      error:null,
     );
   }
   factory SalesQuotModal.exception(String e) {

@@ -61,6 +61,7 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
   @override
   void initState() {
     super.initState();
+    log("isLoading:::" + isLoading.toString());
     SalesDetailsQtAPi.getGlobalData(basedocentry).then((value) {
       getdocumentApprovalValuee = [];
       approvalDetailsValue = null;
@@ -188,7 +189,6 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
                                         "$docTypeName based on draft no. ${approvalDetailsValue!.docNum}", //${approvalDetailsValue!.DocNum}
                                         style:
                                             TextStyles.headlineBlack1(context),
-                                            
                                       ),
                                     ),
                                   ],
@@ -421,16 +421,26 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
                     Container(
                       height: Screens.heigth(context) * 0.06,
                       child: CustomSpinkitdButton(
-                        onTap: () async {
-                          setState(() {
-                            isLoading = true;
-                          });
+                        onTap: getdocumentApprovalValuee.isEmpty
+                            ? null
+                            : () async {
+                                setState(() {
+                                  isLoading = true;
+                                });
 
-                          salequoteReportApi.getGlobalData(
-                              approvalDetailsValue!.docEntry.toString());
-                          // callSalesOrderInfoApiForPDF();
-                          // callServiceLayerApi();
-                        },
+                                await salequoteReportApi
+                                    .getGlobalData(approvalDetailsValue!
+                                        .docEntry
+                                        .toString())
+                                    .then((value) {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                });
+
+                                // callSalesOrderInfoApiForPDF();
+                                // callServiceLayerApi();
+                              },
                         isLoading: isLoading,
                         label: 'Convert to pdf',
                       ),
@@ -443,94 +453,151 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
                         : Container(
                             height: Screens.heigth(context) * 0.06,
                             child: CustomSpinkitdButton(
-                              onTap: () async {
-                                CreateOrderDetailsState.isCameFromqutation =
-                                    true;
-                                HeaderOrderCreationState.bpCode =
-                                    approvalDetailsValue!.cardCode!; //;;
-                                HeaderOrderCreationState.bpName =
-                                    approvalDetailsValue!.cardName!;
-                                HeaderOrderCreationState.docNo =
-                                    approvalDetailsValue!.docNum!.toString();
-                                HeaderOrderCreationState.salesEmp =
-                                    GetValues.userName;
-                                ContentOrderCreationState.itemsDetails2.clear();
-                                for (int i = 0;
-                                    i < getdocumentApprovalValuee.length;
-                                    i++) {
-                                  double taxxTotal =
-                                      getdocumentApprovalValuee[i].taxTotal !=
-                                              null
-                                          ? getdocumentApprovalValuee[i]
-                                              .taxTotal!
-                                          : 0;
+                              onTap: getdocumentApprovalValuee.isEmpty
+                                  ? null
+                                  : () async {
+                                      CreateOrderDetailsState
+                                          .isCameFromqutation = true;
+                                      HeaderOrderCreationState.bpCode =
+                                          approvalDetailsValue!.cardCode!; //;;
+                                      HeaderOrderCreationState.bpName =
+                                          approvalDetailsValue!.cardName!;
+                                      HeaderOrderCreationState.docNo =
+                                          approvalDetailsValue!.docNum!
+                                              .toString();
+                                      HeaderOrderCreationState.salesEmp =
+                                          GetValues.userName;
+                                      ContentOrderCreationState.itemsDetails2
+                                          .clear();
+                                      ContentOrderCreationState.itemsDetails
+                                          .clear();
+                                      ContentOrderCreationState.isCalculated =
+                                          false;
+                                      for (int i = 0;
+                                          i < getdocumentApprovalValuee.length;
+                                          i++) {
+                                        double taxxTotal =
+                                            getdocumentApprovalValuee[i]
+                                                        .taxTotal !=
+                                                    null
+                                                ? getdocumentApprovalValuee[i]
+                                                    .taxTotal!
+                                                : 0;
 
-                                  ContentOrderCreationState.itemsDetails2.add(
-                                      AddItem(
-                                          itemCode: getdocumentApprovalValuee[i]
-                                              .itemCode!,
-                                          itemName: getdocumentApprovalValuee[i]
-                                              .itemDescription!,
-                                          price: getdocumentApprovalValuee[i]
-                                              .unitPrice,
-                                              lineTotal:getdocumentApprovalValuee[i].lineTotal ,
-                                          unitPrice:
-                                              getdocumentApprovalValuee[i]
-                                                  .unitPrice,
-                                          discount: 0,
-                                          qty: int.parse(
-                                              getdocumentApprovalValuee[i]
-                                                  .quantity!
-                                                  .toStringAsFixed(0)),
-                                          total: getdocumentApprovalValuee[i]
-                                              .total,
-                                          tax: taxxTotal,
-                                          // getdocumentApprovalValuee[i]
-                                          //     .taxTotal,
-                                          valuechoosed: "",
-                                          discounpercent: 0,
-                                          taxCode: getdocumentApprovalValuee[i]
-                                                      .taxCode ==
-                                                  null
-                                              ? isTaxApplied(
-                                                  getdocumentApprovalValuee[i]
-                                                      .lineTotal!,
-                                                  taxxTotal
-                                                  // getdocumentApprovalValuee[i]
-                                                  //     .taxTotal!
-                                                  )
-                                              : getdocumentApprovalValuee[i]
-                                                  .taxCode!
-                                                  .toString(),
-                                          taxPer: caluclateTaxpercent(
-                                              getdocumentApprovalValuee[i]
-                                                  .lineTotal!,
-                                              taxxTotal
-                                              // getdocumentApprovalValuee[i]
-                                              //     .taxTotal!
-                                              ),
-                                          wareHouseCode: GetValues.branch.toString(),
-                                          // documentApprovalValue[i]
-                                          //     .warehouseCode,
-                                          taxName: "",
-                                          baseline: getdocumentApprovalValuee[i].lineNum.toString(),
-                                          basedocentry: docEntryforSO));
-                                }
-                                HeaderOrderCreationState.mycontroller[0].text =
-                                    "";
-                                HeaderOrderCreationState.documentLines =
-                                    ContentOrderCreationState.itemsDetails2;
-                                LogisticOrderState.valueSelectedOrder = null;
-                                LogisticOrderState.valueSelectedGPApproval =
-                                    null;
-                                LogisticOrderState.mycontroller[0].text = "";
-                                LogisticOrderState.mycontroller[1].text = "";
-                                Get.toNamed<dynamic>(
-                                    FurneyRoutes.creationOrderDetails);
-                                // callServiceLayerApi();
-                              },
+                                        String taxNamee =
+                                            getdocumentApprovalValuee[i]
+                                                            .taxCode ==
+                                                        null ||
+                                                    getdocumentApprovalValuee[i]
+                                                            .taxCode ==
+                                                        'null'
+                                                ? isTaxApplied(
+                                                    getdocumentApprovalValuee[i]
+                                                        .lineTotal!,
+                                                    taxxTotal
+                                                    // getdocumentApprovalValuee[i]
+                                                    //     .taxTotal!
+                                                    )
+                                                : getdocumentApprovalValuee[i]
+                                                    .taxCode!;
+
+                                        log('taxNameetaxNamee::$taxNamee');
+                                        ContentOrderCreationState.itemsDetails2
+                                            .add(AddItem(
+                                                itemCode: getdocumentApprovalValuee[i]
+                                                    .itemCode!,
+                                                itemName:
+                                                    getdocumentApprovalValuee[i]
+                                                        .itemDescription!,
+                                                price: getdocumentApprovalValuee[i]
+                                                    .unitPrice,
+                                                lineTotal:
+                                                    getdocumentApprovalValuee[i]
+                                                        .lineTotal,
+                                                unitPrice:
+                                                    getdocumentApprovalValuee[i]
+                                                        .unitPrice,
+                                                discount: 0,
+                                                qty: int.parse(
+                                                    getdocumentApprovalValuee[i]
+                                                        .quantity!
+                                                        .toStringAsFixed(0)),
+                                                total: getdocumentApprovalValuee[i]
+                                                    .total,
+                                                tax: 0,
+                                                // getdocumentApprovalValuee[i]
+                                                //     .taxTotal,
+                                                valuechoosed: "",
+                                                discounpercent: 0,
+                                                // taxName=getdocumentApprovalValuee[i].taxName;
+                                                taxCode: taxNamee,
+                                                taxPer: caluclateTaxpercent(
+                                                    getdocumentApprovalValuee[i]
+                                                        .lineTotal!,
+                                                    taxxTotal
+                                                    // getdocumentApprovalValuee[i]
+                                                    //     .taxTotal!
+                                                    ),
+                                                wareHouseCode:
+                                                    GetValues.branch.toString(),
+                                                // documentApprovalValue[i]
+                                                //     .warehouseCode,
+                                                taxName: "",
+                                                baseline: getdocumentApprovalValuee[i].lineNum.toString(),
+                                                basedocentry: docEntryforSO));
+                                      }
+                                      for (int i = 0;
+                                          i <
+                                              ContentOrderCreationState
+                                                  .itemsDetails2.length;
+                                          i++) {
+                                        double discount =
+                                            (ContentOrderCreationState
+                                                        .itemsDetails2[i]
+                                                        .price! *
+                                                    ContentOrderCreationState
+                                                        .itemsDetails2[i]
+                                                        .qty!) *
+                                                ContentOrderCreationState
+                                                    .itemsDetails2[i]
+                                                    .discounpercent! /
+                                                100;
+
+                                        double taxs = ((ContentOrderCreationState
+                                                        .itemsDetails2[i]
+                                                        .price! *
+                                                    ContentOrderCreationState
+                                                        .itemsDetails2[i]
+                                                        .qty!) -
+                                                discount) *
+                                            ContentOrderCreationState
+                                                .itemsDetails2[i].taxPer! /
+                                            100;
+
+                                        ContentOrderCreationState
+                                            .itemsDetails2[i].tax = taxs;
+                                      }
+
+                                      HeaderOrderCreationState
+                                          .mycontroller[0].text = "";
+                                      HeaderOrderCreationState.documentLines =
+                                          ContentOrderCreationState
+                                              .itemsDetails2;
+
+                                      LogisticOrderState.valueSelectedOrder =
+                                          null;
+                                      LogisticOrderState
+                                          .valueSelectedGPApproval = null;
+                                      LogisticOrderState.mycontroller[0].text =
+                                          "";
+                                      LogisticOrderState.mycontroller[1].text =
+                                          "";
+                                      Get.toNamed<dynamic>(
+                                          FurneyRoutes.creationOrderDetails);
+                                      // callServiceLayerApi();
+                                    },
                               isLoading: isLoading,
-                              label: 'Convert to Sales order',
+                              label: 'Convert to sales order',
                             ),
                           ),
 
@@ -544,49 +611,57 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
                               Container(
                                 height: Screens.heigth(context) * 0.06,
                                 child: CustomSpinkitdButton(
-                                  onTap: () async {
-                                    ContentEditCreationState
-                                        .isCameFromqutation = true;
-                                    HeaderEditCreationState.currentDateTime =
-                                        approvalDetailsValue!.docDate!; //;;
-                                    HeaderEditCreationState.bpCode =
-                                        approvalDetailsValue!.cardCode!; //;;
-                                    HeaderEditCreationState.bpName =
-                                        approvalDetailsValue!.cardName!;
-                                    HeaderEditCreationState.docNo =
-                                        approvalDetailsValue!.docNum!
-                                            .toString();
-                                    HeaderEditCreationState.salesEmp =
-                                        GetValues.userName!;
-                                    ContentEditCreationState.contentitemsDetails
-                                        .clear();
+                                  onTap: getdocumentApprovalValuee.isEmpty
+                                      ? null
+                                      : () async {
+                                          ContentEditCreationState
+                                              .isCameFromqutation = true;
+                                          HeaderEditCreationState
+                                                  .currentDateTime =
+                                              approvalDetailsValue!
+                                                  .docDate!; //;;
+                                          HeaderEditCreationState.bpCode =
+                                              approvalDetailsValue!
+                                                  .cardCode!; //;;
+                                          HeaderEditCreationState.bpName =
+                                              approvalDetailsValue!.cardName!;
+                                          HeaderEditCreationState.docNo =
+                                              approvalDetailsValue!.docNum!
+                                                  .toString();
+                                          HeaderEditCreationState.salesEmp =
+                                              GetValues.userName!;
+                                          ContentEditCreationState
+                                              .contentitemsDetails
+                                              .clear();
 
-                                    HeaderEditCreationState
-                                        .mycontroller[0].text = "";
-                                    // valueChossed
-                                    // LogisticEditPageState.valueSelectedOrder =
-                                    //     null;
-                                    // LogisticEditPageState
-                                    //     .valueSelectedGPApproval = null;
-                                    // LogisticEditPageState.mycontroller[0].text =
-                                    //     "";
-                                    // LogisticEditPageState.mycontroller[1].text =
-                                    //     "";
-                                    // Get.toNamed<dynamic>(
-                                    //     FurneyRoutes.editSalesQuot);
-                                    // callServiceLayerApi();
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => EditDetails(
-                                                getdocumentApprovalValue:
-                                                    getdocumentApprovalValuee,
-                                                docentry: approvalDetailsValue!
-                                                    .docEntry!,
-                                                title: 'Edit Quotation',
-                                              )),
-                                    );
-                                  },
+                                          HeaderEditCreationState
+                                              .mycontroller[0].text = "";
+                                          // valueChossed
+                                          // LogisticEditPageState.valueSelectedOrder =
+                                          //     null;
+                                          // LogisticEditPageState
+                                          //     .valueSelectedGPApproval = null;
+                                          // LogisticEditPageState.mycontroller[0].text =
+                                          //     "";
+                                          // LogisticEditPageState.mycontroller[1].text =
+                                          //     "";
+                                          // Get.toNamed<dynamic>(
+                                          //     FurneyRoutes.editSalesQuot);
+                                          // callServiceLayerApi();
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditDetails(
+                                                      getdocumentApprovalValue:
+                                                          getdocumentApprovalValuee,
+                                                      docentry:
+                                                          approvalDetailsValue!
+                                                              .docEntry!,
+                                                      title: 'Edit Quotation',
+                                                    )),
+                                          );
+                                        },
                                   isLoading: isLoading,
                                   label: 'Edit',
                                 ),
@@ -608,10 +683,20 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
   }
 
   String isTaxApplied(double total, double tax) {
+    log('message1');
     double res = 0;
+    double res1 = 0;
+
     String isaval = "";
+
     res = tax / total * 100;
-    isaval = res == 18 ? "O1" : "null";
+    res1 = double.parse(res.toStringAsFixed(2));
+    log('resresresres11::$res1');
+    if (GetValues.countryCode!.toLowerCase() == 'tanzania') {
+      isaval = res1 == 18 ? "O1" : "null";
+    } else {
+      isaval = res1 == 16 ? "O1" : "null";
+    }
 
     return isaval;
   }
@@ -657,7 +742,7 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
     }
   }
 
-  bool isLoading = false;
+  static bool isLoading = false;
   List<GlobalKey<FormState>> formkey =
       List.generate(3, (i) => GlobalKey<FormState>());
   String? successString;

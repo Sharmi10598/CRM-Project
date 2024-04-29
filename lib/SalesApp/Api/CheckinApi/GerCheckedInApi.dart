@@ -18,15 +18,16 @@ class GetCheckedINAPi {
           },
           body: json.encode({
             "constr":
-                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+            //     "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
             "query":
                 "Select T0.ClgCode, T0.CardCode , CardName,T2.Name VisitReg,CntctTime,CntctDate,T0.Details,CntctSbjct From oclg T0 Inner Join OCRD T1 on T0.CardCode = T1.CardCode Inner Join OCLS T2 on T2.Code = T0.CntctSbjct where T0.slpcode = ${GetValues.slpCode!} and U_CheckedIn = 'Yes' and U_Status = 'A' ", //and U_PlanDate='${currentDate}'  '${GetValues.slpCode}'
           }));
 
       // print('B1SESSION='+ GetValues.sessionID.toString());
       // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
-      //  log("checkdddd innn: " + json.decode(response.body).toString());
-      print(response.statusCode);
+      log("checkdddd innn: " + json.decode(response.body).toString());
+      log("checkdddd response::${response.statusCode}");
       if (response.statusCode == 200) {
         return GetCheckedINModel.fromJson(response.body, response.statusCode);
       } else {

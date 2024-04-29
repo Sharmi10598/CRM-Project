@@ -19,80 +19,80 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import 'dart:typed_data';
 
-
 import 'package:url_launcher/url_launcher.dart';
-class SalesOnDayExcelAPi{
+
+class SalesOnDayExcelAPi {
   static String? slpCode;
   static String? fromDate;
   static String? toDate;
 
-  static Future<int> getGlobalData() async {    
+  static Future<int> getGlobalData() async {
     try {
-      log("URL"+URL.reportUrl+  'SalesInDay/$fromDate,$toDate,$slpCode');
-    final response = await http.get(
+      log("SalesOnDayExcelAPi" +
+          URL.reportUrl +
+          'SalesInDay/$fromDate,$toDate,$slpCode');
+      final response = await http.get(
         Uri.parse(
-     URL.reportUrl+  'SalesInDayExcel/$fromDate,$toDate,$slpCode', //866   $docEntry
-      ),
+          URL.reportUrl +
+              'SalesInDayExcel/$fromDate,$toDate,$slpCode', //866   $docEntry
+        ),
         headers: {
-        'content-type': 'application/octet-stream',
+          'content-type': 'application/octet-stream',
         },
       );
-      if (response.statusCode == 200) {
+      log("bodyBytes: " + response.bodyBytes.toString());
 
- 
-log("bodyBytes: "+ response.bodyBytes.toString());
-      // log("bodyBytes: "+ response.bodyBytes.toString());
-         final bytes =  response.bodyBytes;
+      if (response.statusCode == 200) {
+        // log("bodyBytes: "+ response.bodyBytes.toString());
+        final bytes = response.bodyBytes;
         //  log("Uint8List bytes: "+bytes.toString());
-       final tempDir = await getTemporaryDirectory();
-     final file = await File('${tempDir.path}/SalesInDay-$slpCode.xlsx').create();
-     file.writeAsBytesSync(bytes);
-     await   OpenFile.open(file.path);
+        final tempDir = await getTemporaryDirectory();
+        final file =
+            await File('${tempDir.path}/SalesInDay-$slpCode.xlsx').create();
+        file.writeAsBytesSync(bytes);
+        await OpenFile.open(file.path);
 
         SReportsState.isLoading = false;
-     return 200;
+        return 200;
       } else {
-  
-      return 400;
+        return 400;
       }
     } catch (e) {
-       log(e.toString());
+      log(e.toString());
 
-     return 500;
+      return 500;
     }
   }
 
- static Future<void> mainss() async {
-  // Open README.md as a byte stream
-  final fileStream = File('README.md').openRead();
+  static Future<void> mainss() async {
+    // Open README.md as a byte stream
+    final fileStream = File('README.md').openRead();
 
-  // Read all bytes from the stream
-  final bytes = await readByteStream(fileStream);
-  print(bytes);
-  // Convert content to string using utf8 codec from dart:convert and print
-  print(utf8.decode(bytes));
-}
- 
-}
- 
- Future<void> launchUrlInBrowser(String url) async {
-    if (!await launchUrl(Uri.file(url),
-        mode: LaunchMode.externalApplication)) {
-      throw 'Could not launch $url';
-    }
+    // Read all bytes from the stream
+    final bytes = await readByteStream(fileStream);
+    print(bytes);
+    // Convert content to string using utf8 codec from dart:convert and print
+    print(utf8.decode(bytes));
   }
+}
 
-  List<String> rowdetail = [];
+Future<void> launchUrlInBrowser(String url) async {
+  if (!await launchUrl(Uri.file(url), mode: LaunchMode.externalApplication)) {
+    throw 'Could not launch $url';
+  }
+}
+
+List<String> rowdetail = [];
 
 _importFromExcel(File path) async {
-    if (await path.exists()) {
+  if (await path.exists()) {
     final bytes = await path.readAsBytes();
     final excel = Excel.decodeBytes(bytes);
 
     for (var table in excel.tables.keys) {
       print(table); //sheet Name
       var sheet = excel.tables[table]!;
-      print(sheet.maxCols);
+      print(sheet.maxColumns);
       print(sheet.maxRows);
 
       for (var row in sheet.rows) {
@@ -102,6 +102,4 @@ _importFromExcel(File path) async {
   } else {
     print('Excel file does not exist.');
   }
-
 }
-

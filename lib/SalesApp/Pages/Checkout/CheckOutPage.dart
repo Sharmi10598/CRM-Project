@@ -53,19 +53,19 @@ class _firstpageState extends State<CheckOutPage> {
   }
 
   bool isselected = false;
-  void checkInternet() async {
+  checkInternet() async {
     bool internet = await config.haveInterNet();
-    print("datatata: " + GetValues.U_CrpUsr!.toLowerCase());
+    log("datatata: " + GetValues.U_CrpUsr!.toLowerCase());
     if (internet) {
-      log(internet.toString());
+      log("internet:::" + internet.toString());
       await getActivityApi();
-      determinePosition55(context);
-
-      // determinePosition();
       await allSubGroupApi();
       await allActiveProjectApi();
+      await determinePosition55(context);
+
+      // determinePosition();
     } else {
-      determinePosition55(context);
+      await determinePosition55(context);
       // await determinePosition();
       await getValuesFromDB();
       await getSubGrpFDB();
@@ -127,12 +127,12 @@ class _firstpageState extends State<CheckOutPage> {
         setState(() {});
         if (value.activitiesData != null) {
           checkedINData = value.activitiesData!;
-          print("datatatat: " + checkedINData[0].ClgCode.toString());
+          log("datatatat: " + checkedINData[0].ClgCode.toString());
           mycontroller[0].text = checkedINData[0].Details.toString();
           mycontroller[16].text = checkedINData[0].CardName!;
         } else {
           loading = false;
-          msg = 'No data fount';
+          msg = ' No data found';
           setState(() {});
         }
       } else if (value.statusCode! >= 400 && value.statusCode! <= 410) {
@@ -149,8 +149,8 @@ class _firstpageState extends State<CheckOutPage> {
 
   String? longi;
   String? lati;
-  String latitude = '';
-  String langitude = '';
+  String latitudee = '';
+  String langitudee = '';
   // String? adrress;
   String? url;
   List<LoginUserData>? loginUserData;
@@ -167,9 +167,10 @@ class _firstpageState extends State<CheckOutPage> {
 
   Future<void> determinePosition55(BuildContext context) async {
     bool? serviceEnabled;
-    latitude = "";
+    latitudee = "";
     adrresss = "";
-    langitude = "";
+    langitudee = "";
+
     LocationPermission permission;
     try {
       LocationPermission permission;
@@ -189,20 +190,22 @@ class _firstpageState extends State<CheckOutPage> {
 
           // if (permission == LocationPermission.deniedForever) {}
           var pos = await Geolocator.getCurrentPosition();
-          latitude = pos.latitude == '' || pos.latitude == 'null'
+          latitudee = pos.latitude == '' || pos.latitude == 'null'
               ? '0.0'
               : pos.latitude.toString();
-          langitude = pos.longitude == '' || pos.longitude == 'null'
+          langitudee = pos.longitude == '' || pos.longitude == 'null'
               ? '0.0'
               : pos.longitude.toString();
+          var lat = double.parse(latitudee);
+          var long = double.parse(langitudee);
+          lati1 = double.parse(latitudee);
+          lang2 = double.parse(langitudee);
 
+          log("lat and lang::${lati1!}, ${lang2!}");
           // url = 'https://www.openstreetmap.org/#map=11/$latitude/$langitude';
           // MapSampleState.lati1 = double.parse(latitude);
           // MapSampleState.lang2 = double.parse(langitude);
-          var lat = double.parse(latitude);
-          var long = double.parse(langitude);
-          lati1 = double.parse(latitude);
-          lang2 = double.parse(langitude);
+
           await AddressMasterApi.getData(lat.toString(), long.toString())
               .then((value) {
             log("value.stcode::" + value!.stcode.toString());
@@ -216,7 +219,9 @@ class _firstpageState extends State<CheckOutPage> {
               print("error:api");
             }
           });
+          // await loadWebView();
         } catch (e) {
+          log("XXXXXXXXXXXXXX");
           const snackBar = SnackBar(
               duration: Duration(seconds: 1),
               backgroundColor: Colors.red,
@@ -229,17 +234,18 @@ class _firstpageState extends State<CheckOutPage> {
         }
       } else if (serviceEnabled == true) {
         var pos = await Geolocator.getCurrentPosition();
-        latitude = pos.latitude == '' || pos.latitude == 'null'
+        latitudee = pos.latitude == '' || pos.latitude == 'null'
             ? '0.0'
             : pos.latitude.toString();
-        langitude = pos.longitude == '' || pos.longitude == 'null'
+        langitudee = pos.longitude == '' || pos.longitude == 'null'
             ? '0.0'
             : pos.longitude.toString();
 
-        var lat = double.parse(latitude);
-        var long = double.parse(langitude);
-        lati1 = double.parse(latitude);
-        lang2 = double.parse(langitude);
+        var lat = double.parse(latitudee);
+        var long = double.parse(langitudee);
+        lati1 = double.parse(latitudee);
+        lang2 = double.parse(langitudee);
+        loading = false;
         await AddressMasterApi.getData(lat.toString(), long.toString())
             .then((value) {
           log("value.stcode::" + value.stcode.toString());
@@ -250,8 +256,11 @@ class _firstpageState extends State<CheckOutPage> {
             print("error:api");
           }
         });
+        // await loadWebView();
       }
     } catch (e) {
+      log("YYYYYYYYYYYYYYYYS");
+
       final snackBar =
           SnackBar(backgroundColor: Colors.red, content: Text('$e'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -262,97 +271,92 @@ class _firstpageState extends State<CheckOutPage> {
     }
     loadingWebView = false;
     loading = false;
+
+    log("lat and lang::${lati1!}, ${lang2!}");
   }
 
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  // Future<void> determinePosition() async {
+  //   bool? serviceEnabled;
+  //   LocationPermission permission;
+  //   try {
+  //     serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //     if (serviceEnabled == false) {
+  //       try {
+  //         await Geolocator.getCurrentPosition();
+  //         permission = await Geolocator.checkPermission();
+  //         if (permission == LocationPermission.denied) {
+  //           permission = await Geolocator.requestPermission();
+  //           if (permission == LocationPermission.denied) {
+  //             //return Future.error('Location permissions are denied');
+  //           }
+  //         }
 
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(lati1!, lang2!),
-    zoom: 19.95,
-  );
-  Future<void> determinePosition() async {
-    bool? serviceEnabled;
-    LocationPermission permission;
-    try {
-      serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (serviceEnabled == false) {
-        try {
-          await Geolocator.getCurrentPosition();
-          permission = await Geolocator.checkPermission();
-          if (permission == LocationPermission.denied) {
-            permission = await Geolocator.requestPermission();
-            if (permission == LocationPermission.denied) {
-              //return Future.error('Location permissions are denied');
-            }
-          }
+  //         if (permission == LocationPermission.deniedForever) {}
+  //         var pos = await Geolocator.getCurrentPosition();
+  //         print('lattitude: ' + pos.latitude.toString());
+  //         latitude = pos.latitude.toString();
+  //         langitude = pos.longitude.toString();
+  //         longi = langitude;
+  //         lati = latitude;
 
-          if (permission == LocationPermission.deniedForever) {}
-          var pos = await Geolocator.getCurrentPosition();
-          print('lattitude: ' + pos.latitude.toString());
-          latitude = pos.latitude.toString();
-          langitude = pos.longitude.toString();
-          longi = langitude;
-          lati = latitude;
+  //         setState(() {
+  //           url = 'https://www.openstreetmap.org/#map=11/$latitude/$langitude';
+  //         });
+  //         var lat = double.parse(latitude);
+  //         var long = double.parse(langitude);
 
-          setState(() {
-            url = 'https://www.openstreetmap.org/#map=11/$latitude/$langitude';
-          });
-          var lat = double.parse(latitude);
-          var long = double.parse(langitude);
+  //         var placemarks = await placemarkFromCoordinates(lat, long);
+  //         setState(() {
+  //           adrresss = placemarks[0].street.toString() +
+  //               ' ' +
+  //               placemarks[0].thoroughfare.toString() +
+  //               ' ' +
+  //               placemarks[0].locality.toString();
+  //         });
+  //         await loadWebView();
+  //       } catch (e) {
+  //         const snackBar = SnackBar(
+  //             duration: Duration(seconds: 1),
+  //             backgroundColor: Colors.red,
+  //             content: Text('Please turn on the Location!!..'));
+  //         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //         Future.delayed(
+  //           const Duration(seconds: 2),
+  //           () => Get.back<dynamic>(),
+  //         );
+  //       }
+  //     } else if (serviceEnabled == true) {
+  //       var pos = await Geolocator.getCurrentPosition();
+  //       print('lattitude: ' + pos.latitude.toString());
+  //       latitude = pos.latitude.toString();
+  //       langitude = pos.longitude.toString();
+  //       longi = langitude;
+  //       lati = latitude;
 
-          var placemarks = await placemarkFromCoordinates(lat, long);
-          setState(() {
-            adrresss = placemarks[0].street.toString() +
-                ' ' +
-                placemarks[0].thoroughfare.toString() +
-                ' ' +
-                placemarks[0].locality.toString();
-          });
-          await loadWebView();
-        } catch (e) {
-          const snackBar = SnackBar(
-              duration: Duration(seconds: 1),
-              backgroundColor: Colors.red,
-              content: Text('Please turn on the Location!!..'));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          Future.delayed(
-            const Duration(seconds: 2),
-            () => Get.back<dynamic>(),
-          );
-        }
-      } else if (serviceEnabled == true) {
-        var pos = await Geolocator.getCurrentPosition();
-        print('lattitude: ' + pos.latitude.toString());
-        latitude = pos.latitude.toString();
-        langitude = pos.longitude.toString();
-        longi = langitude;
-        lati = latitude;
+  //       setState(() {
+  //         url = 'https://www.openstreetmap.org/#map=11/$latitude/$langitude';
+  //       });
+  //       var lat = double.parse(latitude);
+  //       var long = double.parse(langitude);
 
-        setState(() {
-          url = 'https://www.openstreetmap.org/#map=11/$latitude/$langitude';
-        });
-        var lat = double.parse(latitude);
-        var long = double.parse(langitude);
+  //       var placemarks = await placemarkFromCoordinates(lat, long);
+  //       setState(() {
+  //         adrresss = placemarks[0].street.toString() +
+  //             ' ' +
+  //             placemarks[0].thoroughfare.toString() +
+  //             ' ' +
+  //             placemarks[0].locality.toString();
+  //       });
+  //       await loadWebView();
+  //     }
+  //   } catch (e) {
+  //     final snackBar =
+  //         SnackBar(backgroundColor: Colors.red, content: Text('$e'));
+  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //   }
+  // }
 
-        var placemarks = await placemarkFromCoordinates(lat, long);
-        setState(() {
-          adrresss = placemarks[0].street.toString() +
-              ' ' +
-              placemarks[0].thoroughfare.toString() +
-              ' ' +
-              placemarks[0].locality.toString();
-        });
-        await loadWebView();
-      }
-    } catch (e) {
-      final snackBar =
-          SnackBar(backgroundColor: Colors.red, content: Text('$e'));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
-  }
-
-  // web view
+  // // web view
   WebViewController? controllerGlobal;
   bool loadingWebView = true;
   Future loadWebView() async {
@@ -404,6 +408,7 @@ class _firstpageState extends State<CheckOutPage> {
             value.itemValueValue![0].code;
             subValueValue = value.itemValueValue!;
             filtersubValueValue = subValueValue;
+            log("filtersubValueValue::${filtersubValueValue.length}");
           });
           await DataBaseHelper.deleteSubGrp();
           await DataBaseHelper.insertsubGroup(value.itemValueValue!);
@@ -447,6 +452,14 @@ class _firstpageState extends State<CheckOutPage> {
     setState(() {});
   }
 
+  final Completer<GoogleMapController> mapController =
+      Completer<GoogleMapController>();
+
+  static final CameraPosition _kGooglePlexxx = CameraPosition(
+    target: LatLng(lati1!, lang2!),
+    zoom: 19.95,
+  );
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -478,6 +491,7 @@ class _firstpageState extends State<CheckOutPage> {
                     controller: pageController,
                     onPageChanged: (index) {
                       log("index: ${index}");
+                      log("U_CrpUsrU_CrpUsr:  ${GetValues.U_CrpUsr!.toLowerCase()}");
                       setState(() {
                         pageChanged = index;
                       });
@@ -530,7 +544,7 @@ class _firstpageState extends State<CheckOutPage> {
                     //    children: [
                     Container(
                       width: Screens.width(context) * 0.37,
-                      child: Text("Lat: ${latitude}"),
+                      child: Text("Lat: ${latitudee}"),
                     ),
                     Container(
                       width: Screens.width(context) * 0.03,
@@ -539,7 +553,7 @@ class _firstpageState extends State<CheckOutPage> {
                     Container(
                       alignment: Alignment.centerRight,
                       width: Screens.width(context) * 0.37,
-                      child: Text("Long: ${langitude}"),
+                      child: Text("Long: ${langitudee}"),
                     ),
                     //    ],
                     //  ),
@@ -553,19 +567,22 @@ class _firstpageState extends State<CheckOutPage> {
                   width: Screens.width(context),
                   height: Screens.heigth(context) * 0.37,
                   decoration: const BoxDecoration(),
-                  child: loadingWebView == false
-                      ? GoogleMap(
+                  child: loading == true || lati1 == null || lang2 == null
+                      // loadingWebView == true
+                      // loadingWebView == false
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : GoogleMap(
                           mapType: MapType.normal,
                           myLocationEnabled: true,
-                          initialCameraPosition: _kGooglePlex,
+                          initialCameraPosition: _kGooglePlexxx,
                           onMapCreated: (GoogleMapController controller) {
-                            _controller.complete(controller);
+                            mapController.complete(controller);
                           },
                         )
-                      // WebViewWidget(controller: controllerGlobal!)
-                      : Center(
-                          child: CircularProgressIndicator(),
-                        )),
+                  // WebViewWidget(controller: controllerGlobal!)
+                  ),
               SizedBox(
                 height: Screens.heigth(context) * 0.02,
               ),
@@ -1354,7 +1371,7 @@ class _firstpageState extends State<CheckOutPage> {
                     //    children: [
                     Container(
                       width: Screens.width(context) * 0.37,
-                      child: Text("Lat: ${latitude}"),
+                      child: Text("Lat: ${latitudee}"),
                     ),
                     Container(
                       width: Screens.width(context) * 0.03,
@@ -1363,7 +1380,7 @@ class _firstpageState extends State<CheckOutPage> {
                     Container(
                       alignment: Alignment.centerRight,
                       width: Screens.width(context) * 0.37,
-                      child: Text("Long: ${langitude}"),
+                      child: Text("Long: ${langitudee}"),
                     ),
                     //    ],
                     //  ),
@@ -1377,11 +1394,22 @@ class _firstpageState extends State<CheckOutPage> {
                   width: Screens.width(context),
                   height: Screens.heigth(context) * 0.37,
                   decoration: const BoxDecoration(),
-                  child: loadingWebView == false
-                      ? WebViewWidget(controller: controllerGlobal!)
-                      : Center(
+                  child: loading == true || lati1 == null || lang2 == null
+                      // loadingWebView == false
+                      ? Center(
                           child: CircularProgressIndicator(),
-                        )),
+                        )
+                      : GoogleMap(
+                          mapType: MapType.normal,
+                          myLocationEnabled: true,
+                          initialCameraPosition: _kGooglePlexxx,
+                          onMapCreated: (GoogleMapController controllerxx) {
+                            mapController.complete(controllerxx);
+                          },
+                        )
+                  // loadingWebView == false
+                  //     ? WebViewWidget(controller: controllerGlobal!)
+                  ),
               SizedBox(
                 height: Screens.heigth(context) * 0.02,
               ),
@@ -2517,27 +2545,30 @@ class _firstpageState extends State<CheckOutPage> {
                         padding: EdgeInsets.symmetric(
                             vertical: 2.0, horizontal: 20.0),
                         color: Colors.grey[200],
-                        child: SizedBox.expand(
-                          child: TextFormField(
-                            controller: mycontroller[1],
-                            validator: (v) {
-                              if (v!.isEmpty) {
-                                return 'Reqtuired *';
-                              }
-                            },
-                            maxLines: 5,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                hintText: "Visit Discussion",
-                                hintStyle: theme.textTheme.bodyLarge!.copyWith(
-                                  color: theme.primaryColor,
-                                  fontSize: 15,
-                                )),
-                          ),
+                        child:
+                            // SizedBox.expand(
+                            // child:
+                            TextFormField(
+                          readOnly: false,
+                          controller: mycontroller[1],
+                          validator: (v) {
+                            if (v!.isEmpty) {
+                              return 'Reqtuired *';
+                            }
+                          },
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              hintText: "Visit Discussion",
+                              hintStyle: theme.textTheme.bodyLarge!.copyWith(
+                                color: theme.primaryColor,
+                                fontSize: 15,
+                              )),
+                          // ),
                         )),
                     SizedBox(
                       height: Screens.heigth(context) * 0.02,
@@ -2581,6 +2612,7 @@ class _firstpageState extends State<CheckOutPage> {
                           //   isselected=false;
                           // });
                           pageController.jumpToPage(++pageChanged);
+                          log("++pageChanged++pageChanged::${++pageChanged}");
                         }
                       },
                       child: Container(
@@ -2611,7 +2643,8 @@ class _firstpageState extends State<CheckOutPage> {
                     onPressed: checkOutapiLoad == false
                         ? () async {
                             if (formkey[0].currentState!.validate()) {
-                              if (latitude.isNotEmpty && langitude.isNotEmpty) {
+                              if (latitudee.isNotEmpty &&
+                                  langitudee.isNotEmpty) {
                                 bool haveInterNet = await config.haveInterNet();
                                 if (haveInterNet) {
                                   CallMediaApi();
@@ -2660,8 +2693,8 @@ class _firstpageState extends State<CheckOutPage> {
     chekcOut.U_CheckOutAdd = adrresss;
     chekcOut.Notes = mycontroller[1].text;
     chekcOut.U_NxtFollowup = selectedDateApi;
-    chekcOut.U_COLatitude = latitude;
-    chekcOut.U_COLongitude = langitude;
+    chekcOut.U_COLatitude = latitudee;
+    chekcOut.U_COLongitude = langitudee;
     chekcOut.U_Advertise = mycontroller[4].text;
     chekcOut.U_AdvFormt = mycontroller[5].text;
     chekcOut.U_Products = choosedProduct(); //mycontroller[6].text;
@@ -2756,8 +2789,8 @@ class _firstpageState extends State<CheckOutPage> {
     chekcOut.Notes = mycontroller[1].text;
     chekcOut.U_CheckOutAdd = adrresss;
     chekcOut.U_NxtFollowup = selectedDateApi;
-    chekcOut.U_COLatitude = latitude;
-    chekcOut.U_COLongitude = langitude;
+    chekcOut.U_COLatitude = latitudee;
+    chekcOut.U_COLongitude = langitudee;
     chekcOut.U_Advertise = mycontroller[4].text;
     chekcOut.U_AdvFormt = mycontroller[5].text;
     chekcOut.U_Products = choosedProduct(); // mycontroller[6].text;
@@ -2894,6 +2927,7 @@ class _firstpageState extends State<CheckOutPage> {
       if (value == null) {
         return;
       }
+
       setState(() {
         selectedDate = value.toString();
         var date = DateTime.parse(selectedDate);

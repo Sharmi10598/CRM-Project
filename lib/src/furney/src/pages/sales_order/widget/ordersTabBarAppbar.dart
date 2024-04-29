@@ -1,11 +1,15 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, require_trailing_commas, prefer_single_quotes, prefer_const_constructors, file_names
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ultimate_bundle/helpers/textstyle.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/constants.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
+
+import '../../../widgets/Drawer.dart';
 
 class SwitchBtn{
   static bool siwtchTrue = false;
@@ -14,7 +18,7 @@ class SwitchBtn{
  AppBar saleOrderAppBar(BuildContext context, GlobalKey<ScaffoldState> key,String title) {
   key:key;
   final width = MediaQuery.of(context).size.width;
-  const isTSH = false;
+  var isTSH = false;
   final theme = Theme.of(context);
   return AppBar(
       leading: GestureDetector(
@@ -60,25 +64,39 @@ class SwitchBtn{
                             color: Colors.black,
                             fontSize: Screens.width(context) * 0.042)),
                   ),
-                  Switch(
-                    onChanged: (value) {
-                      print(value);
-                      setState(() {
-                        if(SwitchBtn.siwtchTrue == true){
-                          SwitchBtn.siwtchTrue = true;
-                        }else{
-                       SwitchBtn.siwtchTrue = value;
-                        }
+                  // Switch(
+                  //   onChanged: (value) {
+                  //     print(value);
+                  //     setState(() {
+                  //       if(SwitchBtn.siwtchTrue == true){
+                  //         SwitchBtn.siwtchTrue = true;
+                  //       }else{
+                  //      SwitchBtn.siwtchTrue = value;
+                  //       }
                         
+                  //     });
+                  //   },
+                  //  activeColor: Colors.white,
+                  //   activeTrackColor: Colors.white,
+                  //   //theme.primaryColor,
+                  //   value: SwitchBtn.siwtchTrue ,
+                  // ),
+                   Switch(
+                    value: isTSH,
+                    onChanged: (value) {
+                      setState(() {
+                        isTSH = value;
+                        log("isTSH:::$isTSH");
                       });
                     },
-                   activeColor: Colors.white,
-                    activeTrackColor: Colors.white,
-                    //theme.primaryColor,
-                    value: SwitchBtn.siwtchTrue ,
+                    // activeColor: theme.primaryColor,
+                    // activeTrackColor: Colors.white,
+                    inactiveTrackColor: theme.primaryColor,
                   ),
                   Text(
-                    AppLocalizations.of(context)!.tzs,
+                   GetValues.currency == 'TZS'
+                      ? AppLocalizations.of(context)!.tzs
+                      : AppLocalizations.of(context)!.zmw,
                     style: GoogleFonts.poppins(
                         color: Colors.white,
                         textStyle: TextStyle(
@@ -196,7 +214,9 @@ class _CreationAppbarState extends State<CreationAppbar> {
                     value: isTSH,
                   ),
                   Text(
-                    AppLocalizations.of(context)!.tzs,
+                  GetValues.currency == 'TZS'
+                      ? AppLocalizations.of(context)!.tzs
+                      : AppLocalizations.of(context)!.zmw,
                     style: GoogleFonts.poppins(
                         color: Colors.white,
                         textStyle: TextStyle(

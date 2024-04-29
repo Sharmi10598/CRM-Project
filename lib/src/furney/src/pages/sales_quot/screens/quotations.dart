@@ -21,7 +21,6 @@ import 'package:ultimate_bundle/src/furney/src/helpers/constants.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/delivery/widgets/delivery_appbar.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/screens/SalesQutDetails.dart';
-import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/screens/sales_quot_details.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/widget/creation/content_creation.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/widget/creation/header_creation.dart';
 
@@ -260,448 +259,448 @@ class _SalesQuotState extends State<SalesQuot> {
               //     ? Center(child: CircularProgressIndicator())
               //     :
               Column(
-                /// mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: Screens.heigth(context) * 0.06,
-                    decoration: BoxDecoration(
-                      color: theme.hintColor.withOpacity(.05),
-                      borderRadius: BorderRadius.circular(Const.radius),
+            /// mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: Screens.heigth(context) * 0.06,
+                decoration: BoxDecoration(
+                  color: theme.hintColor.withOpacity(.05),
+                  borderRadius: BorderRadius.circular(Const.radius),
+                ),
+                child: TextFormField(
+                  controller: mycontroller[0],
+                  autocorrect: false,
+                  style: theme.textTheme.bodyMedium,
+                  onChanged: (v) {
+                    setState(() {
+                      quotDataFilter = quotData
+                          // filtervalues = values
+                          .where((e) =>
+                              e.cardCode!
+                                  .toLowerCase()
+                                  .contains(v.toLowerCase()) ||
+                              e.cardName!
+                                  .toLowerCase()
+                                  .contains(v.toLowerCase()) ||
+                              e.DocNum.toString()
+                                  .toLowerCase()
+                                  .contains(v.toLowerCase()) ||
+                              e.documentStatus
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains(v.toLowerCase()))
+                          .toList();
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Search for Quotations',
+                    hintStyle: TextStyles.bodytextBlack1(context),
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    prefixIcon: IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: () {
+                        mycontroller[1].text = "";
+                        mycontroller[2].text = "";
+                        mycontroller[3].text = "";
+                        statusBorderRed = false;
+                        statusChossed = null;
+                        showSheetSearch(theme, context);
+                      }, //
+                      color: theme.primaryColor,
                     ),
-                    child: TextFormField(
-                      controller: mycontroller[0],
-                      autocorrect: false,
-                      style: theme.textTheme.bodyMedium,
-                      onChanged: (v) {
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.add),
+                      onPressed: () {
                         setState(() {
-                          quotDataFilter = quotData
-                              // filtervalues = values
-                              .where((e) =>
-                                  e.cardCode!
-                                      .toLowerCase()
-                                      .contains(v.toLowerCase()) ||
-                                  e.cardName!
-                                      .toLowerCase()
-                                      .contains(v.toLowerCase()) ||
-                                  e.DocNum.toString()
-                                      .toLowerCase()
-                                      .contains(v.toLowerCase()) ||
-                                  e.documentStatus
-                                      .toString()
-                                      .toLowerCase()
-                                      .contains(v.toLowerCase()))
-                              .toList();
+                          setAllNull();
+                          Get.toNamed<dynamic>(FurneyRoutes.creationDetails);
                         });
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Search for Quotations',
-                        hintStyle: TextStyles.bodytextBlack1(context),
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        prefixIcon: IconButton(
-                          icon: const Icon(Icons.search),
-                          onPressed: () {
-                            mycontroller[1].text = "";
-                            mycontroller[2].text = "";
-                            mycontroller[3].text = "";
-                            statusBorderRed = false;
-                            statusChossed = null;
-                            showSheetSearch(theme, context);
-                          }, //
-                          color: theme.primaryColor,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.add),
-                          onPressed: () {
-                            setState(() {
-                              setAllNull();
-                              Get.toNamed<dynamic>(FurneyRoutes.creationDetails);
-                            });
-                          }, //
-                          color: theme.primaryColor,
-                        ),
-                        //   Positioned(
-                        //           left: Screens.width(context)*0.8,
-                        //           child: IconButton(onPressed: (){
-                        //             //print("object");
-                        //             setAllNull();
-                        //              Get.toNamed<dynamic>(FurneyRoutes.creationDetails);
-                        //           }, icon: Icon(Icons.add,
-                        //           color: theme.primaryColor,
-                        //           size: Screens.width(context)*0.08,
-                        //           )))
-                        //       ]
-                        //     ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 15,
-                          horizontal: 5,
-                        ),
-                      ),
+                      }, //
+                      color: theme.primaryColor,
+                    ),
+                    //   Positioned(
+                    //           left: Screens.width(context)*0.8,
+                    //           child: IconButton(onPressed: (){
+                    //             //print("object");
+                    //             setAllNull();
+                    //              Get.toNamed<dynamic>(FurneyRoutes.creationDetails);
+                    //           }, icon: Icon(Icons.add,
+                    //           color: theme.primaryColor,
+                    //           size: Screens.width(context)*0.08,
+                    //           )))
+                    //       ]
+                    //     ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 15,
+                      horizontal: 5,
                     ),
                   ),
-              
-                  searchLoading == true // salesOrderDetails.isEmpty &&
-                      ? SizedBox(
-                          //color: Colors.amber,
-                          width: Screens.width(context),
-                          height: Screens.heigth(context) * 0.72,
-                          child: Center(
-                            child: Visibility(
-                              visible: spin,
-                              child: SpinKitThreeBounce(
-                                size: Screens.heigth(context) * 0.06,
-                                color: theme.primaryColor,
-                              ),
-                            ),
-                          ),
-                        )
-                      : openClosedList(theme),
-              
-                  // Expanded(
-                  //     child: LazyLoadScrollView(
-                  //       isLoading: swipeLoad2,
-                  //       onEndOfPage: () => getmoredataFWH(),
-                  //       child: Scrollbar(
-                  //         thickness: 5,
-                  //         child: ListView.builder(
-                  //           itemCount: swipeLoad2 == true
-                  //               ? 1
-                  //               : filtervalues.length,
-                  //           itemBuilder:
-                  //               (BuildContext context, int index) {
-                  //             if (swipeLoad2 == true) {
-                  //               return Container(
-                  //                   width: Screens.width(context),
-                  //                   height: Screens.heigth(context) * 0.8,
-                  //                   child: Center(
-                  //                       child:
-                  //                           CircularProgressIndicator()));
-                  //             }
-                  //             return InkWell(
-                  //               child: Card(
-                  //                   child: GestureDetector(
-                  //                 onTap: () {
-                  //                   if (filtervalues[index].docStatus ==
-                  //                       "bost_Close") {
-                  //                     SalesDetailsQuotState
-                  //                         .isclosedocument = true;
-                  //                     log("IsClose::" +
-                  //                         filtervalues[index]
-                  //                             .docStatus
-                  //                             .toString());
-                  //                   } else {
-                  //                     SalesDetailsQuotState
-                  //                         .isclosedocument = false;
-                  //                   }
-              
-                  //                   if (filtervalues[index].docStatus ==
-                  //                       "C") {
-                  //                     SalesDetailsQuotState
-                  //                         .isclosedocument2 = true;
-                  //                     log("IsC::" +
-                  //                         filtervalues[index]
-                  //                             .docStatus
-                  //                             .toString());
-                  //                   } else {
-                  //                     SalesDetailsQuotState
-                  //                         .isclosedocument2 = false;
-                  //                   }
-                  //                   log("filtervalues[index].docStatus:bost_Close::" +
-                  //                       filtervalues[index]
-                  //                           .docStatus
-                  //                           .toString());
-                  //                   //  widget.DTCon. selectedFWH(index,context);
-                  //                   // ApprovalsDetailsQuotState.docTypeName =  filtervalues[index].ObjType.toString().contains('13')?'A/R Invoice':
-                  //                   //                                  filtervalues[index].ObjType.toString().contains('23')?'Sales Quotation':
-                  //                   //                                   filtervalues[index].ObjType.toString().contains('17')?'Sales Order':
-                  //                   //                                    filtervalues[index].ObjType.toString().contains('14')?'Sales Return':
-                  //                   //                                    filtervalues[index].ObjType.toString().contains('15')?'Deliveries':'';
-                  //                   filtervalues[index]
-                  //                       .docEntry
-                  //                       .toString();
-                  //                   log("filtervalues[index].docEntry:::::::::::" +
-                  //                       filtervalues[index]
-                  //                           .docEntry
-                  //                           .toString());
-                  //                   SalesDetailsQuotState.docEntryforSO =
-                  //                       filtervalues[index]
-                  //                           .docEntry
-                  //                           .toString();
-                  //                   Get.to<void>(SalesDetailsQuot(
-                  //                     title: 'Sales Quot',
-                  //                     docentry: filtervalues[index]
-                  //                         .docEntry
-                  //                         .toString(),
-                  //                   ));
-                  //                 },
-                  //                 child: Container(
-                  //                     decoration: BoxDecoration(
-                  //                       color: Colors.white,
-                  //                       boxShadow: [
-                  //                         BoxShadow(
-                  //                           color: Colors.grey
-                  //                               .withOpacity(0.5),
-                  //                           spreadRadius: 1,
-                  //                           blurRadius: 2,
-                  //                           offset: Offset(0, 3),
-                  //                         ),
-                  //                       ],
-                  //                       borderRadius:
-                  //                           BorderRadius.circular(4),
-                  //                     ),
-                  //                     padding: EdgeInsets.all(
-                  //                         Screens.heigth(context) * 0.01),
-                  //                     child: Column(
-                  //                       crossAxisAlignment:
-                  //                           CrossAxisAlignment.start,
-                  //                       children: [
-                  //                         Row(
-                  //                           mainAxisAlignment:
-                  //                               MainAxisAlignment
-                  //                                   .spaceBetween,
-                  //                           children: [
-                  //                             Container(
-                  //                               child: Text(
-                  //                                   '${filtervalues[index].CardCode}',
-                  //                                   style: theme.textTheme
-                  //                                       .bodyLarge),
-                  //                             ),
-                  //                             Container(
-                  //                               child: Text(
-                  //                                   '${filtervalues[index].docnum}',
-                  //                                   style: theme.textTheme
-                  //                                       .bodyLarge),
-                  //                             ),
-                  //                           ],
-                  //                         ),
-                  //                         Container(
-                  //                           child: Text(
-                  //                               '${filtervalues[index].CardName}',
-                  //                               style: theme
-                  //                                   .textTheme.bodyLarge),
-                  //                         ),
-                  //                         Row(
-                  //                           mainAxisAlignment:
-                  //                               MainAxisAlignment
-                  //                                   .spaceBetween,
-                  //                           children: [
-                  // Container(
-                  //   child: Text(
-                  //       '${filtervalues[index].docStatus}',
-                  //       style: theme.textTheme
-                  //           .bodyLarge),
-                  // ),
-                  //                             Container(
-                  //                               child: Text(
-                  // config.alignDate2(
-                  //                                       filtervalues[
-                  //                                               index]
-                  //                                           .docDate),
-                  //                                   style: theme.textTheme
-                  //                                       .bodyLarge),
-                  //                             ),
-                  //                           ],
-                  //                         ),
-                  //                       ],
-                  //                     )),
-                  //               )),
-                  //             );
-                  //           },
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   )
-                  // sharmi commented
-              
-                  //     Stack(
-                  //       children:[
-                  //         Container(
-                  //         height: Screens.heigth(context) * 0.06,
-                  //         decoration: BoxDecoration(
-                  //           color: theme.hintColor.withOpacity(.05),
-                  //           borderRadius: BorderRadius.circular(Const.radius),
-                  //         ),
-                  //         child: TextField(
-                  //          controller: mycontroller[0],
-                  //           autocorrect: false,
-                  //           style: theme.textTheme.bodyText2,
-                  //           onChanged: (v) {
-                  //             setState(() {
-                  //               quotDataFilter = quotData
-                  //                   .where((e) =>
-                  //                       (e)
-                  //                           .cardName!
-                  //                           .toLowerCase()
-                  //                           .contains(v.toLowerCase()) ||
-                  //                       (e)
-                  //                           .cardCode!
-                  //                           .toLowerCase()
-                  //                           .contains(v.toLowerCase()))
-                  //                   .toList();
-                  //             });
-                  //           },
-                  //           decoration: InputDecoration(
-                  //             hintText: 'Search for Quotations',
-                  //             hintStyle: TextStyles.bodytextBlack1(context),
-                  //             // AppLocalizations.of(context)!
-                  //             //     .search_sales_quot,
-                  //             enabledBorder: InputBorder.none,
-                  //             focusedBorder: InputBorder.none,
-                  //             prefixIcon: IconButton(
-                  //               icon: const Icon(Icons.search),
-                  //               onPressed: () {
-                  //                  mycontroller[1].text="";
-                  //               mycontroller[2].text="";
-                  //               mycontroller[3].text="";
-                  //               statusBorderRed = false;
-                  //               statusChossed = null;
-                  //                 showSheetSearch(theme,context);
-                  //               //    SalesQuotAPi.searchValue = mycontroller[0].text;
-                  //               // setState(() {
-                  //               //   quotData.clear();
-                  //               //   quotDataFilter.clear();
-                  //               //   });
-              
-                  //               //   SalesQuotAPi.searchData().then((value) {
-                  //               //         if(value.salesQuotValue!=null){
-                  //               //           if(value.salesQuotValue!.length>0){
-                  //               //               setState(() {
-                  //               //             print(value.salesQuotValue![0].docEntry);
-                  //               //             quotData = value.salesQuotValue!;
-                  //               //             quotDataFilter =quotData;
-                  //               //           });
-                  //               //           }else{
-              
-                  //               //           }
-                  //               //         }
-                  //               //   });
-                  //               }, //
-                  //               color: theme.primaryColor,
-                  //             ),
-                  //             contentPadding: const EdgeInsets.symmetric(
-                  //               vertical: 15,
-                  //               horizontal: 5,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //        Positioned(
-                  //           left: Screens.width(context)*0.8,
-                  //           child: IconButton(onPressed: (){
-                  //             //print("object");
-                  //             setAllNull();
-                  //              Get.toNamed<dynamic>(FurneyRoutes.creationDetails);
-                  //           }, icon: Icon(Icons.add,
-                  //           color: theme.primaryColor,
-                  //           size: Screens.width(context)*0.08,
-                  //           )))
-                  //       ]
-                  //     ),
-                  //      searchLoading == true //quotData.length == 0 &&
-                  // ? Container(
-                  //   //color: Colors.amber,
-                  //   width: Screens.width(context),
-                  //   height: Screens.heigth(context)*0.72,
-                  //   child: Center(
-                  //       child: Visibility(
-                  //         visible: spin,
-                  //         child: SpinKitThreeBounce(
-                  //           size: Screens.heigth(context) * 0.06,
-                  //           color: theme.primaryColor,
-                  //         ),
-                  //       ),
-                  //     ),
-                  // )
-                  // :statusChossed == 'Open' || statusChossed =='Closed'? openClosedList(theme)
-              
-                  // :Container(
-                  //   width: Screens.width(context),
-                  //   height: Screens.heigth(context)*0.735,
-                  //   color: Colors.white,
-                  // child: Column(
-                  //       children: [
-                  //         Expanded(
-                  //           child: ListView.builder(
-                  //             itemCount:22,// filterapprovals.length,
-                  //             itemBuilder: (c,i){
-                  //             return InkWell(
-                  //               onTap:(){
-                  //                 // ApprovalsDetailsQuotState.docTypeName =  filterapprovals[i].ObjType.toString().contains('13')?'A/R Invoice':
-                  //                 //                        filterapprovals[i].ObjType.toString().contains('23')?'Sales Quotation':
-                  //                 //                         filterapprovals[i].ObjType.toString().contains('17')?'Sales Order':
-                  //                 //                          filterapprovals[i].ObjType.toString().contains('14')?'Sales Return':
-                  //                 //                          filterapprovals[i].ObjType.toString().contains('15')?'Deliveries':'';
-                  //                 // ApprovalsDetailsAPi.draftEntry = filterapprovals[i].docEntry.toString();
-                  //                 Get.toNamed<dynamic>(FurneyRoutes.approvalsDetailsSalesQuot);
-                  //               },
-                  //               child: Card(
-                  //                 child: Container(
-                  //                    padding: EdgeInsets.symmetric(horizontal: Screens.width(context)*0.01),
-                  //                       child:  Row(
-                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //           children: [
-                  //                 Row(//row 1
-                  //                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //                   children: [
-                  //                     // Container(
-                  //                     //   width: Screens.width(context)*0.01,
-                  //                     //  height: double.infinity,
-                  //                     //   color: Colors.blue,
-                  //                     // ),
-                  //                     //SizedBox(width: Screens.width(context)*0.01,),
-                  //                     Container(
-                  //                    ///  color: Colors.greenAccent,
-                  //                         width: Screens.width(context)*0.2,
-                  //                       child: Text('data',//'${filterapprovals[i].cardCode}',
-                  //                       style: TextStyles.bodytextBlack1(context),),
-                  //                     ),
-                  //                      SizedBox(width: Screens.width(context)*0.01,),
-                  //                     Container(
-                  //                     //   color: Colors.blue,
-                  //                         width: Screens.width(context)*0.4,
-                  //                       child: Text('data',//'${filterapprovals[i].cardName}',
-                  //                       style: TextStyles.bodytextBlack1(context),),
-                  //                     )
-                  //                   ],
-                  //                 ),
-              
-                  //                 Padding(
-                  //                   padding:  EdgeInsets.only(top:Screens.width(context)*0.02),
-                  //                   child: Row(
-                  //                     children: [
-                  //                       Container(
-                  //                         alignment: Alignment.centerRight,
-                  //                      //    color: Colors.red,
-                  //                         width: Screens.width(context)*0.22,
-                  //                         child: Column(
-                  //                           children: [
-                  //                             Text(
-                  //                         'data',//   '${filterapprovals[i].docEntry}' ,
-                  //                            style:TextStyles.bodytextBlack1(context),),
-                  //                             Text(
-                  //                               'data',//'${filterapprovals[i].DocDate}' ,
-                  //                               style: TextStyles.bodytextBlack1(context),),
-                  //                           ],
-                  //                         ),
-                  //                       ),
-                  //                       Icon(Icons.chevron_right,
-                  //                       color:  theme.primaryColor,)
-                  //                     ],
-                  //                   ),
-                  //                 )
-                  //           ],
-                  //         ),
-                  //                 ),
-                  //               ),
-                  //             );
-                  //           }),
-                  //         ),
-                  //       ],
-                  //     ),
-                  // ),
-                ],
+                ),
               ),
+
+              searchLoading == true // salesOrderDetails.isEmpty &&
+                  ? SizedBox(
+                      //color: Colors.amber,
+                      width: Screens.width(context),
+                      height: Screens.heigth(context) * 0.72,
+                      child: Center(
+                        child: Visibility(
+                          visible: spin,
+                          child: SpinKitThreeBounce(
+                            size: Screens.heigth(context) * 0.06,
+                            color: theme.primaryColor,
+                          ),
+                        ),
+                      ),
+                    )
+                  : openClosedList(theme),
+
+              // Expanded(
+              //     child: LazyLoadScrollView(
+              //       isLoading: swipeLoad2,
+              //       onEndOfPage: () => getmoredataFWH(),
+              //       child: Scrollbar(
+              //         thickness: 5,
+              //         child: ListView.builder(
+              //           itemCount: swipeLoad2 == true
+              //               ? 1
+              //               : filtervalues.length,
+              //           itemBuilder:
+              //               (BuildContext context, int index) {
+              //             if (swipeLoad2 == true) {
+              //               return Container(
+              //                   width: Screens.width(context),
+              //                   height: Screens.heigth(context) * 0.8,
+              //                   child: Center(
+              //                       child:
+              //                           CircularProgressIndicator()));
+              //             }
+              //             return InkWell(
+              //               child: Card(
+              //                   child: GestureDetector(
+              //                 onTap: () {
+              //                   if (filtervalues[index].docStatus ==
+              //                       "bost_Close") {
+              //                     SalesDetailsQuotState
+              //                         .isclosedocument = true;
+              //                     log("IsClose::" +
+              //                         filtervalues[index]
+              //                             .docStatus
+              //                             .toString());
+              //                   } else {
+              //                     SalesDetailsQuotState
+              //                         .isclosedocument = false;
+              //                   }
+
+              //                   if (filtervalues[index].docStatus ==
+              //                       "C") {
+              //                     SalesDetailsQuotState
+              //                         .isclosedocument2 = true;
+              //                     log("IsC::" +
+              //                         filtervalues[index]
+              //                             .docStatus
+              //                             .toString());
+              //                   } else {
+              //                     SalesDetailsQuotState
+              //                         .isclosedocument2 = false;
+              //                   }
+              //                   log("filtervalues[index].docStatus:bost_Close::" +
+              //                       filtervalues[index]
+              //                           .docStatus
+              //                           .toString());
+              //                   //  widget.DTCon. selectedFWH(index,context);
+              //                   // ApprovalsDetailsQuotState.docTypeName =  filtervalues[index].ObjType.toString().contains('13')?'A/R Invoice':
+              //                   //                                  filtervalues[index].ObjType.toString().contains('23')?'Sales Quotation':
+              //                   //                                   filtervalues[index].ObjType.toString().contains('17')?'Sales Order':
+              //                   //                                    filtervalues[index].ObjType.toString().contains('14')?'Sales Return':
+              //                   //                                    filtervalues[index].ObjType.toString().contains('15')?'Deliveries':'';
+              //                   filtervalues[index]
+              //                       .docEntry
+              //                       .toString();
+              //                   log("filtervalues[index].docEntry:::::::::::" +
+              //                       filtervalues[index]
+              //                           .docEntry
+              //                           .toString());
+              //                   SalesDetailsQuotState.docEntryforSO =
+              //                       filtervalues[index]
+              //                           .docEntry
+              //                           .toString();
+              //                   Get.to<void>(SalesDetailsQuot(
+              //                     title: 'Sales Quot',
+              //                     docentry: filtervalues[index]
+              //                         .docEntry
+              //                         .toString(),
+              //                   ));
+              //                 },
+              //                 child: Container(
+              //                     decoration: BoxDecoration(
+              //                       color: Colors.white,
+              //                       boxShadow: [
+              //                         BoxShadow(
+              //                           color: Colors.grey
+              //                               .withOpacity(0.5),
+              //                           spreadRadius: 1,
+              //                           blurRadius: 2,
+              //                           offset: Offset(0, 3),
+              //                         ),
+              //                       ],
+              //                       borderRadius:
+              //                           BorderRadius.circular(4),
+              //                     ),
+              //                     padding: EdgeInsets.all(
+              //                         Screens.heigth(context) * 0.01),
+              //                     child: Column(
+              //                       crossAxisAlignment:
+              //                           CrossAxisAlignment.start,
+              //                       children: [
+              //                         Row(
+              //                           mainAxisAlignment:
+              //                               MainAxisAlignment
+              //                                   .spaceBetween,
+              //                           children: [
+              //                             Container(
+              //                               child: Text(
+              //                                   '${filtervalues[index].CardCode}',
+              //                                   style: theme.textTheme
+              //                                       .bodyLarge),
+              //                             ),
+              //                             Container(
+              //                               child: Text(
+              //                                   '${filtervalues[index].docnum}',
+              //                                   style: theme.textTheme
+              //                                       .bodyLarge),
+              //                             ),
+              //                           ],
+              //                         ),
+              //                         Container(
+              //                           child: Text(
+              //                               '${filtervalues[index].CardName}',
+              //                               style: theme
+              //                                   .textTheme.bodyLarge),
+              //                         ),
+              //                         Row(
+              //                           mainAxisAlignment:
+              //                               MainAxisAlignment
+              //                                   .spaceBetween,
+              //                           children: [
+              // Container(
+              //   child: Text(
+              //       '${filtervalues[index].docStatus}',
+              //       style: theme.textTheme
+              //           .bodyLarge),
+              // ),
+              //                             Container(
+              //                               child: Text(
+              // config.alignDate2(
+              //                                       filtervalues[
+              //                                               index]
+              //                                           .docDate),
+              //                                   style: theme.textTheme
+              //                                       .bodyLarge),
+              //                             ),
+              //                           ],
+              //                         ),
+              //                       ],
+              //                     )),
+              //               )),
+              //             );
+              //           },
+              //         ),
+              //       ),
+              //     ),
+              //   )
+              // sharmi commented
+
+              //     Stack(
+              //       children:[
+              //         Container(
+              //         height: Screens.heigth(context) * 0.06,
+              //         decoration: BoxDecoration(
+              //           color: theme.hintColor.withOpacity(.05),
+              //           borderRadius: BorderRadius.circular(Const.radius),
+              //         ),
+              //         child: TextField(
+              //          controller: mycontroller[0],
+              //           autocorrect: false,
+              //           style: theme.textTheme.bodyText2,
+              //           onChanged: (v) {
+              //             setState(() {
+              //               quotDataFilter = quotData
+              //                   .where((e) =>
+              //                       (e)
+              //                           .cardName!
+              //                           .toLowerCase()
+              //                           .contains(v.toLowerCase()) ||
+              //                       (e)
+              //                           .cardCode!
+              //                           .toLowerCase()
+              //                           .contains(v.toLowerCase()))
+              //                   .toList();
+              //             });
+              //           },
+              //           decoration: InputDecoration(
+              //             hintText: 'Search for Quotations',
+              //             hintStyle: TextStyles.bodytextBlack1(context),
+              //             // AppLocalizations.of(context)!
+              //             //     .search_sales_quot,
+              //             enabledBorder: InputBorder.none,
+              //             focusedBorder: InputBorder.none,
+              //             prefixIcon: IconButton(
+              //               icon: const Icon(Icons.search),
+              //               onPressed: () {
+              //                  mycontroller[1].text="";
+              //               mycontroller[2].text="";
+              //               mycontroller[3].text="";
+              //               statusBorderRed = false;
+              //               statusChossed = null;
+              //                 showSheetSearch(theme,context);
+              //               //    SalesQuotAPi.searchValue = mycontroller[0].text;
+              //               // setState(() {
+              //               //   quotData.clear();
+              //               //   quotDataFilter.clear();
+              //               //   });
+
+              //               //   SalesQuotAPi.searchData().then((value) {
+              //               //         if(value.salesQuotValue!=null){
+              //               //           if(value.salesQuotValue!.length>0){
+              //               //               setState(() {
+              //               //             print(value.salesQuotValue![0].docEntry);
+              //               //             quotData = value.salesQuotValue!;
+              //               //             quotDataFilter =quotData;
+              //               //           });
+              //               //           }else{
+
+              //               //           }
+              //               //         }
+              //               //   });
+              //               }, //
+              //               color: theme.primaryColor,
+              //             ),
+              //             contentPadding: const EdgeInsets.symmetric(
+              //               vertical: 15,
+              //               horizontal: 5,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //        Positioned(
+              //           left: Screens.width(context)*0.8,
+              //           child: IconButton(onPressed: (){
+              //             //print("object");
+              //             setAllNull();
+              //              Get.toNamed<dynamic>(FurneyRoutes.creationDetails);
+              //           }, icon: Icon(Icons.add,
+              //           color: theme.primaryColor,
+              //           size: Screens.width(context)*0.08,
+              //           )))
+              //       ]
+              //     ),
+              //      searchLoading == true //quotData.length == 0 &&
+              // ? Container(
+              //   //color: Colors.amber,
+              //   width: Screens.width(context),
+              //   height: Screens.heigth(context)*0.72,
+              //   child: Center(
+              //       child: Visibility(
+              //         visible: spin,
+              //         child: SpinKitThreeBounce(
+              //           size: Screens.heigth(context) * 0.06,
+              //           color: theme.primaryColor,
+              //         ),
+              //       ),
+              //     ),
+              // )
+              // :statusChossed == 'Open' || statusChossed =='Closed'? openClosedList(theme)
+
+              // :Container(
+              //   width: Screens.width(context),
+              //   height: Screens.heigth(context)*0.735,
+              //   color: Colors.white,
+              // child: Column(
+              //       children: [
+              //         Expanded(
+              //           child: ListView.builder(
+              //             itemCount:22,// filterapprovals.length,
+              //             itemBuilder: (c,i){
+              //             return InkWell(
+              //               onTap:(){
+              //                 // ApprovalsDetailsQuotState.docTypeName =  filterapprovals[i].ObjType.toString().contains('13')?'A/R Invoice':
+              //                 //                        filterapprovals[i].ObjType.toString().contains('23')?'Sales Quotation':
+              //                 //                         filterapprovals[i].ObjType.toString().contains('17')?'Sales Order':
+              //                 //                          filterapprovals[i].ObjType.toString().contains('14')?'Sales Return':
+              //                 //                          filterapprovals[i].ObjType.toString().contains('15')?'Deliveries':'';
+              //                 // ApprovalsDetailsAPi.draftEntry = filterapprovals[i].docEntry.toString();
+              //                 Get.toNamed<dynamic>(FurneyRoutes.approvalsDetailsSalesQuot);
+              //               },
+              //               child: Card(
+              //                 child: Container(
+              //                    padding: EdgeInsets.symmetric(horizontal: Screens.width(context)*0.01),
+              //                       child:  Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //           children: [
+              //                 Row(//row 1
+              //                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //                   children: [
+              //                     // Container(
+              //                     //   width: Screens.width(context)*0.01,
+              //                     //  height: double.infinity,
+              //                     //   color: Colors.blue,
+              //                     // ),
+              //                     //SizedBox(width: Screens.width(context)*0.01,),
+              //                     Container(
+              //                    ///  color: Colors.greenAccent,
+              //                         width: Screens.width(context)*0.2,
+              //                       child: Text('data',//'${filterapprovals[i].cardCode}',
+              //                       style: TextStyles.bodytextBlack1(context),),
+              //                     ),
+              //                      SizedBox(width: Screens.width(context)*0.01,),
+              //                     Container(
+              //                     //   color: Colors.blue,
+              //                         width: Screens.width(context)*0.4,
+              //                       child: Text('data',//'${filterapprovals[i].cardName}',
+              //                       style: TextStyles.bodytextBlack1(context),),
+              //                     )
+              //                   ],
+              //                 ),
+
+              //                 Padding(
+              //                   padding:  EdgeInsets.only(top:Screens.width(context)*0.02),
+              //                   child: Row(
+              //                     children: [
+              //                       Container(
+              //                         alignment: Alignment.centerRight,
+              //                      //    color: Colors.red,
+              //                         width: Screens.width(context)*0.22,
+              //                         child: Column(
+              //                           children: [
+              //                             Text(
+              //                         'data',//   '${filterapprovals[i].docEntry}' ,
+              //                            style:TextStyles.bodytextBlack1(context),),
+              //                             Text(
+              //                               'data',//'${filterapprovals[i].DocDate}' ,
+              //                               style: TextStyles.bodytextBlack1(context),),
+              //                           ],
+              //                         ),
+              //                       ),
+              //                       Icon(Icons.chevron_right,
+              //                       color:  theme.primaryColor,)
+              //                     ],
+              //                   ),
+              //                 )
+              //           ],
+              //         ),
+              //                 ),
+              //               ),
+              //             );
+              //           }),
+              //         ),
+              //       ],
+              //     ),
+              // ),
+            ],
+          ),
         )),
       ),
     );
@@ -889,10 +888,11 @@ class _SalesQuotState extends State<SalesQuot> {
     HeaderCreationState.totalBeforeDiscount = 0.00;
     HeaderCreationState.total = 0.00;
     HeaderCreationState.tax = 0.00;
+    HeaderCreationState.mycontroller[0].text = '';
+    HeaderCreationState.mycontroller[1].text = '';
     //content creation
     ContentCreationState.itemsDetails.clear();
     ContentCreationState.carcode = null;
-
     SwitchBtn.siwtchTrue = true;
   }
 

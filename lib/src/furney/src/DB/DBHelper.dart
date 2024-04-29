@@ -55,6 +55,7 @@ class DataBaseHelper {
              ${ItemColumn.total} varchar not null,
              ${ItemColumn.taxCode} varchar not null,
              ${ItemColumn.discounpercent} varchar not null,
+             ${ItemColumn.valueAFDisc} varchar,
              ${ItemColumn.wareHouseCose} varchar not null,
              ${ItemColumn.taxCodeName} varchar not null,
              ${ItemColumn.cartoon} varchar not null,
@@ -644,7 +645,7 @@ SELECT * FROM $tableNotification;
       String cusTable, String cusID, String itemTable) async {
     final Database db = await createDB();
     final List<Map<String, Object?>> result = await db.rawQuery(
-        'select B.ItemCode, B.ItemName, B.Price ,B.Qty ,B.DisCount,B.Total,B.WareHouseCose,B.Tax,B.TaxCode,B.Discounpercent,B.TaxCodeName from $cusTable A inner join $itemTable B on A.CusId=B.CusId WHERE A.CusId=$cusID');
+        'select B.ItemCode, B.ItemName, B.Price ,B.Qty ,B.DisCount,B.ValueAFDisc,B.Total,B.WareHouseCose,B.Tax,B.TaxCode,B.Discounpercent,B.TaxCodeName from $cusTable A inner join $itemTable B on A.CusId=B.CusId WHERE A.CusId=$cusID');
     // PageState.cst = result;
     // var result = await db.
     print(result.toList());
@@ -664,6 +665,7 @@ SELECT * FROM $tableNotification;
         wareHouseCose: result[i]['WareHouseCose'].toString(),
         taxCodeName: result[i]['TaxCodeName'].toString(),
         carton: result[i]['cartoon'].toString(),
+        valueAFDisc: double.parse(result[i]['ValueAFDisc'].toString()),
       );
     });
   }

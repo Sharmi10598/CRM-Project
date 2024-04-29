@@ -107,7 +107,6 @@ class HeaderOrderstState extends State<HeaderOrders> {
                         width: Screens.width(context) * 0.83,
                         // color: Colors.blue,
                         child: Text(
-                          //vv
                           '$docNO',
                           style: TextStyles.headlineBlack1(context),
                         ),
@@ -664,7 +663,7 @@ class HeaderOrderstState extends State<HeaderOrders> {
     //     setState(() => isLoading = false);
     // });
     StreamDataAPi.getGlobalData().then((value) {
-      print('status$value');
+      print('status::$value');
       if (value == 200) {
         setState(() => isLoading = false);
       } else if (value == 400) {
@@ -692,7 +691,7 @@ class HeaderOrderstState extends State<HeaderOrders> {
       HeaderEditOrderPageState.docNo = val.DocNum.toString();
       HeaderEditOrderPageState.bpName = val.cardName.toString();
       HeaderEditOrderPageState.bpCode = val.cardCode.toString();
-      HeaderEditOrderPageState.currency = val.DocCurrency.toString(); //
+      // HeaderEditOrderPageState.currency = val.DocCurrency.toString(); //
       // HeaderEditOrderPageState.status = status;
       HeaderEditOrderPageState.currentDateTime = val.DocDate.toString();
       //HeaderEditOrderPageState.documentLines =  val.documentLines;//

@@ -18,9 +18,12 @@ class GetValues{
   static String? crmUserID; 
   static String? sapUserID; 
   static String? sapUserName; 
+  static String? sapPassword;
   static String? slpCode; 
   static String? branch; 
   static String? sapDB; 
+  static String? currency; 
+  static String? countryCode; 
   static String? seriresOrder; 
   static String? userRoll; 
   static String? LeadToken; 

@@ -21,7 +21,7 @@ class SalesOderDetailsAPi{
       ),
         headers: {
         "content-type": "application/json",
-        "cookie": 'B1SESSION='+ GetValues.sessionID.toString(),
+        "cookie": 'B1SESSION='+ GetValues.sessionID.toString(), 
         },
       );
       if (response.statusCode == 200) {

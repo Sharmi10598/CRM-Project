@@ -47,11 +47,14 @@ class ItemValue {
   String? itemName;
   String? salesUnit;
   String? odataetag;
+  String? salesperCode;
+
   double? U_Pack_Size;
   int? U_Tins_Per_Box;
   List<ItemPrices>? itemPrices;
   ItemValue({
     this.warehouse,
+    required this.salesperCode,
     required this.itemCode,
     required this.itemName,
     required this.salesUnit,
@@ -77,6 +80,7 @@ class ItemValue {
           jsons['U_Pack_Size'] == null ? 0.00 : jsons['U_Pack_Size'] as double,
       U_Tins_Per_Box:
           jsons['U_Tins_Per_Box'] == null ? 0 : jsons['U_Tins_Per_Box'] as int,
+      salesperCode: jsons['SalesPersonCode'].toString(),
     );
   }
 }

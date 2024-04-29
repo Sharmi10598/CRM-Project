@@ -30,32 +30,36 @@ class ApprovalsQuotPostAPi {
 
     print("Body request:" + data);
     try {
-      log("api:"+URL.url +
-                "DraftsService_SaveDraftToDocument",);
+      log(
+        "api:" + URL.url + "DraftsService_SaveDraftToDocument",
+      );
       final response = await http.post(
-          Uri.parse(
-            URL.url +
-                "DraftsService_SaveDraftToDocument", //&\$filter= DocumentStatus eq 'bost_Open'
-          ),
-          headers: {
-            "content-type": "application/json",
-            "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
-            // "Prefer":"return-no-content"
+        Uri.parse(
+          URL.url +
+              "DraftsService_SaveDraftToDocument", //&\$filter= DocumentStatus eq 'bost_Open'
+        ),
+        headers: {
+          "content-type": "application/json",
+          "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
+          // "Prefer":"return-no-content"
+        },
+        body: json.encode({
+          "Document": {
+            "DocDueDate": "$docDueDate",
+            "DocEntry": "$docEntry",
+            "U_OrderDate": "$orderDate",
+            "U_Order_Type": "$orderType",
+            "U_GP_Approval": "$gpApproval",
+            "U_Received_Time": "$orderTime",
+            "NumAtCard": "$custREfNo",
           },
-          body: json.encode({
-            "Document": {
-              "DocDueDate": "$docDueDate",
-              "DocEntry": "$docEntry",
-              "U_OrderDate": "$orderDate",
-              "U_Order_Type": "$orderType",
-              "U_GP_Approval": "$gpApproval",
-              "U_Received_Time": "$orderTime",
-              "NumAtCard": "$custREfNo",
-            }
-          }),);
+        }),
+      );
+      log("ApprovalsQuotPost sts " + response.statusCode.toString());
+      log("ApprovalsQuotPost res " + response.body);
+
       if (response.statusCode == 200 || response.statusCode == 204) {
         // print("statucCode: "+response.statusCode.toString());
-        // print(json.decode(response.body));
         return ApprovalsOTORModal.fromJson(
           response.statusCode.toString(),
         );
@@ -64,11 +68,15 @@ class ApprovalsQuotPostAPi {
         //   print("statucCode2222: "+response.statusCode.toString());
         // print("response.body: "+json.decode(response.body).toString());
         //  throw Exception('Restart the app or contact the admin!!..');
-        return ApprovalsOTORModal.fromJson2(response.statusCode.toString(),
-            json.decode(response.body) as Map<String, dynamic>,);
+        return ApprovalsOTORModal.fromJson2(
+          response.statusCode.toString(),
+          json.decode(response.body) as Map<String, dynamic>,
+        );
       }
     } catch (e) {
+      log("Exception::" + e.toString());
       throw Exception(e);
+
       // return ApprovalsQuotModal.issue('Restart the app or contact the admin!!..');
     }
   }

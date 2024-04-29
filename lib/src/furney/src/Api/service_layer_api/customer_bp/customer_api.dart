@@ -15,45 +15,15 @@ class GetCustomerAPi {
   static String? sessionID;
   static String? slpCode;
 
-  // static Future<CustomerModal> getGlobalData() async {
-  //   print("GetValues.slpCode "+GetValues.slpCode .toString());
-  //   try {
-  //   final response = await http.get(
-  //       Uri.parse(
-  //      URL.url+"/\$crossjoin(BusinessPartners,SalesPersons,PaymentTermsTypes)?\$expand=SalesPersons(\$select=SalesEmployeeName),PaymentTermsTypes(\$select=PaymentTermsGroupName),BusinessPartners(\$select=CardCode,CardName,ShipToDefault,BilltoDefault,CurrentAccountBalance,U_CASHCUST)&\$filter=BusinessPartners/PayTermsGrpCode eq PaymentTermsTypes/GroupNumber and BusinessPartners/SalesPersonCode eq SalesPersons/SalesEmployeeCode and BusinessPartners/CardType eq 'cCustomer' and (BusinessPartners/SalesPersonCode eq ${GetValues.slpCode} or BusinessPartners/U_CASHCUST eq 'Yes')"
-  //   //  /\$crossjoin(BusinessPartners,SalesPersons,PaymentTermsTypes)?\$expand=SalesPersons(\$select=SalesEmployeeName),PaymentTermsTypes(\$select=PaymentTermsGroupName),BusinessPartners(\$select=CardCode,CardName,ShipToDefault,BilltoDefault,CurrentAccountBalance,U_CASHCUST)&\$filter=BusinessPartners/PayTermsGrpCode eq PaymentTermsTypes/GroupNumber and BusinessPartners/SalesPersonCode eq SalesPersons/SalesEmployeeCode and BusinessPartners/CardType eq 'cCustomer' and BusinessPartners/SalesPersonCode eq ${GetValues.slpCode}"
-  //     ),
-  //       headers: {
-  //       'content-type': 'application/json',
-  //       'cookie': 'B1SESSION='+ GetValues.sessionID.toString(),//'B1SESSION=cd7eff02-46e1-11ec-8000-000c29e6775e',
-  //       'Prefer':'odata.maxpagesize=${GetValues.maximumfetchValue}'
-  //       },
-
-  //     );
-  //     // print('B1SESSION='+ GetValues.sessionID.toString());
-  //     // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
-  //     print("customer details: "+json.decode(response.body).toString());
-  //      print(response.statusCode);
-  //     if (response.statusCode == 200) {
-  //    //   print(json.decode(response.body));
-  //       return CustomerModal.fromJson(json.decode(response.body)as Map<String,dynamic>);
-  //     } else {
-  //       // throw Exception("Error!!...");
-  //     return CustomerModal.issue('Error!!..');
-  //     }
-  //   } catch (e) {
-  //    //  throw Exception("Exception: $e");
-  //     return CustomerModal.issue("Restart the app or contact the admin!!..");
-  //   }
-  // }
   static Future<NewCustomerModal2> getGlobalData() async {
-    // print("GetValues.slpCode " + GetValues.slpCode.toString());
+    print("GetValues.sapPassword " + GetValues.sapPassword.toString());
     log("GetCustomerAPi::" + URL.dynamicUrl);
     log(
       "Post Det::" +
           json.encode({
             "constr":
-                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+            // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",---old one
             "query": "exec BZ_CRM_GET_CUST_SLPCODE '${GetValues.slpCode}'",
           }),
     );
@@ -65,7 +35,8 @@ class GetCustomerAPi {
         },
         body: json.encode({
           "constr":
-              "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+              "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+          // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
           "query":
               "exec BZ_CRM_GET_CUST_SLPCODE '${GetValues.slpCode}'", //'${GetValues.slpCode}'
         }),
@@ -73,7 +44,9 @@ class GetCustomerAPi {
 
       // print('B1SESSION='+ GetValues.sessionID.toString());
       // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
-      print("customer details: " + json.decode(response.body).toString());
+      log("customer stscode: " + response.statusCode.toString());
+
+      log("customer details: " + json.decode(response.body).toString());
       // print(response.statusCode);
       if (response.statusCode == 200) {
         print(json.decode(response.body));
@@ -152,3 +125,35 @@ class GetCustomerAPi {
     }
   }
 }
+
+  // static Future<CustomerModal> getGlobalData() async {
+  //   print("GetValues.slpCode "+GetValues.slpCode .toString());
+  //   try {
+  //   final response = await http.get(
+  //       Uri.parse(
+  //      URL.url+"/\$crossjoin(BusinessPartners,SalesPersons,PaymentTermsTypes)?\$expand=SalesPersons(\$select=SalesEmployeeName),PaymentTermsTypes(\$select=PaymentTermsGroupName),BusinessPartners(\$select=CardCode,CardName,ShipToDefault,BilltoDefault,CurrentAccountBalance,U_CASHCUST)&\$filter=BusinessPartners/PayTermsGrpCode eq PaymentTermsTypes/GroupNumber and BusinessPartners/SalesPersonCode eq SalesPersons/SalesEmployeeCode and BusinessPartners/CardType eq 'cCustomer' and (BusinessPartners/SalesPersonCode eq ${GetValues.slpCode} or BusinessPartners/U_CASHCUST eq 'Yes')"
+  //   //  /\$crossjoin(BusinessPartners,SalesPersons,PaymentTermsTypes)?\$expand=SalesPersons(\$select=SalesEmployeeName),PaymentTermsTypes(\$select=PaymentTermsGroupName),BusinessPartners(\$select=CardCode,CardName,ShipToDefault,BilltoDefault,CurrentAccountBalance,U_CASHCUST)&\$filter=BusinessPartners/PayTermsGrpCode eq PaymentTermsTypes/GroupNumber and BusinessPartners/SalesPersonCode eq SalesPersons/SalesEmployeeCode and BusinessPartners/CardType eq 'cCustomer' and BusinessPartners/SalesPersonCode eq ${GetValues.slpCode}"
+  //     ),
+  //       headers: {
+  //       'content-type': 'application/json',
+  //       'cookie': 'B1SESSION='+ GetValues.sessionID.toString(),//'B1SESSION=cd7eff02-46e1-11ec-8000-000c29e6775e',
+  //       'Prefer':'odata.maxpagesize=${GetValues.maximumfetchValue}'
+  //       },
+
+  //     );
+  //     // print('B1SESSION='+ GetValues.sessionID.toString());
+  //     // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
+  //     print("customer details: "+json.decode(response.body).toString());
+  //      print(response.statusCode);
+  //     if (response.statusCode == 200) {
+  //    //   print(json.decode(response.body));
+  //       return CustomerModal.fromJson(json.decode(response.body)as Map<String,dynamic>);
+  //     } else {
+  //       // throw Exception("Error!!...");
+  //     return CustomerModal.issue('Error!!..');
+  //     }
+  //   } catch (e) {
+  //    //  throw Exception("Exception: $e");
+  //     return CustomerModal.issue("Restart the app or contact the admin!!..");
+  //   }
+  // }

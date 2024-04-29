@@ -7,6 +7,8 @@ import 'package:ultimate_bundle/helpers/textstyle.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/constants.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 
+import '../../../../widgets/Drawer.dart';
+
 class SwitchBtn{
   static bool siwtchTrue = false;
 }
@@ -78,7 +80,9 @@ class SwitchBtn{
                     value: SwitchBtn.siwtchTrue ,
                   ),
                   Text(
-                    AppLocalizations.of(context)!.tzs,
+                   GetValues.currency == 'TZS'
+                      ? AppLocalizations.of(context)!.tzs
+                      : AppLocalizations.of(context)!.zmw,
                     style: GoogleFonts.poppins(
                         color: Colors.white,
                         textStyle: TextStyle(

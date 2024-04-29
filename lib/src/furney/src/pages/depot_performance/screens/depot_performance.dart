@@ -109,7 +109,7 @@ class _DepotPerformanceState extends State<DepotPerformance> {
           } else if (value.CustomerData == null) {
             setState(() {
               // isLoading = false;
-              volumeexp = "No data fount";
+              volumeexp = "No data found";
             });
           }
         } else {
@@ -135,14 +135,20 @@ class _DepotPerformanceState extends State<DepotPerformance> {
     achsales.clear();
     setState(() {
       for (var i = 0; i < chartslist.length; i++) {
-        targetsales.add(ChartRecord(
+        targetsales.add(
+          ChartRecord(
             name: chartslist[i].slpname,
             sales: chartslist[i].targetSales,
-            barColor: Colors.red,),);
-        achsales.add(ChartRecord(
+            barColor: Colors.red,
+          ),
+        );
+        achsales.add(
+          ChartRecord(
             name: chartslist[i].slpname,
             sales: chartslist[i].achSales,
-            barColor: Colors.red.shade200,),);
+            barColor: Colors.red.shade200,
+          ),
+        );
       }
     });
   }
@@ -152,14 +158,20 @@ class _DepotPerformanceState extends State<DepotPerformance> {
     col_achsales.clear();
     setState(() {
       for (var i = 0; i < chartslist.length; i++) {
-        col_targetsales.add(CollectionChartRecord(
+        col_targetsales.add(
+          CollectionChartRecord(
             name: chartslist[i].slpname,
             collection: chartslist[i].targetSales,
-            barColor: Colors.blue,),);
-        col_achsales.add(CollectionChartRecord(
+            barColor: Colors.blue,
+          ),
+        );
+        col_achsales.add(
+          CollectionChartRecord(
             name: chartslist[i].slpname,
             collection: chartslist[i].achSales,
-            barColor: Colors.blue.shade200,),);
+            barColor: Colors.blue.shade200,
+          ),
+        );
       }
     });
   }
@@ -169,14 +181,20 @@ class _DepotPerformanceState extends State<DepotPerformance> {
     vol_achsales.clear();
     setState(() {
       for (var i = 0; i < chartslist.length; i++) {
-        vol_targetsales.add(VolumeChartRecord(
+        vol_targetsales.add(
+          VolumeChartRecord(
             name: chartslist[i].slpname,
             volume: chartslist[i].targetSales,
-            barColor: Colors.green,),);
-        vol_achsales.add(VolumeChartRecord(
+            barColor: Colors.green,
+          ),
+        );
+        vol_achsales.add(
+          VolumeChartRecord(
             name: chartslist[i].slpname,
             volume: chartslist[i].achSales,
-            barColor: Colors.green.shade200,),);
+            barColor: Colors.green.shade200,
+          ),
+        );
       }
     });
   }
@@ -185,18 +203,16 @@ class _DepotPerformanceState extends State<DepotPerformance> {
     return [
       new charts.Series<ChartRecord, String>(
         // domainFormatterFn: ,
-        
+
         id: 'Desktop',
         domainFn: (ChartRecord sales, _) => sales.name,
         measureFn: (ChartRecord sales, _) => sales.sales,
         data: targetsales,
-        
+
         colorFn: (ChartRecord sales, _) =>
             charts.ColorUtil.fromDartColor(sales.barColor),
         labelAccessorFn: (ChartRecord sales, _) =>
             '${sales.sales.toStringAsFixed(0)}',
-            
-
       ),
       new charts.Series<ChartRecord, String>(
         id: 'Tablet',
@@ -271,7 +287,7 @@ class _DepotPerformanceState extends State<DepotPerformance> {
       body: (salesdata.isEmpty &&
               collectiondata.isEmpty &&
               volumedata.isEmpty &&
-              count<3)
+              count < 3)
           ? Center(
               child: Center(child: CircularProgressIndicator()),
             )
@@ -289,15 +305,13 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                       children: [
                         salesdata.isEmpty
                             ? Container(
-                                        // color: theme.primaryColor.withOpacity(0.5),
-                                        width: 
-                                             Screens.width(context)
-                                            ,
-                                        height: Screens.heigth(context) * 0.28,
-                                        child: Center(
-                                          child: Text("$salesexp"),
-                                        ),
-                                      )
+                                // color: theme.primaryColor.withOpacity(0.5),
+                                width: Screens.width(context),
+                                height: Screens.heigth(context) * 0.28,
+                                child: Center(
+                                  child: Text("$salesexp"),
+                                ),
+                              )
                             : Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -307,7 +321,8 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                         "Sales",
                                         style: theme.textTheme.titleMedium!
                                             .copyWith(
-                                                fontWeight: FontWeight.bold,),
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                     SingleChildScrollView(
@@ -317,26 +332,30 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                         width: targetsales.length <= 3
                                             ? Screens.width(context)
                                             : Screens.width(context) * s,
-                                        height: Screens.heigth(context) ,
+                                        height: Screens.heigth(context),
                                         child: Center(
                                           child: charts.BarChart(
                                             cretaedChart(),
                                             animate: true,
-                                        vertical: false,    
+                                            vertical: false,
                                             barGroupingType:
                                                 charts.BarGroupingType.grouped,
-                                            barRendererDecorator: new charts
-                                                .BarLabelDecorator(
-                                                   insideLabelStyleSpec: new charts.TextStyleSpec(fontSize: 10),
-                                                  outsideLabelStyleSpec: new charts.TextStyleSpec(fontSize: 10),
-                                                ),
+                                            barRendererDecorator:
+                                                new charts.BarLabelDecorator(
+                                              insideLabelStyleSpec:
+                                                  new charts.TextStyleSpec(
+                                                      fontSize: 10),
+                                              outsideLabelStyleSpec:
+                                                  new charts.TextStyleSpec(
+                                                      fontSize: 10),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                     SizedBox(
-                                        height:
-                                            Screens.heigth(context) * 0.015,),
+                                      height: Screens.heigth(context) * 0.015,
+                                    ),
                                     Container(
                                       width: Screens.width(context),
                                       // color: Colors.red,
@@ -390,15 +409,13 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                         //
                         collectiondata.isEmpty
                             ? Container(
-                                        // color: theme.primaryColor.withOpacity(0.5),
-                                        width: 
-                                             Screens.width(context)
-                                            ,
-                                        height: Screens.heigth(context) * 0.28,
-                                        child: Center(
-                                          child: Text("$collectionexp"),
-                                        ),
-                                      )
+                                // color: theme.primaryColor.withOpacity(0.5),
+                                width: Screens.width(context),
+                                height: Screens.heigth(context) * 0.28,
+                                child: Center(
+                                  child: Text("$collectionexp"),
+                                ),
+                              )
                             : Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -408,7 +425,8 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                         "Collection",
                                         style: theme.textTheme.titleMedium!
                                             .copyWith(
-                                                fontWeight: FontWeight.bold,),
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                     SingleChildScrollView(
@@ -418,7 +436,7 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                         width: targetsales.length <= 3
                                             ? Screens.width(context)
                                             : Screens.width(context) * s,
-                                        height: Screens.heigth(context) ,
+                                        height: Screens.heigth(context),
                                         child: Center(
                                           child: charts.BarChart(
                                             CollectionChart(),
@@ -427,14 +445,20 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                             barGroupingType:
                                                 charts.BarGroupingType.grouped,
                                             barRendererDecorator: new charts
-                                                .BarLabelDecorator(outsideLabelStyleSpec: new charts.TextStyleSpec(fontSize: 10),insideLabelStyleSpec:new charts.TextStyleSpec(fontSize: 10)),
+                                                .BarLabelDecorator(
+                                                outsideLabelStyleSpec:
+                                                    new charts.TextStyleSpec(
+                                                        fontSize: 10),
+                                                insideLabelStyleSpec:
+                                                    new charts.TextStyleSpec(
+                                                        fontSize: 10)),
                                           ),
                                         ),
                                       ),
                                     ),
                                     SizedBox(
-                                        height:
-                                            Screens.heigth(context) * 0.015,),
+                                      height: Screens.heigth(context) * 0.015,
+                                    ),
                                     Container(
                                       width: Screens.width(context),
                                       // color: Colors.red,
@@ -487,16 +511,14 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                         //
                         //
                         volumedata.isEmpty
-                            ?Container(
-                                        // color: theme.primaryColor.withOpacity(0.5),
-                                        width: 
-                                             Screens.width(context)
-                                            ,
-                                        height: Screens.heigth(context) * 0.28,
-                                        child: Center(
-                                          child: Text("$volumeexp"),
-                                        ),
-                                      )
+                            ? Container(
+                                // color: theme.primaryColor.withOpacity(0.5),
+                                width: Screens.width(context),
+                                height: Screens.heigth(context) * 0.28,
+                                child: Center(
+                                  child: Text("$volumeexp"),
+                                ),
+                              )
                             : Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -506,7 +528,8 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                         "Volume",
                                         style: theme.textTheme.titleMedium!
                                             .copyWith(
-                                                fontWeight: FontWeight.bold,),
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                     SingleChildScrollView(
@@ -525,14 +548,20 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                             barGroupingType:
                                                 charts.BarGroupingType.grouped,
                                             barRendererDecorator: new charts
-                                                .BarLabelDecorator(outsideLabelStyleSpec: new charts.TextStyleSpec(fontSize: 10),insideLabelStyleSpec:new charts.TextStyleSpec(fontSize: 10) ),
+                                                .BarLabelDecorator(
+                                                outsideLabelStyleSpec:
+                                                    new charts.TextStyleSpec(
+                                                        fontSize: 10),
+                                                insideLabelStyleSpec:
+                                                    new charts.TextStyleSpec(
+                                                        fontSize: 10)),
                                           ),
                                         ),
                                       ),
                                     ),
                                     SizedBox(
-                                        height:
-                                            Screens.heigth(context) * 0.015,),
+                                      height: Screens.heigth(context) * 0.015,
+                                    ),
                                     Container(
                                       width: Screens.width(context),
                                       // color: Colors.red,
@@ -594,8 +623,11 @@ class ChartRecord {
   double sales;
   final Color barColor;
 
-  ChartRecord(
-      {required this.name, required this.sales, required this.barColor,});
+  ChartRecord({
+    required this.name,
+    required this.sales,
+    required this.barColor,
+  });
 }
 
 class VolumeChartRecord {
@@ -603,8 +635,11 @@ class VolumeChartRecord {
   double volume;
   final Color barColor;
 
-  VolumeChartRecord(
-      {required this.name, required this.volume, required this.barColor,});
+  VolumeChartRecord({
+    required this.name,
+    required this.volume,
+    required this.barColor,
+  });
 }
 
 class CollectionChartRecord {
@@ -612,6 +647,9 @@ class CollectionChartRecord {
   double collection;
   final Color barColor;
 
-  CollectionChartRecord(
-      {required this.name, required this.collection, required this.barColor,});
+  CollectionChartRecord({
+    required this.name,
+    required this.collection,
+    required this.barColor,
+  });
 }

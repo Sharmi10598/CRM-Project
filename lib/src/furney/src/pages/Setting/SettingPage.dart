@@ -2,11 +2,13 @@
 
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sign_in/sign_in_page.dart';
 import '../../Api/local_api/SettingAPI/SettingsApi.dart';
 import '../../helpers/screens.dart';
+import '../../widgets/Drawer.dart';
 
 class SettingWidget extends StatefulWidget {
   SettingWidget({
@@ -35,15 +37,19 @@ class SettingWidgetState extends State<SettingWidget> {
   validateMethod() async {
     if (formkey[0].currentState!.validate()) {
       final pref2 = await pref;
-      await pref2.setString(
-        'countryCode',
-        mycontroller[3].text,
-      );
-
       SettingModelAPi.countryCode = mycontroller[3].text;
       await SettingModelAPi.getGlobalData().then((value) async {
         if (value.stsCode! >= 200 && value.stsCode! <= 210) {
           if (value.countryClass != null) {
+            await pref2.setString(
+              'countryCode',
+              value.countryClass!.countryName,
+            );
+
+            GetValues.countryCode = value.countryClass!.countryName;
+            FurneySignInScreenState.settingMsg = '';
+            log('FurneySignInScreenState.settingMsg ::${FurneySignInScreenState.settingMsg}');
+
             await pref2.setString(
               'queryUrl',
               value.countryClass!.queryUrl,
@@ -63,7 +69,25 @@ class SettingWidgetState extends State<SettingWidget> {
             URL.dynamicUrl = value.countryClass!.queryUrl;
             URL.reportUrl = value.countryClass!.reportUrl;
             URL.urlLocal = value.countryClass!.localUrl;
-            FurneySignInScreenState.settingMsg = '';
+            if (pref2.getString('countryCode') == 'tanzania' ||
+                pref2.getString('countryCode') == 'Tanzania') {
+              setState(() {
+                log('Tanzania message1');
+                GetValues.sapPassword = 'Insignia@2021#';
+                GetValues.currency = 'TZS';
+                GetValues.countryCode = pref2.getString('countryCode');
+              });
+            } else if (pref2.getString('countryCode') == 'zambia' ||
+                pref2.getString('countryCode') == 'Zambia') {
+              setState(() {
+                log('Zambia message2');
+                GetValues.sapPassword = 'Insignia@2023#';
+                GetValues.currency = 'ZMW';
+                GetValues.countryCode = pref2.getString('countryCode');
+              });
+            }
+
+            log('${GetValues.sapPassword},${GetValues.currency} ,${GetValues.countryCode}');
             Navigator.pop(context);
           } else if (value.countryClass == null) {
             mycontroller[3].text = '';
@@ -80,6 +104,8 @@ class SettingWidgetState extends State<SettingWidget> {
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
         } else {
+          await pref2.remove('countryCode');
+          mycontroller[3].text = '';
           final snackBar = SnackBar(
             duration: Duration(seconds: 5),
             backgroundColor: Colors.red,
@@ -90,17 +116,6 @@ class SettingWidgetState extends State<SettingWidget> {
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
-        // if (value.stsCode! >= 400 && value.stsCode! <= 410) {
-        //   final snackBar = SnackBar(
-        //     duration: Duration(seconds: 5),
-        //     backgroundColor: const Color.fromARGB(255, 180, 168, 168),
-        //     content: Text(
-        //       '${value.excep}',
-        //       style: TextStyle(color: Colors.white),
-        //     ),
-        //   );
-        //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        // }
       });
     }
   }
@@ -108,13 +123,13 @@ class SettingWidgetState extends State<SettingWidget> {
   saveCountryCode() async {
     final pref2 = await pref;
     if (pref2.getString('countryCode') != null) {
-      log("xxxxxx::: ${pref2.getString('countryCode')}");
       mycontroller[3].text = pref2.getString('countryCode')!;
     } else {
       mycontroller[3].text = '';
     }
   }
 
+  @override
   initState() {
     // TODO: implement initState
     super.initState();
@@ -122,6 +137,10 @@ class SettingWidgetState extends State<SettingWidget> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Container(
       // padding: EdgeInsets.only(
@@ -240,6 +259,7 @@ class SettingWidgetState extends State<SettingWidget> {
             ),
             InkWell(
               onTap: () {
+                // setState(validateMethod);
                 setState(() {
                   validateMethod();
                 });

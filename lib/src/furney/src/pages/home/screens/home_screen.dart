@@ -18,7 +18,7 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
   List<InPaymentChartData> collectiondata = [];
   List<VolumeChartData> volumedetails = [];
   List<VolumeChartData> volumedata = [];
-
+  Future<SharedPreferences> pref = SharedPreferences.getInstance();
   @override
   void initState() {
     super.initState();
@@ -59,12 +59,12 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
   Config config = new Config();
   void checkHaveInternet() async {
     final bool internet = await config.haveInterNet();
-
+    log('message::${internet}');
     if (internet) {
+      await checkCountryCodeMethod();
       // saleschartapi();
       // Collectionchartapi();
       // Volumechartapi();
-
       checkVersion();
     } else {
       setState(() {
@@ -78,6 +78,7 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
   void checkVersion() {
     CheckVersionAPi.getGlobalData().then((value) {
       if (value.deviceData != null) {
+        log('value.deviceData![0].Version::${value.deviceData![0].Version}');
         if (AppVersion.version == value.deviceData![0].Version) {
           setState(() {
             log("comeeeeee: ${AppVersion.version} ");
@@ -89,6 +90,25 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
         }
       }
     });
+  }
+
+  checkCountryCodeMethod() async {
+    final pref2 = await pref;
+    if (pref2.getString('countryCode') == 'tanzania' ||
+        pref2.getString('countryCode') == 'Tanzania') {
+      log('Tanzania message1');
+      GetValues.sapPassword = 'Insignia@2021#';
+      GetValues.currency = 'TZS';
+      GetValues.countryCode = pref2.getString('countryCode');
+      log('${GetValues.sapPassword},${GetValues.currency} ,${GetValues.countryCode}');
+    } else if (pref2.getString('countryCode') == 'zambia' ||
+        pref2.getString('countryCode') == 'Zambia') {
+      log('Zambia message2');
+      GetValues.sapPassword = 'Insignia@2023#';
+      GetValues.currency = 'ZMW';
+      GetValues.countryCode = pref2.getString('countryCode');
+      log('${GetValues.sapPassword},${GetValues.currency} ,${GetValues.countryCode}');
+    }
   }
 
   Future<void> ploadCheckinCheckout() async {
@@ -481,21 +501,19 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
   //
 
   void callServiceLayerApi() async {
+    await checkCountryCodeMethod();
     final preff = await SharedPreferences.getInstance();
-    PostLoginAPi.username =
+    PostSAPLoginAPi.username =
         preff.getString('sapUserName'); //'crmapp';//sapUserName;
-    PostLoginAPi.password = preff.getString('sapPassword');
+    PostSAPLoginAPi.password = preff.getString('sapPassword');
     final pref2 = await pref;
     GetValues.sapDB = preff.getString('SapDB');
     GetValues.slpCode = preff.getString('SlpCode');
-    log("url: ${preff.getString('sapUrl')}, user ${preff.getString('sapUserName')}, pass ${preff.getString('sapPassword')} ");
+    log("sapUrl: ${preff.getString('sapUrl')}, user:: ${preff.getString('sapUserName')}, pass ::${preff.getString('sapPassword')} ");
     URL.url = preff.getString('sapUrl')!;
 
-    //'Tanzania';sapUserPass;//Tanzania crmapp
-    //  print( "sap name"+PostLoginAPi.username.toString());
-    //     print( "sap password"+PostLoginAPi.password.toString());
-    await PostLoginAPi.getGlobalData().then((value) async {
-      print("SapDBdbdbdb: ${value.stCode!}" + GetValues.sapDB.toString());
+    await PostSAPLoginAPi.getGlobaldData().then((value) async {
+      log("SapDBdbdbdb: ${value.stCode!}::" + GetValues.sapDB.toString());
       if (value.stCode! >= 200 && value.stCode! <= 210) {
         if (value.sessionId != null) {
           pref2.setString("sessionId", value.sessionId.toString());
@@ -533,7 +551,7 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
           duration: Duration(seconds: 4),
           backgroundColor: Colors.red,
           content: Text(
-            "Opps Somthing went wrong !!..",
+            "Opps Something went wrong !!..",
             style: const TextStyle(color: Colors.white),
           ),
         );
@@ -561,16 +579,16 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
     GetValues.crmUserID = preff.getString('crmUserID');
     GetValues.sapUserName = preff.getString('sapUserName');
     // print('sessionId........'+GetValues.sessionID .toString());
-    //  print('crmUserID........'+ GetValues.crmUserID .toString());
+    print('crmUserID........' + GetValues.crmUserID.toString());
     //  print('sapUserName........'+ GetValues.sapUserName .toString());
     getSapUserID();
   }
 
   void getSapUserID() async {
-    await SapUserIDAPi.getGlobalData().then((value) {
+    await SapUserIDAPi.getGlobalData().then((value) async {
       if (value.sapUserIDValue != null) {
         //value.sapUserIDValue!.length>0 &&
-        //   print("code...."+value.sapUserIDValue![0].InternalKey.toString());
+        print("code...." + value.sapUserIDValue![0].InternalKey.toString());
         if (value.sapUserIDValue!.isNotEmpty) {
           GetValues.sapUserID = value.sapUserIDValue![0].InternalKey.toString();
           callAprovals();
@@ -604,7 +622,7 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
   int notes = 0;
   int total = 0;
   List<NotesData> notesData = [];
-  void callNotesApi() async {
+  callNotesApi() async {
     int reads = 0;
     await NotesAPi.getGlobalData().then((value) {
       if (value.notesData != null) {
@@ -633,9 +651,9 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
     });
   }
 
-  void callAprovals() async {
+  callAprovals() async {
     await ApprovalsAPi.getGlobalData().then((value) {
-      if (value.approvalsvalue!.isNotEmpty) {
+      if (value.approvalsvalue != null || value.approvalsvalue!.isNotEmpty) {
         loadingCompleted = loadingCompleted + 1;
         if (mounted) {
           setState(() {
@@ -689,7 +707,7 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
     //
     //
 
-    log("U_CrpUsr::::UUUU::::" + GetValues.U_CrpUsr.toString());
+    log("U_CrpUsr::::UUUU::::" + GetValues.userName.toString());
     log("U_CrpUsr::::UUUUBBBBB::::" + preff.getString('U_CrpUsr').toString());
     //  auth(preff);
     // }
@@ -913,7 +931,6 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
     );
   }
 
-  Future<SharedPreferences> pref = SharedPreferences.getInstance();
   String isauthticate = '';
   // Future<void> checkLocalAuth() async {
   //   final localAuth = LocalAuthentication();
@@ -989,7 +1006,7 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
   //     );
   //   }
 
-  void callSeriesApi() async {
+  callSeriesApi() async {
     await SeriesAPi.getGlobalData().then((value) {
       if (value.Series != null) {
         loadingCompleted = loadingCompleted + 1;

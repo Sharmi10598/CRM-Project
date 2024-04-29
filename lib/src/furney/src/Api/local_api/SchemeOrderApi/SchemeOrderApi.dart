@@ -28,7 +28,7 @@ class SchemeOrderAPi {
           json.encode(
               {"SCHEMES": salesOderSchene.map((e) => e.toMap()).toList()}));
 
-      log("json ressss: SCHEMES: " + response.body);
+      log("SCHEMES ressss:: " + response.body);
       if (response.statusCode == 200) {
         print(json.decode(response.body));
         return SchemeOrderModal.fromJson(

@@ -10,6 +10,7 @@ import 'package:ultimate_bundle/src/furney/src/Modal/service_layer_modal/contact
 import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/SalesQuotEdit/widget/creation/logisticEdit_page.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/customers/screens/customer_page.dart';
+import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 // import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/widget/creation/content_creation.dart';
 
 class HeaderEditCreation extends StatefulWidget {
@@ -28,7 +29,7 @@ class HeaderEditCreationState extends State<HeaderEditCreation> {
   ///
   static String docNo = '0'; //
   static String contactPerson = ''; //
-  static String currency = 'TZS'; //
+  static String currency = GetValues.currency.toString(); //
   static String status = 'open'; //
   static String salesEmp = ''; //
   static double totalBeforeDiscount = 0; //
@@ -45,8 +46,6 @@ class HeaderEditCreationState extends State<HeaderEditCreation> {
   //
   List<ContactEmployeValue> contactValue = [];
   List<ContactEmployeValue> filtercontactValue = [];
-
-
 
   void callapi() {
     ContactPersonsAPi.getGlobalData().then((value) {
@@ -66,11 +65,11 @@ class HeaderEditCreationState extends State<HeaderEditCreation> {
 //       totalBeforeDiscount = totalBeforeDiscount! +
 //           (documentLines![i].price! * documentLines![i].qty!);
 
-      // discount = discount +
-      //     ((documentLines![i].price! * documentLines![i].qty!) -
-      //         (documentLines![i].lineTotal!));
-      // tax = tax + documentLines![i].tax!;
-      // total = total + documentLines![i].total!;
+  // discount = discount +
+  //     ((documentLines![i].price! * documentLines![i].qty!) -
+  //         (documentLines![i].lineTotal!));
+  // tax = tax + documentLines![i].tax!;
+  // total = total + documentLines![i].total!;
 //     }
 //   }
 
@@ -677,5 +676,4 @@ class HeaderEditCreationState extends State<HeaderEditCreation> {
   //     // });
   //   }
   // }
-
 }

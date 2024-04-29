@@ -56,7 +56,7 @@ class LogisticOrderState extends State<LogisticOrder> {
   }
 
   Future<SharedPreferences> pref = SharedPreferences.getInstance();
-  bool schmDisableBtn = false;
+  static bool schmDisableBtn = false;
 
   static String? approvedocentry;
   static String? valueSelectedOrder2;
@@ -477,9 +477,9 @@ class LogisticOrderState extends State<LogisticOrder> {
                           onTap: schmDisableBtn == false
                               ? null
                               : () async {
-                                  setState(() async {
+                                  setState(() {
                                     ifSchemeOnlyClicked = true;
-                                    await callSchemeOrderApi();
+                                    callSchemeOrderApi();
                                   });
                                 },
                           isLoading: schemeApiLoad,
@@ -605,8 +605,6 @@ class LogisticOrderState extends State<LogisticOrder> {
     }
     await SchemeOrderAPi.getGlobalData(salesOderSchene).then((value) {
       if (value.statuscode >= 200 && value.statuscode <= 210) {
-//  SalesOrderAfterAPi.baseType = value.saleOrder[0].;
-
         if (value.saleOrder != null) {
           alreadySchemeApiCalled = true;
 
@@ -756,8 +754,7 @@ class LogisticOrderState extends State<LogisticOrder> {
               (ContentOrderCreationState.itemsDetails[i].total! -
                   ContentOrderCreationState.itemsDetails[i].valueAFdisc!);
         }
-        // print("basictotal: " + basictotal.toString());
-        // print("discount: " + discount.toString());
+
         setState(() {
           HeaderOrderCreationState.discount = discount;
           HeaderOrderCreationState.tax = tax;
@@ -786,7 +783,7 @@ class LogisticOrderState extends State<LogisticOrder> {
         billTo: billto,
         bPCode: HeaderOrderCreationState.bpCode,
         bPName: HeaderOrderCreationState.bpName,
-        currency: HeaderOrderCreationState.currency,
+        currency: GetValues.currency.toString(),
         cusRefNo: HeaderOrderCreationState.mycontroller[0].text,
         docDate: HeaderOrderCreationState.currentDateTime!,
         status: HeaderOrderCreationState.status,
@@ -832,6 +829,7 @@ class LogisticOrderState extends State<LogisticOrder> {
         taxCodeName:
             ContentOrderCreationState.itemsDetails[i].taxName.toString(),
         carton: ContentOrderCreationState.itemsDetails[i].carton.toString(),
+        valueAFDisc: ContentOrderCreationState.itemsDetails[i].valueAFdisc,
       );
       //  );
       //  print("items: "+ val.itemName);
@@ -1087,6 +1085,7 @@ class LogisticOrderState extends State<LogisticOrder> {
               await SOLoginAPi.getGlobalData().then((valuel) {
                 if (valuel.sessionId!.isNotEmpty) {
                   soLimit = true;
+                  log('valuel.sessionId!::${valuel.sessionId!}');
                   SalesOrderPostAPi.sessionID = valuel.sessionId!;
                   callPostApi();
                 } else {
@@ -1143,7 +1142,7 @@ class LogisticOrderState extends State<LogisticOrder> {
     await SalesOrderPostAPi.getGlobalData(CreateOrderDetailsState.latitude!,
             CreateOrderDetailsState.longitude!)
         .then((value) {
-      //  log("Doccccccd" + value.docEntry.toString());
+      log("Doccccccd" + value.docEntry.toString());
       if (value.statusCode! >= 200 && value.statusCode! <= 204) {
         SalesOrderAfterAPi.baseEntry = value.docEntry.toString();
 
@@ -1194,26 +1193,24 @@ class LogisticOrderState extends State<LogisticOrder> {
         ScaffoldMessenger.of(this.context).showSnackBar(snackBar);
       }
     });
-    SalesOrderAfterAPi.sessionID = GetValues.sessionID;
-    SalesOrderAfterAPi.baseType = "17";
-    // SalesOrderAfterAPi.baseEntry = "12345";
-    // print("SO basetype: " + SalesOrderAfterAPi.baseType.toString());
-    // print("SO discper:" + SalesOrderAfterAPi.baseLineTo.toString());
-    // print("SO discper:" + SalesOrderAfterAPi.disValue.toString());
-    // print("SO discper:" + SalesOrderAfterAPi.discper.toString());
-    // print("SO schemeEntry:" + SalesOrderAfterAPi.schemeEntry.toString());
-    for (int i = 0; i < saleOrderdata!.length; i++) {
-      log("1111");
-      SalesOrderAfterAPi.baseLineTo = saleOrderdata![i].lineNum.toString();
-      SalesOrderAfterAPi.disValue = saleOrderdata![i].discVal.toString();
-      SalesOrderAfterAPi.discper = saleOrderdata![i].discPer.toString();
-      SalesOrderAfterAPi.schemeEntry = saleOrderdata![i].schemeEntry;
-      await SalesOrderAfterAPi.getData(SalesOrderPostAPi.deviceTransID!)
-          .then((value) async {
-        if (value.statusCode! >= 200 && value.statusCode! <= 210) {
-          print("Post Successfully..");
-        }
-      });
+
+    if (schmDisableBtn == true) {
+      SalesOrderAfterAPi.sessionID = GetValues.sessionID;
+      SalesOrderAfterAPi.baseType = "17";
+
+      for (int i = 0; i < saleOrderdata!.length; i++) {
+        log("1111");
+        SalesOrderAfterAPi.baseLineTo = saleOrderdata![i].lineNum.toString();
+        SalesOrderAfterAPi.disValue = saleOrderdata![i].discVal.toString();
+        SalesOrderAfterAPi.discper = saleOrderdata![i].discPer.toString();
+        SalesOrderAfterAPi.schemeEntry = saleOrderdata![i].schemeEntry;
+        await SalesOrderAfterAPi.getData(SalesOrderPostAPi.deviceTransID!)
+            .then((value) async {
+          if (value.statusCode! >= 200 && value.statusCode! <= 210) {
+            log("Post Successfully..");
+          }
+        });
+      }
     }
   }
 

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-Logindata logindataFromJson(String str,int st) =>
-    Logindata.fromJson(json.decode(str) as Map<String, dynamic>,st);
+// Logindata logindataFromJson(String str,int st) =>
+//     Logindata.fromJson(json.decode(str) as Map<String, dynamic>,st);
 
-//String logindataToJson(Logindata data) => json.encode(data.toJson());
+// //String logindataToJson(Logindata data) => json.encode(data.toJson());
 
 class Logindata {
   Logindata(
@@ -24,19 +24,7 @@ class Logindata {
   int? stCode;
 
   factory Logindata.fromJson(Map<String, dynamic> json,int stcode) {
-    //   if(json['error'] != null){
-    //     print("data1");
-    //        return Logindata(
-    //     odataMetadata: null,
-    //     sessionId: null,
-    //     version: null,
-    //     sessionTimeout: null,
-    //     error: Error.fromJson(json['error']),
-    //     exception: null
-    // );
-    //   }
-    // else{
-    //  print("data2");
+  
     return Logindata(
         odataMetadata: json['odata.metadata'] as String,
         sessionId: json['SessionId'] as String,

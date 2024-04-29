@@ -10,32 +10,39 @@ import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 class GetActivityApvdAPi {
   static Future<GetActivityApvdModel> getGlobalData(String slpcode) async {
     try {
-      final response = await http.post(
-        Uri.parse(URL.dynamicUrl),
-        headers: {
-          'content-type': 'application/json',
+      final response = await http.post(Uri.parse(URL.dynamicUrl),
+          headers: {
+            'content-type': 'application/json',
           },
-         body: json.encode({
-              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
-              "query": "BZ_CRM_Get_Cust_for_saleCall '$slpcode'",//'${GetValues.slpCode}'
-          })
-      );
-      log( "aproval: "+json.encode({
-              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
-              "query": "BZ_CRM_Get_Cust_for_saleCall '$slpcode'",//'${GetValues.slpCode}'
+          body: json.encode({
+            "constr":
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+            // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+            "query":
+                "BZ_CRM_Get_Cust_for_saleCall '$slpcode'", //'${GetValues.slpCode}'
+          }));
+      log("Aproval Act : " +
+          json.encode({
+            "constr":
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+            //  "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+            "query":
+                "BZ_CRM_Get_Cust_for_saleCall '$slpcode'", //'${GetValues.slpCode}'
           }));
 
-      log( response.body);
-    
+      log("ActivityApvdAPi::${response.body}");
+
       if (response.statusCode == 200) {
-        return GetActivityApvdModel.fromJson( response.body,response.statusCode);
+        return GetActivityApvdModel.fromJson(
+            response.body, response.statusCode);
       } else {
         // throw Exception("Error!!...");
-        return GetActivityApvdModel.fromJson( response.body,response.statusCode);
+        return GetActivityApvdModel.fromJson(
+            response.body, response.statusCode);
       }
     } catch (e) {
       //  throw Exception("Exception: $e");
-      return GetActivityApvdModel.fromJson(e.toString(),500);
+      return GetActivityApvdModel.fromJson(e.toString(), 500);
     }
   }
 }

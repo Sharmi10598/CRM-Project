@@ -31,7 +31,7 @@ class GetActivityApvdModel {
           .toList();
       return GetActivityApvdModel(
         activitiesData: dataList,
-        message: jsons['message'].toString(),
+        message: jsons['message'].toString(),//D3128
         status: jsons['status'] as bool, 
         error: null, 
         statusCode: stcode,

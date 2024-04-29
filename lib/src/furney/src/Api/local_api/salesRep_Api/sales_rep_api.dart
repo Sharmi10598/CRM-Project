@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
 import 'package:ultimate_bundle/src/furney/src/Modal/local_modal/sales_rep_modal/sales_rep_modal.dart';
@@ -23,6 +24,8 @@ class SalesRepAPi{
         'content-type': 'application/json',
         },
       );
+        log(json.decode(response.body).toString());
+
       if (response.statusCode == 200) {
         print(json.decode(response.body));
         return SalesRepModal.fromJson(json.decode(response.body)as Map<String,dynamic>);

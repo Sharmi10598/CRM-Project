@@ -25,41 +25,44 @@ class StockWarehouseState extends State<StockWarehouse> {
   static String? qty;
   List<ItemWarehouseInfoCollection> itemWarehouse = [];
   List<ItemWarehouseInfoCollection> itemWarehouseFilter = [];
-  int indexOFWarehouse=0;
+  String errorMsg = '';
+  int indexOFWarehouse = 0;
   @override
   void initState() {
     super.initState();
-     StockWarehouseAPi.itemcode = itemCode;
-     print( StockWarehouseAPi.itemcode );
-     StockWarehouseAPi.getGlobalData().then((value) {
-      if(value.itemWarehouse!=null){
+    StockWarehouseAPi.itemcode = itemCode;
+    print(StockWarehouseAPi.itemcode);
+    StockWarehouseAPi.getGlobalData().then((value) {
+      if (value.itemWarehouse != null) {
         setState(() {
-           print(value.itemWarehouse![0].warehouseCode);
+          print(value.itemWarehouse![0].warehouseCode);
           itemWarehouse = value.itemWarehouse!;
           itemWarehouseFilter = itemWarehouse;
         });
         getWarehouse();
+      } else if (value.itemWarehouse == null || value.itemWarehouse!.isEmpty) {
+        errorMsg = 'No data found try again';
       }
-     
     });
-    
   }
-  void getWarehouse(){
+
+  void getWarehouse() {
     print(GetValues.branch);
-    print('length: '+itemWarehouse.length.toString());
-    print('GetValues.branch: '+GetValues.branch!.toLowerCase());
-    for(var i=0; i<itemWarehouse.length;i++){
-      if(itemWarehouse[i].warehouseCode!.toLowerCase()==GetValues.branch!.toLowerCase()){
-        print('warehouse: '+itemWarehouse[i].warehouseCode.toString());
-        print('i: '+i.toString());
+    print('length: ' + itemWarehouse.length.toString());
+    print('GetValues.branch: ' + GetValues.branch!.toLowerCase());
+    for (var i = 0; i < itemWarehouse.length; i++) {
+      if (itemWarehouse[i].warehouseCode!.toLowerCase() ==
+          GetValues.branch!.toLowerCase()) {
+        print('warehouse: ' + itemWarehouse[i].warehouseCode.toString());
+        print('i: ' + i.toString());
         setState(() {
           indexOFWarehouse = i;
         });
       }
-     //  print("warehouse: "+itemWarehouse[i].warehouseCode!.toLowerCase().toString());
+      //  print("warehouse: "+itemWarehouse[i].warehouseCode!.toLowerCase().toString());
     }
   }
-  
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -69,316 +72,314 @@ class StockWarehouseState extends State<StockWarehouse> {
       drawer: drawer(context),
       key: _scaffoldKey,
       appBar: appBar(context, _scaffoldKey, widget.title),
-      body:
-          itemWarehouse.length==0? Center(
-            child:  SpinKitThreeBounce(
-                          size: Screens.heigth(context)*0.06,
-                          color:theme.primaryColor,
-                        ),
-          ):
-          Padding(
-        padding: EdgeInsets.only(
-          top: Screens.heigth(context) * 0.02,
-          left: Screens.width(context) * 0.02,
-          bottom: Screens.heigth(context) * 0.02,
-          right: Screens.width(context) * 0.02,
-        ),
-        child:
-        //  Card(
-        //   elevation: 6,
-        //   child:
-           Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Center(
-                //   child: 
-                SizedBox(
-                   // alignment: Alignment.center,
+      body: itemWarehouse.length == 0
+          ? Center(
+              child: SpinKitThreeBounce(
+                size: Screens.heigth(context) * 0.06,
+                color: theme.primaryColor,
+              ),
+            )
+          : Padding(
+              padding: EdgeInsets.only(
+                top: Screens.heigth(context) * 0.02,
+                left: Screens.width(context) * 0.02,
+                bottom: Screens.heigth(context) * 0.02,
+                right: Screens.width(context) * 0.02,
+              ),
+              child:
+                  //  Card(
+                  //   elevation: 6,
+                  //   child:
+                  Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Center(
+                  //   child:
+                  SizedBox(
+                    // alignment: Alignment.center,
                     width: Screens.width(context),
                     //color: Colors.greenAccent,
-                    child:
-                     Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          
-                        //  color: Colors.red,
-                          width: Screens.width(context)*0.28,
+                          //  color: Colors.red,
+                          width: Screens.width(context) * 0.28,
                           child: Text(
                             'Item Code: ',
-                            style:  TextStyles.boldPC1(context),
+                            style: TextStyles.boldPC1(context),
                           ),
                         ),
-                        
                         Container(
-                         //   color: Colors.red,
-                           alignment: Alignment.bottomLeft,
-                          width: Screens.width(context)*0.6,
+                          //   color: Colors.red,
+                          alignment: Alignment.bottomLeft,
+                          width: Screens.width(context) * 0.6,
                           child: Text(
                             '$itemCode',
-                            style:  TextStyles.boldPC1(context),
+                            style: TextStyles.boldPC1(context),
                           ),
                         ),
                       ],
                     ),
                   ),
-                // ),
-                SizedBox(
-                  height: Screens.heigth(context) * 0.02,
-                ),
-                 SizedBox(
-                     width: Screens.width(context),
+                  // ),
+                  SizedBox(
+                    height: Screens.heigth(context) * 0.02,
+                  ),
+                  SizedBox(
+                    width: Screens.width(context),
                     //color: Colors.greenAccent,
-                   child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: Screens.width(context) * 0.28,
-                            //  color: Colors.greenAccent,
-                            child: Text(
-                              'Item Name: ',
-                              style: TextStyles.headlineBlack1(context),
-                            ),
-                          ),
-                          //                SizedBox(width: Screens.width(context) * 0.05),
-                          Container(
-                              alignment: Alignment.bottomLeft,
-                            width: Screens.width(context) * 0.6,
-                        //     color: Colors.redAccent,
-                            child: Text(
-                              '$itemName ',
-                              style: TextStyles.headlineBlack1(context),
-                            ),
-                          ),
-                        ],
-                      ),
-                 ),
-                    SizedBox(
-                      height: Screens.heigth(context) * 0.01,
-                    ),
-              Card(
-                elevation: 6,
-                child: Container(
-                  padding: EdgeInsets.only(
-                    top: Screens.heigth(context) * 0.02,
-                    left: Screens.width(context) * 0.02,
-                    bottom: Screens.heigth(context) * 0.02,
-                    right: Screens.width(context) * 0.02,
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          BorderRadius.circular(Screens.width(context) * 0.02),),
-                  width: Screens.width(context),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // // Center(
-                      // //   child: Container(
-                      // //     alignment: Alignment.center,
-                      // //     width: Screens.width(context),
-                      // //     // color: Colors.greenAccent,
-                      // //     child:
-                      //      Row(
-                      //      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //       children: [
-                      //         Container(
-                                
-                      //         //  color: Colors.red,
-                      //           width: Screens.width(context)*0.28,
-                      //           child: Text(
-                      //             "Item Code: ",
-                      //             style: GoogleFonts.poppins(
-                      //               color: Colors.red[200],
-                      //               fontSize: Screens.width(context) * 0.045,
-                      
-                      //               ///  fontWeight: FontWeight.bold
-                      //             ),
-                      //           ),
-                      //         ),
-                              
-                      //         Container(
-                      //          //   color: Colors.red,
-                      //            alignment: Alignment.bottomLeft,
-                      //           width: Screens.width(context)*0.6,
-                      //           child: Text(
-                      //             "$itemCode",
-                      //             style: GoogleFonts.poppins(
-                      //               color: Colors.red[200],
-                      //               fontSize: Screens.width(context) * 0.045,
-                      
-                      //               ///  fontWeight: FontWeight.bold
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      // //   ),
-                      // // ),
-                      // SizedBox(
-                      //   height: Screens.heigth(context) * 0.02,
-                      // ),
-                      // Container(
-                      //   alignment: Alignment.center,
-                      //   width: Screens.width(context),
-                      //   // color: Colors.greenAccent,
-                      //   child: Text(
-                      //     "itemName",
-                      //     style: GoogleFonts.poppins(
-                      //       color: Colors.red[200],
-                      //       fontSize: Screens.width(context) * 0.045,
-                      
-                      //       ///  fontWeight: FontWeight.bold
-                      //     ),
-                      //   ),
-                      // ),
-                      
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     Container(
-                      //       width: Screens.width(context) * 0.28,
-                      //       //  color: Colors.greenAccent,
-                      //       child: Text(
-                      //         "Item Name: ",
-                      //         style: GoogleFonts.poppins(
-                      //           color: Colors.black54,
-                      //           fontSize: Screens.width(context) * 0.035,
-                      //           //  fontWeight: FontWeight.bold
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     //                SizedBox(width: Screens.width(context) * 0.05),
-                      //     Container(
-                      //         alignment: Alignment.bottomLeft,
-                      //       width: Screens.width(context) * 0.6,
-                      //   //     color: Colors.redAccent,
-                      //       child: Text(
-                      //         "$itemName ",
-                      //         style: GoogleFonts.poppins(
-                      //           color: Colors.black54,
-                      //           fontSize: Screens.width(context) * 0.035,
-                      //           //  fontWeight: FontWeight.bold
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      // SizedBox(
-                      //   height: Screens.heigth(context) * 0.01,
-                      // ),
-                      
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: Screens.width(context) * 0.3,
-                            //  color: Colors.greenAccent,
-                            child: Text(
-                              'Quantity: ',
-                              style:TextStyles.headlineBlack1(context),
-                            ),
-                          ),
-                          //                SizedBox(width: Screens.width(context) * 0.05),
-                          Container(
-                            alignment: Alignment.bottomRight,
-                            width: Screens.width(context) *0.5,
-                          //   color: Colors.redAccent,
-                            child: Text(
-                              '${itemWarehouseFilter[indexOFWarehouse].inStock} ',
-                              style: TextStyles.headlineBlack1(context),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: Screens.heigth(context) * 0.01,
-                      ),
-                          Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: Screens.width(context) * 0.35,
-                             // color: Colors.greenAccent,
-                            child: Text(
-                              'WarehouseCode: ',
-                              style:TextStyles.headlineBlack1(context),
-                            ),
-                          ),
-                          //                SizedBox(width: Screens.width(context) * 0.05),
-                          Container(
-                            alignment: Alignment.bottomRight,
-                            width: Screens.width(context) * 0.5,
-                            // color: Colors.redAccent,
-                            child: Text(
-                              '${itemWarehouseFilter[indexOFWarehouse].warehouseCode}',
-                              style:TextStyles.headlineBlack1(context),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: Screens.heigth(context) * 0.01,
-                      ),
-                      
-                           Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: Screens.width(context) * 0.3,
-                            //  color: Colors.greenAccent,
-                            child: Text(
-                              'Committed: ',
-                              style: TextStyles.headlineBlack1(context),
-                            ),
-                          ),
-                          //                SizedBox(width: Screens.width(context) * 0.05),
-                          Container(
-                            alignment: Alignment.bottomRight,
-                            width: Screens.width(context) * 0.5,
-                          //   color: Colors.redAccent,
-                            child: Text(
-                              '${itemWarehouseFilter[indexOFWarehouse].committed}',
-                              style:TextStyles.headlineBlack1(context),
-                            ),
-                          ),
-                        ],
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                         SizedBox(
-                        height: Screens.heigth(context) * 0.01,
-                      ),
-                      
-                           Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: Screens.width(context) * 0.3,
-                            //  color: Colors.greenAccent,
-                            child: Text(
-                              'Ordered: ',
-                              style:TextStyles.headlineBlack1(context),
-                            ),
+                          width: Screens.width(context) * 0.28,
+                          //  color: Colors.greenAccent,
+                          child: Text(
+                            'Item Name: ',
+                            style: TextStyles.headlineBlack1(context),
                           ),
-                          //                SizedBox(width: Screens.width(context) * 0.05),
-                          Container(
-                            alignment: Alignment.bottomRight,
-                            width: Screens.width(context) * 0.5,
-                          //   color: Colors.redAccent,
-                            child: Text(
-                              '${itemWarehouseFilter[indexOFWarehouse].ordered}',
-                              style:TextStyles.headlineBlack1(context),
-                            ),
+                        ),
+                        //                SizedBox(width: Screens.width(context) * 0.05),
+                        Container(
+                          alignment: Alignment.bottomLeft,
+                          width: Screens.width(context) * 0.6,
+                          //     color: Colors.redAccent,
+                          child: Text(
+                            '$itemName ',
+                            style: TextStyles.headlineBlack1(context),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: Screens.heigth(context) * 0.01,
+                  ),
+                  Card(
+                    elevation: 6,
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        top: Screens.heigth(context) * 0.02,
+                        left: Screens.width(context) * 0.02,
+                        bottom: Screens.heigth(context) * 0.02,
+                        right: Screens.width(context) * 0.02,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(
+                            Screens.width(context) * 0.02),
+                      ),
+                      width: Screens.width(context),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // // Center(
+                          // //   child: Container(
+                          // //     alignment: Alignment.center,
+                          // //     width: Screens.width(context),
+                          // //     // color: Colors.greenAccent,
+                          // //     child:
+                          //      Row(
+                          //      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //       children: [
+                          //         Container(
+
+                          //         //  color: Colors.red,
+                          //           width: Screens.width(context)*0.28,
+                          //           child: Text(
+                          //             "Item Code: ",
+                          //             style: GoogleFonts.poppins(
+                          //               color: Colors.red[200],
+                          //               fontSize: Screens.width(context) * 0.045,
+
+                          //               ///  fontWeight: FontWeight.bold
+                          //             ),
+                          //           ),
+                          //         ),
+
+                          //         Container(
+                          //          //   color: Colors.red,
+                          //            alignment: Alignment.bottomLeft,
+                          //           width: Screens.width(context)*0.6,
+                          //           child: Text(
+                          //             "$itemCode",
+                          //             style: GoogleFonts.poppins(
+                          //               color: Colors.red[200],
+                          //               fontSize: Screens.width(context) * 0.045,
+
+                          //               ///  fontWeight: FontWeight.bold
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          // //   ),
+                          // // ),
+                          // SizedBox(
+                          //   height: Screens.heigth(context) * 0.02,
+                          // ),
+                          // Container(
+                          //   alignment: Alignment.center,
+                          //   width: Screens.width(context),
+                          //   // color: Colors.greenAccent,
+                          //   child: Text(
+                          //     "itemName",
+                          //     style: GoogleFonts.poppins(
+                          //       color: Colors.red[200],
+                          //       fontSize: Screens.width(context) * 0.045,
+
+                          //       ///  fontWeight: FontWeight.bold
+                          //     ),
+                          //   ),
+                          // ),
+
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     Container(
+                          //       width: Screens.width(context) * 0.28,
+                          //       //  color: Colors.greenAccent,
+                          //       child: Text(
+                          //         "Item Name: ",
+                          //         style: GoogleFonts.poppins(
+                          //           color: Colors.black54,
+                          //           fontSize: Screens.width(context) * 0.035,
+                          //           //  fontWeight: FontWeight.bold
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     //                SizedBox(width: Screens.width(context) * 0.05),
+                          //     Container(
+                          //         alignment: Alignment.bottomLeft,
+                          //       width: Screens.width(context) * 0.6,
+                          //   //     color: Colors.redAccent,
+                          //       child: Text(
+                          //         "$itemName ",
+                          //         style: GoogleFonts.poppins(
+                          //           color: Colors.black54,
+                          //           fontSize: Screens.width(context) * 0.035,
+                          //           //  fontWeight: FontWeight.bold
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          // SizedBox(
+                          //   height: Screens.heigth(context) * 0.01,
+                          // ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: Screens.width(context) * 0.3,
+                                //  color: Colors.greenAccent,
+                                child: Text(
+                                  'Quantity: ',
+                                  style: TextStyles.headlineBlack1(context),
+                                ),
+                              ),
+                              //                SizedBox(width: Screens.width(context) * 0.05),
+                              Container(
+                                alignment: Alignment.bottomRight,
+                                width: Screens.width(context) * 0.5,
+                                //   color: Colors.redAccent,
+                                child: Text(
+                                  '${itemWarehouseFilter[indexOFWarehouse].inStock} ',
+                                  style: TextStyles.headlineBlack1(context),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: Screens.heigth(context) * 0.01,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: Screens.width(context) * 0.35,
+                                // color: Colors.greenAccent,
+                                child: Text(
+                                  'WarehouseCode: ',
+                                  style: TextStyles.headlineBlack1(context),
+                                ),
+                              ),
+                              //                SizedBox(width: Screens.width(context) * 0.05),
+                              Container(
+                                alignment: Alignment.bottomRight,
+                                width: Screens.width(context) * 0.5,
+                                // color: Colors.redAccent,
+                                child: Text(
+                                  '${itemWarehouseFilter[indexOFWarehouse].warehouseCode}',
+                                  style: TextStyles.headlineBlack1(context),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: Screens.heigth(context) * 0.01,
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: Screens.width(context) * 0.3,
+                                //  color: Colors.greenAccent,
+                                child: Text(
+                                  'Committed: ',
+                                  style: TextStyles.headlineBlack1(context),
+                                ),
+                              ),
+                              //                SizedBox(width: Screens.width(context) * 0.05),
+                              Container(
+                                alignment: Alignment.bottomRight,
+                                width: Screens.width(context) * 0.5,
+                                //   color: Colors.redAccent,
+                                child: Text(
+                                  '${itemWarehouseFilter[indexOFWarehouse].committed}',
+                                  style: TextStyles.headlineBlack1(context),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: Screens.heigth(context) * 0.01,
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: Screens.width(context) * 0.3,
+                                //  color: Colors.greenAccent,
+                                child: Text(
+                                  'Ordered: ',
+                                  style: TextStyles.headlineBlack1(context),
+                                ),
+                              ),
+                              //                SizedBox(width: Screens.width(context) * 0.05),
+                              Container(
+                                alignment: Alignment.bottomRight,
+                                width: Screens.width(context) * 0.5,
+                                //   color: Colors.redAccent,
+                                child: Text(
+                                  '${itemWarehouseFilter[indexOFWarehouse].ordered}',
+                                  style: TextStyles.headlineBlack1(context),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
-                      ),              
-                    ],
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ),
-   //   ),
+            ),
+      //   ),
     );
   }
 }

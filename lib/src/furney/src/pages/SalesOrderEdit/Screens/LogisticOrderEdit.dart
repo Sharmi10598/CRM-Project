@@ -771,7 +771,7 @@ class LogisticEditORderState extends State<LogisticEditORder> {
         billTo: billto,
         bPCode: HeaderEditOrderPageState.bpCode,
         bPName: HeaderEditOrderPageState.bpName,
-        currency: HeaderEditOrderPageState.currency,
+        currency: GetValues.currency.toString(),
         cusRefNo: HeaderEditOrderPageState.mycontroller[0].text,
         docDate: HeaderEditOrderPageState.currentDateTime!,
         status: HeaderEditOrderPageState.status,
@@ -796,23 +796,25 @@ class LogisticEditORderState extends State<LogisticEditORder> {
     for (int i = 0; i < ContentOrderEditState.itemsDetails.length; i++) {
       // itemDoc.add(
       var val = ItemDocuments(
-        cusID: cusId,
-        discount:
-            ContentOrderEditState.itemsDetails[i].discount!.toStringAsFixed(2),
-        itemCode: ContentOrderEditState.itemsDetails[i].itemCode,
-        itemName: ContentOrderEditState.itemsDetails[i].itemName,
-        price: ContentOrderEditState.itemsDetails[i].price!.toStringAsFixed(2),
-        qty: ContentOrderEditState.itemsDetails[i].qty.toString(),
-        tax: ContentOrderEditState.itemsDetails[i].tax!.toStringAsFixed(2),
-        total: ContentOrderEditState.itemsDetails[i].total!.toStringAsFixed(2),
-        wareHouseCose:
-            ContentOrderEditState.itemsDetails[i].wareHouseCode.toString(),
-        discounpercent: ContentOrderEditState.itemsDetails[i].discounpercent!
-            .toStringAsFixed(2),
-        taxCode: ContentOrderEditState.itemsDetails[i].taxCode.toString(),
-        taxCodeName: ContentOrderEditState.itemsDetails[i].taxName.toString(),
-        carton: ContentOrderEditState.itemsDetails[i].carton.toString(),
-      );
+          cusID: cusId,
+          discount: ContentOrderEditState.itemsDetails[i].discount!
+              .toStringAsFixed(2),
+          itemCode: ContentOrderEditState.itemsDetails[i].itemCode,
+          itemName: ContentOrderEditState.itemsDetails[i].itemName,
+          price:
+              ContentOrderEditState.itemsDetails[i].price!.toStringAsFixed(2),
+          qty: ContentOrderEditState.itemsDetails[i].qty.toString(),
+          tax: ContentOrderEditState.itemsDetails[i].tax!.toStringAsFixed(2),
+          total:
+              ContentOrderEditState.itemsDetails[i].total!.toStringAsFixed(2),
+          wareHouseCose:
+              ContentOrderEditState.itemsDetails[i].wareHouseCode.toString(),
+          discounpercent: ContentOrderEditState.itemsDetails[i].discounpercent!
+              .toStringAsFixed(2),
+          taxCode: ContentOrderEditState.itemsDetails[i].taxCode.toString(),
+          taxCodeName: ContentOrderEditState.itemsDetails[i].taxName.toString(),
+          carton: ContentOrderEditState.itemsDetails[i].carton.toString(),
+          valueAFDisc: ContentOrderEditState.itemsDetails[i].valueAFdisc);
       //  );
       //  print("items: "+ val.itemName);
       DataBaseHelper.insertItemData(val, 'ItemDetails').then((value) {
@@ -988,6 +990,7 @@ class LogisticEditORderState extends State<LogisticEditORder> {
         });
       }
     }
+    HeaderEditOrderPageState.mycontroller[0].text = '';
   }
 
   void callSaveApi(double getCredit) async {
@@ -1119,6 +1122,7 @@ class LogisticEditORderState extends State<LogisticEditORder> {
         ScaffoldMessenger.of(this.context).showSnackBar(snackBar);
       }
     });
+     if (schmDisableBtn == true) {
     SalesOrderAfterAPi.sessionID = GetValues.sessionID;
     SalesOrderAfterAPi.baseType = "17";
     // SalesOrderAfterAPi.baseEntry = "12345";
@@ -1136,7 +1140,7 @@ class LogisticEditORderState extends State<LogisticEditORder> {
           .then((value) async {
         if (value.statusCode! >= 200 && value.statusCode! <= 210) {}
       });
-    }
+    }}
   }
 
   void deleteValueToDB() {}

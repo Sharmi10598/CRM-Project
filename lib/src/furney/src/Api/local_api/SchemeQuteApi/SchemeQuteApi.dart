@@ -23,7 +23,7 @@ class SchemeQuteAPi {
           json.encode(
               {"SCHEMES": salesOderSchene.map((e) => e.toMap()).toList()}));
 
-      log("json res: " + response.body);
+      log("json SCHEMES Res: " + response.body);
       if (response.statusCode == 200) {
         print(json.decode(response.body));
         return SchemeQuteModal.fromJson(

@@ -1,11 +1,4 @@
 // // ignore_for_file: prefer_single_quotes, prefer_interpolation_to_compose_strings, use_raw_strings, omit_local_variable_types
-
-// import 'dart:convert';
-// import 'dart:developer';
-// import 'package:http/http.dart' as http;
-// import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
-// import 'package:ultimate_bundle/src/furney/src/Modal/service_layer_modal/sales_quot/sales_quot_modal.dart';
-// import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 // ignore_for_file: prefer_single_quotes, avoid_print, prefer_interpolation_to_compose_strings, use_raw_strings, require_trailing_commas, unused_import, always_use_package_imports, duplicate_ignore
 
 import 'dart:convert';
@@ -13,7 +6,6 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:ultimate_bundle/helpers/uikit_model.dart';
 import '../../../../../../SalesApp/Model/GetActivities/GetContApi.dart';
-// ignore: always_use_package_imports
 import '../../../Modal/SalesQuaModel/AllSalesQuaModel.dart';
 import '../../../Modal/service_layer_modal/sales_quot/sales_quot_modal.dart';
 import '../../../widgets/Drawer.dart';
@@ -25,20 +17,25 @@ class SalesQuotAPi {
   static Future<SalesQuotModal> getGlobalData(
       String fromDate, String toDate) async {
     try {
-      log(URL.dynamicUrl);
+      log("URL.dynamicUrl::" + URL.dynamicUrl);
       final response = await http.post(Uri.parse(URL.dynamicUrl),
           headers: {
             'content-type': 'application/json',
           },
           body: json.encode({
             "constr":
-                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+            // "constr":
+            // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
             "query":
                 "[BZ_CRM_GET_QUOTATION_BY_SLPCODE] '${GetValues.slpCode}','$fromDate','$toDate'", //'${GetValues.slpCode}'
           }));
       log(json.encode({
         "constr":
-            "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+            "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+        // "constr":
+        //     "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
         "query":
             "[BZ_CRM_GET_QUOTATION_BY_SLPCODE] '${GetValues.slpCode}','$fromDate','$toDate'" //'${GetValues.slpCode}'
       }));

@@ -18,7 +18,8 @@ class CustomSpinkitdButton extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
 
   const CustomSpinkitdButton({
-    required this.onTap, Key? key,
+    required this.onTap,
+    Key? key,
     this.label,
     this.labelLoading,
     this.color,

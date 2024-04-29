@@ -15,30 +15,37 @@ class GetPurposeVisitAPi {
         Uri.parse(URL.dynamicUrl),
         headers: {
           'content-type': 'application/json',
-          },
-         body: json.encode({
-              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
-              "query": "select * from ocls",//'${GetValues.slpCode}'
-          }),
+        },
+        body: json.encode({
+          "constr":
+              "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+          // "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+          "query": "select * from ocls", //'${GetValues.slpCode}'
+        }),
       );
-     
-      log(json.encode({
-              "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
-              "query": "select * from ocls",
-   }),);
-      // print('B1SESSION='+ GetValues.sessionID.toString());
-      // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
-      print("customer details: " + json.decode(response.body).toString());
-      print(response.statusCode);
+
+      log(
+        json.encode({
+          "constr":
+              "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+          // "constr": "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+          "query": "select * from ocls",
+        }),
+      );
+
+      log("GetPurposeVisit details: " + json.decode(response.body).toString());
+      log(response.statusCode.toString());
       if (response.statusCode == 200) {
-        return PurposeVisitModel.fromJson( response.body,response.statusCode);
+        return PurposeVisitModel.fromJson(response.body, response.statusCode);
       } else {
         // throw Exception("Error!!...");
-        return PurposeVisitModel.fromJson( response.body,response.statusCode);
+        return PurposeVisitModel.fromJson(response.body, response.statusCode);
       }
     } catch (e) {
       //  throw Exception("Exception: $e");
-      return PurposeVisitModel.fromJson(e.toString(),500);
+      return PurposeVisitModel.fromJson(e.toString(), 500);
     }
   }
 }
