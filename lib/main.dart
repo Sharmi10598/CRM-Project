@@ -1,5 +1,3 @@
-// ignore_for_file: cascade_invocations, unused_import, directives_ordering, unnecessary_new, require_trailing_commas, prefer_single_quotes, prefer_interpolation_to_compose_strings, unused_local_variable, prefer_final_locals, omit_local_variable_types, unawaited_futures
-// import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,7 +5,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
-// import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -28,17 +25,17 @@ import 'package:quick_actions/quick_actions.dart';
 import 'package:ultimate_bundle/helpers/LocalNotification.dart';
 import 'package:ultimate_bundle/helpers/constants.dart';
 
-import 'src/furney/src/pages/sign_in/sign_in_page.dart';
 import 'package:dio/dio.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  List<NotificationModel2> notify = [];
-  DataBaseHelper dbHelper2 = DataBaseHelper();
-  Config config2 = Config();
+  final notify = <NotificationModel2>[];
+  final dbHelper2 = DataBaseHelper();
+  final config2 = Configuration();
   if (message.notification!.android!.imageUrl != null) {
-    notify.add(NotificationModel2(
+    notify.add(
+      NotificationModel2(
         docEntry: 0,
 
         ///int.parse(message.data['DocEntry'].toString()),
@@ -47,10 +44,13 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
         receiveTime: config2.currentDate(),
         seenTime: '0',
         imgUrl: message.notification!.android!.imageUrl.toString(),
-        naviScn: ''));
+        naviScn: '',
+      ),
+    );
     await dbHelper2.insertNotification(notify);
   } else {
-    notify.add(NotificationModel2(
+    notify.add(
+      NotificationModel2(
         docEntry: 0,
 
         ///int.parse(message.data['DocEntry'].toString()),
@@ -59,28 +59,31 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
         receiveTime: config2.currentDate(),
         seenTime: '0',
         imgUrl: message.notification!.android!.imageUrl.toString(),
-        naviScn: ''));
+        naviScn: '',
+      ),
+    );
     await dbHelper2.insertNotification(notify);
   }
 }
 
 Future<void> onReciveFCM() async {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-    log("datta: " + message.notification!.title.toString());
-    List<NotificationModel2> notify = [];
-    Config config2 = Config();
-    DataBaseHelper dbHelper2 = DataBaseHelper();
+    log('datta: ${message.notification!.title}');
+    final notify = <NotificationModel2>[];
+    final config2 = Configuration();
+    final dbHelper2 = DataBaseHelper();
     if (message.notification != null) {
-      int cont = await dbHelper2.getUnSeenNotificationCount() ?? 10;
-      FlutterAppBadger.isAppBadgeSupported().then((isSupported) {
+      final cont = await dbHelper2.getUnSeenNotificationCount() ?? 10;
+      await FlutterAppBadger.isAppBadgeSupported().then((isSupported) {
         if (isSupported) {
           FlutterAppBadger.updateBadgeCount(cont);
-          log("$cont");
+          log('$cont');
           localNotificationService.showNitification(
-              notifycount: cont,
-              titile: message.notification!.title,
-              msg: message.notification!.body,
-              message: message);
+            notifycount: cont,
+            titile: message.notification!.title,
+            msg: message.notification!.body,
+            message: message,
+          );
           // localNotificationService().showLocalNotification(count,"Test","EMPTY");
         }
       });
@@ -95,7 +98,8 @@ Future<void> onReciveFCM() async {
       if (message.notification!.android!.imageUrl != null) {
         // log(message.data['DocEntry'].toString());
         // log(message.data['NaviScreen'].toString());
-        notify.add(NotificationModel2(
+        notify.add(
+          NotificationModel2(
             docEntry: 0,
 
             ///int.parse(message.data['DocEntry'].toString()),
@@ -104,10 +108,13 @@ Future<void> onReciveFCM() async {
             receiveTime: config2.currentDate(),
             seenTime: '0',
             imgUrl: message.notification!.android!.imageUrl.toString(),
-            naviScn: ''));
-        dbHelper2.insertNotification(notify);
+            naviScn: '',
+          ),
+        );
+        await dbHelper2.insertNotification(notify);
       } else {
-        notify.add(NotificationModel2(
+        notify.add(
+          NotificationModel2(
             docEntry: 0,
 
             ///int.parse(message.data['DocEntry'].toString()),
@@ -116,8 +123,10 @@ Future<void> onReciveFCM() async {
             receiveTime: config2.currentDate(),
             seenTime: '0',
             imgUrl: message.notification!.android!.imageUrl.toString(),
-            naviScn: ''));
-        dbHelper2.insertNotification(notify);
+            naviScn: '',
+          ),
+        );
+        await dbHelper2.insertNotification(notify);
       }
     }
   });
@@ -135,20 +144,26 @@ class MyHttpOverrides extends HttpOverrides {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyBmptoZK38oThH4sDUeRxzF8_y8CvQVggY',
+      appId: '1:515450596796:android:9dd2ba9172b0d852070fb9',
+      messagingSenderId: '515450596796',
+      projectId: 'notifycrm-3ab40',
+    ),
+  );
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await localNotificationService.flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(localNotificationService.channel);
-  onReciveFCM();
-  HttpOverrides.global = new MyHttpOverrides();
+  await onReciveFCM();
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 
-LocalNotificationService localNotificationService =
-    new LocalNotificationService();
+LocalNotificationService localNotificationService = LocalNotificationService();
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -166,37 +181,35 @@ class MyHomePageState extends State<MyApp> {
 
     super.initState();
 
-    quick.setShortcutItems([
-      const ShortcutItem(
+    quick
+      ..setShortcutItems([
+        const ShortcutItem(
           type: 'Attendance',
           localizedTitle: 'Attendance',
-          icon:
-              'outline_calendar_today_black_24'), //icon: 'outline_dashboard_black_24dp'
-      const ShortcutItem(
+          icon: 'outline_calendar_today_black_24',
+        ), //icon: 'outline_dashboard_black_24dp'
+        const ShortcutItem(
           type: 'Approval',
           localizedTitle: 'Approval',
-          icon:
-              'outline_fact_check_black_24'), //icon:'outline_pie_chart_black_24dp'
-      const ShortcutItem(
+          icon: 'outline_fact_check_black_24',
+        ), //icon:'outline_pie_chart_black_24dp'
+        const ShortcutItem(
           type: 'Notifications',
           localizedTitle: 'Notifications',
-          icon:
-              'outline_format_list_bulleted_black_24'), //icon:'outline_reorder_black_24dp'
-    ]);
-
-    quick.initialize((type) {
-      if (type == 'Attendance') {
-        Get.toNamed<dynamic>(FurneyRoutes.attendance);
-      } else if (type == 'Approval') {
-        Get.toNamed<dynamic>(FurneyRoutes.approvals);
-      } else if (type == 'Notifications') {
-        Get.toNamed<dynamic>(FurneyRoutes.notification);
-      }
-    });
+          icon: 'outline_format_list_bulleted_black_24',
+        ), //icon:'outline_reorder_black_24dp'
+      ])
+      ..initialize((type) {
+        if (type == 'Attendance') {
+          Get.toNamed<dynamic>(FurneyRoutes.attendance);
+        } else if (type == 'Approval') {
+          Get.toNamed<dynamic>(FurneyRoutes.approvals);
+        } else if (type == 'Notifications') {
+          Get.toNamed<dynamic>(FurneyRoutes.notification);
+        }
+      });
     //  check();
   }
-
-  final String _appBadgeSupported = 'Unknown';
 
   Future<void> check() async {
     bool serviceEnabled;
@@ -207,7 +220,7 @@ class MyHomePageState extends State<MyApp> {
     if (!serviceEnabled) {
       //  serviceEnabled = await Geolocator.isLocationServiceEnabled();
     }
-    print("service: " + serviceEnabled.toString());
+    log('service: $serviceEnabled');
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -216,20 +229,19 @@ class MyHomePageState extends State<MyApp> {
       }
     }
     if (serviceEnabled == true) {
-      Position pos = await Geolocator.getCurrentPosition();
-      print("lattitude: " + pos.latitude.toString());
-      print("longitude: " + pos.longitude.toString());
+      final pos = await Geolocator.getCurrentPosition();
+      log('lattitude: ${pos.latitude}');
+      log('longitude: ${pos.longitude}');
     }
   }
 
   bool? isDarkMode;
   void checkDark() {
-    var brightness = SchedulerBinding.instance.window.platformBrightness; //cha!
+    final brightness =
+        SchedulerBinding.instance.window.platformBrightness; //cha!
     setState(() {
       isDarkMode = brightness == Brightness.dark;
     });
-
-    print("darkmode: " + isDarkMode.toString());
   }
 
   @override
@@ -261,7 +273,7 @@ class MyHomePageState extends State<MyApp> {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            home: FurneySplashScreen(),
+            home: const FurneySplashScreen(),
           );
         },
       ),

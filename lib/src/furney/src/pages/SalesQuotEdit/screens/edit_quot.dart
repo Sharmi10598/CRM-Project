@@ -35,18 +35,15 @@ class EditDetailsState extends State<EditDetails> {
     setState(() {
       HeaderCreationState.currentDateTime =
           "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
-      print('date: ${HeaderCreationState.currentDateTime}');
     });
   }
 
-  @override
   DateTime? currentBackPressTime;
   Future<bool> onbackpress() {
     final now = DateTime.now();
     if (currentBackPressTime == null ||
         now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
       currentBackPressTime = now;
-      print('are you sure');
       //  Get.offAllNamed<dynamic>(FurneyRoutes.salesQuotes);
       const snackBar = SnackBar(
         duration: Duration(seconds: 5),
@@ -66,9 +63,9 @@ class EditDetailsState extends State<EditDetails> {
 
   String isTaxApplied(double total, double tax) {
     double res = 0;
-    String isaval = '0';
+    var isaval = '0';
     res = tax / total * 100;
-    isaval = (res == 18 ? "O1" : "null");
+    isaval = (res == 18 ? 'O1' : 'null');
 
     return isaval;
   }
@@ -79,7 +76,6 @@ class EditDetailsState extends State<EditDetails> {
     double taxVal = 0;
     double tax = 0;
 
-    double taxable = 0;
     double netvalue = 0;
     HeaderEditCreationState.totalBeforeDiscount = 0;
     HeaderEditCreationState.discount = 0;
@@ -87,7 +83,7 @@ class EditDetailsState extends State<EditDetails> {
     HeaderEditCreationState.total = 0;
     String? taxCode;
 
-    for (int ik = 0; ik < widget.getdocumentApprovalValue.length; ik++) {
+    for (var ik = 0; ik < widget.getdocumentApprovalValue.length; ik++) {
       double ttaxTotal = 0;
       ttaxTotal = widget.getdocumentApprovalValue[ik].taxTotal != null
           ? widget.getdocumentApprovalValue[ik].taxTotal!
@@ -153,76 +149,79 @@ class EditDetailsState extends State<EditDetails> {
   getTaxRate(String taxCode) {
     String? valueChosedReason;
     double taxSelected = 0;
-    String? valueChossed;
+    String valueChossed = '';
 
-    if (GetValues.countryCode!.toLowerCase() == 'tanzania') {
-      if (taxCode == 'O0') {
-        // print("" + widget.getdocumentApprovalValue[ik].taxCode.toString());
-        valueChossed = 'O0 - 0 % Output VAT';
-        valueChosedReason = '0';
-        taxCode = 'O0';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason);
-      } else if (taxCode == 'O1') {
+    if (GetValues.countryCode!.toLowerCase().trim() == 'tanzania') {
+      // if (taxCode == 'O0') {
+      //   // print("" + widget.getdocumentApprovalValue[ik].taxCode.toString());
+      //   valueChossed = 'O0 - 0 % Output VAT';
+      //   valueChosedReason = '0';
+      //   taxCode = 'O0';
+      //   taxSelected = 0.00;
+      //   taxSelected = double.parse(valueChosedReason);
+      // } else
+      if (taxCode == 'O1') {
         valueChossed = 'O1 - 18 % Output VAT';
         valueChosedReason = '18';
-        taxCode = 'O1';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason);
-      } else if (taxCode == '01') {
-        //01
-        valueChossed = 'O1 - 18 % Output VAT';
-        valueChosedReason = '18';
-        taxCode = 'O1';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason);
-      } else if (taxCode == 'O3') {
-        valueChossed = 'O3 - Exempted Output VAT';
-        taxCode = 'O3';
-        valueChosedReason = '0';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason);
-      } else if (taxCode == 'X0') {
-        valueChossed = 'X0 - Exempt Output';
-        valueChosedReason = '0';
-        taxCode = 'X0';
         taxSelected = 0.00;
         taxSelected = double.parse(valueChosedReason);
       }
+      //  else if (taxCode == '01') {
+      //   //01
+      //   valueChossed = 'O1 - 18 % Output VAT';
+      //   valueChosedReason = '18';
+      //   taxCode = 'O1';
+      //   taxSelected = 0.00;
+      //   taxSelected = double.parse(valueChosedReason);
+      // } else if (taxCode == 'O3') {
+      //   valueChossed = 'O3 - Exempted Output VAT';
+      //   taxCode = 'O3';
+      //   valueChosedReason = '0';
+      //   taxSelected = 0.00;
+      //   taxSelected = double.parse(valueChosedReason);
+      // } else if (taxCode == 'X0') {
+      //   valueChossed = 'X0 - Exempt Output';
+      //   valueChosedReason = '0';
+      //   taxCode = 'X0';
+      //   taxSelected = 0.00;
+      //   taxSelected = double.parse(valueChosedReason);
+      // }
     } else {
-      if (taxCode == 'O0') {
-        // print("" + widget.getdocumentApprovalValue[ik].taxCode.toString());
-        valueChossed = 'O0 - 0 % Output VAT';
-        valueChosedReason = '0';
-        taxCode = 'O0';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason);
-      } else if (taxCode == 'O1') {
+      // if (taxCode == 'O0') {
+      //   // print("" + widget.getdocumentApprovalValue[ik].taxCode.toString());
+      //   valueChossed = 'O0 - 0 % Output VAT';
+      //   valueChosedReason = '0';
+      //   taxCode = 'O0';
+      //   taxSelected = 0.00;
+      //   taxSelected = double.parse(valueChosedReason);
+      // }
+      // else
+      if (taxCode == 'O1') {
         valueChossed = 'O1 - 16 % Output VAT';
         valueChosedReason = '16';
-        taxCode = 'O1';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason);
-      } else if (taxCode == '01') {
-        //01
-        valueChossed = 'O1 - 16 % Output VAT';
-        valueChosedReason = '16';
-        taxCode = 'O1';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason);
-      } else if (taxCode == 'O3') {
-        valueChossed = 'O3 - Exempted Output VAT';
-        taxCode = 'O3';
-        valueChosedReason = '0';
-        taxSelected = 0.00;
-        taxSelected = double.parse(valueChosedReason);
-      } else if (taxCode == 'X0') {
-        valueChossed = 'X0 - Exempt Output';
-        valueChosedReason = '0';
-        taxCode = 'X0';
         taxSelected = 0.00;
         taxSelected = double.parse(valueChosedReason);
       }
+      //  else if (taxCode == '01') {
+      //   //01
+      //   valueChossed = 'O1 - 16 % Output VAT';
+      //   valueChosedReason = '16';
+      //   taxCode = 'O1';
+      //   taxSelected = 0.00;
+      //   taxSelected = double.parse(valueChosedReason);
+      // } else if (taxCode == 'O3') {
+      //   valueChossed = 'O3 - Exempted Output VAT';
+      //   taxCode = 'O3';
+      //   valueChosedReason = '0';
+      //   taxSelected = 0.00;
+      //   taxSelected = double.parse(valueChosedReason);
+      // } else if (taxCode == 'X0') {
+      //   valueChossed = 'X0 - Exempt Output';
+      //   valueChosedReason = '0';
+      //   taxCode = 'X0';
+      //   taxSelected = 0.00;
+      //   taxSelected = double.parse(valueChosedReason);
+      // }
     }
   }
 
@@ -248,7 +247,11 @@ class EditDetailsState extends State<EditDetails> {
               key: _scaffoldKey,
               backgroundColor: Colors.grey[200],
               appBar: deliveryAppBar(context, _scaffoldKey, widget.title),
-              drawer: drawer(context),
+              drawer:
+                  // GetValues.userRoll == '3'
+                  //     ? drawer2(context)
+                  //     :
+                  drawer(context),
               body: Padding(
                 padding: EdgeInsets.only(
                   top: Screens.heigth(context) * 0.01,

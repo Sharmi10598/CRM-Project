@@ -167,14 +167,14 @@ class _MyDialogState extends State<MyDialog> {
                                     child: const Divider(
                                       thickness: 1.5,
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),),
                           //  ),
                         );
                       },
                     ),
-                  )
+                  ),
                 ],
               ),
       ),

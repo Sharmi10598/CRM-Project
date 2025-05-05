@@ -30,7 +30,10 @@ class StreamDataAPi {
       );
 
       log('Stream stsCode::${response.statusCode}');
-      log('Stream Response::${jsonDecode(utf8.decode(response.bodyBytes))}');
+      log('Stream Response11::${jsonDecode(response.bodyBytes.toString())}');
+
+      // log('Stream Response::${jsonDecode(utf8.decode(response.bodyBytes))}');
+
       if (response.statusCode == 200) {
         //  print("streamm: "+ json.fuse() response.body);
         //  var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));

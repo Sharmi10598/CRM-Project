@@ -32,6 +32,6 @@ Map<String , Object?> toMap()=>{
   Notification.seenTime:seenTime,
   Notification.docEntry:docEntry,
   Notification.imgurl:imgUrl,
-  Notification.naviScn:naviScn
+  Notification.naviScn:naviScn,
 };
 }

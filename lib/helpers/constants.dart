@@ -1,4 +1,3 @@
-
 class FurneyRoutes {
   static const String splash = '/furney_splash';
   static const String address = '/furney_address';
@@ -74,19 +73,22 @@ class FurneyRoutes {
   static const String newSalesQuot = '/newSalesQuot';
   static const String newSalesOrders = '/newSalesOrders';
   static const String approvalsDetailsSalesQuot = '/approvalsDetailsSalesQuot';
-  static const String approvalsDetailsSalesOrders = '/approvalsDetailsSalesOrders';
+  static const String approvalsDetailsSalesOrders =
+      '/approvalsDetailsSalesOrders';
   static const String approvalsNew = '/approvalsNew';
   static const String showpdf = '/showpdf';
   static const String reports = '/reports';
   static const String depotperformance = '/depotperformance';
 
-  // sales app 
+  // sales app
 
   static const String planningPage = '/PlanningPage';
   static const String approvalTask = '/approvalTask';
   static const String checkoutPage = '/checkoutPage';
   static const String createVisitPage = '/CreateVisitPage';
   static const String selectionCustomer = '/selectionCustomer';
+  static const String ageingCustomer = '/ageingCustomer';
+
   static const String checkin = '/checkin';
   static const String checkedin = '/checkedin';
   static const String createCustomer = '/createCustomer';
@@ -94,6 +96,5 @@ class FurneyRoutes {
   static const String updatePlan = '/updatePlan';
 
   static const String unplannedVisit = '/unplannedVisit';
- static const String salesQtDetailss = '/salesQtDetailss';
-
+  static const String salesQtDetailss = '/salesQtDetailss';
 }

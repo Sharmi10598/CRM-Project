@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_single_quotes, prefer_interpolation_to_compose_strings, use_raw_strings, omit_local_variable_types
 
 import 'dart:convert';
-import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
 import 'package:ultimate_bundle/src/furney/src/Modal/service_layer_modal/sales_oder/sales_order_modal.dart';
@@ -15,25 +14,27 @@ class SalesOderAPi {
   // static String? toDate;
   static String callWhichApi = '';
   static meth(String? fromDate, String? toDate) async {
-    String open =
+    final String open =
         "Orders?\$select=DocEntry,DocNum,DocDate,CardCode,CardName,DocumentStatus,CancelStatus&\$orderby=DocDate desc&\$filter=DocumentStatus eq 'bost_Open' and CancelStatus eq 'csNo' and CancelStatus eq 'csNo'and (contains(CardCode,'$searchValue') or contains(CardName,'$searchValue')) and DocDate ge '$fromDate' and DocDate le '$toDate'";
-    String closed =
+    final String closed =
         "Orders?\$select=DocEntry,DocNum,DocDate,CardCode,CardName,DocumentStatus,CancelStatus&\$orderby=DocDate desc&\$filter=DocumentStatus eq 'bost_Close' and CancelStatus eq 'csNo' and CancelStatus eq 'csNo'and (contains(CardCode,'$searchValue') or contains(CardName,'$searchValue')) and DocDate ge '$fromDate' and DocDate le '$toDate'";
 
-    print("callWhichApi: " + callWhichApi);
+    // print("callWhichApi: " + callWhichApi);
     final String url = callWhichApi == "Open"
         ? open
         : callWhichApi == "Closed"
             ? closed
             : '';
-    print("url: " + (URL.url + url));
+    // print("url: " + (URL.url + url));
   }
 
   static Future<SalesOrderModal> getGlobalData(
-      String? fromDate, String? toDate) async {
-    String open =
+    String? fromDate,
+    String? toDate,
+  ) async {
+    final String open =
         "Orders?\$select=DocEntry,DocNum,DocDate,CardCode,CardName,DocumentStatus,CancelStatus&\$orderby=DocDate desc&\$filter=DocumentStatus eq 'bost_Open' and CancelStatus eq 'csNo' and CancelStatus eq 'csNo'and (contains(CardCode,'$searchValue') or contains(CardName,'$searchValue')) and DocDate ge '$fromDate' and DocDate le '$toDate'";
-    String closed =
+    final String closed =
         "Orders?\$select=DocEntry,DocNum,DocDate,CardCode,CardName,DocumentStatus,CancelStatus&\$orderby=DocDate desc&\$filter=DocumentStatus eq 'bost_Close' and CancelStatus eq 'csNo' and CancelStatus eq 'csNo'and (contains(CardCode,'$searchValue') or contains(CardName,'$searchValue')) and DocDate ge '$fromDate' and DocDate le '$toDate'";
 
     final String url = callWhichApi == "Open"
@@ -52,13 +53,14 @@ class SalesOderAPi {
         headers: {
           "content-type": "application/json",
           "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
-          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}'
+          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}',
         },
       );
       if (response.statusCode == 200) {
-        print(json.decode(response.body));
+        // print(json.decode(response.body));
         return SalesOrderModal.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+          json.decode(response.body) as Map<String, dynamic>,
+        );
       } else {
         print(json.decode(response.body));
         print(json.decode(response.statusCode.toString()));
@@ -81,13 +83,14 @@ class SalesOderAPi {
         headers: {
           "content-type": "application/json",
           "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
-          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}'
+          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}',
         },
       );
       if (response.statusCode == 200) {
         ///   print(json.decode(response.body));
         return SalesOrderModal.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+          json.decode(response.body) as Map<String, dynamic>,
+        );
       } else {
         throw Exception('Restart the app or contact the admin!!..');
         //  return SalesOrderModal.issue('Restart the app or contact the admin!!..');
@@ -109,13 +112,14 @@ class SalesOderAPi {
         headers: {
           "content-type": "application/json",
           "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
-          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}'
+          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}',
         },
       );
       if (response.statusCode == 200) {
         print(json.decode(response.body));
         return SalesOrderModal.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+          json.decode(response.body) as Map<String, dynamic>,
+        );
       } else {
         print(json.decode(response.body));
         print(json.decode(response.statusCode.toString()));

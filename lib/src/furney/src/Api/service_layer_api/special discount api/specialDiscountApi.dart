@@ -12,10 +12,9 @@ class SpecialDiscountAPi {
   static String? cardCode;
   static Future<SpecialDisCountModal> getGlobalData() async {
     try {
-      log("SpecialDiscountAPi url::"+
-           URL.url +
-              "SQLQueries('SpecialDiscount')/List?ItemCode='$itemCode'&CardCode='$cardCode'"
-      );
+      log("SpecialDiscountAPi url::" +
+          URL.url +
+          "SQLQueries('SpecialDiscount')/List?ItemCode='$itemCode'&CardCode='$cardCode'",);
       final response = await http.get(
         Uri.parse(
           URL.url +
@@ -24,23 +23,25 @@ class SpecialDiscountAPi {
         headers: {
           "content-type": "application/json",
           "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
-          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}'
+          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}',
         },
       );
       log("SpecialDiscountAPi:::" + json.decode(response.body).toString());
+      log("stscode:::" + response.statusCode.toString());
 
       if (response.statusCode == 200) {
         return SpecialDisCountModal.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+            json.decode(response.body) as Map<String, dynamic>,);
       } else {
-        print(json.decode(response.body));
         print(json.decode(response.statusCode.toString()));
-        throw Exception('Restart the app or contact the admin!!..');
-        // return SpecialDisCountModal.issue('Restart the app or contact the admin!!..');
+        // throw Exception('Restart the app or contact the admin!!..');
+        return SpecialDisCountModal.issue(
+            'Restart the app or contact the admin!!..',);
       }
     } catch (e) {
-      throw Exception(e);
-      // return SpecialDisCountModal.issue('Restart the app or contact the admin!!..');
+      // throw Exception(e);
+      return SpecialDisCountModal.issue(
+          'Restart the app or contact the admin!!..',);
     }
   }
 }

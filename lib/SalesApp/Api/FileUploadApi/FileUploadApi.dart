@@ -18,9 +18,9 @@ class FilePostApi {
             'files': [
               {
                 'imageBytes': '$fileBytes',
-                'filePath': 'D:\\Checkout Attachements\\$filename'
+                'filePath': 'D:\\Checkout Attachements\\$filename',
               }
-            ]
+            ],
           }),);
 
           // log(jsonEncode({

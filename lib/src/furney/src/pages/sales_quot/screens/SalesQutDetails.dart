@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_single_quotes, sort_child_properties_last, avoid_print, prefer_interpolation_to_compose_strings, unnecessary_null_comparison, unnecessary_lambdas, invariant_booleans, file_names, prefer_final_locals, omit_local_variable_types, unnecessary_parenthesis, prefer_const_constructors, unawaited_futures, require_trailing_commas, prefer_if_elements_to_conditional_expressions, sized_box_for_whitespace, join_return_with_assignment, avoid_bool_literals_in_conditional_expressions
 
 import 'dart:developer';
+import 'package:intl/intl.dart';
 
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,10 @@ import 'package:ultimate_bundle/src/furney/src/pages/sign_in/widgets/custom_elev
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/appBar.dart';
 
+import 'package:ultimate_bundle/helpers/uikit_model.dart';
+import 'package:ultimate_bundle/src/furney/src/Api/local_api/LeadDateApi/LeadDateApi.dart';
+import 'package:ultimate_bundle/src/furney/src/Modal/local_modal/LeadDatrModels/LeadDateMdl.dart';
+
 class SalesDetailsQuot extends StatefulWidget {
   const SalesDetailsQuot({
     // required this.title,
@@ -58,6 +63,37 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
   static String? basedocentry;
   String docEntry = '';
   String docDueDate = '';
+  Configuration config = Configuration();
+  List<LeadDateMdlData>? leadDataList = [];
+  callLeadDateApi(String itemCode) async {
+    leadDataList = [];
+    await NewLeadDateApi.getGlobalData('$itemCode').then((value) async {
+      if (value.statusCode! >= 200 && value.statusCode! <= 210) {
+        leadDataList = value.leadDataList;
+      } else if (value.statusCode! >= 400 && value.statusCode! <= 410) {}
+    });
+  }
+
+  callLeadApiandDate(String itemcodee, BuildContext context, int i) async {
+    await callLeadDateApi(itemcodee);
+    await leadDatePicker2(itemcodee, context, i);
+  }
+
+  leadDatePicker2(String itemCode, BuildContext context, int i) async {
+    DateTime date1 = DateTime.parse(DateTime.now().toString());
+
+    log('leadDataList[0].leadDays::${leadDataList![0].leadDays!.toString()}');
+    DateTime futureDate = date1
+        .add(Duration(days: int.parse(leadDataList![0].leadDays!.toString())));
+
+    log("date1 date: $date1");
+    log("Date after 90 days: $futureDate");
+    String datetype2 = DateFormat('yyyy-MM-dd').format(futureDate);
+    log("Date datetype2: $datetype2");
+
+    ContentOrderCreationState.itemsDetails2[i].deliveryDate = datetype2;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -142,7 +178,9 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       appBar: appBar(context, _scaffoldKey, "Sales Quot"),
-      drawer: drawer(context),
+      drawer:
+          // GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       body: approvalDetailsValue == null
           ? Center(
               child: SpinKitThreeBounce(
@@ -397,14 +435,11 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
                                                           context),
                                                 ),
                                               ),
-                                              Container(
-                                                child: Icon(
-                                                  Icons.navigate_next_outlined,
-                                                  color: theme.primaryColor,
-                                                  size:
-                                                      Screens.heigth(context) *
-                                                          0.06,
-                                                ),
+                                              Icon(
+                                                Icons.navigate_next_outlined,
+                                                color: theme.primaryColor,
+                                                size: Screens.heigth(context) *
+                                                    0.06,
                                               )
                                             ],
                                           )
@@ -503,7 +538,7 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
 
                                         log('taxNameetaxNamee::$taxNamee');
                                         ContentOrderCreationState.itemsDetails2
-                                            .add(AddItem(
+                                            .add(AddOrderItem(
                                                 itemCode: getdocumentApprovalValuee[i]
                                                     .itemCode!,
                                                 itemName:
@@ -576,6 +611,12 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
 
                                         ContentOrderCreationState
                                             .itemsDetails2[i].tax = taxs;
+
+                                        await callLeadApiandDate(
+                                            ContentOrderCreationState
+                                                .itemsDetails2[i].itemCode,
+                                            context,
+                                            i);
                                       }
 
                                       HeaderOrderCreationState
@@ -592,6 +633,7 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
                                           "";
                                       LogisticOrderState.mycontroller[1].text =
                                           "";
+
                                       Get.toNamed<dynamic>(
                                           FurneyRoutes.creationOrderDetails);
                                       // callServiceLayerApi();
@@ -619,7 +661,7 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
                                           HeaderEditCreationState
                                                   .currentDateTime =
                                               approvalDetailsValue!
-                                                  .docDate!; //;;
+                                                  .docDate; //;;
                                           HeaderEditCreationState.bpCode =
                                               approvalDetailsValue!
                                                   .cardCode!; //;;
@@ -683,7 +725,6 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
   }
 
   String isTaxApplied(double total, double tax) {
-    log('message1');
     double res = 0;
     double res1 = 0;
 
@@ -692,7 +733,7 @@ class SalesDetailsQuotState extends State<SalesDetailsQuot> {
     res = tax / total * 100;
     res1 = double.parse(res.toStringAsFixed(2));
     log('resresresres11::$res1');
-    if (GetValues.countryCode!.toLowerCase() == 'tanzania') {
+    if (GetValues.countryCode!.toLowerCase().trim() == 'tanzania') {
       isaval = res1 == 18 ? "O1" : "null";
     } else {
       isaval = res1 == 16 ? "O1" : "null";

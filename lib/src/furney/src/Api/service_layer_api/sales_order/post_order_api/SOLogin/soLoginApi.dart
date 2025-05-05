@@ -10,6 +10,14 @@ import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 class SOLoginAPi {
   static String? username;
   static String? password;
+  static method() {
+    log("Session user111: " +
+        json.encode({
+          'CompanyDB': '${GetValues.sapDB}',
+          'UserName': '$username', //crmapp
+          'Password': '1234' //Tanzania
+        }));
+  }
 
   static Future<SoLogindata> getGlobalData() async {
     try {
@@ -24,7 +32,7 @@ class SOLoginAPi {
             'Password': '1234'
           }));
 
-      log("Session user: " +
+      log("Session user222: " +
           json.encode({
             'CompanyDB': '${GetValues.sapDB}',
             'UserName': '$username', //crmapp

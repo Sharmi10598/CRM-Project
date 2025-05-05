@@ -12,16 +12,18 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
   TextEditingController? _emailController;
   TextEditingController? _passwordController;
   bool _isLoading = false;
-  final bool _obscureText = true;
+  final bool obscureText = true;
 
   Future<SharedPreferences> pref = SharedPreferences.getInstance();
-  List<GlobalKey<FormState>> formkey =
-      List.generate(3, (i) => GlobalKey<FormState>());
+  final formKey = GlobalKey<FormState>();
+
+  // List<GlobalKey<FormState>> formkey =
+  //     List.generate(3, (i) => GlobalKey<FormState>());
   List<TextEditingController> mycontroller =
       List.generate(15, (i) => TextEditingController());
   static String? settingMsg;
   disableKeyBoard(BuildContext context) {
-    FocusScopeNode currentFocus = FocusScope.of(context);
+    final currentFocus = FocusScope.of(context);
 
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
@@ -43,7 +45,7 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       body: Form(
-        key: formkey[0],
+        key: formKey,
         // autovalidateMode: AutovalidateMode.onUserInteraction,
         child: SingleChildScrollView(
           child: Container(
@@ -98,7 +100,9 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
                       controller: mycontroller[0],
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: const BorderSide(color: Colors.grey),
@@ -149,7 +153,9 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
                       controller: mycontroller[1],
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: const BorderSide(color: Colors.grey),
@@ -196,13 +202,10 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
 
                 CustomSpinkitdButton(
                   onTap: () {
+                    // setState();
                     setState(() {
                       setupValidation();
-                      disableKeyBoard(context);
                     });
-
-                    // validate();
-                    //callServiceLayerApi();
                   },
                   isLoading: _isLoading,
                   labelLoading: AppLocalizations.of(context)!.signing,
@@ -216,25 +219,28 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
                 InkWell(
                   onTap: () async {
                     await showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return StatefulBuilder(builder: (context, st) {
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return StatefulBuilder(
+                          builder: (context, st) {
                             return AlertDialog(
                               contentPadding: EdgeInsets.all(0),
                               content: SettingWidget(
                                 theme: theme,
                               ),
                             );
-                          });
-                        });
+                          },
+                        );
+                      },
+                    );
                   },
                   child: Container(
                     width: Screens.width(context) * 0.1,
                     alignment: Alignment.centerLeft,
                     child: Icon(Icons.settings),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -243,10 +249,11 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
     );
   }
 
-  String? sapUserName;
-  String? sapUserPass;
+  // String? sapUserName;
+  // String? sapUserPass;
   final firebaseMessaging = FirebaseMessaging.instance;
   Future<String?> getToken() async {
+    log('firebaseMessaging.getToken::${await firebaseMessaging.getToken()}');
     return firebaseMessaging.getToken();
   }
 
@@ -409,49 +416,68 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
   //   //     theme: theme, formkey: formkey, mycontroller: mycontroller);
   // }
 
-  errorText() async {
+  errorText() {
     settingMsg = '';
-    final pref2 = await pref;
-    log('SettingWidgetState.mycontroller::${SettingWidgetState.mycontroller[3].text}');
-    setState(() {
-      if (SettingWidgetState.mycontroller[3].text.isEmpty) {
-        log("countryCode:: ${pref2.getString('countryCode')}");
+    if (SettingWidgetState.mycontroller[3].text.isEmpty) {
+      setState(() {
         settingMsg = 'Complete the setup..!!';
-      } else {
-        setState(() {
-          settingMsg = '';
-        });
-      }
-    });
+      });
+    } else {
+      setState(() {
+        settingMsg = '';
+      });
+    }
   }
+  // disableKeyBoard(context);
 
   setupValidation() async {
-    final pref2 = await pref;
-
     // if (pref2.getString('countryCode') == null) {
     if (SettingWidgetState.mycontroller[3].text.isEmpty) {
       settingMsg = 'Complete the setup..!!';
 
       SettingWidgetState.mycontroller[3].text = '';
     } else {
-      settingMsg = '';
+      setState(() {
+        settingMsg = '';
+      });
 
       final pref2 = await pref;
-      pref2.setString(
+      await pref2.setString(
         'countryCode',
-        SettingWidgetState.mycontroller[3].text.toString(),
+        SettingWidgetState.mycontroller[3].text,
       );
 
       await validate();
     }
   }
 
+  static String? menuListItem22;
+  static List<String> menuListItem = [];
+
+  callGetAuthMenuApi() async {
+    final pref2 = await SharedPreferences.getInstance();
+    var menuListItem22x = '';
+    var menuListItem22y = '';
+    final getMenuId = pref2.getString('Id').toString();
+    await GetMenuAuthAPi.getGlobalData(getMenuId).then((value) async {
+      menuListItem22 = value.response;
+      menuListItem22x = menuListItem22.toString().replaceAll('[', '');
+      menuListItem22y = menuListItem22x.replaceAll(']', '');
+      menuListItem22 = menuListItem22y;
+      menuListItem = menuListItem22.toString().split(',');
+      await Get.offAllNamed<dynamic>(FurneyRoutes.home);
+    });
+  }
+
   Future<void> validate() async {
-    log('message1');
-    if (formkey[0].currentState!.validate()) {
+    log('message1sign');
+    if (formKey.currentState!.validate()) {
+      log('message1sign22');
+
       setState(() => _isLoading = true);
-      var preff = await SharedPreferences.getInstance();
-      String? tokenFCM = await getToken();
+      final preff = await SharedPreferences.getInstance();
+      final tokenFCM = await getToken();
+
       // setState(() => _isLoading = true);
       LoginUserAPi.deviceId = preff.getString('deviceID');
       LoginUserAPi.userCode = mycontroller[0].text;
@@ -463,44 +489,85 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
         if (value.loginUserData != null) {
           setState(() => _isLoading = false);
           final pref2 = await pref;
-          pref2.setString(
+          await pref2.setString(
+            'Id',
+            value.loginUserData![0].id.toString(),
+          );
+          await pref2.setString(
             'UserName',
             value.loginUserData![0].userName.toString(),
           );
-          pref2.setString(
-              'userCode', value.loginUserData![0].userCode.toString());
-          pref2.setString(
-              'userRoll', value.loginUserData![0].userRoll.toString());
-          pref2.setString('active', value.loginUserData![0].active.toString());
-          pref2.setString('branch', value.loginUserData![0].branch.toString());
-          pref2.setString('email', value.loginUserData![0].email.toString());
-          pref2.setString('crmUserID', value.loginUserData![0].id.toString());
-          pref2.setString(
-              'password', value.loginUserData![0].password.toString());
-          pref2.setString(
-              'reportTo', value.loginUserData![0].reportTo.toString());
-          pref2.setString(
-              'sapPassword', value.loginUserData![0].sapPassword.toString());
-          pref2.setString('sapUrl', value.loginUserData![0].sapUrl.toString());
+          await pref2.setString(
+            'userCode',
+            value.loginUserData![0].userCode.toString(),
+          );
+          await pref2.setString(
+            'userRoll',
+            value.loginUserData![0].userRoll.toString(),
+          );
+          await pref2.setString(
+            'active',
+            value.loginUserData![0].active.toString(),
+          );
+          await pref2.setString(
+            'branch',
+            value.loginUserData![0].branch.toString(),
+          );
+          await pref2.setString(
+            'email',
+            value.loginUserData![0].email.toString(),
+          );
+          await pref2.setString(
+            'crmUserID',
+            value.loginUserData![0].id.toString(),
+          );
+          await pref2.setString(
+            'password',
+            value.loginUserData![0].password.toString(),
+          );
+          await pref2.setString(
+            'reportTo',
+            value.loginUserData![0].reportTo.toString(),
+          );
+          await pref2.setString(
+            'sapPassword',
+            value.loginUserData![0].sapPassword.toString(),
+          );
+          await pref2.setString(
+            'sapUrl',
+            value.loginUserData![0].sapUrl.toString(),
+          );
           URL.url = value.loginUserData![0].sapUrl.toString();
-          print('url:${URL.url}');
-          pref2.setString(
-              'sapUserName', value.loginUserData![0].sapUserName.toString());
-          pref2.setString(
-              'SlpCode', value.loginUserData![0].slpCode.toString());
-          pref2.setString(
-              'DeviceCode', value.loginUserData![0].deviceCode.toString());
-          pref2.setString('SapDB', value.loginUserData![0].sapDB.toString());
-          Get.offAllNamed<dynamic>(FurneyRoutes.home);
-          pref2.setString(
-              'LeadToken', value.loginUserData![0].ManagerFCM.toString());
-          pref2.setString('FCMToken', value.loginUserData![0].FCM.toString());
-          pref2.setString(
-              'U_CrpUsr', value.loginUserData![0].U_CrpUsr.toString());
-          // Get.offAllNamed<dynamic>(FurneyRoutes.home);
-          // sapUserName = value.loginUserData![0].sapUserName.toString();
-          // sapUserPass = value.loginUserData![0].sapPassword.toString();
-          callServiceLayerApi();
+          await pref2.setString(
+            'sapUserName',
+            value.loginUserData![0].sapUserName.toString(),
+          );
+          await pref2.setString(
+            'SlpCode',
+            value.loginUserData![0].slpCode.toString(),
+          );
+          await pref2.setString(
+            'DeviceCode',
+            value.loginUserData![0].deviceCode.toString(),
+          );
+          await pref2.setString(
+            'SapDB',
+            value.loginUserData![0].sapDB.toString(),
+          );
+          await pref2.setString(
+            'LeadToken',
+            value.loginUserData![0].ManagerFCM.toString(),
+          );
+          await pref2.setString(
+            'FCMToken',
+            value.loginUserData![0].FCM.toString(),
+          );
+          await pref2.setString(
+            'U_CrpUsr',
+            value.loginUserData![0].U_CrpUsr.toString(),
+          );
+          callGetAuthMenuApi();
+          // await Get.offAllNamed<dynamic>(FurneyRoutes.home);
         } else if (value.loginUserData == null && value.status == false) {
           setState(() => _isLoading = false);
           const snackBar = SnackBar(
@@ -524,27 +591,32 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
-        print('Status: ${value.status}');
       });
     }
   }
 
-  void callServiceLayerApi() {
-    PostSAPLoginAPi.username = sapUserName; //'crmapp';//sapUserName;
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  callServiceLayerApi(BuildContext context) async {
+    final pref2 = await pref;
+
+    PostSAPLoginAPi.username =
+        pref2.getString('sapUserName'); //'crmapp';//sapUserName;
     PostSAPLoginAPi.password =
-        sapUserPass; //'Tanzania';sapUserPass;//Tanzania crmapp
-    PostSAPLoginAPi.getGlobaldData().then((value) async {
-      final pref2 = await pref;
+        GetValues.sapPassword; //'Tanzania';sapUserPass;//Tanzania crmapp
+    await PostSAPLoginAPi.getGlobaldData().then((value) async {
       if (value.error == null) {
         await pref2.setString('sessionId', value.sessionId.toString());
         await pref2.setString(
-            'sessionTimeout', value.sessionTimeout.toString());
-        print('session:${value.sessionId}');
-        Get.offAllNamed<dynamic>(FurneyRoutes.home);
-        //    Future.delayed(const Duration(seconds: 2), () {
-        //    setState(() => _isLoading = false);
-        //   Get.offAllNamed<dynamic>(FurneyRoutes.home);
-        // });
+          'sessionTimeout',
+          value.sessionTimeout.toString(),
+        );
+        await Get.offAllNamed<dynamic>(FurneyRoutes.home);
       } else if (value.error != null) {
         setState(() => _isLoading = false);
         final snackBar = SnackBar(
@@ -556,7 +628,7 @@ class FurneySignInScreenState extends State<FurneySignInScreen> {
           ),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
+      } else {}
     });
   }
 }

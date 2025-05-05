@@ -33,15 +33,14 @@ class AttendanceAPi {
           "Longitude": "$longitude",
           "Location": "$location",
           "Comments": "$comments",
-          "LocationType": "$locationType"
+          "LocationType": "$locationType",
         }),
         //
         //
       );
 
       log(
-        'AttendenceInfo:::' +
-            json.encode({
+        'AttendenceInfo:::${json.encode({
               "UserId": "$userid",
               "DeviceCode": "$deviceID",
               "TimeStamp": "$timeStamp",
@@ -49,24 +48,24 @@ class AttendanceAPi {
               "Longitude": "$longitude",
               "Location": "$location",
               "Comments": "$comments",
-              "LocationType": "$locationType"
-            }),
+              "LocationType": "$locationType",
+            })}',
       );
       if (response.statusCode == 200) {
         print(json.decode(response.body));
         return AttendanceModal.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+            json.decode(response.body) as Map<String, dynamic>,);
       } else {
         print(json.decode(response.body));
         print(json.decode(response.statusCode.toString()));
-        // throw Exception("Error!!...");
+        // throw Exception("Error!!....");
         return AttendanceModal.issue(
-            'Restart the app or contact the admin!!..');
+            'Restart the app or contact the admin!!..',);
       }
     } catch (e) {
       //throw Exception("Exceptionsss: $e");
       return AttendanceModal.exception(
-          'Restart the app or contact the admin!!..');
+          'Restart the app or contact the admin!!..',);
     }
   }
 }

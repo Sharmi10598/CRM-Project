@@ -16,7 +16,6 @@ import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order/post_order_api/checkOrderORDraft/orderordraft.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order/post_order_api/getCreaditDays/getBalanceCreditLimit.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order/post_order_api/getCreaditDays/getCreaditDaysApi.dart';
-import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order/post_order_api/post_sales_order_api.dart';
 import 'package:ultimate_bundle/src/furney/src/DB/DBHelper.dart';
 import 'package:ultimate_bundle/src/furney/src/DB/DBModal/CusTomerModal.dart';
 import 'package:ultimate_bundle/src/furney/src/DB/DBModal/ItemModal.dart';
@@ -25,13 +24,13 @@ import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/SalesOrderEdit/Screens/ContentEdit.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/SalesOrderEdit/Screens/EditOrder.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/SalesOrderEdit/Screens/HederEdit.dart';
-import 'package:ultimate_bundle/src/furney/src/pages/sales_order/screens/create_order.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sign_in/widgets/custom_elevatedBtn.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 import 'package:uuid/uuid.dart';
 
 class LogisticEditORder extends StatefulWidget {
-  LogisticEditORder({Key? key, required this.docEntry, required this.isAproved})
+  const LogisticEditORder(
+      {required this.docEntry, required this.isAproved, Key? key})
       : super(key: key);
   final int docEntry;
   final bool isAproved;
@@ -147,12 +146,10 @@ class LogisticEditORderState extends State<LogisticEditORder> {
                                     // ),
                                   ],
                                 ),
-                                Container(
-                                  child: Icon(
-                                    Icons.navigate_next_outlined,
-                                    color: theme.primaryColor,
-                                    size: Screens.heigth(context) * 0.06,
-                                  ),
+                                Icon(
+                                  Icons.navigate_next_outlined,
+                                  color: theme.primaryColor,
+                                  size: Screens.heigth(context) * 0.06,
                                 )
                               ],
                             )
@@ -199,13 +196,10 @@ class LogisticEditORderState extends State<LogisticEditORder> {
                                     // ),
                                   ],
                                 ),
-                                Container(
-                                  //  color: Colors.red,
-                                  child: Icon(
-                                    Icons.navigate_next_outlined,
-                                    color: theme.primaryColor,
-                                    size: Screens.heigth(context) * 0.06,
-                                  ),
+                                Icon(
+                                  Icons.navigate_next_outlined,
+                                  color: theme.primaryColor,
+                                  size: Screens.heigth(context) * 0.06,
                                 )
                               ],
                             ),
@@ -230,6 +224,7 @@ class LogisticEditORderState extends State<LogisticEditORder> {
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(5)),
                               child: DropdownButton(
+                                dropdownColor: Colors.white,
                                 hint: Text(
                                   "Select Order Type: ",
                                   style: TextStyles.headlineBlack1(context),
@@ -276,6 +271,7 @@ class LogisticEditORderState extends State<LogisticEditORder> {
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(5)),
                               child: DropdownButton(
+                                dropdownColor: Colors.white,
                                 hint: Text(
                                   "GP Approval Required?",
                                   style: TextStyles.headlineBlack1(context),
@@ -318,54 +314,49 @@ class LogisticEditORderState extends State<LogisticEditORder> {
                                 SizedBox(
                                   height: Screens.heigth(context) * 0.005,
                                 ),
-                                Container(
-                                  // width: Screens.width(context) * 0.83,
-                                  // color: Colors.blue,
-                                  child: Stack(
-                                    children: [
-                                      SizedBox(
-                                        //   height: 50,
-                                        child: TextFormField(
-                                          readOnly: true,
+                                Stack(
+                                  children: [
+                                    SizedBox(
+                                      //   height: 50,
+                                      child: TextFormField(
+                                        readOnly: true,
+                                        onTap: () {
+                                          selecTime(context);
+                                        },
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return "Enter Order Received Time";
+                                          }
+                                          return null;
+                                        },
+                                        controller: mycontroller[0],
+                                        decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 10, horizontal: 10),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            borderSide:
+                                                BorderSide(color: Colors.green),
+                                          ),
+                                        ),
+                                        cursorColor: theme.primaryColor,
+                                      ),
+                                    ),
+                                    Positioned(
+                                        top: Screens.heigth(context) * 0.007,
+                                        left: Screens.width(context) * 0.86,
+                                        child: InkWell(
                                           onTap: () {
                                             selecTime(context);
                                           },
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return "Enter Order Received Time";
-                                            }
-                                            return null;
-                                          },
-                                          controller: mycontroller[0],
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 10,
-                                                    horizontal: 10),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              borderSide: BorderSide(
-                                                  color: Colors.green),
-                                            ),
-                                          ),
-                                          cursorColor: theme.primaryColor,
-                                        ),
-                                      ),
-                                      Positioned(
-                                          top: Screens.heigth(context) * 0.007,
-                                          left: Screens.width(context) * 0.86,
-                                          child: InkWell(
-                                            onTap: () {
-                                              selecTime(context);
-                                            },
-                                            child: Icon(Icons.access_time,
-                                                color: theme.primaryColor,
-                                                size: Screens.width(context) *
-                                                    0.095),
-                                          )),
-                                    ],
-                                  ),
+                                          child: Icon(Icons.access_time,
+                                              color: theme.primaryColor,
+                                              size: Screens.width(context) *
+                                                  0.095),
+                                        )),
+                                  ],
                                 ),
                               ],
                             ),
@@ -383,57 +374,52 @@ class LogisticEditORderState extends State<LogisticEditORder> {
                                 SizedBox(
                                   height: Screens.heigth(context) * 0.005,
                                 ),
-                                Container(
-                                  // width: Screens.width(context) * 0.83,
-                                  // color: Colors.blue,
-                                  child: Stack(
-                                    children: [
-                                      SizedBox(
-                                        //   height: 50,
+                                Stack(
+                                  children: [
+                                    SizedBox(
+                                      //   height: 50,
 
-                                        child: TextFormField(
+                                      child: TextFormField(
+                                        onTap: () {
+                                          showDate(context);
+                                        },
+                                        readOnly: true,
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return "Enter Order Received Date";
+                                          }
+
+                                          return null;
+                                        },
+                                        controller: mycontroller[1],
+                                        decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 10, horizontal: 10),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            borderSide:
+                                                BorderSide(color: Colors.green),
+                                          ),
+                                        ),
+                                        cursorColor: theme.primaryColor,
+                                      ),
+                                    ),
+                                    Positioned(
+                                        top: Screens.heigth(context) * 0.01,
+                                        left: Screens.width(context) * 0.86,
+                                        child: InkWell(
                                           onTap: () {
                                             showDate(context);
                                           },
-                                          readOnly: true,
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return "Enter Order Received Date";
-                                            }
-
-                                            return null;
-                                          },
-                                          controller: mycontroller[1],
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 10,
-                                                    horizontal: 10),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              borderSide: BorderSide(
-                                                  color: Colors.green),
-                                            ),
-                                          ),
-                                          cursorColor: theme.primaryColor,
-                                        ),
-                                      ),
-                                      Positioned(
-                                          top: Screens.heigth(context) * 0.01,
-                                          left: Screens.width(context) * 0.86,
-                                          child: InkWell(
-                                            onTap: () {
-                                              showDate(context);
-                                            },
-                                            child: Icon(
-                                                Icons.calendar_today_outlined,
-                                                color: theme.primaryColor,
-                                                size: Screens.width(context) *
-                                                    0.08),
-                                          )),
-                                    ],
-                                  ),
+                                          child: Icon(
+                                              Icons.calendar_today_outlined,
+                                              color: theme.primaryColor,
+                                              size: Screens.width(context) *
+                                                  0.08),
+                                        )),
+                                  ],
                                 ),
                               ],
                             ),
@@ -796,6 +782,7 @@ class LogisticEditORderState extends State<LogisticEditORder> {
     for (int i = 0; i < ContentOrderEditState.itemsDetails.length; i++) {
       // itemDoc.add(
       var val = ItemDocuments(
+          deliveryDate: '',
           cusID: cusId,
           discount: ContentOrderEditState.itemsDetails[i].discount!
               .toStringAsFixed(2),
@@ -995,69 +982,70 @@ class LogisticEditORderState extends State<LogisticEditORder> {
 
   void callSaveApi(double getCredit) async {
     await GettCreditDaysAPi.getGlobalData().then((value) async {
-      if (value.creaditDaysValueValue![0].CreditDays == 0) {
-        // print("getCredit3333 : " + getCredit.toString());
-        await GetBalanceCreditAPi.getGlobalData().then((value) async {
-          if (value.balanceCreaditValue!.isNotEmpty) {
-            double? balance = value.balanceCreaditValue![0].Balance;
-            double? creditLimit = value.balanceCreaditValue![0].CreditLimit;
-            double? ordersBal = value.balanceCreaditValue![0].OrdersBal;
+      if (value.creaditDaysValueValue!.isNotEmpty) {
+        if (value.creaditDaysValueValue![0].CreditDays == 0) {
+          // print("getCredit3333 : " + getCredit.toString());
+          await GetBalanceCreditAPi.getGlobalData().then((value) async {
+            if (value.balanceCreaditValue!.isNotEmpty) {
+              double? balance = value.balanceCreaditValue![0].Balance;
+              double? creditLimit = value.balanceCreaditValue![0].CreditLimit;
+              double? ordersBal = value.balanceCreaditValue![0].OrdersBal;
 
-            double ans = creditLimit! -
-                balance! -
-                ordersBal! -
-                HeaderEditOrderPageState.total;
-            if (ans < 0) {
-              SOLoginAPi.username = 'solimitapp';
-              await SOLoginAPi.getGlobalData().then((valuel) {
-                if (valuel.sessionId!.isNotEmpty) {
-                  soLimit = true;
-                  SalesOrderPatchAPi.sessionID = valuel.sessionId!;
-                  callPostApi();
-                } else {
-                  setState(() {
-                    isLoading = false;
-                    schemeApiLoad = false;
-                  });
-                  showDetailBox('Server Issue Please Try Again !!..');
-                }
-              });
-              // });
+              double ans = creditLimit! -
+                  balance! -
+                  ordersBal! -
+                  HeaderEditOrderPageState.total;
+              if (ans < 0) {
+                SOLoginAPi.username = 'solimitapp';
+                await SOLoginAPi.getGlobalData().then((valuel) {
+                  if (valuel.sessionId!.isNotEmpty) {
+                    soLimit = true;
+                    SalesOrderPatchAPi.sessionID = valuel.sessionId!;
+                    callPostApi();
+                  } else {
+                    setState(() {
+                      isLoading = false;
+                      schemeApiLoad = false;
+                    });
+                    showDetailBox('Server Issue Please Try Again !!..');
+                  }
+                });
+                // });
+              } else {
+                SalesOrderPatchAPi.sessionID = GetValues.sessionID;
+                callPostApi();
+              }
             } else {
               SalesOrderPatchAPi.sessionID = GetValues.sessionID;
               callPostApi();
             }
-          } else {
-            SalesOrderPatchAPi.sessionID = GetValues.sessionID;
-            callPostApi();
-          }
-        });
-      } else if (value.creaditDaysValueValue![0].CreditDays! > 0) {
-        // PostMaxCommitAPi.cardCodePost = HeaderEditOrderPageState.bpCode;
-        // PostMaxCommitAPi.value = "${50.00 + getCredit}";
-        // PostMaxCommitAPi.getGlobalData().then((value) {
-        // print(" PostMaxCommitAPi callPostApi: ");
-        SOLoginAPi.username = 'sodaysapp';
-        await SOLoginAPi.getGlobalData().then((valuel) {
-          if (valuel.sessionId != null) {
-            soDats = true;
-            SalesOrderPatchAPi.sessionID = valuel.sessionId!;
-            callPostApi();
-          } else if (valuel.sessionId == null) {
-            setState(() {
-              isLoading = false;
-              schemeApiLoad = false;
-            });
-            showDetailBox('Server Issue Please Try Again !!..');
-          }
-        });
+          });
+        } else if (value.creaditDaysValueValue![0].CreditDays! > 0) {
+          // PostMaxCommitAPi.cardCodePost = HeaderEditOrderPageState.bpCode;
+          // PostMaxCommitAPi.value = "${50.00 + getCredit}";
+          // PostMaxCommitAPi.getGlobalData().then((value) {
+          // print(" PostMaxCommitAPi callPostApi: ");
+          SOLoginAPi.username = 'sodaysapp';
+          await SOLoginAPi.getGlobalData().then((valuel) {
+            if (valuel.sessionId != null) {
+              soDats = true;
+              SalesOrderPatchAPi.sessionID = valuel.sessionId!;
+              callPostApi();
+            } else if (valuel.sessionId == null) {
+              setState(() {
+                isLoading = false;
+                schemeApiLoad = false;
+              });
+              showDetailBox('Server Issue Please Try Again !!..');
+            }
+          });
 
-        //  });
-      } else {
-        SalesOrderPatchAPi.sessionID = GetValues.sessionID;
-        callPostApi();
+          //  });
+        } else {
+          SalesOrderPatchAPi.sessionID = GetValues.sessionID;
+          callPostApi();
+        }
       }
-      // }
     });
   }
 
@@ -1122,25 +1110,26 @@ class LogisticEditORderState extends State<LogisticEditORder> {
         ScaffoldMessenger.of(this.context).showSnackBar(snackBar);
       }
     });
-     if (schmDisableBtn == true) {
-    SalesOrderAfterAPi.sessionID = GetValues.sessionID;
-    SalesOrderAfterAPi.baseType = "17";
-    // SalesOrderAfterAPi.baseEntry = "12345";
-    // print("SO basetype: " + SalesOrderAfterAPi.baseType.toString());
-    // print("SO discper:" + SalesOrderAfterAPi.baseLineTo.toString());
-    // print("SO discper:" + SalesOrderAfterAPi.disValue.toString());
-    // print("SO discper:" + SalesOrderAfterAPi.discper.toString());
-    // print("SO schemeEntry:" + SalesOrderAfterAPi.schemeEntry.toString());
-    for (int i = 0; i < saleOrderdata!.length; i++) {
-      SalesOrderAfterAPi.baseLineTo = saleOrderdata![i].lineNum.toString();
-      SalesOrderAfterAPi.disValue = saleOrderdata![i].discVal.toString();
-      SalesOrderAfterAPi.discper = saleOrderdata![i].discPer.toString();
-      SalesOrderAfterAPi.schemeEntry = saleOrderdata![i].schemeEntry;
-      await SalesOrderAfterAPi.getData(SalesOrderPatchAPi.deviceTransID!)
-          .then((value) async {
-        if (value.statusCode! >= 200 && value.statusCode! <= 210) {}
-      });
-    }}
+    if (schmDisableBtn == true) {
+      SalesOrderAfterAPi.sessionID = GetValues.sessionID;
+      SalesOrderAfterAPi.baseType = "17";
+      // SalesOrderAfterAPi.baseEntry = "12345";
+      // print("SO basetype: " + SalesOrderAfterAPi.baseType.toString());
+      // print("SO discper:" + SalesOrderAfterAPi.baseLineTo.toString());
+      // print("SO discper:" + SalesOrderAfterAPi.disValue.toString());
+      // print("SO discper:" + SalesOrderAfterAPi.discper.toString());
+      // print("SO schemeEntry:" + SalesOrderAfterAPi.schemeEntry.toString());
+      for (int i = 0; i < saleOrderdata!.length; i++) {
+        SalesOrderAfterAPi.baseLineTo = saleOrderdata![i].lineNum.toString();
+        SalesOrderAfterAPi.disValue = saleOrderdata![i].discVal.toString();
+        SalesOrderAfterAPi.discper = saleOrderdata![i].discPer.toString();
+        SalesOrderAfterAPi.schemeEntry = saleOrderdata![i].schemeEntry;
+        await SalesOrderAfterAPi.getData(SalesOrderPatchAPi.deviceTransID!)
+            .then((value) async {
+          if (value.statusCode! >= 200 && value.statusCode! <= 210) {}
+        });
+      }
+    }
   }
 
   void deleteValueToDB() {}
@@ -1198,7 +1187,7 @@ class LogisticEditORderState extends State<LogisticEditORder> {
         // String contentText = "Content of Dialog";
         return StatefulBuilder(
           builder: (context, setState) {
-            final theme = Theme.of(context);
+            Theme.of(context);
             return AlertDialog(
               //    title: Text("Title of Dialog"),
               content: SizedBox(
@@ -1223,7 +1212,7 @@ class LogisticEditORderState extends State<LogisticEditORder> {
                           //  Navigator.pop(context);
                         },
                         child: Text(
-                          'ok',
+                          'OK',
                           style: TextStyles.whiteText(context),
                         ))
                   ],

@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_lambdas, prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable, unnecessary_new, omit_local_variable_types, prefer_single_quotes, prefer_if_elements_to_conditional_expressions, prefer_interpolation_to_compose_strings, unawaited_futures
-
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -14,7 +12,7 @@ class LocationDialog extends StatefulWidget {
   GetLocDetData? getLocDetData;
 
   @override
-  MyDialogState createState() => new MyDialogState();
+  MyDialogState createState() => MyDialogState();
 }
 
 class MyDialogState extends State<LocationDialog> {
@@ -49,7 +47,7 @@ class MyDialogState extends State<LocationDialog> {
 
           if (permission == LocationPermission.deniedForever) {}
           final pos = await Geolocator.getCurrentPosition();
-          print('lattitude: ' + pos.latitude.toString());
+          // print('lattitude: ${pos.latitude}');
           latitude = pos.latitude.toString();
           langitude = pos.longitude.toString();
           longi = langitude;
@@ -63,18 +61,16 @@ class MyDialogState extends State<LocationDialog> {
 
           final placemarks = await placemarkFromCoordinates(lat, long);
           setState(() {
-            adrress = placemarks[0].street.toString() +
-                ' ' +
-                placemarks[0].thoroughfare.toString() +
-                ' ' +
-                placemarks[0].locality.toString();
+            adrress =
+                '${placemarks[0].street} ${placemarks[0].thoroughfare} ${placemarks[0].locality}';
           });
           await loadWebView();
         } catch (e) {
           const snackBar = SnackBar(
-              duration: Duration(seconds: 1),
-              backgroundColor: Colors.red,
-              content: Text('Please turn on the Location!!..'),);
+            duration: Duration(seconds: 1),
+            backgroundColor: Colors.red,
+            content: Text('Please turn on the Location!!..'),
+          );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
           Future.delayed(
             const Duration(seconds: 2),
@@ -83,7 +79,7 @@ class MyDialogState extends State<LocationDialog> {
         }
       } else if (serviceEnabled == true) {
         final pos = await Geolocator.getCurrentPosition();
-        print('lattitude: ' + pos.latitude.toString());
+        // print('lattitude: ${pos.latitude}');
         latitude = pos.latitude.toString();
         langitude = pos.longitude.toString();
         longi = langitude;
@@ -97,11 +93,8 @@ class MyDialogState extends State<LocationDialog> {
 
         final placemarks = await placemarkFromCoordinates(lat, long);
         setState(() {
-          adrress = placemarks[0].street.toString() +
-              ' ' +
-              placemarks[0].thoroughfare.toString() +
-              ' ' +
-              placemarks[0].locality.toString();
+          adrress =
+              '${placemarks[0].street} ${placemarks[0].thoroughfare} ${placemarks[0].locality}';
         });
         await loadWebView();
       }
@@ -111,34 +104,35 @@ class MyDialogState extends State<LocationDialog> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
-   WebViewController? controllerGlobal;
+
+  WebViewController? controllerGlobal;
   bool loading = true;
 
- Future loadWebView()async{
-        controllerGlobal = WebViewController()
-  ..setJavaScriptMode(JavaScriptMode.unrestricted)
-  ..setBackgroundColor(const Color(0x00000000))
-  ..setNavigationDelegate(
-    NavigationDelegate(
-      onProgress: (int progress) {
-        // Update loading bar.
-      },
-      onPageStarted: (String url) {},
-      onPageFinished: (String url) {
-         setState(() {
-         loading = false;
-        });
-      },
-      onWebResourceError: (WebResourceError error) {},
-    //   onNavigationRequest: (NavigationRequest request) {
-    //     if (request.url.startsWith('https://www.youtube.com/')) {
-    //       return NavigationDecision.prevent;
-    //     }
-    //     return NavigationDecision.navigate;
-    //   },
-     ),
-  )
-  ..loadRequest(Uri.parse(url!));
+  Future loadWebView() async {
+    controllerGlobal = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {
+            setState(() {
+              loading = false;
+            });
+          },
+          onWebResourceError: (WebResourceError error) {},
+          //   onNavigationRequest: (NavigationRequest request) {
+          //     if (request.url.startsWith('https://www.youtube.com/')) {
+          //       return NavigationDecision.prevent;
+          //     }
+          //     return NavigationDecision.navigate;
+          //   },
+        ),
+      )
+      ..loadRequest(Uri.parse(url!));
   }
 
   List<TextEditingController> mycontroller =
@@ -146,92 +140,93 @@ class MyDialogState extends State<LocationDialog> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final heigth = MediaQuery.of(context).size.height;
-    final theme = Theme.of(context);
+
     return AlertDialog(
       content: (url == null)
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : SizedBox(
               width: width * 0.8,
-              child: (isdone == true && msgresp=='')
-                  ? Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Center(child: CircularProgressIndicator()),
-                    ],
-                  )
-                  : (isdone == false && msgresp!='')?
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Center(child: Text(msgresp)),
-                    ],
-                  )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              child: (isdone == true && msgresp == '')
+                  ? const Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Container(
-                          child: Text("Lat: $latitude"),
-                        ),
-                        SizedBox(
-                          height: Screens.heigth(context) * 0.02,
-                        ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Long: $langitude"),
-                        ),
-                        SizedBox(
-                          height: Screens.heigth(context) * 0.02,
-                        ),
-                        Container(
-                          width: Screens.width(context),
-                          height: Screens.heigth(context) * 0.37,
-                          decoration: const BoxDecoration(),
-                          child:
-                           loading == false?
-          WebViewWidget(controller: controllerGlobal!):
-          Center(child: CircularProgressIndicator(),)
-                         ),
-                        SizedBox(
-                          height: Screens.heigth(context) * 0.02,
-                        ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text("${widget.getLocDetData!.CardCode}"),
-                        ),
-                        SizedBox(
-                          height: Screens.heigth(context) * 0.01,
-                        ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text("${widget.getLocDetData!.CardName}"),
-                        ),
-                        SizedBox(
-                          height: Screens.heigth(context) * 0.02,
-                        ),
+                        Center(child: CircularProgressIndicator()),
                       ],
-                    ),),
+                    )
+                  : (isdone == false && msgresp != '')
+                      ? Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Center(child: Text(msgresp)),
+                          ],
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('Lat: $latitude'),
+                            SizedBox(
+                              height: Screens.heigth(context) * 0.02,
+                            ),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text('Long: $langitude'),
+                            ),
+                            SizedBox(
+                              height: Screens.heigth(context) * 0.02,
+                            ),
+                            Container(
+                              width: Screens.width(context),
+                              height: Screens.heigth(context) * 0.37,
+                              decoration: const BoxDecoration(),
+                              child: loading == false
+                                  ? WebViewWidget(controller: controllerGlobal!)
+                                  : const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                            ),
+                            SizedBox(
+                              height: Screens.heigth(context) * 0.02,
+                            ),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text('${widget.getLocDetData!.CardCode}'),
+                            ),
+                            SizedBox(
+                              height: Screens.heigth(context) * 0.01,
+                            ),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text('${widget.getLocDetData!.CardName}'),
+                            ),
+                            SizedBox(
+                              height: Screens.heigth(context) * 0.02,
+                            ),
+                          ],
+                        ),
+            ),
       actions: isdone == false && msgresp != ''
-          ? <Widget>[SizedBox()]
+          ? <Widget>[const SizedBox()]
           : <Widget>[
               TextButton(
                 onPressed: () {
-                callAprovalApi('A');
+                  callAprovalApi('A');
                 },
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green),),
-                child: Text("Approve"),
+                  backgroundColor: MaterialStateProperty.all(Colors.green),
+                ),
+                child: const Text('Approve'),
               ),
               TextButton(
                 onPressed: () {
-                 callAprovalApi('R');
+                  callAprovalApi('R');
                 },
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.red),),
-                child: Text("Reject"),
+                  backgroundColor: MaterialStateProperty.all(Colors.red),
+                ),
+                child: const Text('Reject'),
               ),
             ],
     );
@@ -241,8 +236,10 @@ class MyDialogState extends State<LocationDialog> {
   String msgresp = '';
 
   Future<void> callAprovalApi(String status) async {
-    final LocationStatusModel aprv = new LocationStatusModel(
-        clgCode: widget.getLocDetData!.ClgCode!, status: status,);
+    final aprv = LocationStatusModel(
+      clgCode: widget.getLocDetData!.ClgCode!,
+      status: status,
+    );
     isdone = true;
     msgresp = '';
     setState(() {});
@@ -250,7 +247,7 @@ class MyDialogState extends State<LocationDialog> {
       if (value.statusCode! >= 200 && value.statusCode! <= 210) {
         isdone = false;
         msgresp = 'Success..!!';
-        
+
         setState(() {});
       } else if (value.statusCode! >= 400 && value.statusCode! <= 410) {
         isdone = false;

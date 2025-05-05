@@ -25,7 +25,9 @@ class DetailsPageState extends State<DetailsPage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       key: _scaffoldKey,
-      drawer: drawer(context),
+      drawer:
+          // GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       appBar: appBar(context, _scaffoldKey, widget.title),
       body:
           // Padding(
@@ -44,7 +46,8 @@ class DetailsPageState extends State<DetailsPage> {
             children: [
               Container(
                 padding: EdgeInsets.symmetric(
-                    horizontal: Screens.width(context) * 0.02),
+                  horizontal: Screens.width(context) * 0.02,
+                ),
                 color: Colors.white,
                 width: Screens.width(context),
                 child: Column(
@@ -132,7 +135,8 @@ class DetailsPageState extends State<DetailsPage> {
                           child: Text(
                             //   '${documentApprovalValue[index].Quantity}',
                             TextStyles.splitValues(
-                                '${documentApprovalValue[index].quantity}'),
+                              '${documentApprovalValue[index].quantity}',
+                            ),
                             style: TextStyles.headlineBlack1(context),
                             //hintStyle: TextStyles.bodytextBlack1(context),
                           ),
@@ -180,7 +184,8 @@ class DetailsPageState extends State<DetailsPage> {
                           child: Text(
                             //'${documentApprovalValue[index].Price}',
                             TextStyles.splitValues(
-                                '${documentApprovalValue[index].unitPrice}'),
+                              '${documentApprovalValue[index].unitPrice}',
+                            ),
                             // TextStyles.splitValues('${documentApprovalValue[index].price}'),
                             style: TextStyles.headlineBlack1(context),
                           ),
@@ -204,7 +209,8 @@ class DetailsPageState extends State<DetailsPage> {
                           child: Text(
                             // '${documentApprovalValue[index].LineTotal}',
                             TextStyles.splitValues(
-                                '${documentApprovalValue[index].lineTotal}'),
+                              '${documentApprovalValue[index].lineTotal}',
+                            ),
                             style: TextStyles.headlineBlack1(context),
                           ),
                         ),
@@ -227,7 +233,8 @@ class DetailsPageState extends State<DetailsPage> {
                           child: Text(
                             //'${documentApprovalValue[index].TaxTotal}',
                             TextStyles.splitValues(
-                                '${documentApprovalValue[index].taxTotal}'),
+                              '${documentApprovalValue[index].taxTotal}',
+                            ),
                             style: TextStyles.headlineBlack1(context),
                           ),
                         ),
@@ -250,7 +257,8 @@ class DetailsPageState extends State<DetailsPage> {
                           child: Text(
                             //'${documentApprovalValue[index].total}',
                             TextStyles.splitValues(
-                                '${documentApprovalValue[index].lineTotal! + documentApprovalValue[index].taxTotal!}'),
+                              '${documentApprovalValue[index].lineTotal! + documentApprovalValue[index].taxTotal!}',
+                            ),
                             style: TextStyles.headlineBlack1(context),
                           ),
                         ),

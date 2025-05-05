@@ -41,7 +41,7 @@ class PdfInvoiceApi{
       "Description",
       "Price",
       "Qty",
-      "Total"
+      "Total",
     ];
     final data = invoice.items.map((e) {
       final total = (e.quantity);
@@ -175,7 +175,7 @@ class PdfInvoiceApi{
      style: TextStyle(
        fontWeight: FontWeight.bold,
        fontSize: 15,
-     ),)
+     ),),
       ],),
       //   Text("UPIAmount: "+invoice.invoiceCash.upiAmnt,style: TextStyle(
       //  fontWeight: FontWeight.bold,
@@ -252,7 +252,7 @@ class PdfInvoiceApi{
     //    fontSize: 10.0
     //  ))
     ],
- )],)
+ ),],)
  ;}
    static Widget inVoiceHead(Invoice invoice)=>Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -322,14 +322,14 @@ class PdfInvoiceApi{
     final headers =[
       "s.No",
       "Description",
-      "Quantity"
+      "Quantity",
     ];
     final data = invoice.items.map((e) {
       final total = (e.quantity);
       return [
         e.slNo,
         (e.descripton),
-        (e.quantity)
+        (e.quantity),
       ];
     }).toList();
     return Table.fromTextArray(
@@ -377,7 +377,7 @@ class PdfInvoiceApi{
      style: const TextStyle(
       // fontWeight: FontWeight.bold,
        fontSize: 10,
-     ),)
+     ),),
     ],
  );
 }

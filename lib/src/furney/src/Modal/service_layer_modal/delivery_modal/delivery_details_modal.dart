@@ -73,7 +73,7 @@ DeliveryDetailsValue({
      if (jsons['DocumentLines'] != null  && jsons['AddressExtension']!=null) {
       final list =  jsons['DocumentLines'] as List; //jsonDecode
       // print(list);
-      List<DocumentDeliveryValue> dataList = list
+      final List<DocumentDeliveryValue> dataList = list
           .map((dynamic enquiries) => DocumentDeliveryValue.fromJson(enquiries))
           .toList();
     return DeliveryDetailsValue(

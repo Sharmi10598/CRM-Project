@@ -8,7 +8,6 @@
 //     "status": true,
 //     "message": "Success"
 // }
-import 'dart:convert';
 
 class SettingModelData {
   CountryClass? countryClass;
@@ -17,7 +16,7 @@ class SettingModelData {
   int? stsCode;
   String? excep;
   SettingModelData(
-      {this.stsCode, this.countryClass, this.status, this.message, this.excep});
+      {this.stsCode, this.countryClass, this.status, this.message, this.excep,});
 
   factory SettingModelData.fromJson(Map<String, dynamic> json, int statusCode) {
     if (json['countryClass'] != null) {
@@ -29,7 +28,6 @@ class SettingModelData {
       );
     } else {
       return SettingModelData(
-        countryClass: null,
         status: json['status'] as bool,
         message: json['message'].toString(),
         stsCode: statusCode,
@@ -39,7 +37,6 @@ class SettingModelData {
 
   factory SettingModelData.issue(Map<String, dynamic> json, int statusCode) =>
       SettingModelData(
-        countryClass: null,
         status: json['status'] as bool,
         message: json['message'].toString(),
         stsCode: statusCode,
@@ -84,6 +81,6 @@ class CountryClass {
         'queryURL': queryUrl,
         'localURL': localUrl,
         'reportURL': reportUrl,
-        'schemeReq': schemeReq
+        'schemeReq': schemeReq,
       };
 }

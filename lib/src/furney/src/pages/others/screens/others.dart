@@ -5,7 +5,6 @@ import 'package:ultimate_bundle/src/furney/src/pages/others/widget/allmenu.dart'
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/appBar.dart';
 
-
 class Others extends StatefulWidget {
   const Others({required this.title, Key? key}) : super(key: key);
   final String title;
@@ -23,20 +22,26 @@ class _OthersState extends State<Others> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: appBar(context, _scaffoldKey, widget.title),
-      drawer: drawer(context),
+      drawer:
+          // GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       body: SafeArea(
         child: Padding(
-            padding: EdgeInsets.only(
-                top: Screens.heigth(context) * 0.02,
-                left: Screens.width(context) * 0.02,
-                right: Screens.width(context) * 0.02,
-                bottom: Screens.width(context) * 0.02,),
-            child:
-            Allmenu(itemCount: dataList(context),),
-                ),
+          padding: EdgeInsets.only(
+            top: Screens.heigth(context) * 0.02,
+            left: Screens.width(context) * 0.02,
+            right: Screens.width(context) * 0.02,
+            bottom: Screens.width(context) * 0.02,
+          ),
+          child: Allmenu(
+            itemCountt:
+                // GetValues.userRoll == '3'
+                //     ? dataList2(context)
+                //     :
+                dataList(context),
+          ),
+        ),
       ),
     );
   }
 }
-
-

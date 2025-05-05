@@ -31,7 +31,7 @@ class GetActiveProjectAPi {
         "query": "Select name  from OPMG where STATUS not in ('P','T','F')",
       }));
       // log("test project statusCode: " + response.statusCode.toString());
-      log("test project response: " + response.body);
+      log("GetActiveProjectAPi response: " + response.body);
 
       if (response.statusCode == 200) {
         return GetActiveProject.fromJson(response.body, response.statusCode);

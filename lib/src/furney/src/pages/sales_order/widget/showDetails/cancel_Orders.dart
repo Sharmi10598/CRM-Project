@@ -61,162 +61,160 @@ class ClosedOrdersState extends State<ClosedOrders> {
           padding: EdgeInsets.symmetric(
               vertical: Screens.heigth(context) * 0.005,
               horizontal: Screens.width(context) * 0.02),
-          child: Container(
-            child: Column(
-              children: [
-                Stack(children: [
-                  Container(
-                    height: Screens.heigth(context) * 0.06,
-                    decoration: BoxDecoration(
-                      color: theme.hintColor.withOpacity(.05),
-                      borderRadius: BorderRadius.circular(Const.radius),
-                    ),
-                    child: TextField(
-                      controller: mycontroller[0],
-                      autocorrect: false,
-                      style: theme.textTheme.bodyMedium,
-                      onChanged: (v) {
-                        setState(() {
-                          cusDocFilter = cusDoc
-                              .where((e) =>
-                                  e.bPCode
-                                      .toLowerCase()
-                                      .contains(v.toLowerCase()) ||
-                                  e.bPName
-                                      .toLowerCase()
-                                      .contains(v.toLowerCase()))
-                              .toList();
-                        });
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Search for Orders',
-                        hintStyle: TextStyles.bodytextBlack1(context),
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        prefixIcon: IconButton(
-                          icon: const Icon(Icons.search),
-                          onPressed: () {}, //
-                          color: theme.primaryColor,
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 15,
-                          horizontal: 5,
-                        ),
+          child: Column(
+            children: [
+              Stack(children: [
+                Container(
+                  height: Screens.heigth(context) * 0.06,
+                  decoration: BoxDecoration(
+                    color: theme.hintColor.withOpacity(.05),
+                    borderRadius: BorderRadius.circular(Const.radius),
+                  ),
+                  child: TextField(
+                    controller: mycontroller[0],
+                    autocorrect: false,
+                    style: theme.textTheme.bodyMedium,
+                    onChanged: (v) {
+                      setState(() {
+                        cusDocFilter = cusDoc
+                            .where((e) =>
+                                e.bPCode
+                                    .toLowerCase()
+                                    .contains(v.toLowerCase()) ||
+                                e.bPName
+                                    .toLowerCase()
+                                    .contains(v.toLowerCase()))
+                            .toList();
+                      });
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Search for Orders',
+                      hintStyle: TextStyles.bodytextBlack1(context),
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      prefixIcon: IconButton(
+                        icon: const Icon(Icons.search),
+                        onPressed: () {}, //
+                        color: theme.primaryColor,
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 15,
+                        horizontal: 5,
                       ),
                     ),
                   ),
-                ]),
-                //      salesOrderValue.isEmpty && searchLoading == true
-                // ?
-                // Container(
-                //   //color: Colors.amber,
-                //   width: Screens.width(context),
-                //   height: Screens.heigth(context)*0.72,
-                //   child: Center(
-                //       child: Visibility(
-                //         visible: spin,
-                //         child: SpinKitThreeBounce(
-                //           size: Screens.heigth(context) * 0.06,
-                //           color: theme.primaryColor,
-                //         ),
-                //       ),
-                //     ),
-                // )
-                // :
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: cusDocFilter.length,
-                      itemBuilder: (context, i) {
-                        return Card(
-                            elevation: 8,
-                            child: InkWell(
-                              onTap: () {
-                                setAllNull(i);
-                                //  print(i);
-                                print('cus id : ${cusDocFilter[i].cusID}');
+                ),
+              ]),
+              //      salesOrderValue.isEmpty && searchLoading == true
+              // ?
+              // Container(
+              //   //color: Colors.amber,
+              //   width: Screens.width(context),
+              //   height: Screens.heigth(context)*0.72,
+              //   child: Center(
+              //       child: Visibility(
+              //         visible: spin,
+              //         child: SpinKitThreeBounce(
+              //           size: Screens.heigth(context) * 0.06,
+              //           color: theme.primaryColor,
+              //         ),
+              //       ),
+              //     ),
+              // )
+              // :
+              Expanded(
+                child: ListView.builder(
+                    itemCount: cusDocFilter.length,
+                    itemBuilder: (context, i) {
+                      return Card(
+                          elevation: 8,
+                          child: InkWell(
+                            onTap: () {
+                              setAllNull(i);
+                              //  print(i);
+                              print('cus id : ${cusDocFilter[i].cusID}');
 
-                                //  Get.toNamed<dynamic>(
-                                // FurneyRoutes.creationOrderDetails);
-                              },
-                              child: Container(
-                                height: Screens.heigth(context) * 0.07,
-                                width: Screens.width(context),
-                                decoration: const BoxDecoration(),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      //row 1
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                              //  Get.toNamed<dynamic>(
+                              // FurneyRoutes.creationOrderDetails);
+                            },
+                            child: Container(
+                              height: Screens.heigth(context) * 0.07,
+                              width: Screens.width(context),
+                              decoration: const BoxDecoration(),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    //row 1
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width: Screens.width(context) * 0.02,
+                                        height: double.infinity,
+                                        color: theme.primaryColor,
+                                      ),
+                                      SizedBox(
+                                        width: Screens.width(context) * 0.01,
+                                      ),
+                                      SizedBox(
+                                        width: Screens.width(context) * 0.2,
+                                        child: Text(
+                                          cusDocFilter[i].bPCode,
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: Screens.width(context) * 0.01,
+                                      ),
+                                      SizedBox(
+                                        width: Screens.width(context) * 0.4,
+                                        child: Text(
+                                          cusDocFilter[i].bPName,
+                                          style: TextStyles.bodytextBlack1(
+                                              context),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: Screens.width(context) * 0.02),
+                                    child: Row(
                                       children: [
-                                        Container(
-                                          width: Screens.width(context) * 0.02,
-                                          height: double.infinity,
+                                        //   Container(
+                                        //     alignment: Alignment.centerRight,
+                                        //  //    color: Colors.red,
+                                        //     width: Screens.width(context)*0.22,
+                                        //     child: Column(
+                                        //       children: [
+                                        //         Text(
+                                        //         // filterSalesValue[i].cancelStatus=='csYes'&&filterSalesValue[i].documentStatus=='bost_Close' ?'Cancelled'
+                                        //        '${cusDoc[i].docDate}'// // :filterSalesValue[i].cancelStatus=='csNo'&&filterSalesValue[i].documentStatus=='bost_Close' ?'Closed':''
+                                        //         , style: TextStyles.bodytextBlack1(context),),
+                                        //         Text(
+                                        //         '${cusDoc[i].}'//  '${filterSalesValue[i].DocDate}'
+                                        //           ,style:TextStyles.bodytextBlack1(context),),
+                                        //       ],
+                                        //     ),
+                                        //   ),
+                                        Icon(
+                                          Icons.chevron_right,
+                                          size: Screens.width(context) * 0.1,
                                           color: theme.primaryColor,
-                                        ),
-                                        SizedBox(
-                                          width: Screens.width(context) * 0.01,
-                                        ),
-                                        SizedBox(
-                                          width: Screens.width(context) * 0.2,
-                                          child: Text(
-                                            cusDocFilter[i].bPCode,
-                                            style: TextStyles.bodytextBlack1(
-                                                context),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: Screens.width(context) * 0.01,
-                                        ),
-                                        SizedBox(
-                                          width: Screens.width(context) * 0.4,
-                                          child: Text(
-                                            cusDocFilter[i].bPName,
-                                            style: TextStyles.bodytextBlack1(
-                                                context),
-                                          ),
                                         )
                                       ],
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: Screens.width(context) * 0.02),
-                                      child: Row(
-                                        children: [
-                                          //   Container(
-                                          //     alignment: Alignment.centerRight,
-                                          //  //    color: Colors.red,
-                                          //     width: Screens.width(context)*0.22,
-                                          //     child: Column(
-                                          //       children: [
-                                          //         Text(
-                                          //         // filterSalesValue[i].cancelStatus=='csYes'&&filterSalesValue[i].documentStatus=='bost_Close' ?'Cancelled'
-                                          //        '${cusDoc[i].docDate}'// // :filterSalesValue[i].cancelStatus=='csNo'&&filterSalesValue[i].documentStatus=='bost_Close' ?'Closed':''
-                                          //         , style: TextStyles.bodytextBlack1(context),),
-                                          //         Text(
-                                          //         '${cusDoc[i].}'//  '${filterSalesValue[i].DocDate}'
-                                          //           ,style:TextStyles.bodytextBlack1(context),),
-                                          //       ],
-                                          //     ),
-                                          //   ),
-                                          Icon(
-                                            Icons.chevron_right,
-                                            size: Screens.width(context) * 0.1,
-                                            color: theme.primaryColor,
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                  )
+                                ],
                               ),
-                            ));
-                      }),
-                ),
-              ],
-            ),
+                            ),
+                          ));
+                    }),
+              ),
+            ],
           ),
         ),
       ),
@@ -266,10 +264,11 @@ class ClosedOrdersState extends State<ClosedOrders> {
         .then((value) {
       print(value[0].itemName);
       for (var it = 0; it < value.length; it++) {
-        ContentOrderCreationState.itemsDetails.add(AddItem(
+        ContentOrderCreationState.itemsDetails.add(AddOrderItem(
             itemCode: value[it].itemCode,
             itemName: value[it].itemName,
             price: double.parse(value[it].price),
+            deliveryDate: value[it].deliveryDate,
             discount: double.parse(value[it].discount),
             qty: int.parse(value[it].qty),
             total: double.parse(value[it].total),

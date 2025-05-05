@@ -7,6 +7,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ultimate_bundle/SalesApp/Pages/Planning/UnplannedVisit.dart';
 import 'package:ultimate_bundle/helpers/constants.dart';
 import 'package:ultimate_bundle/helpers/textstyle.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/local_api/streamDataApi/streamDataapi.dart';
@@ -26,6 +27,10 @@ import 'package:ultimate_bundle/src/furney/src/pages/sales_order/widget/creation
 import 'package:ultimate_bundle/src/furney/src/pages/sales_order/widget/creation/logistics_orders_creation.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sales_order/widget/showDetails/approvalsDetailsOrders.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
+
+import 'package:ultimate_bundle/src/furney/src/pages/sales_order/screens/create_order.dart';
+
+import '../../../../../../SalesApp/Pages/Planning/UpdatePlan.dart';
 
 class SalesOrder extends StatefulWidget {
   const SalesOrder({
@@ -53,6 +58,8 @@ class _SalesQuotState extends State<SalesOrder> {
   void initState() {
     super.initState();
     log("lennList: " + salesOrderFilter.length.toString());
+    log("getvalues password: " + GetValues.sapPassword.toString());
+    log("getvalues username: " + GetValues.sapUserName.toString());
 
     //  GetValues.isAtive[0]=false;
     //   GetValues.isAtive[1]=true;
@@ -87,7 +94,7 @@ class _SalesQuotState extends State<SalesOrder> {
       }
     });
     log("lenthofList :::${salesOrderFilter.length}");
-    log("nextLinknextLink::${nextLink}");
+    log("nextLinknextLink::$nextLink");
     // });
   }
 
@@ -99,7 +106,7 @@ class _SalesQuotState extends State<SalesOrder> {
 
   bool swipeLoad = false;
   void getmoredata() {
-    log("nextLinknextLink::${nextLink}");
+    log("nextLinknextLink::$nextLink");
 
     SalesOderAPi.callNextLink().then((val) {
       setState(() {
@@ -148,11 +155,17 @@ class _SalesQuotState extends State<SalesOrder> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return WillPopScope(
-      onWillPop: onbackpress,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didpop) {
+        if (didpop) return;
+        log("bbbbbbbb");
+        onbackpress();
+      },
       child: Scaffold(
         // key:_scaffoldKey,
-        // drawer: drawer(context),
+        //   drawer:
+        // GetValues.userRoll == '3' ? drawer2(context) : drawer(context),
         // appBar: appBar(context, _scaffoldKey, widget.title),
         //  ),
 
@@ -208,6 +221,7 @@ class _SalesQuotState extends State<SalesOrder> {
                       prefixIcon: IconButton(
                         icon: const Icon(Icons.search),
                         onPressed: () {
+                          log(' get password:::${GetValues.sapPassword}');
                           mycontroller[1].text = "";
                           mycontroller[2].text = "";
                           mycontroller[3].text = "";
@@ -328,7 +342,7 @@ class _SalesQuotState extends State<SalesOrder> {
                         Get.toNamed<dynamic>(FurneyRoutes.salesorderdetails);
                       },
                       child: Container(
-                        height: Screens.heigth(context) * 0.07,
+                        height: Screens.heigth(context) * 0.075,
                         width: Screens.width(context),
                         decoration: const BoxDecoration(
                             // color:Colors.green,
@@ -408,7 +422,9 @@ class _SalesQuotState extends State<SalesOrder> {
                                               context),
                                         ),
                                         Text(
-                                          "${salesOrderFilter[i].DocDate}",
+                                          config.alignDate(salesOrderFilter[i]
+                                              .DocDate
+                                              .toString()),
                                           style: TextStyles.bodytextBlack1(
                                               context),
                                         ),
@@ -564,6 +580,7 @@ class _SalesQuotState extends State<SalesOrder> {
       LogisticOrderState.soDats = false;
       LogisticOrderState.soLimit = false;
       SwitchBtn.siwtchTrue = true;
+      CreateOrderDetailsState.isCameFromqutation = false;
     });
   }
 
@@ -734,6 +751,8 @@ class _SalesQuotState extends State<SalesOrder> {
                                           : Colors.red),
                                   borderRadius: BorderRadius.circular(5)),
                               child: DropdownButton(
+                                dropdownColor: Colors.white,
+
                                 hint: Text(
                                   "Select Status: ",
                                   style: TextStyles.bodytextBlack1(context),

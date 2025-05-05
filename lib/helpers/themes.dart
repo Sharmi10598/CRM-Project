@@ -7,7 +7,7 @@ import 'package:ultimate_bundle/providers/theme_provider.dart';
 ThemeData themeLight(BuildContext context) {
   final theme = Provider.of<ThemeProvider>(context);
 
-  Color _primaryLight(ThemeUIKit val) {
+  Color primaryLight(ThemeUIKit val) {
     switch (val) {
       // case ThemeUIKit.barbera:
       //   return PrimaryColorLight.barbera;
@@ -39,13 +39,13 @@ ThemeData themeLight(BuildContext context) {
     cardColor: ColorLight.card,
     disabledColor: ColorLight.disabledButton,
     hintColor: ColorLight.fontSubtitle,
-    indicatorColor: _primaryLight(theme.themeUIKit),
+    indicatorColor: primaryLight(theme.themeUIKit),
     primaryIconTheme: const IconThemeData(
       color: ColorLight.fontTitle,
     ),
-    primaryColor: _primaryLight(theme.themeUIKit),
+    primaryColor: primaryLight(theme.themeUIKit),
     textSelectionTheme: TextSelectionThemeData(
-      cursorColor: _primaryLight(theme.themeUIKit),
+      cursorColor: primaryLight(theme.themeUIKit),
     ),
     scaffoldBackgroundColor: ColorLight.background,
     appBarTheme: const AppBarTheme(
@@ -104,14 +104,14 @@ ThemeData themeLight(BuildContext context) {
         fontSize: 14,
         fontWeight: FontWeight.normal,
       ),
-    ), colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.indigo).copyWith(background: ColorLight.background).copyWith(error: ColorLight.error),
+    ), colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.indigo).copyWith(surface: ColorLight.background).copyWith(error: ColorLight.error),
   );
 }
 
 ThemeData themeDark(BuildContext context) {
   final theme = Provider.of<ThemeProvider>(context);
 
-  Color _primaryDark(ThemeUIKit val) {
+  Color primaryDark(ThemeUIKit val) {
     switch (val) {
       case ThemeUIKit.barbera:
         return PrimaryColorDark.barbera;
@@ -143,13 +143,13 @@ ThemeData themeDark(BuildContext context) {
     cardColor: ColorDark.card,
     disabledColor: ColorDark.disabledButton,
     hintColor: ColorDark.fontSubtitle,
-    indicatorColor: _primaryDark(theme.themeUIKit),
+    indicatorColor: primaryDark(theme.themeUIKit),
     primaryIconTheme: const IconThemeData(
       color: ColorDark.fontTitle,
     ),
-    primaryColor: _primaryDark(theme.themeUIKit),
+    primaryColor: primaryDark(theme.themeUIKit),
     textSelectionTheme: TextSelectionThemeData(
-      cursorColor: _primaryDark(theme.themeUIKit),
+      cursorColor: primaryDark(theme.themeUIKit),
     ),
     scaffoldBackgroundColor: ColorDark.background,
     appBarTheme: const AppBarTheme(
@@ -207,6 +207,6 @@ ThemeData themeDark(BuildContext context) {
         fontSize: 14,
         fontWeight: FontWeight.normal,
       ),
-    ), colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red).copyWith(background: ColorDark.background).copyWith(error: ColorDark.error),
+    ), colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red).copyWith(surface: ColorDark.background).copyWith(error: ColorDark.error),
   );
 }

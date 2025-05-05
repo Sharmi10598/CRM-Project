@@ -71,7 +71,9 @@ class ApprovalsNewState extends State<ApprovalsNew> {
           key: _scaffoldKey,
           backgroundColor: Colors.grey[200],
           appBar: approvalTabBar(context, _scaffoldKey, widget.title),
-          drawer: drawer(context),
+          drawer:
+              // GetValues.userRoll == '3' ? drawer2(context) :
+              drawer(context),
           body: Padding(
             padding: EdgeInsets.only(
               top: Screens.heigth(context) * 0.01,

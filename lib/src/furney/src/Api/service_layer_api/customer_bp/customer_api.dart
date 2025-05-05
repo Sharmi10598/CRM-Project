@@ -36,7 +36,6 @@ class GetCustomerAPi {
         body: json.encode({
           "constr":
               "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
-          // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
           "query":
               "exec BZ_CRM_GET_CUST_SLPCODE '${GetValues.slpCode}'", //'${GetValues.slpCode}'
         }),
@@ -46,7 +45,7 @@ class GetCustomerAPi {
       // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
       log("customer stscode: " + response.statusCode.toString());
 
-      log("customer details: " + json.decode(response.body).toString());
+      // log("customer details: " + json.decode(response.body).toString());
       // print(response.statusCode);
       if (response.statusCode == 200) {
         print(json.decode(response.body));
@@ -58,9 +57,11 @@ class GetCustomerAPi {
         return NewCustomerModal2.issue('Error!!..');
       }
     } catch (e) {
+      log('Customer Exception $e');
       //  throw Exception("Exception: $e");
       return NewCustomerModal2.issue(
-          "Restart the app or contact the admin!!..");
+        "Restart the app or contact the admin!!..",
+      );
     }
   }
 
@@ -74,7 +75,7 @@ class GetCustomerAPi {
         headers: {
           "content-type": "application/json",
           "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
-          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}'
+          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}',
         },
       );
       if (response.statusCode == 200) {
@@ -105,7 +106,7 @@ class GetCustomerAPi {
         headers: {
           "content-type": "application/json",
           "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
-          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}'
+          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}',
         },
       );
       if (response.statusCode == 200) {

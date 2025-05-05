@@ -271,9 +271,8 @@
 //
 //     final ApprovalDetailsValue = ApprovalDetailsValueFromJson(jsonString);
 
-import 'dart:convert';
 
-import '../sales_quot/QuotPutModel.dart';
+import 'package:ultimate_bundle/src/furney/src/Modal/service_layer_modal/sales_quot/QuotPutModel.dart';
 
 class ApprovalDetailsValue {
   String? error;
@@ -961,10 +960,10 @@ class ApprovalDetailsValue {
 
   factory ApprovalDetailsValue.fromJson(dynamic json) {
     final list = json['DocumentLines'] as List;
-    List<DocumentApprovalValue> dataList = list
+    final dataList = list
         .map((dynamic enquiries) => DocumentApprovalValue.fromJson(enquiries))
         .toList();
-    List<DocumentReference> dataList2 = [];
+    var dataList2 = <DocumentReference>[];
 
     if (json['DocumentReferences'] != null) {
       final list2 = json['DocumentReferences'] as List;
@@ -976,48 +975,46 @@ class ApprovalDetailsValue {
       documentLines: dataList,
       //  List<DocumentLine>.from(json['DocumentLines'].map((x) => DocumentLine.fromJson(x))),
       documentReferences: dataList2,
-      odataMetadata: json['odata.metadata'] == null
-          ? null
-          : json['odata.metadata'].toString(),
+      odataMetadata: json['odata.metadata']?.toString(),
       odataEtag:
-          json['odata.etag'] == null ? null : json['odata.etag'].toString(),
+          json['odata.etag']?.toString(),
       docEntry: json['DocEntry'] == null
           ? null
           : int.parse(json['DocEntry'].toString()),
       docNum:
           json['DocNum'] == null ? null : int.parse(json['DocNum'].toString()),
-      docType: json['DocType'] == null ? null : json['DocType'].toString(),
+      docType: json['DocType']?.toString(),
       handWritten:
-          json['HandWritten'] == null ? null : json['HandWritten'].toString(),
-      printed: json['Printed'] == null ? null : json['Printed'].toString(),
-      docDate: json['DocDate'] == null ? null : json['DocDate'].toString(),
+          json['HandWritten']?.toString(),
+      printed: json['Printed']?.toString(),
+      docDate: json['DocDate']?.toString(),
       docDueDate:
-          json['DocDueDate'] == null ? null : json['DocDueDate'].toString(),
-      cardCode: json['CardCode'] == null ? null : json['CardCode'].toString(),
-      cardName: json['CardName'] == null ? null : json['CardName'].toString(),
-      address: json['Address'] == null ? null : json['Address'].toString(),
+          json['DocDueDate']?.toString(),
+      cardCode: json['CardCode']?.toString(),
+      cardName: json['CardName']?.toString(),
+      address: json['Address']?.toString(),
       numAtCard:
-          json['NumAtCard'] == null ? null : json['NumAtCard'].toString(),
+          json['NumAtCard']?.toString(),
       docTotal: json['DocTotal'] == null
           ? null
           : double.parse(json['DocTotal'].toString()),
       attachmentEntry:
-          json['AttachmentEntry'] == null ? null : json['AttachmentEntry'],
+          json['AttachmentEntry'],
       docCurrency:
-          json['DocCurrency'] == null ? null : json['DocCurrency'].toString(),
+          json['DocCurrency']?.toString(),
       docRate: json['DocRate'] == null
           ? null
           : double.parse(json['DocRate'].toString()),
       reference1:
-          json['Reference1'] == null ? null : json['Reference1'].toString(),
-      reference2: json['Reference2'] == null ? null : json['Reference2'],
-      comments: json['Comments'] == null ? null : json['Comments'],
+          json['Reference1']?.toString(),
+      reference2: json['Reference2'],
+      comments: json['Comments'],
       journalMemo:
-          json['JournalMemo'] == null ? null : json['JournalMemo'].toString(),
+          json['JournalMemo']?.toString(),
       paymentGroupCode: json['PaymentGroupCode'] == null
           ? null
           : int.parse(json['PaymentGroupCode'].toString()),
-      docTime: json['DocTime'] == null ? null : json['DocTime'].toString(),
+      docTime: json['DocTime']?.toString(),
       salesPersonCode: json['SalesPersonCode'] == null
           ? null
           : int.parse(json['SalesPersonCode'].toString()),
@@ -1025,29 +1022,25 @@ class ApprovalDetailsValue {
           ? null
           : int.parse(json['TransportationCode'].toString()),
       confirmed:
-          json['Confirmed'] == null ? null : json['Confirmed'].toString(),
+          json['Confirmed']?.toString(),
       importFileNum: json['ImportFileNum'] == null
           ? null
           : int.parse(json['ImportFileNum'].toString()),
       summeryType:
-          json['SummeryType'] == null ? null : json['SummeryType'].toString(),
+          json['SummeryType']?.toString(),
       contactPersonCode: json['ContactPersonCode'] == null
           ? null
           : int.parse(json['ContactPersonCode'].toString()),
-      showScn: json['ShowSCN'] == null ? null : json['ShowSCN'].toString(),
+      showScn: json['ShowSCN']?.toString(),
       series:
           json['Series'] == null ? null : int.parse(json['Series'].toString()),
-      taxDate: json['TaxDate'] == null ? null : json['TaxDate'].toString(),
-      partialSupply: json['PartialSupply'] == null
-          ? null
-          : json['PartialSupply'].toString(),
-      docObjectCode: json['DocObjectCode'] == null
-          ? null
-          : json['DocObjectCode'].toString(),
+      taxDate: json['TaxDate']?.toString(),
+      partialSupply: json['PartialSupply']?.toString(),
+      docObjectCode: json['DocObjectCode']?.toString(),
       shipToCode: json['ShipToCode'] != null || json['ShipToCode'] != 'null'
           ? null
           : json['ShipToCode'].toString(),
-      indicator: json['Indicator'] == null ? null : json['Indicator'],
+      indicator: json['Indicator'],
       federalTaxId:
           json['FederalTaxID'] != null || json['FederalTaxID'] != 'null'
               ? null
@@ -1056,18 +1049,18 @@ class ApprovalDetailsValue {
           ? null
           : double.parse(json['DiscountPercent'].toString()),
       paymentReference:
-          json['PaymentReference'] == null ? null : json['PaymentReference'],
+          json['PaymentReference'],
       creationDate:
-          json['CreationDate'] == null ? null : json['CreationDate'].toString(),
+          json['CreationDate']?.toString(),
       updateDate:
-          json['UpdateDate'] == null ? null : json['UpdateDate'].toString(),
+          json['UpdateDate']?.toString(),
       financialPeriod: json['FinancialPeriod'] == null
           ? null
           : int.parse(json['FinancialPeriod'].toString()),
       userSign: json['UserSign'] == null
           ? null
           : int.parse(json['UserSign'].toString()),
-      transNum: json['TransNum'] == null ? null : json['TransNum'],
+      transNum: json['TransNum'],
       vatSum: json['VatSum'] == null
           ? null
           : double.parse(json['VatSum'].toString()),
@@ -1078,78 +1071,56 @@ class ApprovalDetailsValue {
           ? null
           : double.parse(json['VatSumFc'].toString()),
       netProcedure:
-          json['NetProcedure'] == null ? null : json['NetProcedure'].toString(),
+          json['NetProcedure']?.toString(),
       docTotalFc: json['DocTotalFc'] == null
           ? null
           : double.parse(json['DocTotalFc'].toString()),
       docTotalSys: json['DocTotalSys'] == null
           ? null
           : double.parse(json['DocTotalSys'].toString()),
-      form1099: json['Form1099'] == null ? null : json['Form1099'],
-      box1099: json['Box1099'] == null ? null : json['Box1099'],
+      form1099: json['Form1099'],
+      box1099: json['Box1099'],
       revisionPo:
-          json['RevisionPo'] == null ? null : json['RevisionPo'].toString(),
-      requriedDate: json['RequriedDate'] == null ? null : json['RequriedDate'],
-      cancelDate: json['CancelDate'] == null ? null : json['CancelDate'],
+          json['RevisionPo']?.toString(),
+      requriedDate: json['RequriedDate'],
+      cancelDate: json['CancelDate'],
       blockDunning:
-          json['BlockDunning'] == null ? null : json['BlockDunning'].toString(),
+          json['BlockDunning']?.toString(),
       submitted:
-          json['Submitted'] == null ? null : json['Submitted'].toString(),
+          json['Submitted']?.toString(),
       segment: json['Segment'] == null
           ? null
           : int.parse(json['Segment'].toString()),
       pickStatus:
-          json['PickStatus'] == null ? null : json['PickStatus'].toString(),
-      pick: json['Pick'] == null ? null : json['Pick'].toString(),
-      paymentMethod: json['PaymentMethod'] == null
-          ? null
-          : json['PaymentMethod'].toString(),
+          json['PickStatus']?.toString(),
+      pick: json['Pick']?.toString(),
+      paymentMethod: json['PaymentMethod']?.toString(),
       paymentBlock:
-          json['PaymentBlock'] == null ? null : json['PaymentBlock'].toString(),
+          json['PaymentBlock']?.toString(),
       paymentBlockEntry:
-          json['PaymentBlockEntry'] == null ? null : json['PaymentBlockEntry'],
-      centralBankIndicator: json['CentralBankIndicator'] == null
-          ? null
-          : json['CentralBankIndicator'],
-      maximumCashDiscount: json['MaximumCashDiscount'] == null
-          ? null
-          : json['MaximumCashDiscount'].toString(),
-      reserve: json['Reserve'] == null ? null : json['Reserve'].toString(),
-      project: json['Project'] == null ? null : json['Project'],
-      exemptionValidityDateFrom: json['ExemptionValidityDateFrom'] == null
-          ? null
-          : json['ExemptionValidityDateFrom'],
-      exemptionValidityDateTo: json['ExemptionValidityDateTo'] == null
-          ? null
-          : json['ExemptionValidityDateTo'],
-      wareHouseUpdateType: json['WareHouseUpdateType'] == null
-          ? null
-          : json['WareHouseUpdateType'].toString(),
-      rounding: json['Rounding'] == null ? null : json['Rounding'].toString(),
-      externalCorrectedDocNum: json['ExternalCorrectedDocNum'] == null
-          ? null
-          : json['ExternalCorrectedDocNum'],
-      internalCorrectedDocNum: json['InternalCorrectedDocNum'] == null
-          ? null
-          : json['InternalCorrectedDocNum'],
-      nextCorrectingDocument: json['NextCorrectingDocument'] == null
-          ? null
-          : json['NextCorrectingDocument'],
+          json['PaymentBlockEntry'],
+      centralBankIndicator: json['CentralBankIndicator'],
+      maximumCashDiscount: json['MaximumCashDiscount']?.toString(),
+      reserve: json['Reserve']?.toString(),
+      project: json['Project'],
+      exemptionValidityDateFrom: json['ExemptionValidityDateFrom'],
+      exemptionValidityDateTo: json['ExemptionValidityDateTo'],
+      wareHouseUpdateType: json['WareHouseUpdateType']?.toString(),
+      rounding: json['Rounding']?.toString(),
+      externalCorrectedDocNum: json['ExternalCorrectedDocNum'],
+      internalCorrectedDocNum: json['InternalCorrectedDocNum'],
+      nextCorrectingDocument: json['NextCorrectingDocument'],
       deferredTax:
-          json['DeferredTax'] == null ? null : json['DeferredTax'].toString(),
-      taxExemptionLetterNum: json['TaxExemptionLetterNum'] == null
-          ? null
-          : json['TaxExemptionLetterNum'],
+          json['DeferredTax']?.toString(),
+      taxExemptionLetterNum: json['TaxExemptionLetterNum'],
       wtApplied: json['WTApplied'] == null
           ? null
           : double.parse(json['WTApplied'].toString()),
       wtAppliedFc: json['WTAppliedFC'] == null
           ? null
           : double.parse(json['WTAppliedFC'].toString()),
-      billOfExchangeReserved: json['BillOfExchangeReserved'] == null
-          ? null
-          : json['BillOfExchangeReserved'].toString(),
-      agentCode: json['AgentCode'] == null ? null : json['AgentCode'],
+      billOfExchangeReserved: json['BillOfExchangeReserved']?.toString(),
+      agentCode: json['AgentCode'],
       wtAppliedSc: json['WTAppliedSC'] == null
           ? null
           : double.parse(json['WTAppliedSC'].toString()),
@@ -1165,9 +1136,7 @@ class ApprovalDetailsValue {
       numberOfInstallments: json['NumberOfInstallments'] == null
           ? null
           : int.parse(json['NumberOfInstallments'].toString()),
-      applyTaxOnFirstInstallment: json['ApplyTaxOnFirstInstallment'] == null
-          ? null
-          : json['ApplyTaxOnFirstInstallment'].toString(),
+      applyTaxOnFirstInstallment: json['ApplyTaxOnFirstInstallment']?.toString(),
       wtNonSubjectAmount: json['WTNonSubjectAmount'] == null
           ? null
           : double.parse(json['WTNonSubjectAmount'].toString()),
@@ -1206,71 +1175,53 @@ class ApprovalDetailsValue {
       wtAmountFc: json['WTAmountFC'] == null
           ? null
           : double.parse(json['WTAmountFC'].toString()),
-      vatDate: json['VatDate'] == null ? null : json['VatDate'],
+      vatDate: json['VatDate'],
       documentsOwner:
-          json['DocumentsOwner'] == null ? null : json['DocumentsOwner'],
+          json['DocumentsOwner'],
       folioPrefixString:
-          json['FolioPrefixString'] == null ? null : json['FolioPrefixString'],
-      folioNumber: json['FolioNumber'] == null ? null : json['FolioNumber'],
-      documentSubType: json['DocumentSubType'] == null
-          ? null
-          : json['DocumentSubType'].toString(),
+          json['FolioPrefixString'],
+      folioNumber: json['FolioNumber'],
+      documentSubType: json['DocumentSubType']?.toString(),
       bpChannelCode:
-          json['BPChannelCode'] == null ? null : json['BPChannelCode'],
+          json['BPChannelCode'],
       bpChannelContact:
-          json['BPChannelContact'] == null ? null : json['BPChannelContact'],
-      address2: json['Address2'] == null ? null : json['Address2'].toString(),
-      documentStatus: json['DocumentStatus'] == null
-          ? null
-          : json['DocumentStatus'].toString(),
-      periodIndicator: json['PeriodIndicator'] == null
-          ? null
-          : json['PeriodIndicator'].toString(),
+          json['BPChannelContact'],
+      address2: json['Address2']?.toString(),
+      documentStatus: json['DocumentStatus']?.toString(),
+      periodIndicator: json['PeriodIndicator']?.toString(),
       payToCode:
-          json['PayToCode'] == null ? null : json['PayToCode'].toString(),
-      manualNumber: json['ManualNumber'] == null ? null : json['ManualNumber'],
-      useShpdGoodsAct: json['UseShpdGoodsAct'] == null
-          ? null
-          : json['UseShpdGoodsAct'].toString(),
+          json['PayToCode']?.toString(),
+      manualNumber: json['ManualNumber'],
+      useShpdGoodsAct: json['UseShpdGoodsAct']?.toString(),
       isPayToBank:
-          json['IsPayToBank'] == null ? null : json['IsPayToBank'].toString(),
+          json['IsPayToBank']?.toString(),
       payToBankCountry:
-          json['PayToBankCountry'] == null ? null : json['PayToBankCountry'],
+          json['PayToBankCountry'],
       payToBankCode:
-          json['PayToBankCode'] == null ? null : json['PayToBankCode'],
-      payToBankAccountNo: json['PayToBankAccountNo'] == null
-          ? null
-          : json['PayToBankAccountNo'],
+          json['PayToBankCode'],
+      payToBankAccountNo: json['PayToBankAccountNo'],
       payToBankBranch:
-          json['PayToBankBranch'] == null ? null : json['PayToBankBranch'],
-      bplIdAssignedToInvoice: json['BPL_IDAssignedToInvoice'] == null
-          ? null
-          : json['BPL_IDAssignedToInvoice'],
+          json['PayToBankBranch'],
+      bplIdAssignedToInvoice: json['BPL_IDAssignedToInvoice'],
       downPayment: json['DownPayment'] == null
           ? null
           : double.parse(json['DownPayment'].toString()),
-      reserveInvoice: json['ReserveInvoice'] == null
-          ? null
-          : json['ReserveInvoice'].toString(),
+      reserveInvoice: json['ReserveInvoice']?.toString(),
       languageCode: json['LanguageCode'] == null
           ? null
           : int.parse(json['LanguageCode'].toString()),
       trackingNumber:
-          json['TrackingNumber'] == null ? null : json['TrackingNumber'],
-      pickRemark: json['PickRemark'] == null ? null : json['PickRemark'],
-      closingDate: json['ClosingDate'] == null ? null : json['ClosingDate'],
-      sequenceCode: json['SequenceCode'] == null ? null : json['SequenceCode'],
+          json['TrackingNumber'],
+      pickRemark: json['PickRemark'],
+      closingDate: json['ClosingDate'],
+      sequenceCode: json['SequenceCode'],
       sequenceSerial:
-          json['SequenceSerial'] == null ? null : json['SequenceSerial'],
-      seriesString: json['SeriesString'] == null ? null : json['SeriesString'],
+          json['SequenceSerial'],
+      seriesString: json['SeriesString'],
       subSeriesString:
-          json['SubSeriesString'] == null ? null : json['SubSeriesString'],
-      sequenceModel: json['SequenceModel'] == null
-          ? null
-          : json['SequenceModel'].toString(),
-      useCorrectionVatGroup: json['UseCorrectionVATGroup'] == null
-          ? null
-          : json['UseCorrectionVATGroup'].toString(),
+          json['SubSeriesString'],
+      sequenceModel: json['SequenceModel']?.toString(),
+      useCorrectionVatGroup: json['UseCorrectionVATGroup']?.toString(),
       totalDiscount: json['TotalDiscount'] == null
           ? null
           : double.parse(json['TotalDiscount'].toString()),
@@ -1280,9 +1231,7 @@ class ApprovalDetailsValue {
       downPaymentPercentage: json['DownPaymentPercentage'] == null
           ? null
           : double.parse(json['DownPaymentPercentage'].toString()),
-      downPaymentType: json['DownPaymentType'] == null
-          ? null
-          : json['DownPaymentType'].toString(),
+      downPaymentType: json['DownPaymentType']?.toString(),
       downPaymentAmountSc: json['DownPaymentAmountSC'] == null
           ? null
           : double.parse(json['DownPaymentAmountSC'].toString()),
@@ -1292,13 +1241,11 @@ class ApprovalDetailsValue {
       vatPercent: json['VatPercent'] == null
           ? null
           : double.parse(json['VatPercent'].toString()),
-      serviceGrossProfitPercent: json['ServiceGrossProfitPercent'] == null
-          ? null
-          : json['ServiceGrossProfitPercent'],
+      serviceGrossProfitPercent: json['ServiceGrossProfitPercent'],
       openingRemarks:
-          json['OpeningRemarks'] == null ? null : json['OpeningRemarks'],
+          json['OpeningRemarks'],
       closingRemarks:
-          json['ClosingRemarks'] == null ? null : json['ClosingRemarks'],
+          json['ClosingRemarks'],
       roundingDiffAmount: json['RoundingDiffAmount'] == null
           ? null
           : double.parse(json['RoundingDiffAmount'].toString()),
@@ -1309,29 +1256,19 @@ class ApprovalDetailsValue {
           ? null
           : double.parse(json['RoundingDiffAmountSC'].toString()),
       cancelled:
-          json['Cancelled'] == null ? null : json['Cancelled'].toString(),
-      signatureInputMessage: json['SignatureInputMessage'] == null
-          ? null
-          : json['SignatureInputMessage'],
+          json['Cancelled']?.toString(),
+      signatureInputMessage: json['SignatureInputMessage'],
       signatureDigest:
-          json['SignatureDigest'] == null ? null : json['SignatureDigest'],
-      certificationNumber: json['CertificationNumber'] == null
-          ? null
-          : json['CertificationNumber'],
+          json['SignatureDigest'],
+      certificationNumber: json['CertificationNumber'],
       privateKeyVersion:
-          json['PrivateKeyVersion'] == null ? null : json['PrivateKeyVersion'],
-      controlAccount: json['ControlAccount'] == null
-          ? null
-          : json['ControlAccount'].toString(),
-      insuranceOperation347: json['InsuranceOperation347'] == null
-          ? null
-          : json['InsuranceOperation347'].toString(),
+          json['PrivateKeyVersion'],
+      controlAccount: json['ControlAccount']?.toString(),
+      insuranceOperation347: json['InsuranceOperation347']?.toString(),
       archiveNonremovableSalesQuotation:
-          json['ArchiveNonremovableSalesQuotation'] == null
-              ? null
-              : json['ArchiveNonremovableSalesQuotation'].toString(),
-      gtsChecker: json['GTSChecker'] == null ? null : json['GTSChecker'],
-      gtsPayee: json['GTSPayee'] == null ? null : json['GTSPayee'],
+          json['ArchiveNonremovableSalesQuotation']?.toString(),
+      gtsChecker: json['GTSChecker'],
+      gtsPayee: json['GTSPayee'],
       extraMonth: json['ExtraMonth'] == null
           ? null
           : int.parse(json['ExtraMonth'].toString()),
@@ -1342,233 +1279,173 @@ class ApprovalDetailsValue {
           ? null
           : int.parse(json['CashDiscountDateOffset'].toString()),
       startFrom:
-          json['StartFrom'] == null ? null : json['StartFrom'].toString(),
+          json['StartFrom']?.toString(),
       ntsApproved:
-          json['NTSApproved'] == null ? null : json['NTSApproved'].toString(),
-      eTaxWebSite: json['ETaxWebSite'] == null ? null : json['ETaxWebSite'],
-      eTaxNumber: json['ETaxNumber'] == null ? null : json['ETaxNumber'],
+          json['NTSApproved']?.toString(),
+      eTaxWebSite: json['ETaxWebSite'],
+      eTaxNumber: json['ETaxNumber'],
       ntsApprovedNumber:
-          json['NTSApprovedNumber'] == null ? null : json['NTSApprovedNumber'],
-      eDocGenerationType: json['EDocGenerationType'] == null
-          ? null
-          : json['EDocGenerationType'].toString(),
-      eDocSeries: json['EDocSeries'] == null ? null : json['EDocSeries'],
-      eDocNum: json['EDocNum'] == null ? null : json['EDocNum'],
+          json['NTSApprovedNumber'],
+      eDocGenerationType: json['EDocGenerationType']?.toString(),
+      eDocSeries: json['EDocSeries'],
+      eDocNum: json['EDocNum'],
       eDocExportFormat:
-          json['EDocExportFormat'] == null ? null : json['EDocExportFormat'],
+          json['EDocExportFormat'],
       eDocStatus:
-          json['EDocStatus'] == null ? null : json['EDocStatus'].toString(),
+          json['EDocStatus']?.toString(),
       eDocErrorCode:
-          json['EDocErrorCode'] == null ? null : json['EDocErrorCode'],
+          json['EDocErrorCode'],
       eDocErrorMessage:
-          json['EDocErrorMessage'] == null ? null : json['EDocErrorMessage'],
-      downPaymentStatus: json['DownPaymentStatus'] == null
-          ? null
-          : json['DownPaymentStatus'].toString(),
-      groupSeries: json['GroupSeries'] == null ? null : json['GroupSeries'],
-      groupNumber: json['GroupNumber'] == null ? null : json['GroupNumber'],
-      groupHandWritten: json['GroupHandWritten'] == null
-          ? null
-          : json['GroupHandWritten'].toString(),
-      reopenOriginalDocument: json['ReopenOriginalDocument'] == null
-          ? null
-          : json['ReopenOriginalDocument'],
+          json['EDocErrorMessage'],
+      downPaymentStatus: json['DownPaymentStatus']?.toString(),
+      groupSeries: json['GroupSeries'],
+      groupNumber: json['GroupNumber'],
+      groupHandWritten: json['GroupHandWritten']?.toString(),
+      reopenOriginalDocument: json['ReopenOriginalDocument'],
       reopenManuallyClosedOrCanceledDocument:
-          json['ReopenManuallyClosedOrCanceledDocument'] == null
-              ? null
-              : json['ReopenManuallyClosedOrCanceledDocument'],
-      createOnlineQuotation: json['CreateOnlineQuotation'] == null
-          ? null
-          : json['CreateOnlineQuotation'].toString(),
-      posEquipmentNumber: json['POSEquipmentNumber'] == null
-          ? null
-          : json['POSEquipmentNumber'],
-      posManufacturerSerialNumber: json['POSManufacturerSerialNumber'] == null
-          ? null
-          : json['POSManufacturerSerialNumber'],
+          json['ReopenManuallyClosedOrCanceledDocument'],
+      createOnlineQuotation: json['CreateOnlineQuotation']?.toString(),
+      posEquipmentNumber: json['POSEquipmentNumber'],
+      posManufacturerSerialNumber: json['POSManufacturerSerialNumber'],
       posCashierNumber:
-          json['POSCashierNumber'] == null ? null : json['POSCashierNumber'],
+          json['POSCashierNumber'],
       applyCurrentVatRatesForDownPaymentsToDraw:
-          json['ApplyCurrentVATRatesForDownPaymentsToDraw'] == null
-              ? null
-              : json['ApplyCurrentVATRatesForDownPaymentsToDraw'].toString(),
-      closingOption: json['ClosingOption'] == null
-          ? null
-          : json['ClosingOption'].toString(),
-      specifiedClosingDate: json['SpecifiedClosingDate'] == null
-          ? null
-          : json['SpecifiedClosingDate'],
-      openForLandedCosts: json['OpenForLandedCosts'] == null
-          ? null
-          : json['OpenForLandedCosts'].toString(),
-      authorizationStatus: json['AuthorizationStatus'] == null
-          ? null
-          : json['AuthorizationStatus'].toString(),
+          json['ApplyCurrentVATRatesForDownPaymentsToDraw']?.toString(),
+      closingOption: json['ClosingOption']?.toString(),
+      specifiedClosingDate: json['SpecifiedClosingDate'],
+      openForLandedCosts: json['OpenForLandedCosts']?.toString(),
+      authorizationStatus: json['AuthorizationStatus']?.toString(),
       totalDiscountFc: json['TotalDiscountFC'] == null
           ? null
           : double.parse(json['TotalDiscountFC'].toString()),
       totalDiscountSc: json['TotalDiscountSC'] == null
           ? null
           : double.parse(json['TotalDiscountSC'].toString()),
-      relevantToGts: json['RelevantToGTS'] == null
-          ? null
-          : json['RelevantToGTS'].toString(),
-      bplName: json['BPLName'] == null ? null : json['BPLName'],
-      vatRegNum: json['VATRegNum'] == null ? null : json['VATRegNum'],
+      relevantToGts: json['RelevantToGTS']?.toString(),
+      bplName: json['BPLName'],
+      vatRegNum: json['VATRegNum'],
       annualInvoiceDeclarationReference:
-          json['AnnualInvoiceDeclarationReference'] == null
-              ? null
-              : json['AnnualInvoiceDeclarationReference'],
-      supplier: json['Supplier'] == null ? null : json['Supplier'],
-      releaser: json['Releaser'] == null ? null : json['Releaser'],
-      receiver: json['Receiver'] == null ? null : json['Receiver'],
-      blanketAgreementNumber: json['BlanketAgreementNumber'] == null
-          ? null
-          : json['BlanketAgreementNumber'],
+          json['AnnualInvoiceDeclarationReference'],
+      supplier: json['Supplier'],
+      releaser: json['Releaser'],
+      receiver: json['Receiver'],
+      blanketAgreementNumber: json['BlanketAgreementNumber'],
       isAlteration:
-          json['IsAlteration'] == null ? null : json['IsAlteration'].toString(),
+          json['IsAlteration']?.toString(),
       cancelStatus:
-          json['CancelStatus'] == null ? null : json['CancelStatus'].toString(),
-      assetValueDate: json['AssetValueDate'] == null
-          ? null
-          : json['AssetValueDate'].toString(),
-      documentDelivery: json['DocumentDelivery'] == null
-          ? null
-          : json['DocumentDelivery'].toString(),
+          json['CancelStatus']?.toString(),
+      assetValueDate: json['AssetValueDate']?.toString(),
+      documentDelivery: json['DocumentDelivery']?.toString(),
       authorizationCode:
-          json['AuthorizationCode'] == null ? null : json['AuthorizationCode'],
+          json['AuthorizationCode'],
       startDeliveryDate:
-          json['StartDeliveryDate'] == null ? null : json['StartDeliveryDate'],
+          json['StartDeliveryDate'],
       startDeliveryTime:
-          json['StartDeliveryTime'] == null ? null : json['StartDeliveryTime'],
+          json['StartDeliveryTime'],
       endDeliveryDate:
-          json['EndDeliveryDate'] == null ? null : json['EndDeliveryDate'],
+          json['EndDeliveryDate'],
       endDeliveryTime:
-          json['EndDeliveryTime'] == null ? null : json['EndDeliveryTime'],
-      vehiclePlate: json['VehiclePlate'] == null ? null : json['VehiclePlate'],
+          json['EndDeliveryTime'],
+      vehiclePlate: json['VehiclePlate'],
       atDocumentType:
-          json['ATDocumentType'] == null ? null : json['ATDocumentType'],
+          json['ATDocumentType'],
       elecCommStatus:
-          json['ElecCommStatus'] == null ? null : json['ElecCommStatus'],
+          json['ElecCommStatus'],
       elecCommMessage:
-          json['ElecCommMessage'] == null ? null : json['ElecCommMessage'],
-      reuseDocumentNum: json['ReuseDocumentNum'] == null
-          ? null
-          : json['ReuseDocumentNum'].toString(),
-      reuseNotaFiscalNum: json['ReuseNotaFiscalNum'] == null
-          ? null
-          : json['ReuseNotaFiscalNum'].toString(),
-      printSepaDirect: json['PrintSEPADirect'] == null
-          ? null
-          : json['PrintSEPADirect'].toString(),
-      fiscalDocNum: json['FiscalDocNum'] == null ? null : json['FiscalDocNum'],
+          json['ElecCommMessage'],
+      reuseDocumentNum: json['ReuseDocumentNum']?.toString(),
+      reuseNotaFiscalNum: json['ReuseNotaFiscalNum']?.toString(),
+      printSepaDirect: json['PrintSEPADirect']?.toString(),
+      fiscalDocNum: json['FiscalDocNum'],
       posDailySummaryNo:
-          json['POSDailySummaryNo'] == null ? null : json['POSDailySummaryNo'],
-      posReceiptNo: json['POSReceiptNo'] == null ? null : json['POSReceiptNo'],
+          json['POSDailySummaryNo'],
+      posReceiptNo: json['POSReceiptNo'],
       pointOfIssueCode:
-          json['PointOfIssueCode'] == null ? null : json['PointOfIssueCode'],
-      letter: json['Letter'] == null ? null : json['Letter'],
+          json['PointOfIssueCode'],
+      letter: json['Letter'],
       folioNumberFrom:
-          json['FolioNumberFrom'] == null ? null : json['FolioNumberFrom'],
+          json['FolioNumberFrom'],
       folioNumberTo:
-          json['FolioNumberTo'] == null ? null : json['FolioNumberTo'],
+          json['FolioNumberTo'],
       interimType:
-          json['InterimType'] == null ? null : json['InterimType'].toString(),
+          json['InterimType']?.toString(),
       relatedType: json['RelatedType'] == null
           ? null
           : int.parse(json['RelatedType'].toString()),
-      relatedEntry: json['RelatedEntry'] == null ? null : json['RelatedEntry'],
-      sapPassport: json['SAPPassport'] == null ? null : json['SAPPassport'],
+      relatedEntry: json['RelatedEntry'],
+      sapPassport: json['SAPPassport'],
       documentTaxId:
-          json['DocumentTaxID'] == null ? null : json['DocumentTaxID'],
+          json['DocumentTaxID'],
       dateOfReportingControlStatementVat:
-          json['DateOfReportingControlStatementVAT'] == null
-              ? null
-              : json['DateOfReportingControlStatementVAT'],
+          json['DateOfReportingControlStatementVAT'],
       reportingSectionControlStatementVat:
-          json['ReportingSectionControlStatementVAT'] == null
-              ? null
-              : json['ReportingSectionControlStatementVAT'],
+          json['ReportingSectionControlStatementVAT'],
       excludeFromTaxReportControlStatementVat:
-          json['ExcludeFromTaxReportControlStatementVAT'] == null
-              ? null
-              : json['ExcludeFromTaxReportControlStatementVAT'].toString(),
+          json['ExcludeFromTaxReportControlStatementVAT']?.toString(),
       posCashRegister:
-          json['POS_CashRegister'] == null ? null : json['POS_CashRegister'],
+          json['POS_CashRegister'],
       updateTime:
-          json['UpdateTime'] == null ? null : json['UpdateTime'].toString(),
+          json['UpdateTime']?.toString(),
       createQrCodeFrom:
-          json['CreateQRCodeFrom'] == null ? null : json['CreateQRCodeFrom'],
-      priceMode: json['PriceMode'] == null ? null : json['PriceMode'],
-      shipFrom: json['ShipFrom'] == null ? null : json['ShipFrom'].toString(),
-      commissionTrade: json['CommissionTrade'] == null
-          ? null
-          : json['CommissionTrade'].toString(),
-      commissionTradeReturn: json['CommissionTradeReturn'] == null
-          ? null
-          : json['CommissionTradeReturn'].toString(),
-      useBillToAddrToDetermineTax: json['UseBillToAddrToDetermineTax'] == null
-          ? null
-          : json['UseBillToAddrToDetermineTax'].toString(),
-      cig: json['Cig'] == null ? null : json['Cig'],
-      cup: json['Cup'] == null ? null : json['Cup'],
-      fatherCard: json['FatherCard'] == null ? null : json['FatherCard'],
+          json['CreateQRCodeFrom'],
+      priceMode: json['PriceMode'],
+      shipFrom: json['ShipFrom']?.toString(),
+      commissionTrade: json['CommissionTrade']?.toString(),
+      commissionTradeReturn: json['CommissionTradeReturn']?.toString(),
+      useBillToAddrToDetermineTax: json['UseBillToAddrToDetermineTax']?.toString(),
+      cig: json['Cig'],
+      cup: json['Cup'],
+      fatherCard: json['FatherCard'],
       fatherType:
-          json['FatherType'] == null ? null : json['FatherType'].toString(),
-      shipState: json['ShipState'] == null ? null : json['ShipState'],
-      shipPlace: json['ShipPlace'] == null ? null : json['ShipPlace'],
-      custOffice: json['CustOffice'] == null ? null : json['CustOffice'],
-      fci: json['FCI'] == null ? null : json['FCI'],
-      addLegIn: json['AddLegIn'] == null ? null : json['AddLegIn'],
-      legTextF: json['LegTextF'] == null ? null : json['LegTextF'],
-      danfeLgTxt: json['DANFELgTxt'] == null ? null : json['DANFELgTxt'],
-      indFinal: json['IndFinal'] == null ? null : json['IndFinal'].toString(),
+          json['FatherType']?.toString(),
+      shipState: json['ShipState'],
+      shipPlace: json['ShipPlace'],
+      custOffice: json['CustOffice'],
+      fci: json['FCI'],
+      addLegIn: json['AddLegIn'],
+      legTextF: json['LegTextF'],
+      danfeLgTxt: json['DANFELgTxt'],
+      indFinal: json['IndFinal']?.toString(),
       dataVersion: json['DataVersion'] == null
           ? null
           : int.parse(json['DataVersion'].toString()),
-      uPurchaseType: json['U_Purchase_Type'] == null
-          ? null
-          : json['U_Purchase_Type'].toString(),
+      uPurchaseType: json['U_Purchase_Type']?.toString(),
       uApApprove:
-          json['U_AP_Approve'] == null ? null : json['U_AP_Approve'].toString(),
+          json['U_AP_Approve']?.toString(),
       uFinalDel:
-          json['U_Final_Del'] == null ? null : json['U_Final_Del'].toString(),
-      uIncoTerms: json['U_Inco_Terms'] == null ? null : json['U_Inco_Terms'],
-      uSourceDest: json['U_Source_Dest'] == null ? null : json['U_Source_Dest'],
-      uTransNo: json['U_Trans_NO'] == null ? null : json['U_Trans_NO'],
-      uVehicleNo: json['U_Vehicle_NO'] == null ? null : json['U_Vehicle_NO'],
-      uSupplierDt: json['U_Supplier_DT'] == null ? null : json['U_Supplier_DT'],
-      uQuotNo: json['U_QuotNo'] == null ? null : json['U_QuotNo'],
-      uQuotDate: json['U_QuotDate'] == null ? null : json['U_QuotDate'],
+          json['U_Final_Del']?.toString(),
+      uIncoTerms: json['U_Inco_Terms'],
+      uSourceDest: json['U_Source_Dest'],
+      uTransNo: json['U_Trans_NO'],
+      uVehicleNo: json['U_Vehicle_NO'],
+      uSupplierDt: json['U_Supplier_DT'],
+      uQuotNo: json['U_QuotNo'],
+      uQuotDate: json['U_QuotDate'],
       uGovPermit:
-          json['U_GovPermit'] == null ? null : json['U_GovPermit'].toString(),
+          json['U_GovPermit']?.toString(),
       uGovPermitdt:
-          json['U_GovPermitdt'] == null ? null : json['U_GovPermitdt'],
-      uCheckNo: json['U_CheckNo'] == null ? null : json['U_CheckNo'],
-      uCheckDate: json['U_CheckDate'] == null ? null : json['U_CheckDate'],
-      uApprovalDate: json['U_ApprovalDate'] == null
-          ? null
-          : json['U_ApprovalDate'].toString(),
-      uOrderNoRecd: json['U_OrderNoRecd'] == null
-          ? null
-          : json['U_OrderNoRecd'].toString(),
+          json['U_GovPermitdt'],
+      uCheckNo: json['U_CheckNo'],
+      uCheckDate: json['U_CheckDate'],
+      uApprovalDate: json['U_ApprovalDate']?.toString(),
+      uOrderNoRecd: json['U_OrderNoRecd']?.toString(),
       uOrderDate:
-          json['U_OrderDate'] == null ? null : json['U_OrderDate'].toString(),
+          json['U_OrderDate']?.toString(),
       uClearingAgent:
-          json['U_ClearingAgent'] == null ? null : json['U_ClearingAgent'],
+          json['U_ClearingAgent'],
       uDateSubAgent:
-          json['U_DateSubAgent'] == null ? null : json['U_DateSubAgent'],
-      uIdfno: json['U_IDFNO'] == null ? null : json['U_IDFNO'],
-      uIdfDate: json['U_IDFDate'] == null ? null : json['U_IDFDate'],
+          json['U_DateSubAgent'],
+      uIdfno: json['U_IDFNO'],
+      uIdfDate: json['U_IDFDate'],
       uInspectionNo:
-          json['U_InspectionNo'] == null ? null : json['U_InspectionNo'],
-      uEta: json['U_ETA'] == null ? null : json['U_ETA'],
+          json['U_InspectionNo'],
+      uEta: json['U_ETA'],
       uAirwayBillNo:
-          json['U_AirwayBillNo'] == null ? null : json['U_AirwayBillNo'],
-      uBol: json['U_BOL'] == null ? null : json['U_BOL'],
-      uCotecna: json['U_Cotecna'] == null ? null : json['U_Cotecna'],
+          json['U_AirwayBillNo'],
+      uBol: json['U_BOL'],
+      uCotecna: json['U_Cotecna'],
       uArrivalDate:
-          json['U_ArrivalDate'] == null ? null : json['U_ArrivalDate'],
+          json['U_ArrivalDate'],
       uDahacoAgentFees: json['U_DahacoAgentFees'] == null
           ? null
           : double.parse(json['U_DahacoAgentFees'].toString()),
@@ -1585,85 +1462,77 @@ class ApprovalDetailsValue {
           ? null
           : double.parse(json['U_HiddenChrges'].toString()),
       uGoodsInspBy:
-          json['U_GoodsInspBy'] == null ? null : json['U_GoodsInspBy'],
+          json['U_GoodsInspBy'],
       uGoodsReport:
-          json['U_GoodsReport'] == null ? null : json['U_GoodsReport'],
-      uPymtStatus: json['U_PymtStatus'] == null ? null : json['U_PymtStatus'],
-      uPymtType: json['U_PymtType'] == null ? null : json['U_PymtType'],
+          json['U_GoodsReport'],
+      uPymtStatus: json['U_PymtStatus'],
+      uPymtType: json['U_PymtType'],
       uTtCopyImage:
-          json['U_TTCopyImage'] == null ? null : json['U_TTCopyImage'],
-      uPfiImage: json['U_PFI_Image'] == null ? null : json['U_PFI_Image'],
+          json['U_TTCopyImage'],
+      uPfiImage: json['U_PFI_Image'],
       uSupplierImage:
-          json['U_Supplier_Image'] == null ? null : json['U_Supplier_Image'],
-      uBolImage: json['U_BOL_Image'] == null ? null : json['U_BOL_Image'],
-        uGpApproval: json['U_GP_Approval'] == null
-          ? null
-          : json['U_GP_Approval'].toString(),
-      uTruckInternal: json['U_Truck_Internal'] == null
-          ? null
-          : json['U_Truck_Internal'].toString(),
+          json['U_Supplier_Image'],
+      uBolImage: json['U_BOL_Image'],
+        uGpApproval: json['U_GP_Approval']?.toString(),
+      uTruckInternal: json['U_Truck_Internal']?.toString(),
     
       uOrderType:
-          json['U_Order_Type'] == null ? null : json['U_Order_Type'].toString(),
+          json['U_Order_Type']?.toString(),
       uSupplierName:
-          json['U_SUPPLIER_NAME'] == null ? null : json['U_SUPPLIER_NAME'],
-      uVatNumber: json['U_VAT_NUMBER'] == null ? null : json['U_VAT_NUMBER'],
-      uTransferType: json['U_Transfer_Type'] == null
-          ? null
-          : json['U_Transfer_Type'].toString(),
-      uSalesOrder: json['U_Sales_Order'] == null ? null : json['U_Sales_Order'],
+          json['U_SUPPLIER_NAME'],
+      uVatNumber: json['U_VAT_NUMBER'],
+      uTransferType: json['U_Transfer_Type']?.toString(),
+      uSalesOrder: json['U_Sales_Order'],
       uReceived:
-          json['U_Received'] == null ? null : json['U_Received'].toString(),
-      uDriverName: json['U_Driver_Name'] == null ? null : json['U_Driver_Name'],
+          json['U_Received']?.toString(),
+      uDriverName: json['U_Driver_Name'],
       uReserveInvoice:
-          json['U_Reserve_Invoice'] == null ? null : json['U_Reserve_Invoice'],
-      uRefSeries: json['U_Ref_Series'] == null ? null : json['U_Ref_Series'],
-      uReceivedTime: json['U_Received_Time'] == null
-          ? null
-          : json['U_Received_Time'].toString(),
+          json['U_Reserve_Invoice'],
+      uRefSeries: json['U_Ref_Series'],
+      uReceivedTime: json['U_Received_Time']?.toString(),
       uSkuBatchNo:
-          json['U_SKU_Batch_No'] == null ? null : json['U_SKU_Batch_No'],
-      uInwardNo: json['U_Inward_No'] == null ? null : json['U_Inward_No'],
+          json['U_SKU_Batch_No'],
+      uInwardNo: json['U_Inward_No'],
       uDispatchTime:
-          json['U_Dispatch_Time'] == null ? null : json['U_Dispatch_Time'],
+          json['U_Dispatch_Time'],
       uReceivedDate:
-          json['U_Received_Date'] == null ? null : json['U_Received_Date'],
-      uExpiryDate: json['U_Expiry_Date'] == null ? null : json['U_Expiry_Date'],
-      uCnType: json['U_CN_Type'] == null ? null : json['U_CN_Type'].toString(),
-      uTinNo: json['U_TinNO'] == null ? null : json['U_TinNO'],
-      uLpoNo: json['U_LPONo'] == null ? null : json['U_LPONo'],
+          json['U_Received_Date'],
+      uExpiryDate: json['U_Expiry_Date'],
+      uCnType: json['U_CN_Type']?.toString(),
+      uTinNo: json['U_TinNO'],
+      uLpoNo: json['U_LPONo'],
       uOrderQty: json['U_OrderQty'] == null
           ? null
           : double.parse(json['U_OrderQty'].toString()),
       uDispatchDate:
-          json['U_Dispatch_Date'] == null ? null : json['U_Dispatch_Date'],
-      uBranch: json['U_Branch'] == null ? null : json['U_Branch'],
+          json['U_Dispatch_Date'],
+      uBranch: json['U_Branch'],
       uSalAppEntry:
-          json['U_SalAppEntry'] == null ? null : json['U_SalAppEntry'],
+          json['U_SalAppEntry'],
       uDocType: json['U_DocType'] == null
           ? null
           : int.parse(json['U_DocType'].toString()),
-      uIntKey: json['U_IntKey'] == null ? null : json['U_IntKey'],
-      uQrFileLoc: json['U_QRFileLoc'] == null ? null : json['U_QRFileLoc'],
-      uRctCde: json['U_rctCde'] == null ? null : json['U_rctCde'],
-      uZno: json['U_Zno'] == null ? null : json['U_Zno'],
-      uVfdIn: json['U_VfdIn'] == null ? null : json['U_VfdIn'],
-      uQrPath: json['U_QRPath'] == null ? null : json['U_QRPath'],
-      uQrValue: json['U_QRValue'] == null ? null : json['U_QRValue'],
-      uIdate: json['U_idate'] == null ? null : json['U_idate'],
-      uItime: json['U_itime'] == null ? null : json['U_itime'],
-      uDeviceCode: json['U_DeviceCode'] == null ? null : json['U_DeviceCode'],
+      uIntKey: json['U_IntKey'],
+      uQrFileLoc: json['U_QRFileLoc'],
+      uRctCde: json['U_rctCde'],
+      uZno: json['U_Zno'],
+      uVfdIn: json['U_VfdIn'],
+      uQrPath: json['U_QRPath'],
+      uQrValue: json['U_QRValue'],
+      uIdate: json['U_idate'],
+      uItime: json['U_itime'],
+      uDeviceCode: json['U_DeviceCode'],
       uDeviceTransId:
-          json['U_DeviceTransID'] == null ? null : json['U_DeviceTransID'],
-      uRvc: json['U_RVC'] == null ? null : json['U_RVC'],
-      uVrn: json['U_VRN'] == null ? null : json['U_VRN'],
-      uLongitude: json['U_longitude'] == null ? null : json['U_longitude'],
-      uLatitude: json['U_latitude'] == null ? null : json['U_latitude'],
+          json['U_DeviceTransID'],
+      uRvc: json['U_RVC'],
+      uVrn: json['U_VRN'],
+      uLongitude: json['U_longitude'],
+      uLatitude: json['U_latitude'],
       uAuditJobGroup:
-          json['U_AUDIT_JOB_GROUP'] == null ? null : json['U_AUDIT_JOB_GROUP'],
-      uAuditName: json['U_AUDIT_NAME'] == null ? null : json['U_AUDIT_NAME'],
-      uRequest: json['U_Request'] == null ? null : json['U_Request'],
-      uPosDocNo: json['U_PosDocNo'] == null ? null : json['U_PosDocNo'],
+          json['U_AUDIT_JOB_GROUP'],
+      uAuditName: json['U_AUDIT_NAME'],
+      uRequest: json['U_Request'],
+      uPosDocNo: json['U_PosDocNo'],
       taxExtension: json['TaxExtension'] != null
           ? TaxExtension.fromJson(json['TaxExtension'])
           : null,
@@ -1718,8 +1587,8 @@ class ApprovalDetailsValue {
         'FederalTaxID': federalTaxId,
         'DiscountPercent': discountPercent,
         'PaymentReference': paymentReference,
-        'CreationDate': "${creationDate}",
-        'UpdateDate': "${updateDate}",
+        'CreationDate': '$creationDate',
+        'UpdateDate': '$updateDate',
         'FinancialPeriod': financialPeriod,
         'UserSign': userSign,
         'TransNum': transNum,
@@ -2019,8 +1888,8 @@ class ApprovalDetailsValue {
         // 'ElectronicProtocols': List<dynamic>.from(electronicProtocols.map((x) => x)),
         // 'DocumentAdditionalExpenses': List<dynamic>.from(documentAdditionalExpenses.map((x) => x)),
         // 'DocumentSpecialLines': List<dynamic>.from(documentSpecialLines.map((x) => x)),
-        'TaxExtension': taxExtension!,
-        'AddressExtension': addressExtension!,
+        'TaxExtension': taxExtension,
+        'AddressExtension': addressExtension,
         'DocumentReferences':
             List<dynamic>.from(documentReferences!.map((x) => x)),
       };
@@ -2505,79 +2374,73 @@ class DocumentApprovalValue {
       lineNum: json['LineNum'] == null
           ? null
           : int.parse(json['LineNum'].toString()),
-      itemCode: json['ItemCode'] == null ? null : json['ItemCode'].toString(),
-      itemDescription: json['ItemDescription'] == null
-          ? null
-          : json['ItemDescription'].toString(),
+      itemCode: json['ItemCode']?.toString(),
+      itemDescription: json['ItemDescription']?.toString(),
       quantity: json['Quantity'] == null
           ? null
           : double.parse(json['Quantity'].toString()),
-      shipDate: json['ShipDate'] == null ? null : json['ShipDate'],
+      shipDate: json['ShipDate'],
       price:
           json['Price'] == null ? null : double.parse(json['Price'].toString()),
       total: json['PriceAfterVAT'] == null
           ? null
           : double.parse(json['PriceAfterVAT'].toString()),
-      currency: json['Currency'] == null ? null : json['Currency'].toString(),
+      currency: json['Currency']?.toString(),
       rate: json['Rate'] == null ? null : double.parse(json['Rate'].toString()),
       discountPercent: json['DiscountPercent'] == null
           ? null
           : double.parse(json['DiscountPercent'].toString()),
       vendorNum:
-          json['VendorNum'] == null ? null : json['VendorNum'].toString(),
+          json['VendorNum']?.toString(),
       serialNum:
-          json['SerialNum'] == null ? null : json['SerialNum'].toString(),
-      warehouseCode: json['WarehouseCode'] == null
-          ? null
-          : json['WarehouseCode'].toString(),
+          json['SerialNum']?.toString(),
+      warehouseCode: json['WarehouseCode']?.toString(),
       salesPersonCode: json['SalesPersonCode'] == null
           ? null
           : int.parse(json['SalesPersonCode'].toString()),
       commisionPercent: json['CommisionPercent'] == null
           ? null
           : double.parse(json['CommisionPercent'].toString()),
-      treeType: json['TreeType'] == null ? null : json['TreeType'].toString(),
+      treeType: json['TreeType']?.toString(),
       accountCode:
-          json['AccountCode'] == null ? null : json['AccountCode'].toString(),
+          json['AccountCode']?.toString(),
       useBaseUnits:
-          json['UseBaseUnits'] == null ? null : json['UseBaseUnits'].toString(),
-      supplierCatNum: json['SupplierCatNum'] == null
-          ? null
-          : json['SupplierCatNum'].toString(),
+          json['UseBaseUnits']?.toString(),
+      supplierCatNum: json['SupplierCatNum']?.toString(),
       costingCode:
-          json['CostingCode'] == null ? null : json['CostingCode'].toString(),
+          json['CostingCode']?.toString(),
       projectCode:
-          json['ProjectCode'] == null ? null : json['ProjectCode'].toString(),
-      barCode: json['BarCode'] == null ? null : json['BarCode'].toString(),
-      vatGroup: json['VatGroup'] == null ? null : json['VatGroup'].toString(),
+          json['ProjectCode']?.toString(),
+      barCode: json['BarCode']?.toString(),
+      vatGroup: json['VatGroup']?.toString(),
       height1: json['Height1'] == null
           ? null
           : double.parse(json['Height1'].toString()),
       hight1Unit:
-          json['Hight1Unit'] == null ? null : json['Hight1Unit'].toString(),
+          json['Hight1Unit']?.toString(),
       height2: json['Height2'] == null
           ? null
           : double.parse(json['Height2'].toString()),
       height2Unit:
-          json['Height2Unit'] == null ? null : json['Height2Unit'].toString(),
+          json['Height2Unit']?.toString(),
       lengh1: json['Lengh1'] == null
           ? null
           : double.parse(json['Lengh1'].toString()),
       lengh1Unit:
-          json['Lengh1Unit'] == null ? null : json['Lengh1Unit'].toString(),
+          json['Lengh1Unit']?.toString(),
       lengh2: json['Lengh2'] == null
           ? null
           : double.parse(json['Lengh2'].toString()),
       lengh2Unit:
-          json['Lengh2Unit'] == null ? null : json['Lengh2Unit'].toString(),
+          json['Lengh2Unit']?.toString(),
       weight1: json['Weight1'] == null
           ? null
           : double.parse(json['Weight1'].toString()),
-      weight1Unit: json['Weight1Unit'] == null ? null : json['Weight1Unit'],
+      weight1Unit: json['Weight1Unit'],
       weight2: json['Weight2'] == null
           ? null
           : double.parse(json['Weight2'].toString()),
-      weight2Unit: json['Weight2Unit'] == null ? null : json['Weight2Unit'],
+      weight2Unit: json['Weight2Unit'],
       factor1: json['Factor1'] == null
           ? null
           : double.parse(json['Factor1'].toString()),
@@ -2593,8 +2456,8 @@ class DocumentApprovalValue {
       baseType: json['BaseType'] == null
           ? null
           : int.parse(json['BaseType'].toString()),
-      baseEntry: json['BaseEntry'] == null ? null : json['BaseEntry'],
-      baseLine: json['BaseLine'] == null ? null : json['BaseLine'],
+      baseEntry: json['BaseEntry'],
+      baseLine: json['BaseLine'],
       volume: json['Volume'] == null
           ? null
           : double.parse(json['Volume'].toString()),
@@ -2604,39 +2467,35 @@ class DocumentApprovalValue {
       width1: json['Width1'] == null
           ? null
           : double.parse(json['Width1'].toString()),
-      width1Unit: json['Width1Unit'] == null ? null : json['Width1Unit'],
+      width1Unit: json['Width1Unit'],
       width2: json['Width2'] == null
           ? null
           : double.parse(json['Width2'].toString()),
-      width2Unit: json['Width2Unit'] == null ? null : json['Width2Unit'],
-      address: json['Address'] == null ? null : json['Address'].toString(),
-      taxCode: json['TaxCode'] == null ? null : json['TaxCode'].toString(),
-      taxType: json['TaxType'] == null ? null : json['TaxType'].toString(),
+      width2Unit: json['Width2Unit'],
+      address: json['Address']?.toString(),
+      taxCode: json['TaxCode']?.toString(),
+      taxType: json['TaxType']?.toString(),
       taxLiable:
-          json['TaxLiable'] == null ? null : json['TaxLiable'].toString(),
+          json['TaxLiable']?.toString(),
       pickStatus:
-          json['PickStatus'] == null ? null : json['PickStatus'].toString(),
+          json['PickStatus']?.toString(),
       pickQuantity: json['PickQuantity'] == null
           ? null
           : double.parse(json['PickQuantity'].toString()),
       pickListIdNumber:
-          json['PickListIdNumber'] == null ? null : json['PickListIdNumber'],
-      originalItem: json['OriginalItem'] == null ? null : json['OriginalItem'],
-      backOrder: json['BackOrder'] == null ? null : json['BackOrder'],
-      freeText: json['FreeText'] == null ? null : json['FreeText'].toString(),
+          json['PickListIdNumber'],
+      originalItem: json['OriginalItem'],
+      backOrder: json['BackOrder'],
+      freeText: json['FreeText']?.toString(),
       shippingMethod: json['ShippingMethod'] == null
           ? null
           : int.parse(json['ShippingMethod'].toString()),
       poTargetNum:
-          json['POTargetNum'] == null ? null : json['POTargetNum'].toString(),
-      poTargetEntry: json['POTargetEntry'] == null
-          ? null
-          : json['POTargetEntry'].toString(),
+          json['POTargetNum']?.toString(),
+      poTargetEntry: json['POTargetEntry']?.toString(),
       poTargetRowNum:
-          json['POTargetRowNum'] == null ? null : json['POTargetRowNum'],
-      correctionInvoiceItem: json['CorrectionInvoiceItem'] == null
-          ? null
-          : json['CorrectionInvoiceItem'].toString(),
+          json['POTargetRowNum'],
+      correctionInvoiceItem: json['CorrectionInvoiceItem']?.toString(),
       corrInvAmountToStock: json['CorrInvAmountToStock'] == null
           ? null
           : double.parse(json['CorrInvAmountToStock'].toString()),
@@ -2652,9 +2511,9 @@ class DocumentApprovalValue {
       appliedTaxSc: json['AppliedTaxSC'] == null
           ? null
           : double.parse(json['AppliedTaxSC'].toString()),
-      wtLiable: json['WTLiable'] == null ? null : json['WTLiable'].toString(),
+      wtLiable: json['WTLiable']?.toString(),
       deferredTax:
-          json['DeferredTax'] == null ? null : json['DeferredTax'].toString(),
+          json['DeferredTax']?.toString(),
       equalizationTaxPercent: json['EqualizationTaxPercent'] == null ? null : double.parse(json['EqualizationTaxPercent'].toString()),
       totalEqualizationTax: json['TotalEqualizationTax'] == null ? null : double.parse(json['TotalEqualizationTax'].toString()),
       totalEqualizationTaxFc: json['TotalEqualizationTaxFC'] == null ? null : double.parse(json['TotalEqualizationTaxFC'].toString()),
@@ -2662,18 +2521,18 @@ class DocumentApprovalValue {
       netTaxAmount: json['NetTaxAmount'] == null ? null : double.parse(json['NetTaxAmount'].toString()),
       netTaxAmountFc: json['NetTaxAmountFC'] == null ? null : double.parse(json['NetTaxAmountFC'].toString()),
       netTaxAmountSc: json['NetTaxAmountSC'] == null ? null : double.parse(json['NetTaxAmountSC'].toString()),
-      measureUnit: json['MeasureUnit'] == null ? null : json['MeasureUnit'].toString(),
+      measureUnit: json['MeasureUnit']?.toString(),
       unitsOfMeasurment: json['UnitsOfMeasurment'] == null ? null : double.parse(json['UnitsOfMeasurment'].toString()),
       lineTotal: json['LineTotal'] == null ? null : double.parse(json['LineTotal'].toString()),
       taxPercentagePerRow: json['TaxPercentagePerRow'] == null ? null : double.parse(json['TaxPercentagePerRow'].toString()),
       taxTotal: json['TaxTotal'] == null ? null : double.parse(json['TaxTotal'].toString()),
-      consumerSalesForecast: json['ConsumerSalesForecast'] == null ? null : json['ConsumerSalesForecast'].toString(),
+      consumerSalesForecast: json['ConsumerSalesForecast']?.toString(),
       exciseAmount: json['ExciseAmount'] == null ? null : double.parse(json['ExciseAmount'].toString()),
       totalInclTax: json['TotalInclTax'] == null ? null : double.parse(json['TotalInclTax'].toString()),
-      countryOrg: json['CountryOrg'] == null ? null : json['CountryOrg'],
-      sww: json['SWW'] == null ? null : json['SWW'].toString(),
-      transactionType: json['TransactionType'] == null ? null : json['TransactionType'].toString(),
-      distributeExpense: json['DistributeExpense'] == null ? null : json['DistributeExpense'].toString(),
+      countryOrg: json['CountryOrg'],
+      sww: json['SWW']?.toString(),
+      transactionType: json['TransactionType']?.toString(),
+      distributeExpense: json['DistributeExpense']?.toString(),
       rowTotalFc: json['RowTotalFC'] == null ? null : double.parse(json['RowTotalFC'].toString()),
       rowTotalSc: json['RowTotalSC'] == null ? null : double.parse(json['RowTotalSC'].toString()),
       lastBuyInmPrice: json['LastBuyInmPrice'] == null ? null : double.parse(json['LastBuyInmPrice'].toString()),
@@ -2684,106 +2543,106 @@ class DocumentApprovalValue {
       stockDistributesumSystem: json['StockDistributesumSystem'] == null ? null : double.parse(json['StockDistributesumSystem'].toString()),
       stockDistributesum: json['StockDistributesum'] == null ? null : double.parse(json['StockDistributesum'].toString()),
       stockInmPrice: json['StockInmPrice'] == null ? null : double.parse(json['StockInmPrice'].toString()),
-      pickStatusEx: json['PickStatusEx'] == null ? null : json['PickStatusEx'].toString(),
+      pickStatusEx: json['PickStatusEx']?.toString(),
       taxBeforeDpm: json['TaxBeforeDPM'] == null ? null : double.parse(json['TaxBeforeDPM'].toString()),
       taxBeforeDpmfc: json['TaxBeforeDPMFC'] == null ? null : double.parse(json['TaxBeforeDPMFC'].toString()),
       taxBeforeDpmsc: json['TaxBeforeDPMSC'] == null ? null : double.parse(json['TaxBeforeDPMSC'].toString()),
-      cfopCode: json['CFOPCode'] == null ? null : json['CFOPCode'],
-      cstCode: json['CSTCode'] == null ? null : json['CSTCode'],
-      usage: json['Usage'] == null ? null : json['Usage'],
-      taxOnly: json['TaxOnly'] == null ? null : json['TaxOnly'].toString(),
+      cfopCode: json['CFOPCode'],
+      cstCode: json['CSTCode'],
+      usage: json['Usage'],
+      taxOnly: json['TaxOnly']?.toString(),
       visualOrder: json['VisualOrder'] == null ? null : int.parse(json['VisualOrder'].toString()),
       baseOpenQuantity: json['BaseOpenQuantity'] == null ? null : double.parse(json['BaseOpenQuantity'].toString()),
       unitPrice: json['UnitPrice'] == null ? null : double.parse(json['UnitPrice'].toString()),
-      lineStatus: json['LineStatus'] == null ? null : json['LineStatus'].toString(),
+      lineStatus: json['LineStatus']?.toString(),
       packageQuantity: json['PackageQuantity'] == null ? null : double.parse(json['PackageQuantity'].toString()),
-      text: json['Text'] == null ? null : json['Text'].toString(),
-      lineType: json['LineType'] == null ? null : json['LineType'].toString(),
-      cogsCostingCode: json['COGSCostingCode'] == null ? null : json['COGSCostingCode'].toString(),
-      cogsAccountCode: json['COGSAccountCode'] == null ? null : json['COGSAccountCode'].toString(),
-      changeAssemlyBoMWarehouse: json['ChangeAssemlyBoMWarehouse'] == null ? null : json['ChangeAssemlyBoMWarehouse'].toString(),
+      text: json['Text']?.toString(),
+      lineType: json['LineType']?.toString(),
+      cogsCostingCode: json['COGSCostingCode']?.toString(),
+      cogsAccountCode: json['COGSAccountCode']?.toString(),
+      changeAssemlyBoMWarehouse: json['ChangeAssemlyBoMWarehouse']?.toString(),
       grossBuyPrice: json['GrossBuyPrice'] == null ? null : double.parse(json['GrossBuyPrice'].toString()),
       grossBase: json['GrossBase'] == null ? null : int.parse(json['GrossBase'].toString()),
       grossProfitTotalBasePrice: json['GrossProfitTotalBasePrice'] == null ? null : double.parse(json['GrossProfitTotalBasePrice'].toString()),
-      costingCode2: json['CostingCode2'] == null ? null : json['CostingCode2'],
-      costingCode3: json['CostingCode3'] == null ? null : json['CostingCode3'],
-      costingCode4: json['CostingCode4'] == null ? null : json['CostingCode4'],
-      costingCode5: json['CostingCode5'] == null ? null : json['CostingCode5'],
-      itemDetails: json['ItemDetails'] == null ? null : json['ItemDetails'],
-      locationCode: json['LocationCode'] == null ? null : json['LocationCode'],
-      actualDeliveryDate: json['ActualDeliveryDate'] == null ? null : json['ActualDeliveryDate'],
+      costingCode2: json['CostingCode2'],
+      costingCode3: json['CostingCode3'],
+      costingCode4: json['CostingCode4'],
+      costingCode5: json['CostingCode5'],
+      itemDetails: json['ItemDetails'],
+      locationCode: json['LocationCode'],
+      actualDeliveryDate: json['ActualDeliveryDate'],
       remainingOpenQuantity: json['RemainingOpenQuantity'] == null ? null : double.parse(json['RemainingOpenQuantity'].toString()),
       openAmount: json['OpenAmount'] == null ? null : double.parse(json['OpenAmount'].toString()),
       openAmountFc: json['OpenAmountFC'] == null ? null : double.parse(json['OpenAmountFC'].toString()),
       openAmountSc: json['OpenAmountSC'] == null ? null : double.parse(json['OpenAmountSC'].toString()),
-      exLineNo: json['ExLineNo'] == null ? null : json['ExLineNo'],
-      Date: json[' RequiredDate'] == null ? null : json[' RequiredDate'],
+      exLineNo: json['ExLineNo'],
+      Date: json[' RequiredDate'],
       requiredQuantity: json['RequiredQuantity'] == null ? null : double.parse(json['RequiredQuantity'].toString()),
-      cogsCostingCode2: json['COGSCostingCode2'] == null ? null : json['COGSCostingCode2'],
-      cogsCostingCode3: json['COGSCostingCode3'] == null ? null : json['COGSCostingCode3'],
-      cogsCostingCode4: json['COGSCostingCode4'] == null ? null : json['COGSCostingCode4'],
-      cogsCostingCode5: json['COGSCostingCode5'] == null ? null : json['COGSCostingCode5'],
-      csTforIpi: json['CSTforIPI'] == null ? null : json['CSTforIPI'],
-      csTforPis: json['CSTforPIS'] == null ? null : json['CSTforPIS'],
-      csTforCofins: json['CSTforCOFINS'] == null ? null : json['CSTforCOFINS'],
-      creditOriginCode: json['CreditOriginCode'] == null ? null : json['CreditOriginCode'],
-      withoutInventoryMovement: json['WithoutInventoryMovement'] == null ? null : json['WithoutInventoryMovement'].toString(),
-      agreementNo: json['AgreementNo'] == null ? null : json['AgreementNo'],
-      agreementRowNumber: json['AgreementRowNumber'] == null ? null : json['AgreementRowNumber'],
-      actualBaseEntry: json['ActualBaseEntry'] == null ? null : json['ActualBaseEntry'],
-      actualBaseLine: json['ActualBaseLine'] == null ? null : json['ActualBaseLine'],
+      cogsCostingCode2: json['COGSCostingCode2'],
+      cogsCostingCode3: json['COGSCostingCode3'],
+      cogsCostingCode4: json['COGSCostingCode4'],
+      cogsCostingCode5: json['COGSCostingCode5'],
+      csTforIpi: json['CSTforIPI'],
+      csTforPis: json['CSTforPIS'],
+      csTforCofins: json['CSTforCOFINS'],
+      creditOriginCode: json['CreditOriginCode'],
+      withoutInventoryMovement: json['WithoutInventoryMovement']?.toString(),
+      agreementNo: json['AgreementNo'],
+      agreementRowNumber: json['AgreementRowNumber'],
+      actualBaseEntry: json['ActualBaseEntry'],
+      actualBaseLine: json['ActualBaseLine'],
       docEntry: json['DocEntry'] == null ? null : int.parse(json['DocEntry'].toString()),
       surpluses: json['Surpluses'] == null ? null : double.parse(json['Surpluses'].toString()),
       defectAndBreakup: json['DefectAndBreakup'] == null ? null : double.parse(json['DefectAndBreakup'].toString()),
       shortages: json['Shortages'] == null ? null : double.parse(json['Shortages'].toString()),
-      considerQuantity: json['ConsiderQuantity'] == null ? null : json['ConsiderQuantity'].toString(),
-      partialRetirement: json['PartialRetirement'] == null ? null : json['PartialRetirement'].toString(),
+      considerQuantity: json['ConsiderQuantity']?.toString(),
+      partialRetirement: json['PartialRetirement']?.toString(),
       retirementQuantity: json['RetirementQuantity'] == null ? null : double.parse(json['RetirementQuantity'].toString()),
       retirementApc: json['RetirementAPC'] == null ? null : double.parse(json['RetirementAPC'].toString()),
-      thirdParty: json['ThirdParty'] == null ? null : json['ThirdParty'].toString(),
-      poNum: json['PoNum'] == null ? null : json['PoNum'],
-      poItmNum: json['PoItmNum'] == null ? null : json['PoItmNum'],
-      expenseType: json['ExpenseType'] == null ? null : json['ExpenseType'],
-      receiptNumber: json['ReceiptNumber'] == null ? null : json['ReceiptNumber'],
-      expenseOperationType: json['ExpenseOperationType'] == null ? null : json['ExpenseOperationType'],
+      thirdParty: json['ThirdParty']?.toString(),
+      poNum: json['PoNum'],
+      poItmNum: json['PoItmNum'],
+      expenseType: json['ExpenseType'],
+      receiptNumber: json['ReceiptNumber'],
+      expenseOperationType: json['ExpenseOperationType'],
       federalTaxId: json['FederalTaxID'] != null || json['FederalTaxID'] != 'null' ? json['FederalTaxID'] : null,
       grossProfit: json['GrossProfit'] == null ? null : double.parse(json['GrossProfit'].toString()),
       grossProfitFc: json['GrossProfitFC'] == null ? null : double.parse(json['GrossProfitFC'].toString()),
       grossProfitSc: json['GrossProfitSC'] == null ? null : double.parse(json['GrossProfitSC'].toString()),
-      priceSource: json['PriceSource'] == null ? null : json['PriceSource'].toString(),
-      stgSeqNum: json['StgSeqNum'] == null ? null : json['StgSeqNum'],
-      stgEntry: json['StgEntry'] == null ? null : json['StgEntry'],
-      stgDesc: json['StgDesc'] == null ? null : json['StgDesc'],
+      priceSource: json['PriceSource']?.toString(),
+      stgSeqNum: json['StgSeqNum'],
+      stgEntry: json['StgEntry'],
+      stgDesc: json['StgDesc'],
       uoMEntry: json['UoMEntry'] == null ? null : int.parse(json['UoMEntry'].toString()),
-      uoMCode: json['UoMCode'] == null ? null : json['UoMCode'].toString(),
+      uoMCode: json['UoMCode']?.toString(),
       inventoryQuantity: json['InventoryQuantity'] == null ? null : double.parse(json['InventoryQuantity'].toString()),
       remainingOpenInventoryQuantity: json['RemainingOpenInventoryQuantity'] == null ? null : double.parse(json['RemainingOpenInventoryQuantity'].toString()),
-      parentLineNum: json['ParentLineNum'] == null ? null : json['ParentLineNum'].toString(),
+      parentLineNum: json['ParentLineNum']?.toString(),
       incoterms: json['Incoterms'] == null ? null : int.parse(json['Incoterms'].toString()),
       transportMode: json['TransportMode'] == null ? null : int.parse(json['TransportMode'].toString()),
-      natureOfTransaction: json['NatureOfTransaction'] == null ? null : json['NatureOfTransaction'],
-      destinationCountryForImport: json['DestinationCountryForImport'] == null ? null : json['DestinationCountryForImport'],
-      destinationRegionForImport: json['DestinationRegionForImport'] == null ? null : json['DestinationRegionForImport'],
-      originCountryForExport: json['OriginCountryForExport'] == null ? null : json['OriginCountryForExport'],
-      originRegionForExport: json['OriginRegionForExport'] == null ? null : json['OriginRegionForExport'],
-      itemType: json['ItemType'] == null ? null : json['ItemType'].toString(),
-      changeInventoryQuantityIndependently: json['ChangeInventoryQuantityIndependently'] == null ? null : json['ChangeInventoryQuantityIndependently'].toString(),
-      freeOfChargeBp: json['FreeOfChargeBP'] == null ? null : json['FreeOfChargeBP'].toString(),
-      sacEntry: json['SACEntry'] == null ? null : json['SACEntry'],
-      hsnEntry: json['HSNEntry'] == null ? null : json['HSNEntry'],
+      natureOfTransaction: json['NatureOfTransaction'],
+      destinationCountryForImport: json['DestinationCountryForImport'],
+      destinationRegionForImport: json['DestinationRegionForImport'],
+      originCountryForExport: json['OriginCountryForExport'],
+      originRegionForExport: json['OriginRegionForExport'],
+      itemType: json['ItemType']?.toString(),
+      changeInventoryQuantityIndependently: json['ChangeInventoryQuantityIndependently']?.toString(),
+      freeOfChargeBp: json['FreeOfChargeBP']?.toString(),
+      sacEntry: json['SACEntry'],
+      hsnEntry: json['HSNEntry'],
       grossPrice: json['GrossPrice'] == null ? null : double.parse(json['GrossPrice'].toString()),
       grossTotal: json['GrossTotal'] == null ? null : double.parse(json['GrossTotal'].toString()),
       grossTotalFc: json['GrossTotalFC'] == null ? null : double.parse(json['GrossTotalFC'].toString()),
       grossTotalSc: json['GrossTotalSC'] == null ? null : double.parse(json['GrossTotalSC'].toString()),
       ncmCode: json['NCMCode'] == null ? null : int.parse(json['NCMCode'].toString()),
-      nveCode: json['NVECode'] == null ? null : json['NVECode'],
-      indEscala: json['IndEscala'] == null ? null : json['IndEscala'].toString(),
+      nveCode: json['NVECode'],
+      indEscala: json['IndEscala']?.toString(),
       ctrSealQty: json['CtrSealQty'] == null ? null : double.parse(json['CtrSealQty'].toString()),
-      cnjpMan: json['CNJPMan'] == null ? null : json['CNJPMan'],
+      cnjpMan: json['CNJPMan'],
       cestCode: json['CESTCode'] == null ? null : int.parse(json['CESTCode'].toString()),
-      ufFiscalBenefitCode: json['UFFiscalBenefitCode'] == null ? null : json['UFFiscalBenefitCode'],
+      ufFiscalBenefitCode: json['UFFiscalBenefitCode'],
       shipToCode: json['ShipToCode'] != null || json['ShipToCode'] != 'null' ? null : json['ShipToCode'].toString(),
-      shipToDescription: json['ShipToDescription'] == null ? null : json['ShipToDescription'].toString(),
+      shipToDescription: json['ShipToDescription']?.toString(),
       externalCalcTaxRate: json['ExternalCalcTaxRate'] == null ? null : double.parse(json['ExternalCalcTaxRate'].toString()),
       externalCalcTaxAmount: json['ExternalCalcTaxAmount'] == null ? null : double.parse(json['ExternalCalcTaxAmount'].toString()),
       externalCalcTaxAmountFc: json['ExternalCalcTaxAmountFC'] == null ? null : double.parse(json['ExternalCalcTaxAmountFC'].toString()),
@@ -2794,27 +2653,27 @@ class DocumentApprovalValue {
           : int.parse(
               json['CommodityClassification'].toString(),
             ),
-      unencumberedReason: json['UnencumberedReason'] == null ? null : json['UnencumberedReason'],
-      cuSplit: json['CUSplit'] == null ? null : json['CUSplit'].toString(),
-      uQtyOrdered: json['U_Qty_Ordered'] == null ? null : json['U_Qty_Ordered'],
-      uOpenQty: json['U_Open_Qty'] == null ? null : json['U_Open_Qty'],
-      uTonnage: json['U_Tonnage'] == null ? null : json['U_Tonnage'],
-      uPackSize: json['U_PackSize'] == null ? null : json['U_PackSize'],
-      uProfitCentre: json['U_Profit_Centre'] == null ? null : json['U_Profit_Centre'],
-      uNumberDrums: json['U_Number_Drums'] == null ? null : json['U_Number_Drums'],
-      uDrumSize: json['U_Drum_Size'] == null ? null : json['U_Drum_Size'],
-      uPails: json['U_Pails'] == null ? null : json['U_Pails'],
-      uCartons: json['U_Cartons'] == null ? null : json['U_Cartons'],
-      uLooseTins: json['U_Loose_Tins'] == null ? null : json['U_Loose_Tins'],
-      uNettWt: json['U_Nett_Wt'] == null ? null : json['U_Nett_Wt'],
-      uGrossWt: json['U_Gross_Wt'] == null ? null : json['U_Gross_Wt'],
-      uAppLinId: json['U_AppLinId'] == null ? null : json['U_AppLinId'],
-      uMuQty: json['U_MUQty'] == null ? null : json['U_MUQty'],
-      uRvc: json['U_RVC'] == null ? null : json['U_RVC'],
-      uVrn: json['U_VRN'] == null ? null : json['U_VRN'],
-      uIdentifier: json['U_Identifier'] == null ? null : json['U_Identifier'],
+      unencumberedReason: json['UnencumberedReason'],
+      cuSplit: json['CUSplit']?.toString(),
+      uQtyOrdered: json['U_Qty_Ordered'],
+      uOpenQty: json['U_Open_Qty'],
+      uTonnage: json['U_Tonnage'],
+      uPackSize: json['U_PackSize'],
+      uProfitCentre: json['U_Profit_Centre'],
+      uNumberDrums: json['U_Number_Drums'],
+      uDrumSize: json['U_Drum_Size'],
+      uPails: json['U_Pails'],
+      uCartons: json['U_Cartons'],
+      uLooseTins: json['U_Loose_Tins'],
+      uNettWt: json['U_Nett_Wt'],
+      uGrossWt: json['U_Gross_Wt'],
+      uAppLinId: json['U_AppLinId'],
+      uMuQty: json['U_MUQty'],
+      uRvc: json['U_RVC'],
+      uVrn: json['U_VRN'],
+      uIdentifier: json['U_Identifier'],
       taxPerUnit: json['TaxPerUnit'] == null ? null : double.parse(json['TaxPerUnit'].toString()),
-      U_Pack_Size: json['U_Pack_Size'] == null ? null : double.parse(json['U_Pack_Size'].toString())
+      U_Pack_Size: json['U_Pack_Size'] == null ? null : double.parse(json['U_Pack_Size'].toString()),
 // U_Tins_Per_Box:double.parse(json['U_Tins_Per_Box'].toString()),
 
       // lineTaxJurisdictions: List<dynamic>.from(json['LineTaxJurisdictions'].map((x) => x)),

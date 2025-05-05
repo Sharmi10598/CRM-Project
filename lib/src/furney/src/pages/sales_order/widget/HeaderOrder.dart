@@ -1,5 +1,7 @@
 // ignore_for_file: file_names, unnecessary_lambdas, prefer_single_quotes, prefer_const_constructors, unawaited_futures, unnecessary_statements, unnecessary_parenthesis, prefer_final_locals, omit_local_variable_types, avoid_redundant_argument_values, prefer_if_elements_to_conditional_expressions
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/route_manager.dart';
@@ -11,11 +13,11 @@ import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/SalesOrderEdit/Screens/ContentEdit.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/SalesOrderEdit/Screens/EditOrder.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/SalesOrderEdit/Screens/HederEdit.dart';
-import 'package:ultimate_bundle/src/furney/src/pages/SalesOrderEdit/Screens/LogisticOrderEdit.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sales_order/widget/creation/content_order_creation.dart';
+import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/screens/SalesQutDetails.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sign_in/widgets/custom_elevatedBtn.dart';
 
-import '../../sales_quot/screens/SalesQutDetails.dart';
+import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
 class HeaderOrders extends StatefulWidget {
   HeaderOrders({Key? key, this.salValue}) : super(key: key);
@@ -38,25 +40,58 @@ class HeaderOrderstState extends State<HeaderOrders> {
   static String? remarks; //no
   static double? totalBeforeDisc; //no
   static double? discnt; //no
-  static String? Tax;
+  static String? tax;
   static String? total;
-  static String? OrderDate; //no
-  static String? Order_Type; //no
+  static String? orderDate; //no
+  static String? order_Type; //no
   static String? GP_Approval;
-  static String? Received_Time;
+  static String? received_Time;
   static List<DocumentSalesOrdeValue>? documentLines = [];
 
   setHeaderValues() {
+    double taxX = 0;
+    double totalx = 0;
+    double taxRate = 0;
+
     totalBeforeDisc = 0;
     discnt = 0;
     for (int i = 0; i < documentLines!.length; i++) {
+      if (documentLines![i].TaxCode == 'O1') {
+        if (GetValues.countryCode!.toLowerCase().trim() == 'tanzania') {
+          taxRate = 18;
+        } else {
+          taxRate = 16;
+        }
+      } else {
+        taxRate = 0;
+      }
+      log('documentLines![i].discountPercent::${documentLines![i].discountPercent}');
+      documentLines![i].basic =
+          (documentLines![i].UnitPrice! * documentLines![i].Quantity!);
+      documentLines![i].discount =
+          (documentLines![i].basic! * documentLines![i].discountPercent! / 100);
+
       totalBeforeDisc = totalBeforeDisc! +
           (documentLines![i].UnitPrice! * documentLines![i].Quantity!);
+      log('totalBeforeDisctotalBeforeDisc::$totalBeforeDisc');
+      // discnt = discnt! +
+      //     ((documentLines![i].UnitPrice! * documentLines![i].Quantity!) -
+      //         (documentLines![i].LineTotal!));
+      documentLines![i].taxable =
+          documentLines![i].basic! - documentLines![i].discount!;
 
-      discnt = discnt! +
-          ((documentLines![i].UnitPrice! * documentLines![i].Quantity!) -
-              (documentLines![i].LineTotal!));
+      documentLines![i].taxValue = documentLines![i].taxable! * taxRate / 100;
+
+      totalx = totalx +
+          ((documentLines![i].basic! - documentLines![i].discount!) +
+              documentLines![i].taxValue!);
+      taxX = taxX + documentLines![i].taxValue!;
+      discnt = discnt! + documentLines![i].discount!;
+      log('totalxtotalx::$totalx');
+      log('totalTXtotalTX::$taxX');
     }
+    tax = taxX.toString();
+    total = totalx.toString();
   }
 
   void seperateNumber() {
@@ -66,14 +101,12 @@ class HeaderOrderstState extends State<HeaderOrders> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setHeaderValues();
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body:
@@ -86,7 +119,8 @@ class HeaderOrderstState extends State<HeaderOrders> {
           children: [
             Container(
               padding: EdgeInsets.symmetric(
-                  horizontal: Screens.width(context) * 0.02),
+                horizontal: Screens.width(context) * 0.02,
+              ),
               color: Colors.white,
               width: Screens.width(context),
               child: Column(
@@ -147,7 +181,7 @@ class HeaderOrderstState extends State<HeaderOrders> {
                             //   ),
                             // )
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -261,7 +295,8 @@ class HeaderOrderstState extends State<HeaderOrders> {
             ),
             Container(
               padding: EdgeInsets.symmetric(
-                  horizontal: Screens.width(context) * 0.02),
+                horizontal: Screens.width(context) * 0.02,
+              ),
               color: Colors.white,
               width: Screens.width(context),
               child: Column(
@@ -303,7 +338,7 @@ class HeaderOrderstState extends State<HeaderOrders> {
                         width: Screens.width(context) * 0.83,
                         // color: Colors.blue,
                         child: Text(
-                          '$Order_Type',
+                          '$order_Type',
                           style: TextStyles.headlineBlack1(context),
                         ),
                       ),
@@ -345,7 +380,7 @@ class HeaderOrderstState extends State<HeaderOrders> {
                         width: Screens.width(context) * 0.83,
                         // color: Colors.blue,
                         child: Text(
-                          '$Received_Time',
+                          '$received_Time',
                           style: TextStyles.headlineBlack1(context),
                         ),
                       ),
@@ -366,7 +401,7 @@ class HeaderOrderstState extends State<HeaderOrders> {
                         width: Screens.width(context) * 0.83,
                         // color: Colors.blue,
                         child: Text(
-                          '$OrderDate',
+                          '$orderDate',
                           style: TextStyles.headlineBlack1(context),
                         ),
                       ),
@@ -466,7 +501,8 @@ class HeaderOrderstState extends State<HeaderOrders> {
               color: Colors.white,
               width: Screens.width(context),
               padding: EdgeInsets.symmetric(
-                  horizontal: Screens.width(context) * 0.02),
+                horizontal: Screens.width(context) * 0.02,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -563,7 +599,7 @@ class HeaderOrderstState extends State<HeaderOrders> {
                         // color: Colors.blue,
                         child: Text(
                           // '$Tax',
-                          TextStyles.splitValues('$Tax'),
+                          TextStyles.splitValues('$tax'),
                           style: TextStyles.headlineBlack1(context),
                         ),
                       ),
@@ -647,7 +683,7 @@ class HeaderOrderstState extends State<HeaderOrders> {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -674,13 +710,15 @@ class HeaderOrderstState extends State<HeaderOrders> {
     });
   }
 
-  void gotoSalesORderEdit(SalesOrderDetailsValue val) async {
+  Future<void> gotoSalesORderEdit(SalesOrderDetailsValue val) async {
     setValue(val);
-    Get.to(() => EditORderDetails(
-          title: "Order Edit",
-          DocEntry: val.docEntry!,
-          isAproved: false,
-        ));
+    Get.to(
+      () => EditORderDetails(
+        title: "Order Edit",
+        docEntry: val.docEntry!,
+        isAproved: false,
+      ),
+    );
   }
 
   void setValue(SalesOrderDetailsValue val) {
@@ -718,23 +756,26 @@ class HeaderOrderstState extends State<HeaderOrders> {
       SalesDetailsQuotState sate2 = SalesDetailsQuotState();
       ContentOrderEditState.itemsDetails3.clear();
       for (int i = 0; i < val.documentLines!.length; i++) {
-        ContentOrderEditState.itemsDetails3.add(AddItem(
-          itemCode: val.documentLines![i].ItemCode!,
-          itemName: val.documentLines![i].ItemDescription!,
-          price: val.documentLines![i].UnitPrice,
-          discount: 0, //
-          qty: int.parse(val.documentLines![i].Quantity!.toStringAsFixed(0)),
-          total: val.documentLines![i].LineTotal,
-          tax: val.documentLines![i].TaxTotal,
-          valuechoosed: state.getTaxNane(val.documentLines![i].TaxCode!),
-          discounpercent: val.documentLines![i].discountPercent,
-          taxCode: val.documentLines![i].TaxCode,
-          taxPer: sate2.caluclateTaxpercent(val.documentLines![i].LineTotal!,
-              val.documentLines![i].TaxTotal!), // val.documentLines![i].
-          wareHouseCode: val.documentLines![i].warehouseCode,
-          taxName: state.getTaxNane(val.documentLines![i].TaxCode!),
-        ) //val.documentLines![i].
-            );
+        ContentOrderEditState.itemsDetails3.add(
+          AddOrderItem(
+            itemCode: val.documentLines![i].ItemCode!,
+            itemName: val.documentLines![i].ItemDescription!,
+            price: val.documentLines![i].UnitPrice,
+            discount: 0, //
+            qty: int.parse(val.documentLines![i].Quantity!.toStringAsFixed(0)),
+            total: val.documentLines![i].LineTotal,
+            tax: val.documentLines![i].TaxTotal,
+            valuechoosed: state.getTaxNane(val.documentLines![i].TaxCode!),
+            discounpercent: val.documentLines![i].discountPercent,
+            taxCode: val.documentLines![i].TaxCode,
+            taxPer: sate2.caluclateTaxpercent(
+              val.documentLines![i].LineTotal!,
+              val.documentLines![i].TaxTotal!,
+            ), // val.documentLines![i].
+            wareHouseCode: val.documentLines![i].warehouseCode,
+            taxName: state.getTaxNane(val.documentLines![i].TaxCode!),
+          ), //val.documentLines![i].
+        );
       }
 
       //log

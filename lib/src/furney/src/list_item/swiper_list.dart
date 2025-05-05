@@ -1,7 +1,6 @@
-
 import 'dart:ui';
 
-import 'package:charts_flutter_new/flutter.dart' as charts;
+// import 'package:charts_flutter_new/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class SwiperList {
@@ -35,7 +34,7 @@ class SwiperList {
   //       'https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/738/0973803_PH154271_S4.jpg',
   //     ]
   //   ),
-    
+
   //   ProductModel(
   //     name: 'Hauga',
   //     price: 80,
@@ -52,43 +51,44 @@ class SwiperList {
   //   ),
   // ];
 
- static final List<IndianGrowth> grouthData = [
-   IndianGrowth('2010',20, const Color(0xFFFF0303)),
-   IndianGrowth('2011',30, const Color(0xFFFF0303)),
-   IndianGrowth('2012',40,const Color(0xFFFF0303)),
-   IndianGrowth('2013',50,const Color(0xFFFF0303)),
-   IndianGrowth('2014',60,const Color(0xFFFF0303)),
- ];
-
-
- static final List<IndianGrowth> grouthData2 = [
-   IndianGrowth('2010',2,const Color(0xFF1c305d)),
-   IndianGrowth('2011',3,const Color(0xFF294689)),
-   IndianGrowth('2012',4,const Color(0xFF1c305d)),
-   IndianGrowth('2013',5,const Color(0xFF294689)),
-   IndianGrowth('2014',10,const Color(0xFF1c305d)),
- ];
-
- static List<charts.Series<IndianGrowth,String>> series =[
-    // charts.Series(id: "Indian Growth", data: grouthData,
-    //  domainFn: (IndianGrowth grow,_)=>grow.year, 
-    //  measureFn:(IndianGrowth grow,_)=>grow.growth,
-    //  colorFn: (IndianGrowth grow,_)=>charts.ColorUtil.fromDartColor(grow.barColor)
-    //  ),
-
-     charts.Series(id: 'Indian Growth', data: grouthData2,
-     domainFn: (IndianGrowth grow,_)=>grow.year, 
-     measureFn:(IndianGrowth grow,_)=>grow.growth,
-     colorFn: (IndianGrowth grow,_)=>charts.ColorUtil.fromDartColor(grow.barColor),
-     )
+  static final List<IndianGrowth> grouthData = [
+    IndianGrowth('2010', 20, const Color(0xFFFF0303)),
+    IndianGrowth('2011', 30, const Color(0xFFFF0303)),
+    IndianGrowth('2012', 40, const Color(0xFFFF0303)),
+    IndianGrowth('2013', 50, const Color(0xFFFF0303)),
+    IndianGrowth('2014', 60, const Color(0xFFFF0303)),
   ];
 
+  static final List<IndianGrowth> grouthData2 = [
+    IndianGrowth('2010', 2, const Color(0xFF1c305d)),
+    IndianGrowth('2011', 3, const Color(0xFF294689)),
+    IndianGrowth('2012', 4, const Color(0xFF1c305d)),
+    IndianGrowth('2013', 5, const Color(0xFF294689)),
+    IndianGrowth('2014', 10, const Color(0xFF1c305d)),
+  ];
+
+  // static List<charts.Series<IndianGrowth, String>> series = [
+  //   // charts.Series(id: "Indian Growth", data: grouthData,
+  //   //  domainFn: (IndianGrowth grow,_)=>grow.year,
+  //   //  measureFn:(IndianGrowth grow,_)=>grow.growth,
+  //   //  colorFn: (IndianGrowth grow,_)=>charts.ColorUtil.fromDartColor(grow.barColor)
+  //   //  ),
+
+  //   charts.Series(
+  //     id: 'Indian Growth',
+  //     data: grouthData2,
+  //     domainFn: (IndianGrowth grow, _) => grow.year,
+  //     measureFn: (IndianGrowth grow, _) => grow.growth,
+  //     colorFn: (IndianGrowth grow, _) =>
+  //         charts.ColorUtil.fromDartColor(grow.barColor),
+  //   ),
+  // ];
 }
 
-class IndianGrowth{
+class IndianGrowth {
   final String year;
   final int growth;
   final Color barColor;
 
-  IndianGrowth(this.year, this.growth, this.barColor); 
+  IndianGrowth(this.year, this.growth, this.barColor);
 }

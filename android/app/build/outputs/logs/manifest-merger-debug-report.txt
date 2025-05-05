@@ -171,7 +171,7 @@ MERGED from [androidx.room:room-runtime:2.2.5] C:\Users\USER\.gradle\caches\tran
 		ADDED from D:\Flutter Apps\new crm\CRM\android\app\src\main\AndroidManifest.xml:28:9-28
 	android:icon
 		ADDED from D:\Flutter Apps\new crm\CRM\android\app\src\main\AndroidManifest.xml:29:9-43
-activity#com.buson.crm.MainActivity
+activity#com.buson.insigniacrm.MainActivity
 ADDED from D:\Flutter Apps\new crm\CRM\android\app\src\main\AndroidManifest.xml:30:9-58:20
 	android:launchMode
 		ADDED from D:\Flutter Apps\new crm\CRM\android\app\src\main\AndroidManifest.xml:32:13-43

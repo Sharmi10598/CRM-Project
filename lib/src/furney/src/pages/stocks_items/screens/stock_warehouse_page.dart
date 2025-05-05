@@ -31,11 +31,9 @@ class StockWarehouseState extends State<StockWarehouse> {
   void initState() {
     super.initState();
     StockWarehouseAPi.itemcode = itemCode;
-    print(StockWarehouseAPi.itemcode);
     StockWarehouseAPi.getGlobalData().then((value) {
       if (value.itemWarehouse != null) {
         setState(() {
-          print(value.itemWarehouse![0].warehouseCode);
           itemWarehouse = value.itemWarehouse!;
           itemWarehouseFilter = itemWarehouse;
         });
@@ -47,14 +45,9 @@ class StockWarehouseState extends State<StockWarehouse> {
   }
 
   void getWarehouse() {
-    print(GetValues.branch);
-    print('length: ' + itemWarehouse.length.toString());
-    print('GetValues.branch: ' + GetValues.branch!.toLowerCase());
     for (var i = 0; i < itemWarehouse.length; i++) {
       if (itemWarehouse[i].warehouseCode!.toLowerCase() ==
           GetValues.branch!.toLowerCase()) {
-        print('warehouse: ' + itemWarehouse[i].warehouseCode.toString());
-        print('i: ' + i.toString());
         setState(() {
           indexOFWarehouse = i;
         });
@@ -69,7 +62,9 @@ class StockWarehouseState extends State<StockWarehouse> {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      drawer: drawer(context),
+      drawer:
+          // GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       key: _scaffoldKey,
       appBar: appBar(context, _scaffoldKey, widget.title),
       body: itemWarehouse.length == 0
@@ -168,7 +163,8 @@ class StockWarehouseState extends State<StockWarehouse> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(
-                            Screens.width(context) * 0.02),
+                          Screens.width(context) * 0.02,
+                        ),
                       ),
                       width: Screens.width(context),
                       child: Column(

@@ -104,9 +104,9 @@ class PageOneState extends State<PageOne> {
                                               color: theme.primaryColor,
                                               size: Screens.heigth(context) * 0.06,
                                             ),
-                                          )
+                                          ),
                                         ],
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -309,7 +309,7 @@ class PageOneState extends State<PageOne> {
                                         ),
                                       ),
                             ),
-                          )
+                          ),
                                     ],
                                   ),
                               ),
@@ -370,9 +370,9 @@ class PageOneState extends State<PageOne> {
                                             color: theme.primaryColor,
                                             size: Screens.heigth(context) * 0.06,
                                           ),
-                                        )
+                                        ),
                                       ],
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -409,9 +409,9 @@ class PageOneState extends State<PageOne> {
                                             color: theme.primaryColor,
                                             size: Screens.heigth(context) * 0.06,
                                           ),
-                                        )
+                                        ),
                                       ],
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -448,9 +448,9 @@ class PageOneState extends State<PageOne> {
                                             color: theme.primaryColor,
                                             size: Screens.heigth(context) * 0.06,
                                           ),
-                                        )
+                                        ),
                                       ],
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -487,9 +487,9 @@ class PageOneState extends State<PageOne> {
                                             color: theme.primaryColor,
                                             size: Screens.heigth(context) * 0.06,
                                           ),
-                                        )
+                                        ),
                                       ],
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -514,7 +514,7 @@ class PageOneState extends State<PageOne> {
                                                 fontSize: Screens.heigth(context) * 0.02,
                                                 color: Colors.black,),
                                           ),
-                                        )
+                                        ),
                                       ],
                                     ),
                    SizedBox(height: Screens.heigth(context) * 0.01, ), 
@@ -538,7 +538,7 @@ class PageOneState extends State<PageOne> {
                                                 fontSize: Screens.heigth(context) * 0.02,
                                                 color: Colors.black,),
                                           ),
-                                        )
+                                        ),
                                       ],
                                     ),
 
@@ -712,14 +712,14 @@ class PageOneState extends State<PageOne> {
                                     child: const Divider(
                                       thickness: 1.5,
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),),
                           //  ),
                         );
                       },
                     ),
-                  )
+                  ),
                 ],
               ),
       ),

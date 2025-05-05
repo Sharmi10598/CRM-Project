@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class AddressrModel {
   PlusCode plusCode;
@@ -7,16 +6,13 @@ class AddressrModel {
   int? stcode;
 
   AddressrModel({
-    this.stcode,
-    required this.plusCode,
-    required this.results,
-    required this.status,
+    required this.plusCode, required this.results, required this.status, this.stcode,
   });
 
   factory AddressrModel.fromJson(dynamic json, int stcode) {
     final list = json['results'] as List; //jsonDecode
     // print(list);
-    List<Result> dataList =
+    final dataList =
         list.map((dynamic enquiries) => Result.fromJson(enquiries)).toList();
 
     return AddressrModel(
@@ -24,7 +20,7 @@ class AddressrModel {
         results: dataList,
         // List<Result>.from(json['results'].map((x) => Result.fromJson(x))),
         status: json['status'].toString(),
-        stcode: stcode);
+        stcode: stcode,);
   }
   Map<String, dynamic> toJson() => {
         'plus_code': plusCode.toJson(),
@@ -71,7 +67,7 @@ class Result {
     required this.formattedAddress,
     required this.geometry,
     required this.placeId,
-     this.types,
+    this.types,
     this.plusCode,
   });
 
@@ -82,7 +78,7 @@ class Result {
   factory Result.fromJson(dynamic json) {
     final list = json['address_components'] as List; //jsonDecode
     // print(list);
-    List<AddressComponent> dataList = list
+    final dataList = list
         .map((dynamic enquiries) => AddressComponent.fromJson(enquiries))
         .toList();
 
@@ -119,7 +115,7 @@ class AddressComponent {
   AddressComponent({
     required this.longName,
     required this.shortName,
-     this.types,
+    this.types,
   });
 
   // factory AddressComponent.fromRawJson(String str) => AddressComponent.fromJson(json.decode(str));
@@ -146,7 +142,7 @@ class Geometry {
   Viewport viewport;
 
   Geometry({
-    this.bounds,
+    required this.bounds,
     required this.location,
     required this.locationType,
     required this.viewport,

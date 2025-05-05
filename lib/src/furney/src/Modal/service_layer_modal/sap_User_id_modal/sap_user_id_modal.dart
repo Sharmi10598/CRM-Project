@@ -16,7 +16,7 @@ class SapUserIDModal{
     if (jsons['value'] != null) {
       final list =  jsons['value'] as List; //jsonDecode
       // print(list);
-      List<SapUserIDValue> dataList = list
+      final List<SapUserIDValue> dataList = list
           .map((dynamic enquiries) => SapUserIDValue.fromJson(enquiries))
           .toList();
       // print(dataList[0]);

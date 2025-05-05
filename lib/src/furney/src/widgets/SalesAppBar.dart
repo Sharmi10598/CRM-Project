@@ -5,9 +5,8 @@ import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 
 AppBar salesappBar(
     BuildContext context, GlobalKey<ScaffoldState> key, String title) {
-  key:key;
+  key;
   final width = MediaQuery.of(context).size.width;
-  const isTSH = false;
   final theme = Theme.of(context);
   return AppBar(
       leading: GestureDetector(
@@ -24,19 +23,21 @@ AppBar salesappBar(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-                  Column(
-                    children: [
-                      Text(
-                        title, //AppLocalizations.of(context)!.dashboard,
-                        style: TextStyle(
-                            fontSize:
+              Column(
+                children: [
+                  Text(
+                    title, //AppLocalizations.of(context)!.dashboard,
+                    style: TextStyle(
+                        fontSize:
                             //Screens.width(context) * 0.04,
-                            title.length>10? Screens.width(context) * 0.04:  Screens.width(context) * 0.045,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
+                            title.length > 10
+                                ? Screens.width(context) * 0.04
+                                : Screens.width(context) * 0.045,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600),
                   ),
+                ],
+              ),
             ],
           ),
         ),

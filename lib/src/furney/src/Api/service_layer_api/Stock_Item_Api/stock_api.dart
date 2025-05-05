@@ -16,26 +16,26 @@ class StockItemAPi {
   static String? nextLink;
   static Future<StockItemModal> getGlobalData() async {
     print(URL.url +
-        "Items?\$select=ItemCode,ItemName,QuantityOnStock,U_Pack_Size&\$filter=((contains(ItemCode,'$searchData') or contains(ItemName,'$searchData')) and contains(U_Pack_Size,'$pack.') And contains(U_Prd_MainGrp,'$mainGrp') and contains(U_Prd_SubGrp,'$subGrp')and Valid eq 'tYES' )");
+        "Items?\$select=ItemCode,ItemName,QuantityOnStock,U_Pack_Size&\$filter=((contains(ItemCode,'$searchData') or contains(ItemName,'$searchData')) and contains(U_Pack_Size,'$pack.') And contains(U_Prd_MainGrp,'$mainGrp') and contains(U_Prd_SubGrp,'$subGrp')and Valid eq 'tYES' )",);
     try {
       final response = await http.get(
         Uri.parse(URL.url +
-            "Items?\$select=ItemCode,ItemName,QuantityOnStock,U_Pack_Size&\$filter=((contains(ItemCode,'$searchData') or contains(ItemName,'$searchData')) and contains(U_Pack_Size,'$pack.') And contains(U_Prd_MainGrp,'$mainGrp') and contains(U_Prd_SubGrp,'$subGrp')and Valid eq 'tYES' )"),
+            "Items?\$select=ItemCode,ItemName,QuantityOnStock,U_Pack_Size&\$filter=((contains(ItemCode,'$searchData') or contains(ItemName,'$searchData')) and contains(U_Pack_Size,'$pack.') And contains(U_Prd_MainGrp,'$mainGrp') and contains(U_Prd_SubGrp,'$subGrp')and Valid eq 'tYES' )",),
         headers: {
           "content-type": "application/json",
           "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
           'prefer':
-              'odata.maxpagesize=${GetValues.maximumfetchValue}' //${GetValues.maximumfetchValue}
+              'odata.maxpagesize=${GetValues.maximumfetchValue}', //${GetValues.maximumfetchValue}
         },
       );
       // print("content-type:application/json");
       // print("cookie:'B!SESION'"+GetValues.sessionID.toString());
       // print("prefer:odata.maxpagesize="+GetValues.maximumfetchValue.toString());
-      log('Stock response: '+response.body.toString());
+      log('Stock response: '+response.body);
       if (response.statusCode == 200) {
         print(json.decode(response.body));
         return StockItemModal.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+            json.decode(response.body) as Map<String, dynamic>,);
       } else {
         print(json.decode(response.body));
         throw Exception("Error!!...");
@@ -56,7 +56,7 @@ class StockItemAPi {
         headers: {
           "content-type": "application/json",
           "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
-          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}'
+          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}',
         },
       );
       // print("content-type:application/json");
@@ -68,7 +68,7 @@ class StockItemAPi {
         print(json.decode(response.body));
         print(response.statusCode);
         return StockItemModal.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+            json.decode(response.body) as Map<String, dynamic>,);
       } else {
         print(json.decode(response.body));
         print(response.statusCode);

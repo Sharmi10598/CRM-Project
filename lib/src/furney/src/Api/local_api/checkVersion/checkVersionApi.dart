@@ -18,12 +18,12 @@ class CheckVersionAPi {
           'content-type': 'application/json',
         },
       );
-            print("YYYYYY::${response.statusCode}");
-        print('Vesrionsres::' + json.decode(response.body).toString());
+      //     print('YYYYYY::${response.statusCode}');
+      // print('Vesrionsres::${json.decode(response.body)}');
       if (response.statusCode == 200) {
-  
         return CheckVersion.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+          json.decode(response.body) as Map<String, dynamic>,
+        );
       } else {
         //  print(json.decode(response.body));
         print(json.decode(response.statusCode.toString()));

@@ -1,4 +1,4 @@
-package com.buson.crm
+package com.buson.insigniacrm
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine

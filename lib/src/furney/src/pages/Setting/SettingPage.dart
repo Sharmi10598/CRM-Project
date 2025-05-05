@@ -1,17 +1,14 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ultimate_bundle/src/furney/src/Api/local_api/SettingAPI/SettingsApi.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
+import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sign_in/sign_in_page.dart';
-import '../../Api/local_api/SettingAPI/SettingsApi.dart';
-import '../../helpers/screens.dart';
-import '../../widgets/Drawer.dart';
+import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
 class SettingWidget extends StatefulWidget {
-  SettingWidget({
+  const SettingWidget({
     required this.theme,
     Key? key,
   }) : super(key: key);
@@ -21,21 +18,26 @@ class SettingWidget extends StatefulWidget {
 }
 
 class SettingWidgetState extends State<SettingWidget> {
-  static List<GlobalKey<FormState>> formkey =
-      List.generate(100, (i) => GlobalKey<FormState>());
+  // static List<GlobalKey<FormState>> formkey =
+  //     List.generate(100, (i) => GlobalKey<FormState>());
+  final formKey = GlobalKey<FormState>();
   static List<TextEditingController> mycontroller =
       List.generate(150, (i) => TextEditingController());
   Future<SharedPreferences> pref = SharedPreferences.getInstance();
   disableKeyBoard(BuildContext context) {
-    FocusScopeNode currentFocus = FocusScope.of(context);
+    final currentFocus = FocusScope.of(context);
 
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
   }
 
-  validateMethod() async {
-    if (formkey[0].currentState!.validate()) {
+  List dropList = ['Tanzania', 'Zambia'];
+
+  String? countryValue;
+  validateeMethod() async {
+    log('message1setting');
+    if (formKey.currentState!.validate()) {
       final pref2 = await pref;
       SettingModelAPi.countryCode = mycontroller[3].text;
       await SettingModelAPi.getGlobalData().then((value) async {
@@ -45,10 +47,11 @@ class SettingWidgetState extends State<SettingWidget> {
               'countryCode',
               value.countryClass!.countryName,
             );
-
-            GetValues.countryCode = value.countryClass!.countryName;
-            FurneySignInScreenState.settingMsg = '';
-            log('FurneySignInScreenState.settingMsg ::${FurneySignInScreenState.settingMsg}');
+            setState(() {
+              GetValues.countryCode = value.countryClass!.countryName;
+              FurneySignInScreenState.settingMsg = '';
+              log('FurneySignInScreenState.settingMsg ::${FurneySignInScreenState.settingMsg}');
+            });
 
             await pref2.setString(
               'queryUrl',
@@ -69,31 +72,41 @@ class SettingWidgetState extends State<SettingWidget> {
             URL.dynamicUrl = value.countryClass!.queryUrl;
             URL.reportUrl = value.countryClass!.reportUrl;
             URL.urlLocal = value.countryClass!.localUrl;
-            if (pref2.getString('countryCode') == 'tanzania' ||
-                pref2.getString('countryCode') == 'Tanzania') {
+            if (pref2.getString('countryCode')!.toLowerCase().trim() ==
+                'tanzania') {
               setState(() {
-                log('Tanzania message1');
-                GetValues.sapPassword = 'Insignia@2021#';
+                pref2.setString('TSapPassword', 'Insignia@2021#');
+
+                // GetValues.sapPassword = 'Insignia@2021#';
+                GetValues.sapPassword = pref2.getString('TSapPassword');
+
                 GetValues.currency = 'TZS';
                 GetValues.countryCode = pref2.getString('countryCode');
               });
-            } else if (pref2.getString('countryCode') == 'zambia' ||
-                pref2.getString('countryCode') == 'Zambia') {
+              log('sapdetails::${GetValues.sapPassword},${GetValues.currency} ,${GetValues.countryCode}');
+            } else if (pref2.getString('countryCode')!.toLowerCase().trim() ==
+                    'zambia'
+                //  ||
+                //     pref2.getString('countryCode') == 'Zambia'
+                ) {
               setState(() {
-                log('Zambia message2');
-                GetValues.sapPassword = 'Insignia@2023#';
+                pref2.setString('ZSapPassword', 'Insignia@2023#');
+
+                // GetValues.sapPassword = 'Insignia@2023#';
+                GetValues.sapPassword = pref2.getString('ZSapPassword');
+
                 GetValues.currency = 'ZMW';
                 GetValues.countryCode = pref2.getString('countryCode');
               });
             }
 
-            log('${GetValues.sapPassword},${GetValues.currency} ,${GetValues.countryCode}');
+            log('sapdetails::${GetValues.sapPassword},${GetValues.currency} ,${GetValues.countryCode}');
             Navigator.pop(context);
           } else if (value.countryClass == null) {
             mycontroller[3].text = '';
             await pref2.remove('countryCode');
 
-            final snackBar = SnackBar(
+            const snackBar = SnackBar(
               duration: Duration(seconds: 5),
               backgroundColor: Colors.red,
               content: Text(
@@ -106,7 +119,7 @@ class SettingWidgetState extends State<SettingWidget> {
         } else {
           await pref2.remove('countryCode');
           mycontroller[3].text = '';
-          final snackBar = SnackBar(
+          const snackBar = SnackBar(
             duration: Duration(seconds: 5),
             backgroundColor: Colors.red,
             content: Text(
@@ -122,16 +135,20 @@ class SettingWidgetState extends State<SettingWidget> {
 
   saveCountryCode() async {
     final pref2 = await pref;
+    log('message:::${pref2.getString('countryCode')}');
     if (pref2.getString('countryCode') != null) {
-      mycontroller[3].text = pref2.getString('countryCode')!;
+      setState(() {
+        mycontroller[3].text = pref2.getString('countryCode')!;
+        countryValue = pref2.getString('countryCode');
+      });
     } else {
       mycontroller[3].text = '';
+      countryValue = '';
     }
   }
 
   @override
   initState() {
-    // TODO: implement initState
     super.initState();
     saveCountryCode();
   }
@@ -141,8 +158,12 @@ class SettingWidgetState extends State<SettingWidget> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
+      color: Colors.white,
+
       // padding: EdgeInsets.only(
       //     top: Screens.heigth(context) * 0.01,
       //     left: Screens.width(context) * 0.03,
@@ -166,12 +187,12 @@ class SettingWidgetState extends State<SettingWidget> {
                       left: Screens.heigth(context) * 0.02,
                       right: Screens.heigth(context) * 0.02,
                     ),
-                    // color: Colors.red,
+                    // color: Colors.red,s
                     // width: Screens.width(context) * 0.7,
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Configure',
-                      style: widget.theme.textTheme.bodyText2
+                      style: widget.theme.textTheme.bodyMedium
                           ?.copyWith(color: Colors.white),
                     ),
                   ),
@@ -183,13 +204,13 @@ class SettingWidgetState extends State<SettingWidget> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.close,
                         // size: Screens.heigth(context) * 0.025,
                         color: Colors.white,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -197,7 +218,7 @@ class SettingWidgetState extends State<SettingWidget> {
               height: Screens.heigth(context) * 0.02,
             ),
             Form(
-              key: formkey[0],
+              key: formKey,
               child: Column(
                 children: [
                   Container(
@@ -208,48 +229,97 @@ class SettingWidgetState extends State<SettingWidget> {
                     alignment: Alignment.centerRight,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
-                      color: Colors.grey.withOpacity(0.001),
                     ),
-                    child: TextFormField(
-                      autofocus: true,
-                      controller: mycontroller[3],
-                      cursorColor: Colors.grey,
-                      //keyboardType: TextInputType.number,
-                      onChanged: (v) {},
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Enter the Country Name';
-                        } else {
-                          return null;
-                        }
-                      },
+                    child: DropdownButtonFormField<String>(
+                      dropdownColor: Colors.white,
+                      isExpanded: true,
+                      validator: (value) => value == null ? 'Required' : null,
                       decoration: InputDecoration(
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
-                          borderSide: BorderSide(color: Colors.red),
+                          borderSide: const BorderSide(color: Colors.red),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
-                          borderSide: BorderSide(color: Colors.red),
+                          borderSide: const BorderSide(color: Colors.red),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
-                          borderSide: BorderSide(color: Colors.grey),
+                          borderSide: const BorderSide(color: Colors.grey),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        hintText: 'Country Name',
-                        hintStyle: widget.theme.textTheme.bodyText2
-                            ?.copyWith(color: Colors.grey),
-                        filled: false,
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 25,
+                          borderSide: const BorderSide(color: Colors.grey),
                         ),
                       ),
+                      icon: const Icon(Icons.arrow_drop_down),
+                      value: countryValue,
+                      items: dropList
+                          .map(
+                            (item) => DropdownMenuItem<String>(
+                              value: item.toString(),
+                              child: Text(
+                                item.toString(),
+                                style: theme.textTheme.bodyLarge
+                                    ?.copyWith(color: theme.primaryColor),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      hint: Text(
+                        'Select Country Code',
+                        style: theme.textTheme.bodyLarge
+                            ?.copyWith(color: Colors.grey),
+                      ),
+                      onChanged: (String? value) {
+                        setState(() {
+                          countryValue = value;
+                          mycontroller[3].text = value.toString();
+                          print('sleect country code: $countryValue');
+                        });
+                      },
                     ),
+                    //
+                    // TextFormField(
+                    //   autofocus: true,
+                    //   controller: mycontroller[3],
+                    //   cursorColor: Colors.grey,
+                    //   //keyboardType: TextInputType.number,
+                    //   onChanged: (v) {},
+                    //   validator: (value) {
+                    //     if (value!.isEmpty) {
+                    //       return 'Enter the Country Name';
+                    //     } else {
+                    //       return null;
+                    //     }
+                    //   },
+                    // decoration: InputDecoration(
+                    //   errorBorder: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(5),
+                    //     borderSide: BorderSide(color: Colors.red),
+                    //   ),
+                    //   focusedErrorBorder: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(5),
+                    //     borderSide: BorderSide(color: Colors.red),
+                    //   ),
+                    //   enabledBorder: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(5),
+                    //     borderSide: BorderSide(color: Colors.grey),
+                    //   ),
+                    //   focusedBorder: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(5),
+                    //     borderSide: BorderSide(color: Colors.grey),
+                    //   ),
+                    //     hintText: 'Country Name',
+                    // hintStyle: widget.theme.textTheme.bodyMedium
+                    //     ?.copyWith(color: Colors.grey),
+                    //     filled: false,
+                    //     contentPadding: const EdgeInsets.symmetric(
+                    //       vertical: 10,
+                    //       horizontal: 25,
+                    //     ),
+                    //   ),
+                    // ),
                   ),
                   SizedBox(
                     height: Screens.heigth(context) * 0.02,
@@ -257,22 +327,13 @@ class SettingWidgetState extends State<SettingWidget> {
                 ],
               ),
             ),
-            InkWell(
+            GestureDetector(
               onTap: () {
-                // setState(validateMethod);
+                // Navigator.pop(context);
                 setState(() {
-                  validateMethod();
+                  validateeMethod();
                 });
-
-                disableKeyBoard(context);
               },
-              // logCon.progrestext == true
-              //     ? null
-              //     : () {
-              //         st(() {
-              //           logCon.settingvalidate(context);
-              //         });
-              //       },
               child: Container(
                 alignment: Alignment.center,
                 height: Screens.heigth(context) * 0.045,
@@ -282,16 +343,10 @@ class SettingWidgetState extends State<SettingWidget> {
                 child: Center(
                   child: Container(
                     alignment: Alignment.center,
-                    child:
-                        //  logCon.progrestext == true
-                        //     ? CircularProgressIndicator(
-                        //         color: Colors.white,
-                        //       )
-                        //     :
-                        Text(
+                    child: Text(
                       'Ok',
                       textAlign: TextAlign.center,
-                      style: widget.theme.textTheme.bodyText1
+                      style: widget.theme.textTheme.bodyLarge
                           ?.copyWith(color: Colors.white),
                     ),
                   ),

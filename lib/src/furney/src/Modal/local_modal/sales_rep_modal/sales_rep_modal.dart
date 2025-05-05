@@ -29,7 +29,7 @@ class SalesRepModal {
     if (jsons['data'] != null) {
       final list = jsonDecode(jsons['data'] as String) as List; //jsonDecode
       // print(list);
-      List<SalesRepData> dataList = list
+      final List<SalesRepData> dataList = list
           .map((dynamic enquiries) => SalesRepData.fromJson(enquiries))
           .toList();
       // print(dataList[0]);

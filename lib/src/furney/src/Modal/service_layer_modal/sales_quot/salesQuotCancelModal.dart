@@ -19,7 +19,7 @@ class SalesQuotCancelModal{
     if (jsons['value'] != null) {
       final list =  jsons['value'] as List; //jsonDecode
       // print(list);
-      List<SalesQuotCancelValue> dataList = list
+      final List<SalesQuotCancelValue> dataList = list
           .map((dynamic enquiries) => SalesQuotCancelValue.fromJson(enquiries))
           .toList();
       // print(dataList[0]);

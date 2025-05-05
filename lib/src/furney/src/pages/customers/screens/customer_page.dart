@@ -17,11 +17,14 @@ import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/approval/screens/bp_info.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/approval/widget/general.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/approval/widget/logistic_page.dart';
+import 'package:ultimate_bundle/src/furney/src/pages/sales_order/screens/create_order.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sales_order/widget/creation/content_order_creation.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sales_order/widget/creation/header_order_creation.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sales_order/widget/creation/logistics_orders_creation.dart';
+import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/screens/create_quot.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/widget/creation/content_creation.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/widget/creation/header_creation.dart';
+import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/widget/header_qut.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/appBar.dart';
 
@@ -35,6 +38,8 @@ class CustomerPage extends StatefulWidget {
 class CustomerPageState extends State<CustomerPage> {
   static bool isCameFromCreation = false;
   static bool isCameFromCreationOrder = false;
+  static bool isCameFromAgeingReport = false;
+
   List<NewCustomerData> customerData = [];
   List<NewCustomerData> customerDataFilter = [];
   // ScrollController scrollController = ScrollController();
@@ -46,6 +51,7 @@ class CustomerPageState extends State<CustomerPage> {
   @override
   void initState() {
     super.initState();
+    log('isCameFromCreationOrderisCameFromCreationOrder::$isCameFromCreationOrder');
     callApi();
   }
 
@@ -54,8 +60,9 @@ class CustomerPageState extends State<CustomerPage> {
     setState(() {
       GetCustomerAPi.slpCode = preff.getString('SlpCode');
       print("slpccode222: " + GetCustomerAPi.slpCode.toString());
+      print("slpccode222: " + GetValues.sapPassword.toString());
     });
-  await GetCustomerAPi.getGlobalData().then((value) {
+    await GetCustomerAPi.getGlobalData().then((value) {
       if (value.CustomerData != null) {
         if (value.CustomerData!.length > 0) {
           print("Customervalue!.length: " +
@@ -145,7 +152,9 @@ class CustomerPageState extends State<CustomerPage> {
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
-      drawer: drawer(context),
+      drawer:
+          //  GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       appBar: appBar(context, _scaffoldKey, widget.title),
       body: customerData.isEmpty && searchLoading == false
           ? Center(
@@ -269,14 +278,14 @@ class CustomerPageState extends State<CustomerPage> {
                                 //   child:
                                 InkWell(
                               onTap: () {
-                                final FocusScopeNode focus = FocusScope.of(context);
+                                final FocusScopeNode focus =
+                                    FocusScope.of(context);
                                 if (!focus.hasPrimaryFocus) {
                                   focus.unfocus();
                                 }
                                 LogisticPageState.billto = '';
-                                  LogisticPageState.shipto ='';
+                                LogisticPageState.shipto = '';
                                 if (isCameFromCreation == true) {
-                                   
                                   setState(() {
                                     HeaderCreationState.bpName =
                                         customerDataFilter[i]
@@ -294,10 +303,18 @@ class CustomerPageState extends State<CustomerPage> {
                                         customerDataFilter[i]
                                             .currentOrderBalance
                                             .toString();
-
-                                    print("billll:" +
+                                    customerDataFilter[i].U_CASHCUST == 'YES'
+                                        ? HeaderCreationState
+                                            .isTextFiledEnabled = true
+                                        : HeaderCreationState
+                                            .isTextFiledEnabled = false;
+                                    HeaderOrderCreationState.bpName =
                                         customerDataFilter[i]
-                                            .BilltoDefault
+                                            .cardName
+                                            .toString();
+                                    log("billll111:" +
+                                        customerDataFilter[i]
+                                            .U_CASHCUST
                                             .toString());
                                     LogisticPageState.billto =
                                         customerDataFilter[i]
@@ -317,11 +334,23 @@ class CustomerPageState extends State<CustomerPage> {
                                     LogisticPageState.ordersBal =
                                         customerDataFilter[i]
                                             .currentOrderBalance!;
+                                    isCameFromCreation = false;
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const CreateDetails(
+                                                  title: 'Quotation Creation'),
+                                        ));
+                                    // Get.toNamed<dynamic>(
+                                    //     FurneyRoutes.creationDetails);
                                   });
-                                  isCameFromCreation = false;
-                                  Get.toNamed<dynamic>(
-                                      FurneyRoutes.creationDetails);
                                 } else if (isCameFromCreationOrder == true) {
+                                  log('bpNamexx =' +
+                                      customerDataFilter[i]
+                                          .cardName
+                                          .toString());
                                   setState(() {
                                     log(customerDataFilter[i]
                                         .currentOrderBalance
@@ -334,6 +363,9 @@ class CustomerPageState extends State<CustomerPage> {
                                             .isTextFiledEnabled = true
                                         : HeaderOrderCreationState
                                             .isTextFiledEnabled = false;
+
+                                    log('customerDataFilter[i].U_CASHCUST::${customerDataFilter[i].U_CASHCUST}');
+
                                     HeaderOrderCreationState.bpName =
                                         customerDataFilter[i]
                                             .cardName
@@ -342,16 +374,22 @@ class CustomerPageState extends State<CustomerPage> {
                                         customerDataFilter[i]
                                             .cardCode
                                             .toString();
-                                    HeaderOrderCreationState.currentACbalance =
-                                        customerDataFilter[i]
-                                            .currentAccountBalance
-                                            .toString();
+                                    HeaderOrderCreationState.bpName =
+                                        HeaderOrderCreationState
+                                                .currentACbalance =
+                                            customerDataFilter[i].cardName!;
+
+                                    customerDataFilter[i]
+                                        .currentAccountBalance
+                                        .toString();
                                     HeaderOrderCreationState.ordersBal =
                                         customerDataFilter[i]
                                             .currentOrderBalance
                                             .toString();
-                                  HeaderOrderCreationState.paymentTerms =   
-                                   customerDataFilter[i].pymntGroup.toString();        
+                                    HeaderOrderCreationState.paymentTerms =
+                                        customerDataFilter[i]
+                                            .pymntGroup
+                                            .toString();
                                     HeaderOrderCreationState.isHaveAdvance =
                                         customerDataFilter[i]
                                             .cardName
@@ -374,17 +412,26 @@ class CustomerPageState extends State<CustomerPage> {
                                             .toString();
                                     LogisticOrderState.ordersBal =
                                         customerDataFilter[i]
-                                            .currentOrderBalance
-                                            !;
+                                            .currentOrderBalance!;
                                     LogisticOrderState.currentACbalance =
                                         customerDataFilter[i]
-                                            .currentAccountBalance
-                                            !;
+                                            .currentAccountBalance!;
+                                    isCameFromCreationOrder = false;
+                                    Navigator.pop(context);
+
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const CreateOrderDetails(
+                                                  title: 'Order Creation'),
+                                        ));
+                                    // Get.toNamed<dynamic>(
+                                    //     FurneyRoutes.creationOrderDetails);
                                   });
-                                  isCameFromCreationOrder = false;
-                                  Get.toNamed<dynamic>(
-                                      FurneyRoutes.creationOrderDetails);
-                                } else {
+                                }
+                                // static bool isCameFromCreationOrder = false;
+                                else {
                                   BPInfoState.cardName =
                                       customerDataFilter[i].cardName;
                                   BPInfoState.cardCode =
@@ -397,7 +444,6 @@ class CustomerPageState extends State<CustomerPage> {
                                       customerDataFilter[i].slpname;
                                   BPInfoState.paymentTerms =
                                       customerDataFilter[i].pymntGroup;
-                                  // ignore: avoid_print
                                   print(BPInfoState.cardCode);
                                   CustomerDetailsAPi.cardCode =
                                       customerDataFilter[i].cardCode.toString();
@@ -520,13 +566,13 @@ class CustomerPageState extends State<CustomerPage> {
                       )
               ],
             ),
-       floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
-        onPressed: (){
+        onPressed: () {
           Get.toNamed<void>(FurneyRoutes.createCustomer);
         },
         child: const Icon(Icons.add),
-        ),     
+      ),
     );
   }
 

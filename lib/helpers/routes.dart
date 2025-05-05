@@ -11,6 +11,7 @@ import 'package:ultimate_bundle/SalesApp/Pages/Planning/UnplannedVisit.dart';
 import 'package:ultimate_bundle/SalesApp/Pages/Planning/UpdatePlan.dart';
 import 'package:ultimate_bundle/helpers/constants.dart';
 import 'package:ultimate_bundle/src/furney/main.dart';
+import 'package:ultimate_bundle/src/furney/main.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/approval/screens/all_addressess.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/approval/screens/all_contacts.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/approval/screens/approvals.dart';
@@ -72,7 +73,6 @@ import 'package:ultimate_bundle/src/furney/src/pages/sign_up/sign_up_page.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/stocks_items/screens/stock_items_page.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/stocks_items/screens/stock_warehouse_page.dart';
 
-
 List<GetPage> allRoutesFurney = [
   GetPage<dynamic>(
     name: FurneyRoutes.splash,
@@ -104,7 +104,9 @@ List<GetPage> allRoutesFurney = [
   ),
   GetPage<dynamic>(
     name: FurneyRoutes.notification,
-    page: () => const NotificationScreen(title: 'Notifications',),
+    page: () => const NotificationScreen(
+      title: 'Notifications',
+    ),
   ),
   GetPage<dynamic>(
     name: FurneyRoutes.profile,
@@ -123,312 +125,428 @@ List<GetPage> allRoutesFurney = [
     page: () => const FurneySignUpScreen(),
   ),
   //new crt
-    GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.salesQuotes,
     page: () => const SalesQuot(),
   ),
 
-      GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.dashBoard,
-    page: () => const FurneyHomeScreen(title: 'DashBoard',),
+    page: () => const FurneyHomeScreen(
+      title: 'DashBoard',
+    ),
   ),
 
-        GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.salesquotdetails,
-    page: () => const SalesQtDetails(title: 'Quotation Details',),
+    page: () => const SalesQtDetails(
+      title: 'Quotation Details',
+    ),
   ),
 
-   GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.attendance,
-    page: () => const AttendancePage(title: 'Attendance',),
+    page: () => const AttendancePage(
+      title: 'Attendance',
+    ),
   ),
 
-    GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.others,
-    page: () => const Others(title: 'All Menu',),
+    page: () => const Others(
+      title: 'All Menu',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.salesorderdetails,
-    page: () => const SalesOrderDetails(title: 'Order Details',),
+    page: () => const SalesOrderDetails(
+      title: 'Order Details',
+    ),
   ),
 
-
-   GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.approvals,
     page: () => const Approvals(),
   ),
-   GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.approvalsInfo,
-    page: () => const ApprovalsInfo(title: 'Approvals Info',),
-  ),  
-   GetPage<dynamic>(
+    page: () => const ApprovalsInfo(
+      title: 'Approvals Info',
+    ),
+  ),
+  GetPage<dynamic>(
     name: FurneyRoutes.iteminfo,
-    page: () =>const  ItemInfo(title: 'Item Info',),
+    page: () => const ItemInfo(
+      title: 'Item Info',
+    ),
   ),
   GetPage<dynamic>(
     name: FurneyRoutes.bpinfo,
-    page: () =>const  BPInfo(title: 'BP Info',),
+    page: () => const BPInfo(
+      title: 'BP Info',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.contactInfo,
-    page: () =>const  ContactInfo(title: 'Contact Info',),
+    page: () => const ContactInfo(
+      title: 'Contact Info',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.details,
-    page: () =>const  DetailsPage(title: 'Details',),
+    page: () => const DetailsPage(
+      title: 'Details',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.priceList,
-    page: () =>const  PriceListPage(title: 'Price List',),
+    page: () => const PriceListPage(
+      title: 'Price List',
+    ),
   ),
   GetPage<dynamic>(
     name: FurneyRoutes.attachments,
-    page: () =>const  Attachments(title: 'Attachments',),
+    page: () => const Attachments(
+      title: 'Attachments',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.regularSalesPrice,
-    page: () =>const  RegularSalesPrice(title: 'Regular Sales Price',),
+    page: () => const RegularSalesPrice(
+      title: 'Regular Sales Price',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.allContacts,
-    page: () =>const  AllContacts(title: 'All Contacts',),
+    page: () => const AllContacts(
+      title: 'All Contacts',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.alladdress,
-    page: () =>const  AllAddresses(title: 'All Addresses',),
+    page: () => const AllAddresses(
+      title: 'All Addresses',
+    ),
   ),
 
-   GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.activities,
-    page: () =>const  Activities(title: 'Activities',),
+    page: () => const Activities(
+      title: 'Activities',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.activitiesDetails,
-    page: () =>const  ActivitiesDetails(title: 'Activities Details',),
+    page: () => const ActivitiesDetails(
+      title: 'Activities Details',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.editactivity,
-    page: () =>const  EditActivity(title: 'Edit Activity',),
+    page: () => const EditActivity(
+      title: 'Edit Activity',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.more,
-    page: () =>const  More(title: 'More',),
-  ),
-
-   GetPage<dynamic>(
-    name: FurneyRoutes.specialPrices,
-    page: () =>const  SpecialPrices(title: 'Special Prices',),
-  ),
-
-   GetPage<dynamic>(
-    name: FurneyRoutes.opportunities,
-    page: () =>const  Opportunities(title: 'Opportunities',),
-  ),
-
-   GetPage<dynamic>(
-    name: FurneyRoutes.opportunitiesInfo,
-    page: () =>const  OpportunitiesInfo(title: 'Opportunities Info',),
+    page: () => const More(
+      title: 'More',
+    ),
   ),
 
   GetPage<dynamic>(
-    name: FurneyRoutes.customerpage,
-    page: () =>const  CustomerPage(title: 'Customer',),
+    name: FurneyRoutes.specialPrices,
+    page: () => const SpecialPrices(
+      title: 'Special Prices',
+    ),
+  ),
+
+  GetPage<dynamic>(
+    name: FurneyRoutes.opportunities,
+    page: () => const Opportunities(
+      title: 'Opportunities',
+    ),
+  ),
+
+  GetPage<dynamic>(
+    name: FurneyRoutes.opportunitiesInfo,
+    page: () => const OpportunitiesInfo(
+      title: 'Opportunities Info',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.stockItem,
-    page: () =>const  StockItem(title: 'Stock',),
+    page: () => const StockItem(
+      title: 'Stock',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.stockWarehouse,
-    page: () =>const  StockWarehouse(title: 'Stock',),
+    page: () => const StockWarehouse(
+      title: 'Stock',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.paymentCustomers,
-    page: () =>const  PaymentCustomer(title: 'Payment Customers',),
+    page: () => const PaymentCustomer(
+      title: 'Payment Customers',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.deliveyPage,
-    page: () =>const  DeliveryPage(title: 'Delivey Details',),
+    page: () => const DeliveryPage(
+      title: 'Delivey Details',
+    ),
   ),
 
-   GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.deliveyDetails,
-    page: () =>const  DeliveryDetails(title: 'Delivey Details',),
+    page: () => const DeliveryDetails(
+      title: 'Delivey Details',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.complaintsPage,
-    page: () =>const  ComplaintsPage(title: 'complaints',),
+    page: () => const ComplaintsPage(
+      title: 'complaints',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.bpAllAddresses,
-    page: () =>const  AllAdress(title: 'BP Info',),
+    page: () => const AllAdress(
+      title: 'BP Info',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.bpAllContacts,
-    page: () =>const  AllContact(title: 'BP Info',),
+    page: () => const AllContact(
+      title: 'BP Info',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.salesRep,
-    page: () =>const  SalesRep(title: 'Sales Rep',),
+    page: () => const SalesRep(
+      title: 'Sales Rep',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.creationDetails,
-    page: () =>const  CreateDetails(title: 'Quotation Creation',),
+    page: () => const CreateDetails(
+      title: 'Quotation Creation',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.itemDetails,
-    page: () =>const  ItemsDetails(title: 'Item Details',),
+    page: () => const ItemsDetails(
+      title: 'Item Details',
+    ),
   ),
 
-   GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.contactpersons,
-    page: () =>const  ContactPerson(title: 'Contact Persons',),
+    page: () => const ContactPerson(
+      title: 'Contact Persons',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.creationOrderDetails,
-    page: () =>const  CreateOrderDetails(title: 'Order Creation',),
+    page: () => const CreateOrderDetails(
+      title: 'Order Creation',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.salesQuotItems,
-    page: () =>const  SalesQuotItems(title: 'Item Details',),
+    page: () => const SalesQuotItems(
+      title: 'Item Details',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.salesOrderItems,
-    page: () =>const  SalesOrderItems(title: 'Item Details',),
+    page: () => const SalesOrderItems(
+      title: 'Item Details',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.deliveryItemsdetails,
-    page: () =>const  DeliveryItems(title: 'Item Details',),
+    page: () => const DeliveryItems(
+      title: 'Item Details',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.notesPage,
-    page: () =>const  NotesPage(title: 'Notes Page',),
+    page: () => const NotesPage(
+      title: 'Notes Page',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.notesDetails,
-    page: () =>const  NotesDetails(title: 'Notes Details',),
+    page: () => const NotesDetails(
+      title: 'Notes Details',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.newSalesQuot,
-    page: () =>const  SalesQuotationNew(title: 'Sales Quotations',),
+    page: () => const SalesQuotationNew(
+      title: 'Sales Quotations',
+    ),
   ),
 
-    GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.approvalsDetailsSalesQuot,
-    page: () =>const  ApprovalsDetailsQuot(title: 'Approvals Info',),
+    page: () => const ApprovalsDetailsQuot(
+      title: 'Approvals Info',
+    ),
   ),
 
-   GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.newSalesOrders,
-    page: () =>const  SalesOrderNew(title: 'Sales Orders',),
+    page: () => const SalesOrderNew(
+      title: 'Sales Orders',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.approvalsDetailsSalesOrders,
-    page: () =>const  ApprovalsDetailsOrders(title: 'Approvals Info',),
+    page: () => const ApprovalsDetailsOrders(
+      title: 'Approvals Info',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.approvalsNew,
-    page: () =>const  ApprovalsNew(title: 'Approvals',),
+    page: () => const ApprovalsNew(
+      title: 'Approvals',
+    ),
   ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.showpdf,
     page: () => const ShowPdf(),
   ),
-   GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.reports,
-    page: () => const Reports(title: 'Reports',),
-  ), 
-   GetPage<dynamic>(
+    page: () => const Reports(
+      title: 'Reports',
+    ),
+  ),
+  GetPage<dynamic>(
     name: FurneyRoutes.depotperformance,
-    page: () => const DepotPerformance(title: 'Depot Performance',),
-  ), 
-   GetPage<dynamic>(
+    page: () => const DepotPerformance(
+      title: 'Depot Performance',
+    ),
+  ),
+  GetPage<dynamic>(
     name: FurneyRoutes.planningPage,
-    page: () => const PlanningPage(title: 'Site Visit Planner',),
-  ), 
-   GetPage<dynamic>(
+    page: () => const PlanningPage(
+      title: 'Site Visit Planner',
+    ),
+  ),
+  GetPage<dynamic>(
     name: FurneyRoutes.approvalTask,
-    page: () => const ApprovalTask(title: 'Approval Pending',),
-  ), 
-   GetPage<dynamic>(
+    page: () => const ApprovalTask(
+      title: 'Approval Pending',
+    ),
+  ),
+  GetPage<dynamic>(
     name: FurneyRoutes.checkoutPage,
-    page: () => const CheckOutPage(title: 'Check Out',),
-  ), 
-   GetPage<dynamic>(
+    page: () => const CheckOutPage(
+      title: 'Site Check-Out',
+    ),
+  ),
+  GetPage<dynamic>(
     name: FurneyRoutes.createVisitPage,
-    page: () => const CreateVisitPage(title: 'Visit Task Creation',),
-  ), 
-   GetPage<dynamic>(
+    page: () => const CreateVisitPage(
+      title: 'Visit Task Creation',
+    ),
+  ),
+  GetPage<dynamic>(
     name: FurneyRoutes.checkin,
-    page: () => const CheckinPage(title: 'Checkin',),
-  ), 
-    GetPage<dynamic>(
+    page: () => const CheckinPage(
+      title: 'Checkin',
+    ),
+  ),
+  GetPage<dynamic>(
     name: FurneyRoutes.checkedin,
-    page: () => const CheckedINPage(title: 'Checkedin',),
-  ), 
-    GetPage<dynamic>(
+    page: () => const CheckedINPage(
+      title: 'Checkedin',
+    ),
+  ),
+  GetPage<dynamic>(
     name: FurneyRoutes.selectionCustomer,
-    page: () => const SelectCustomerPage(title: 'Customers',),
-  ), 
-
-      GetPage<dynamic>(
+    page: () => const SelectCustomerPage(
+      title: 'Customers',
+    ),
+  ),
+  GetPage<dynamic>(
+    name: FurneyRoutes.customerpage,
+    page: () => const CustomerPage(
+      title: 'Customer',
+    ),
+  ),
+  GetPage<dynamic>(
     name: FurneyRoutes.createCustomer,
-    page: () => const CustomerCreatePage(title: 'Customer',),
-  ), 
+    page: () => const CustomerCreatePage(
+      title: 'Customer',
+    ),
+  ),
 
-        GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.locationApproval,
-    page: () => const LocationApproval(title: 'Location Approval',),
-  ), 
+    page: () => const LocationApproval(
+      title: 'Location Approval',
+    ),
+  ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.updatePlan,
-    page: () => const UpdateVisitPage(title: 'Location Approval',),
-  ), 
+    page: () => const UpdateVisitPage(
+      title: 'Location Approval',
+    ),
+  ),
 
   GetPage<dynamic>(
     name: FurneyRoutes.updatePlan,
-    page: () => const UpdateVisitPage(title: 'Location Approval',),
-  ), 
+    page: () => const UpdateVisitPage(
+      title: 'Location Approval',
+    ),
+  ),
 
-    GetPage<dynamic>(
+  GetPage<dynamic>(
     name: FurneyRoutes.unplannedVisit,
-    page: () => const UnplannedVisitPage(title: 'Unplanned Visit',),
-  ), 
+    page: () => const UnplannedVisitPage(
+      title: 'Unplanned Visit',
+    ),
+  ),
   GetPage<dynamic>(
     name: FurneyRoutes.salesQtDetailss,
     page: () => const SalesDetailsQuot(),
     // title: 'Sales Quotation details',
-  ), 
-  
+  ),
 ];

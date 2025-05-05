@@ -206,7 +206,7 @@ class ApprovalsQuotDetailsState extends State<ApprovalsQuotDetails> {
                                     width: Screens.width(context)*0.4,
                                   child: Text('${filterapprovals[i].cardName}',
                                   style: TextStyles.bodytextBlack1(context),),
-                                )
+                                ),
                               ],
                             ),
             
@@ -227,10 +227,10 @@ class ApprovalsQuotDetailsState extends State<ApprovalsQuotDetails> {
                                     ),
                                   ),
                                   Icon(Icons.chevron_right,
-                                  color:  theme.primaryColor,)
+                                  color:  theme.primaryColor,),
                                 ],
                               ),
-                            )
+                            ),
                       ],
                     ),
                             ),

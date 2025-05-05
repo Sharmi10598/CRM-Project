@@ -43,10 +43,10 @@ class BPInfoState extends State<BPInfo> {
     GeneralState.acntBalance = curentBalance;
     GeneralState.slpName = slpName;
     GeneralState.paymentTerms = paymentTerms;
-   
+
     CustomerDetailsAPi.getGlobalData().then((value) {
-       log("CustomerDetailsAPi.length: " +
-       value.contactEmployees!.length.toString());
+      log("CustomerDetailsAPi.length: " +
+          value.contactEmployees!.length.toString());
       if (value.contactEmployees!.length > 0) {
         log("contactEmployees: " + value.contactEmployees![0].name.toString());
       }
@@ -79,7 +79,9 @@ class BPInfoState extends State<BPInfo> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: appBar(context, _scaffoldKey, widget.title),
-      drawer: drawer(context),
+      drawer:
+          // GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       backgroundColor: Colors.grey[200],
       body:
           // GeneralState.customerDetailsValue ==null &&  GeneralState.salesPersonModal!.isEmpty?
@@ -140,7 +142,7 @@ class BPInfoState extends State<BPInfo> {
                                 border: Border.all(color: theme.primaryColor),
                                 color: theme.primaryColor,
                               ),
-                              labelColor: theme.colorScheme.background,
+                              labelColor: theme.colorScheme.surface,
                               unselectedLabelColor: theme.primaryColor,
                               tabs: [
                                 Tab(
@@ -227,345 +229,345 @@ class BPInfoState extends State<BPInfo> {
   }
 }
 
-  // data.length==0?Center(
-  //                child:  SpinKitThreeBounce(
-  //                     size: Screens.heigth(context)*0.06,
-  //                     color:theme.primaryColor,
-  //                   ),
-  //              ):  Container(padding: EdgeInsets.symmetric(horizontal: Screens.width(context)*0.02 ),
-  //     width: Screens.width(context),
-  //     height: Screens.heigth(context) * 0.3,
-  //     color: Colors.white,
-  //     child: SingleChildScrollView(
-  //       child: Column(
-  //          crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //              SizedBox(height: Screens.heigth(context) * 0.01, ),
-  //                     Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.start,
-  //                       children: [
-  //                         Text(
-  //                       //    AppLocalizations.of(context)!.docNo,
-  //                         "Acct Balance",
-  //                           style: GoogleFonts.poppins(
-  //                               fontSize: Screens.heigth(context) * 0.018,
-  //                               color: theme.primaryColor),
-  //                         ),
-  //                         Container(
-  //                           width: Screens.width(context) * 0.83,
-  //                           // color: Colors.blue,
-  //                           child: Text(
-  //                             "4,789,949.15 \$",
-  //                             style: GoogleFonts.poppins(
-  //                                 fontSize: Screens.heigth(context) * 0.02,
-  //                                 color: Colors.black),
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     ),
-  //          SizedBox(height: Screens.heigth(context) * 0.01, ),
-  //                     Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.start,
-  //                       children: [
-  //                         Text(
-  //                       //    AppLocalizations.of(context)!.docNo,
-  //                         "Credit Limit",
-  //                           style: GoogleFonts.poppins(
-  //                               fontSize: Screens.heigth(context) * 0.018,
-  //                               color: theme.primaryColor),
-  //                         ),
-  //                         Container(
-  //                           width: Screens.width(context) * 0.83,
-  //                           // color: Colors.blue,
-  //                           child: Text(
-  //                             "0.00 \$",
-  //                             style: GoogleFonts.poppins(
-  //                                 fontSize: Screens.heigth(context) * 0.02,
-  //                                 color: Colors.black),
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     ),
-  //            SizedBox(height: Screens.heigth(context) * 0.01, ),
-  //                     Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.start,
-  //                       children: [
-  //                         Text(
-  //                       //    AppLocalizations.of(context)!.docNo,
-  //                         "Acct Balance",
-  //                           style: GoogleFonts.poppins(
-  //                               fontSize: Screens.heigth(context) * 0.018,
-  //                               color: theme.primaryColor),
-  //                         ),
-  //                         Container(
-  //                           width: Screens.width(context) * 0.83,
-  //                           // color: Colors.blue,
-  //                           child: Text(
-  //                             "4,789,949.15 \$",
-  //                             style: GoogleFonts.poppins(
-  //                                 fontSize: Screens.heigth(context) * 0.02,
-  //                                 color: Colors.black),
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     ),
-  //           SizedBox(height: Screens.heigth(context) * 0.01, ),
-  //                     Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.start,
-  //                       children: [
-  //                         Text(
-  //                       //    AppLocalizations.of(context)!.docNo,
-  //                         "Sales Employee",
-  //                           style: GoogleFonts.poppins(
-  //                               fontSize: Screens.heigth(context) * 0.018,
-  //                               color: theme.primaryColor),
-  //                         ),
-  //                         Container(
-  //                           width: Screens.width(context) * 0.83,
-  //                           // color: Colors.blue,
-  //                           child: Text(
-  //                             "Tom Mobile",
-  //                             style: GoogleFonts.poppins(
-  //                                 fontSize: Screens.heigth(context) * 0.02,
-  //                                 color: Colors.black),
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     ),
-  //           SizedBox(height: Screens.heigth(context) * 0.01, ),
-  //                     Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.start,
-  //                       children: [
-  //                         Text(
-  //                       //    AppLocalizations.of(context)!.docNo,
-  //                         "Payment Terms",
-  //                           style: GoogleFonts.poppins(
-  //                               fontSize: Screens.heigth(context) * 0.018,
-  //                               color: theme.primaryColor),
-  //                         ),
-  //                         Container(
-  //                           width: Screens.width(context) * 0.83,
-  //                           // color: Colors.blue,
-  //                           child: Text(
-  //                             "2P10Net30",
-  //                             style: GoogleFonts.poppins(
-  //                                 fontSize: Screens.heigth(context) * 0.02,
-  //                                 color: Colors.black),
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                SizedBox(height: Screens.heigth(context) * 0.01, ),
-  //                 GestureDetector(
-  //                             onTap: (){
-  //                              Get.toNamed<dynamic>(FurneyRoutes.regularSalesPrice);
-  //                             },
-  //                             child: Column(
-  //                               crossAxisAlignment: CrossAxisAlignment.start,
-  //                               children: [
-  //                                 Text(
-  //                                   "Price List",
-  //                                   style: GoogleFonts.poppins(
-  //                                       fontSize: Screens.heigth(context) * 0.018,
-  //                                       color: theme.primaryColor),
-  //                                 ),
-  //                                 Row(
-  //                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                                   children: [
-  //                                     Container(
-  //                                       width: Screens.width(context) * 0.83,
-  //                                       // color: Colors.blue,
-  //                                       child: Text(
-  //                                         "Regular Sales Price",
-  //                                         style: GoogleFonts.poppins(
-  //                                             fontSize: Screens.heigth(context) * 0.02,
-  //                                             color: Colors.black),
-  //                                       ),
-  //                                     ),
-  //                                     Container(
-  //                                       child: Icon(
-  //                                         Icons.navigate_next_outlined,
-  //                                         color: theme.primaryColor,
-  //                                         size: Screens.heigth(context) * 0.06,
-  //                                       ),
-  //                                     )
-  //                                   ],
-  //                                 )
-  //                               ],
-  //                             ),
-  //                           ),
-  //                SizedBox(height: Screens.heigth(context) * 0.01, ),
-  //                 GestureDetector(
-  //                             onTap: (){
-  //                              makecall("tel:555-0110");
-  //                             },
-  //                             child: Column(
-  //                               crossAxisAlignment: CrossAxisAlignment.start,
-  //                               children: [
-  //                                 Text(
-  //                                   "Telephone",
-  //                                   style: GoogleFonts.poppins(
-  //                                       fontSize: Screens.heigth(context) * 0.018,
-  //                                       color: theme.primaryColor),
-  //                                 ),
-  //                                 Row(
-  //                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                                   children: [
-  //                                     Container(
-  //                                       width: Screens.width(context) * 0.83,
-  //                                       // color: Colors.blue,
-  //                                       child: Text(
-  //                                        // "555-0110",
-  //                                         data[0].cardCode.toString(),
-  //                                         style: GoogleFonts.poppins(
-  //                                             fontSize: Screens.heigth(context) * 0.02,
-  //                                             color: Colors.black),
-  //                                       ),
-  //                                     ),
-  //                                     Container(
-  //                                       child: Icon(
-  //                                         Icons.navigate_next_outlined,
-  //                                         color: theme.primaryColor,
-  //                                         size: Screens.heigth(context) * 0.06,
-  //                                       ),
-  //                                     )
-  //                                   ],
-  //                                 )
-  //                               ],
-  //                             ),
-  //                           ),   
-  //                SizedBox(height: Screens.heigth(context) * 0.01, ),
-  //                 GestureDetector(
-  //                             onTap: (){
-  //                           mailto("https://mail.google.com/mail/u/0/#inbox?compose=new");
-  //                             },
-  //                             child: Column(
-  //                               crossAxisAlignment: CrossAxisAlignment.start,
-  //                               children: [
-  //                                 Text(
-  //                                   "Email",
-  //                                   style: GoogleFonts.poppins(
-  //                                       fontSize: Screens.heigth(context) * 0.018,
-  //                                       color: theme.primaryColor),
-  //                                 ),
-  //                                 Row(
-  //                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                                   children: [
-  //                                     Container(
-  //                                       width: Screens.width(context) * 0.83,
-  //                                       // color: Colors.blue,
-  //                                       child: Text(
-  //                                         "info@maxi-teq.sap.com",
-  //                                         style: GoogleFonts.poppins(
-  //                                             fontSize: Screens.heigth(context) * 0.02,
-  //                                             color: Colors.black),
-  //                                       ),
-  //                                     ),
-  //                                     Container(
-  //                                       child: Icon(
-  //                                         Icons.navigate_next_outlined,
-  //                                         color: theme.primaryColor,
-  //                                         size: Screens.heigth(context) * 0.06,
-  //                                       ),
-  //                                     )
-  //                                   ],
-  //                                 )
-  //                               ],
-  //                             ),
-  //                           ), 
-  //                SizedBox(height: Screens.heigth(context) * 0.01, ),
-  //                 GestureDetector(
-  //                             onTap: (){
-  //                          //  launchInWebViewWithJavaScript("https://mail.google.com");
-  //                          launchInBrowser("https://google.com");
-  //                             },
-  //                             child: Column(
-  //                               crossAxisAlignment: CrossAxisAlignment.start,
-  //                               children: [
-  //                                 Text(
-  //                                   "Web Site",
-  //                                   style: GoogleFonts.poppins(
-  //                                       fontSize: Screens.heigth(context) * 0.018,
-  //                                       color: theme.primaryColor),
-  //                                 ),
-  //                                 Row(
-  //                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                                   children: [
-  //                                     Container(
-  //                                       width: Screens.width(context) * 0.83,
-  //                                       // color: Colors.blue,
-  //                                       child: Text(
-  //                                         "WWW.maxi-teq.sap.com",
-  //                                         style: GoogleFonts.poppins(
-  //                                             fontSize: Screens.heigth(context) * 0.02,
-  //                                             color: Colors.black),
-  //                                       ),
-  //                                     ),
-  //                                     Container(
-  //                                       child: Icon(
-  //                                         Icons.navigate_next_outlined,
-  //                                         color: theme.primaryColor,
-  //                                         size: Screens.heigth(context) * 0.06,
-  //                                       ),
-  //                                     )
-  //                                   ],
-  //                                 )
-  //                               ],
-  //                             ),
-  //                           ),              
-  //             SizedBox(height: Screens.heigth(context) * 0.01, ),
-  //                     Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.start,
-  //                       children: [
-  //                         Text(
-  //                       //    AppLocalizations.of(context)!.docNo,
-  //                         "Remarks",
-  //                           style: GoogleFonts.poppins(
-  //                               fontSize: Screens.heigth(context) * 0.018,
-  //                               color: theme.primaryColor),
-  //                         ),
-  //                         Container(
-  //                           width: Screens.width(context) * 0.83,
-  //                           // color: Colors.blue,
-  //                           child: Text(
-  //                             "",
-  //                             style: GoogleFonts.poppins(
-  //                                 fontSize: Screens.heigth(context) * 0.02,
-  //                                 color: Colors.black),
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     ),
-  //            SizedBox(height: Screens.heigth(context) * 0.01, ),
-  //                     GestureDetector(
-  //                         onTap: (){
-  //                                 Get.toNamed<dynamic>(FurneyRoutes.attachments);
-  //                             },
-  //                       child: Center(
-  //                         child: Row(
-  //                           crossAxisAlignment: CrossAxisAlignment.center,
-  //                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //                           children: [
-  //                             SizedBox(width: Screens.width(context)*0.3,),
-  //                             Text(
-  //                             "Attachments",
-  //                             style: GoogleFonts.poppins(
-  //                                 fontSize: Screens.heigth(context) * 0.02,
-  //                                 color: Colors.black),
-  //                           ),
-  //                           SizedBox(width: Screens.width(context)*0.25,),
-  //                             Container(
-  //                                       child: Icon(
-  //                                         Icons.navigate_next_outlined,
-  //                                         color: theme.primaryColor,
-  //                                         size: Screens.heigth(context) * 0.06,
-  //                                       ),
-  //                                     )
-  //                           ],
-  //                         ),
-  //                       ),
-  //                     )
-  //         ],
-  //       ),
-  //     ),
-  //   ),
+// data.length==0?Center(
+//                child:  SpinKitThreeBounce(
+//                     size: Screens.heigth(context)*0.06,
+//                     color:theme.primaryColor,
+//                   ),
+//              ):  Container(padding: EdgeInsets.symmetric(horizontal: Screens.width(context)*0.02 ),
+//     width: Screens.width(context),
+//     height: Screens.heigth(context) * 0.3,
+//     color: Colors.white,
+//     child: SingleChildScrollView(
+//       child: Column(
+//          crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//              SizedBox(height: Screens.heigth(context) * 0.01, ),
+//                     Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         Text(
+//                       //    AppLocalizations.of(context)!.docNo,
+//                         "Acct Balance",
+//                           style: GoogleFonts.poppins(
+//                               fontSize: Screens.heigth(context) * 0.018,
+//                               color: theme.primaryColor),
+//                         ),
+//                         Container(
+//                           width: Screens.width(context) * 0.83,
+//                           // color: Colors.blue,
+//                           child: Text(
+//                             "4,789,949.15 \$",
+//                             style: GoogleFonts.poppins(
+//                                 fontSize: Screens.heigth(context) * 0.02,
+//                                 color: Colors.black),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//          SizedBox(height: Screens.heigth(context) * 0.01, ),
+//                     Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         Text(
+//                       //    AppLocalizations.of(context)!.docNo,
+//                         "Credit Limit",
+//                           style: GoogleFonts.poppins(
+//                               fontSize: Screens.heigth(context) * 0.018,
+//                               color: theme.primaryColor),
+//                         ),
+//                         Container(
+//                           width: Screens.width(context) * 0.83,
+//                           // color: Colors.blue,
+//                           child: Text(
+//                             "0.00 \$",
+//                             style: GoogleFonts.poppins(
+//                                 fontSize: Screens.heigth(context) * 0.02,
+//                                 color: Colors.black),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//            SizedBox(height: Screens.heigth(context) * 0.01, ),
+//                     Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         Text(
+//                       //    AppLocalizations.of(context)!.docNo,
+//                         "Acct Balance",
+//                           style: GoogleFonts.poppins(
+//                               fontSize: Screens.heigth(context) * 0.018,
+//                               color: theme.primaryColor),
+//                         ),
+//                         Container(
+//                           width: Screens.width(context) * 0.83,
+//                           // color: Colors.blue,
+//                           child: Text(
+//                             "4,789,949.15 \$",
+//                             style: GoogleFonts.poppins(
+//                                 fontSize: Screens.heigth(context) * 0.02,
+//                                 color: Colors.black),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//           SizedBox(height: Screens.heigth(context) * 0.01, ),
+//                     Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         Text(
+//                       //    AppLocalizations.of(context)!.docNo,
+//                         "Sales Employee",
+//                           style: GoogleFonts.poppins(
+//                               fontSize: Screens.heigth(context) * 0.018,
+//                               color: theme.primaryColor),
+//                         ),
+//                         Container(
+//                           width: Screens.width(context) * 0.83,
+//                           // color: Colors.blue,
+//                           child: Text(
+//                             "Tom Mobile",
+//                             style: GoogleFonts.poppins(
+//                                 fontSize: Screens.heigth(context) * 0.02,
+//                                 color: Colors.black),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//           SizedBox(height: Screens.heigth(context) * 0.01, ),
+//                     Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         Text(
+//                       //    AppLocalizations.of(context)!.docNo,
+//                         "Payment Terms",
+//                           style: GoogleFonts.poppins(
+//                               fontSize: Screens.heigth(context) * 0.018,
+//                               color: theme.primaryColor),
+//                         ),
+//                         Container(
+//                           width: Screens.width(context) * 0.83,
+//                           // color: Colors.blue,
+//                           child: Text(
+//                             "2P10Net30",
+//                             style: GoogleFonts.poppins(
+//                                 fontSize: Screens.heigth(context) * 0.02,
+//                                 color: Colors.black),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                SizedBox(height: Screens.heigth(context) * 0.01, ),
+//                 GestureDetector(
+//                             onTap: (){
+//                              Get.toNamed<dynamic>(FurneyRoutes.regularSalesPrice);
+//                             },
+//                             child: Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 Text(
+//                                   "Price List",
+//                                   style: GoogleFonts.poppins(
+//                                       fontSize: Screens.heigth(context) * 0.018,
+//                                       color: theme.primaryColor),
+//                                 ),
+//                                 Row(
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: [
+//                                     Container(
+//                                       width: Screens.width(context) * 0.83,
+//                                       // color: Colors.blue,
+//                                       child: Text(
+//                                         "Regular Sales Price",
+//                                         style: GoogleFonts.poppins(
+//                                             fontSize: Screens.heigth(context) * 0.02,
+//                                             color: Colors.black),
+//                                       ),
+//                                     ),
+//                                     Container(
+//                                       child: Icon(
+//                                         Icons.navigate_next_outlined,
+//                                         color: theme.primaryColor,
+//                                         size: Screens.heigth(context) * 0.06,
+//                                       ),
+//                                     )
+//                                   ],
+//                                 )
+//                               ],
+//                             ),
+//                           ),
+//                SizedBox(height: Screens.heigth(context) * 0.01, ),
+//                 GestureDetector(
+//                             onTap: (){
+//                              makecall("tel:555-0110");
+//                             },
+//                             child: Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 Text(
+//                                   "Telephone",
+//                                   style: GoogleFonts.poppins(
+//                                       fontSize: Screens.heigth(context) * 0.018,
+//                                       color: theme.primaryColor),
+//                                 ),
+//                                 Row(
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: [
+//                                     Container(
+//                                       width: Screens.width(context) * 0.83,
+//                                       // color: Colors.blue,
+//                                       child: Text(
+//                                        // "555-0110",
+//                                         data[0].cardCode.toString(),
+//                                         style: GoogleFonts.poppins(
+//                                             fontSize: Screens.heigth(context) * 0.02,
+//                                             color: Colors.black),
+//                                       ),
+//                                     ),
+//                                     Container(
+//                                       child: Icon(
+//                                         Icons.navigate_next_outlined,
+//                                         color: theme.primaryColor,
+//                                         size: Screens.heigth(context) * 0.06,
+//                                       ),
+//                                     )
+//                                   ],
+//                                 )
+//                               ],
+//                             ),
+//                           ),
+//                SizedBox(height: Screens.heigth(context) * 0.01, ),
+//                 GestureDetector(
+//                             onTap: (){
+//                           mailto("https://mail.google.com/mail/u/0/#inbox?compose=new");
+//                             },
+//                             child: Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 Text(
+//                                   "Email",
+//                                   style: GoogleFonts.poppins(
+//                                       fontSize: Screens.heigth(context) * 0.018,
+//                                       color: theme.primaryColor),
+//                                 ),
+//                                 Row(
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: [
+//                                     Container(
+//                                       width: Screens.width(context) * 0.83,
+//                                       // color: Colors.blue,
+//                                       child: Text(
+//                                         "info@maxi-teq.sap.com",
+//                                         style: GoogleFonts.poppins(
+//                                             fontSize: Screens.heigth(context) * 0.02,
+//                                             color: Colors.black),
+//                                       ),
+//                                     ),
+//                                     Container(
+//                                       child: Icon(
+//                                         Icons.navigate_next_outlined,
+//                                         color: theme.primaryColor,
+//                                         size: Screens.heigth(context) * 0.06,
+//                                       ),
+//                                     )
+//                                   ],
+//                                 )
+//                               ],
+//                             ),
+//                           ),
+//                SizedBox(height: Screens.heigth(context) * 0.01, ),
+//                 GestureDetector(
+//                             onTap: (){
+//                          //  launchInWebViewWithJavaScript("https://mail.google.com");
+//                          launchInBrowser("https://google.com");
+//                             },
+//                             child: Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 Text(
+//                                   "Web Site",
+//                                   style: GoogleFonts.poppins(
+//                                       fontSize: Screens.heigth(context) * 0.018,
+//                                       color: theme.primaryColor),
+//                                 ),
+//                                 Row(
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: [
+//                                     Container(
+//                                       width: Screens.width(context) * 0.83,
+//                                       // color: Colors.blue,
+//                                       child: Text(
+//                                         "WWW.maxi-teq.sap.com",
+//                                         style: GoogleFonts.poppins(
+//                                             fontSize: Screens.heigth(context) * 0.02,
+//                                             color: Colors.black),
+//                                       ),
+//                                     ),
+//                                     Container(
+//                                       child: Icon(
+//                                         Icons.navigate_next_outlined,
+//                                         color: theme.primaryColor,
+//                                         size: Screens.heigth(context) * 0.06,
+//                                       ),
+//                                     )
+//                                   ],
+//                                 )
+//                               ],
+//                             ),
+//                           ),
+//             SizedBox(height: Screens.heigth(context) * 0.01, ),
+//                     Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         Text(
+//                       //    AppLocalizations.of(context)!.docNo,
+//                         "Remarks",
+//                           style: GoogleFonts.poppins(
+//                               fontSize: Screens.heigth(context) * 0.018,
+//                               color: theme.primaryColor),
+//                         ),
+//                         Container(
+//                           width: Screens.width(context) * 0.83,
+//                           // color: Colors.blue,
+//                           child: Text(
+//                             "",
+//                             style: GoogleFonts.poppins(
+//                                 fontSize: Screens.heigth(context) * 0.02,
+//                                 color: Colors.black),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//            SizedBox(height: Screens.heigth(context) * 0.01, ),
+//                     GestureDetector(
+//                         onTap: (){
+//                                 Get.toNamed<dynamic>(FurneyRoutes.attachments);
+//                             },
+//                       child: Center(
+//                         child: Row(
+//                           crossAxisAlignment: CrossAxisAlignment.center,
+//                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                           children: [
+//                             SizedBox(width: Screens.width(context)*0.3,),
+//                             Text(
+//                             "Attachments",
+//                             style: GoogleFonts.poppins(
+//                                 fontSize: Screens.heigth(context) * 0.02,
+//                                 color: Colors.black),
+//                           ),
+//                           SizedBox(width: Screens.width(context)*0.25,),
+//                             Container(
+//                                       child: Icon(
+//                                         Icons.navigate_next_outlined,
+//                                         color: theme.primaryColor,
+//                                         size: Screens.heigth(context) * 0.06,
+//                                       ),
+//                                     )
+//                           ],
+//                         ),
+//                       ),
+//                     )
+//         ],
+//       ),
+//     ),
+//   ),

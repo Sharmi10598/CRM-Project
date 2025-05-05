@@ -1,6 +1,6 @@
 // ignore_for_file: cascade_invocations, unnecessary_new, prefer_single_quotes, prefer_const_constructors, prefer_int_literals, sized_box_for_whitespace, prefer_if_elements_to_conditional_expressions, unnecessary_string_interpolations
 
-import 'package:charts_flutter_new/flutter.dart' as charts;
+// import 'package:charts_flutter_new/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/local_api/InPaymentChartapi/IncomingPaymentApi.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/local_api/SalesChartapi/SalesChartApi.dart';
@@ -199,90 +199,92 @@ class _DepotPerformanceState extends State<DepotPerformance> {
     });
   }
 
-  List<charts.Series<ChartRecord, String>> cretaedChart() {
-    return [
-      new charts.Series<ChartRecord, String>(
-        // domainFormatterFn: ,
+  // List<charts.Series<ChartRecord, String>> cretaedChart() {
+  //   return [
+  //     new charts.Series<ChartRecord, String>(
+  //       // domainFormatterFn: ,
 
-        id: 'Desktop',
-        domainFn: (ChartRecord sales, _) => sales.name,
-        measureFn: (ChartRecord sales, _) => sales.sales,
-        data: targetsales,
+  //       id: 'Desktop',
+  //       domainFn: (ChartRecord sales, _) => sales.name,
+  //       measureFn: (ChartRecord sales, _) => sales.sales,
+  //       data: targetsales,
 
-        colorFn: (ChartRecord sales, _) =>
-            charts.ColorUtil.fromDartColor(sales.barColor),
-        labelAccessorFn: (ChartRecord sales, _) =>
-            '${sales.sales.toStringAsFixed(0)}',
-      ),
-      new charts.Series<ChartRecord, String>(
-        id: 'Tablet',
-        domainFn: (ChartRecord sales, _) => sales.name,
-        measureFn: (ChartRecord sales, _) => sales.sales,
-        data: achsales,
-        colorFn: (ChartRecord sales, _) =>
-            charts.ColorUtil.fromDartColor(sales.barColor),
-        labelAccessorFn: (ChartRecord sales, _) =>
-            '${sales.sales.toStringAsFixed(0)}',
-      ),
-    ];
-  }
+  //       colorFn: (ChartRecord sales, _) =>
+  //           charts.ColorUtil.fromDartColor(sales.barColor),
+  //       labelAccessorFn: (ChartRecord sales, _) =>
+  //           '${sales.sales.toStringAsFixed(0)}',
+  //     ),
+  //     new charts.Series<ChartRecord, String>(
+  //       id: 'Tablet',
+  //       domainFn: (ChartRecord sales, _) => sales.name,
+  //       measureFn: (ChartRecord sales, _) => sales.sales,
+  //       data: achsales,
+  //       colorFn: (ChartRecord sales, _) =>
+  //           charts.ColorUtil.fromDartColor(sales.barColor),
+  //       labelAccessorFn: (ChartRecord sales, _) =>
+  //           '${sales.sales.toStringAsFixed(0)}',
+  //     ),
+  //   ];
+  // }
 
-  List<charts.Series<CollectionChartRecord, String>> CollectionChart() {
-    return [
-      new charts.Series<CollectionChartRecord, String>(
-        id: 'Desktop',
-        domainFn: (CollectionChartRecord sales, _) => sales.name,
-        measureFn: (CollectionChartRecord sales, _) => sales.collection,
-        data: col_targetsales,
-        colorFn: (CollectionChartRecord sales, _) =>
-            charts.ColorUtil.fromDartColor(sales.barColor),
-        labelAccessorFn: (CollectionChartRecord sales, _) =>
-            '${sales.collection.toStringAsFixed(0)}',
-      ),
-      new charts.Series<CollectionChartRecord, String>(
-        id: 'Tablet',
-        domainFn: (CollectionChartRecord sales, _) => sales.name,
-        measureFn: (CollectionChartRecord sales, _) => sales.collection,
-        colorFn: (CollectionChartRecord sales, _) =>
-            charts.ColorUtil.fromDartColor(sales.barColor),
-        data: col_achsales,
-        labelAccessorFn: (CollectionChartRecord sales, _) =>
-            '${sales.collection.toStringAsFixed(0)}',
-      ),
-    ];
-  }
+  // List<charts.Series<CollectionChartRecord, String>> CollectionChart() {
+  //   return [
+  //     new charts.Series<CollectionChartRecord, String>(
+  //       id: 'Desktop',
+  //       domainFn: (CollectionChartRecord sales, _) => sales.name,
+  //       measureFn: (CollectionChartRecord sales, _) => sales.collection,
+  //       data: col_targetsales,
+  //       colorFn: (CollectionChartRecord sales, _) =>
+  //           charts.ColorUtil.fromDartColor(sales.barColor),
+  //       labelAccessorFn: (CollectionChartRecord sales, _) =>
+  //           '${sales.collection.toStringAsFixed(0)}',
+  //     ),
+  //     new charts.Series<CollectionChartRecord, String>(
+  //       id: 'Tablet',
+  //       domainFn: (CollectionChartRecord sales, _) => sales.name,
+  //       measureFn: (CollectionChartRecord sales, _) => sales.collection,
+  //       colorFn: (CollectionChartRecord sales, _) =>
+  //           charts.ColorUtil.fromDartColor(sales.barColor),
+  //       data: col_achsales,
+  //       labelAccessorFn: (CollectionChartRecord sales, _) =>
+  //           '${sales.collection.toStringAsFixed(0)}',
+  //     ),
+  //   ];
+  // }
 
-  List<charts.Series<VolumeChartRecord, String>> VolumeChart() {
-    return [
-      new charts.Series<VolumeChartRecord, String>(
-        id: 'Desktop',
-        domainFn: (VolumeChartRecord sales, _) => sales.name,
-        measureFn: (VolumeChartRecord sales, _) => sales.volume,
-        colorFn: (VolumeChartRecord sales, _) =>
-            charts.ColorUtil.fromDartColor(sales.barColor),
-        data: vol_targetsales,
-        labelAccessorFn: (VolumeChartRecord sales, _) =>
-            '${sales.volume.toStringAsFixed(0)}',
-      ),
-      new charts.Series<VolumeChartRecord, String>(
-        id: 'Tablet',
-        domainFn: (VolumeChartRecord sales, _) => sales.name,
-        colorFn: (VolumeChartRecord sales, _) =>
-            charts.ColorUtil.fromDartColor(sales.barColor),
-        measureFn: (VolumeChartRecord sales, _) => sales.volume,
-        data: vol_achsales,
-        labelAccessorFn: (VolumeChartRecord sales, _) =>
-            '${sales.volume.toStringAsFixed(0)}',
-      ),
-    ];
-  }
+  // List<charts.Series<VolumeChartRecord, String>> VolumeChart() {
+  //   return [
+  //     new charts.Series<VolumeChartRecord, String>(
+  //       id: 'Desktop',
+  //       domainFn: (VolumeChartRecord sales, _) => sales.name,
+  //       measureFn: (VolumeChartRecord sales, _) => sales.volume,
+  //       colorFn: (VolumeChartRecord sales, _) =>
+  //           charts.ColorUtil.fromDartColor(sales.barColor),
+  //       data: vol_targetsales,
+  //       labelAccessorFn: (VolumeChartRecord sales, _) =>
+  //           '${sales.volume.toStringAsFixed(0)}',
+  //     ),
+  //     new charts.Series<VolumeChartRecord, String>(
+  //       id: 'Tablet',
+  //       domainFn: (VolumeChartRecord sales, _) => sales.name,
+  //       colorFn: (VolumeChartRecord sales, _) =>
+  //           charts.ColorUtil.fromDartColor(sales.barColor),
+  //       measureFn: (VolumeChartRecord sales, _) => sales.volume,
+  //       data: vol_achsales,
+  //       labelAccessorFn: (VolumeChartRecord sales, _) =>
+  //           '${sales.volume.toStringAsFixed(0)}',
+  //     ),
+  //   ];
+  // }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       key: _scaffoldKey,
-      drawer: drawer(context),
+      drawer:
+          // GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       appBar: appBar(context, _scaffoldKey, widget.title),
       body: (salesdata.isEmpty &&
               collectiondata.isEmpty &&
@@ -334,23 +336,26 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                             : Screens.width(context) * s,
                                         height: Screens.heigth(context),
                                         child: Center(
-                                          child: charts.BarChart(
-                                            cretaedChart(),
-                                            animate: true,
-                                            vertical: false,
-                                            barGroupingType:
-                                                charts.BarGroupingType.grouped,
-                                            barRendererDecorator:
-                                                new charts.BarLabelDecorator(
-                                              insideLabelStyleSpec:
-                                                  new charts.TextStyleSpec(
-                                                      fontSize: 10),
-                                              outsideLabelStyleSpec:
-                                                  new charts.TextStyleSpec(
-                                                      fontSize: 10),
+                                            // child: charts.BarChart(
+                                            //   cretaedChart(),
+                                            //   animate: true,
+                                            //   vertical: false,
+                                            //   barGroupingType:
+                                            //       charts.BarGroupingType.grouped,
+                                            //   barRendererDecorator:
+                                            //       new charts.BarLabelDecorator(
+                                            //     insideLabelStyleSpec:
+                                            //         new charts.TextStyleSpec(
+                                            //       fontSize: 10,
+                                            //     ),
+                                            //     outsideLabelStyleSpec:
+                                            //         new charts.TextStyleSpec(
+                                            //       fontSize: 10,
+                                            //     ),
+                                            //   ),
+                                            // ),
+
                                             ),
-                                          ),
-                                        ),
                                       ),
                                     ),
                                     SizedBox(
@@ -378,7 +383,7 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                                 width: Screens.width(context) *
                                                     0.01,
                                               ),
-                                              Text("Target Sales")
+                                              Text("Target Sales"),
                                             ],
                                           ),
                                           Row(
@@ -395,7 +400,7 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                                 width: Screens.width(context) *
                                                     0.01,
                                               ),
-                                              Text("Ach Sales")
+                                              Text("Ach Sales"),
                                             ],
                                           ),
                                         ],
@@ -438,22 +443,26 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                             : Screens.width(context) * s,
                                         height: Screens.heigth(context),
                                         child: Center(
-                                          child: charts.BarChart(
-                                            CollectionChart(),
-                                            animate: true,
-                                            vertical: false,
-                                            barGroupingType:
-                                                charts.BarGroupingType.grouped,
-                                            barRendererDecorator: new charts
-                                                .BarLabelDecorator(
-                                                outsideLabelStyleSpec:
-                                                    new charts.TextStyleSpec(
-                                                        fontSize: 10),
-                                                insideLabelStyleSpec:
-                                                    new charts.TextStyleSpec(
-                                                        fontSize: 10)),
-                                          ),
-                                        ),
+                                            // child: charts.BarChart(
+                                            //   CollectionChart(),
+                                            //   animate: true,
+                                            //   vertical: false,
+                                            //   barGroupingType:
+                                            //       charts.BarGroupingType.grouped,
+                                            //   barRendererDecorator:
+                                            //       new charts.BarLabelDecorator(
+                                            //     outsideLabelStyleSpec:
+                                            //         new charts.TextStyleSpec(
+                                            //       fontSize: 10,
+                                            //     ),
+                                            //     insideLabelStyleSpec:
+                                            //         new charts.TextStyleSpec(
+                                            //       fontSize: 10,
+                                            //     ),
+                                            //   ),
+                                            // ),
+
+                                            ),
                                       ),
                                     ),
                                     SizedBox(
@@ -481,7 +490,7 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                                 width: Screens.width(context) *
                                                     0.01,
                                               ),
-                                              Text("Target Collection")
+                                              Text("Target Collection"),
                                             ],
                                           ),
                                           Row(
@@ -498,7 +507,7 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                                 width: Screens.width(context) *
                                                     0.01,
                                               ),
-                                              Text("Ach Collection")
+                                              Text("Ach Collection"),
                                             ],
                                           ),
                                         ],
@@ -541,22 +550,26 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                             : Screens.width(context) * s,
                                         height: Screens.heigth(context),
                                         child: Center(
-                                          child: charts.BarChart(
-                                            VolumeChart(),
-                                            animate: true,
-                                            vertical: false,
-                                            barGroupingType:
-                                                charts.BarGroupingType.grouped,
-                                            barRendererDecorator: new charts
-                                                .BarLabelDecorator(
-                                                outsideLabelStyleSpec:
-                                                    new charts.TextStyleSpec(
-                                                        fontSize: 10),
-                                                insideLabelStyleSpec:
-                                                    new charts.TextStyleSpec(
-                                                        fontSize: 10)),
-                                          ),
-                                        ),
+                                            // child: charts.BarChart(
+                                            //   VolumeChart(),
+                                            //   animate: true,
+                                            //   vertical: false,
+                                            //   barGroupingType:
+                                            //       charts.BarGroupingType.grouped,
+                                            //   barRendererDecorator:
+                                            //       new charts.BarLabelDecorator(
+                                            //     outsideLabelStyleSpec:
+                                            //         new charts.TextStyleSpec(
+                                            //       fontSize: 10,
+                                            //     ),
+                                            //     insideLabelStyleSpec:
+                                            //         new charts.TextStyleSpec(
+                                            //       fontSize: 10,
+                                            //     ),
+                                            //   ),
+                                            // ),
+
+                                            ),
                                       ),
                                     ),
                                     SizedBox(
@@ -584,7 +597,7 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                                 width: Screens.width(context) *
                                                     0.01,
                                               ),
-                                              Text("Target Volume")
+                                              Text("Target Volume"),
                                             ],
                                           ),
                                           Row(
@@ -601,7 +614,7 @@ class _DepotPerformanceState extends State<DepotPerformance> {
                                                 width: Screens.width(context) *
                                                     0.01,
                                               ),
-                                              Text("Ach Volume")
+                                              Text("Ach Volume"),
                                             ],
                                           ),
                                         ],

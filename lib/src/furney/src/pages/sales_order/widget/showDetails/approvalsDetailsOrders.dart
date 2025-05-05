@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_single_quotes, sort_child_properties_last, avoid_print, prefer_interpolation_to_compose_strings, unnecessary_null_comparison, unnecessary_lambdas, invariant_booleans, file_names, prefer_const_constructors, prefer_if_elements_to_conditional_expressions, unnecessary_string_interpolations, sized_box_for_whitespace, require_trailing_commas, unawaited_futures, prefer_final_locals, omit_local_variable_types
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/route_manager.dart';
@@ -56,10 +58,6 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
           // valuesReturn(value.approvalsvalue![0].ObjType.toString());
           approvalDetailsValue = value;
           documentApprovalValue = value.documentLines!;
-
-
-
-          
         });
       } else if (value.error != null) {
         final snackBar = SnackBar(
@@ -93,13 +91,20 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return WillPopScope(
-      onWillPop: onbackpress,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didpop) {
+        if (didpop) return;
+        log("bbbbbbbb");
+        onbackpress();
+      },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
         appBar: appBar(context, _scaffoldKey, widget.title),
-        drawer: drawer(context),
+        drawer:
+            // GetValues.userRoll == '3' ? drawer2(context) :
+            drawer(context),
         body: approvalDetailsValue == null
             ? Center(
                 child: SpinKitThreeBounce(
@@ -507,16 +512,13 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                                                                 context),
                                                       ),
                                                     ),
-                                                    Container(
-                                                      child: Icon(
-                                                        Icons
-                                                            .navigate_next_outlined,
-                                                        color:
-                                                            theme.primaryColor,
-                                                        size: Screens.heigth(
-                                                                context) *
-                                                            0.06,
-                                                      ),
+                                                    Icon(
+                                                      Icons
+                                                          .navigate_next_outlined,
+                                                      color: theme.primaryColor,
+                                                      size: Screens.heigth(
+                                                              context) *
+                                                          0.06,
                                                     )
                                                   ],
                                                 )
@@ -671,11 +673,11 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
     );
   }
 
-  void gotoSalesOrderEditPage() async {
+  Future<void> gotoSalesOrderEditPage() async {
     setValue();
     Get.to(() => EditORderDetails(
           title: "Order Edit",
-          DocEntry: approvalDetailsValue!.docEntry!,
+          docEntry: approvalDetailsValue!.docEntry!,
           isAproved: true,
         ));
   }
@@ -698,8 +700,7 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
       HeaderEditOrderPageState.salesEmp = GetValues.slpCode;
       //approvalDetailsValue!. .toString();// map sales emp
       HeaderEditOrderPageState.totalBeforeDiscount = totalbeforeDiscount;
-      HeaderEditOrderPageState.discount =
-          approvalDetailsValue!.totalDiscount!.toDouble();
+      HeaderEditOrderPageState.discount = approvalDetailsValue!.totalDiscount!;
       HeaderEditOrderPageState.tax = approvalDetailsValue!.vatSum!;
       HeaderEditOrderPageState.total = approvalDetailsValue!.docTotal!;
       //cn
@@ -707,7 +708,7 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
       SalesDetailsQuotState sate2 = SalesDetailsQuotState();
       ContentOrderEditState.itemsDetails3.clear();
       for (int i = 0; i < documentApprovalValue.length; i++) {
-        ContentOrderEditState.itemsDetails3.add(AddItem(
+        ContentOrderEditState.itemsDetails3.add(AddOrderItem(
                 itemCode: documentApprovalValue[i].itemCode!,
                 itemName: documentApprovalValue[i].itemDescription!,
                 price: documentApprovalValue[i].price,
@@ -716,8 +717,8 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                     documentApprovalValue[i].quantity!.toStringAsFixed(0)),
                 total: documentApprovalValue[i].lineTotal,
                 tax: documentApprovalValue[i].taxTotal,
-                valuechoosed: state
-                    .getTaxNane(documentApprovalValue[i].taxCode!.toString()),
+                valuechoosed:
+                    state.getTaxNane(documentApprovalValue[i].taxCode!),
                 discounpercent: documentApprovalValue[i].discountPercent,
                 taxCode: documentApprovalValue[i].taxCode.toString(),
                 taxPer: sate2.caluclateTaxpercent(
@@ -725,8 +726,7 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
                     documentApprovalValue[i]
                         .taxTotal!), // val.documentLines![i].
                 wareHouseCode: documentApprovalValue[i].warehouseCode,
-                taxName: state
-                    .getTaxNane(documentApprovalValue[i].taxCode!.toString()),
+                taxName: state.getTaxNane(documentApprovalValue[i].taxCode!),
                 basedocentry: documentApprovalValue[i].baseEntry.toString(),
                 baseline: documentApprovalValue[i].baseLine.toString(),
                 BaseType: double.parse(documentApprovalValue[i]
@@ -780,14 +780,13 @@ class ApprovalsDetailsOrdersState extends State<ApprovalsDetailsOrders> {
               duration: Duration(seconds: 5),
               backgroundColor: Colors.red,
               content: Text(
-                '${value.erorrs!.message!.Value}',
+                '${value.erorrs!.message!.value}',
                 style: TextStyle(color: Colors.white),
               ),
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
         });
-   
       });
     }
   }

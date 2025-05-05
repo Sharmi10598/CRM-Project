@@ -11,23 +11,24 @@ import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/widget/creation/
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
 class CreateDetails extends StatefulWidget {
-  const CreateDetails({ required this.title, Key? key }) : super(key: key);
-   final String title;
+  const CreateDetails({required this.title, Key? key}) : super(key: key);
+  final String title;
   @override
   CreateDetailsState createState() => CreateDetailsState();
 }
 
 class CreateDetailsState extends State<CreateDetails> {
-  static bool contentAddItems=false;
+  static bool contentAddItems = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
- void currentDate() {
+  void currentDate() {
     final now = DateTime.now();
     setState(() {
-    HeaderCreationState.  currentDateTime =
+      HeaderCreationState.currentDateTime =
           "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
       print('date: ${HeaderCreationState.currentDateTime}');
     });
   }
+
   @override
   DateTime? currentBackPressTime;
   Future<bool> onbackpress() {
@@ -35,55 +36,61 @@ class CreateDetailsState extends State<CreateDetails> {
     if (currentBackPressTime == null ||
         now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
       currentBackPressTime = now;
-       print('are you sure');
-   //  Get.offAllNamed<dynamic>(FurneyRoutes.salesQuotes);
-const snackBar = SnackBar(
-          duration:  Duration(seconds: 5),
-          backgroundColor: Colors.red,
-          content: Text(
-            'Are you want to exit press again!!..',
-            style:  TextStyle(color: Colors.white),
-          ),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      print('are you sure');
+      //  Get.offAllNamed<dynamic>(FurneyRoutes.salesQuotes);
+      const snackBar = SnackBar(
+        duration: Duration(seconds: 5),
+        backgroundColor: Colors.red,
+        content: Text(
+          'Are you want to exit press again!!..',
+          style: TextStyle(color: Colors.white),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return Future.value(false);
     }
-     Get.offAllNamed<dynamic>(FurneyRoutes.newSalesQuot);
-   ScaffoldMessenger.of(context).removeCurrentSnackBar();
-      return Future.value(true);
+    Navigator.pop(context);
+    Get.toNamed<dynamic>(FurneyRoutes.newSalesQuot);
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    return Future.value(true);
   }
+
   @override
   void initState() {
     super.initState();
     currentDate();
-    }
-  static  TabController? tabController ;
+  }
+
+  static TabController? tabController;
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return DefaultTabController(
       length: 3,
-      child: WillPopScope(
-        onWillPop:onbackpress ,
-        child: Scaffold(
+      // child:
+      // WillPopScope(
+      //   onWillPop: onbackpress,
+      child: Scaffold(
           resizeToAvoidBottomInset: false,
-          key:_scaffoldKey ,
+          key: _scaffoldKey,
           backgroundColor: Colors.grey[200],
-          appBar:  deliveryAppBar(context,_scaffoldKey,widget.title),
-          drawer: drawer(context),
-          body:Padding(
-            padding: EdgeInsets.only(top:Screens.heigth(context)*0.01,),//left: Screens.width(context)*0.02,right: Screens.width(context)*0.02,bottom: Screens.heigth(context)*0.01
+          appBar: deliveryAppBar(context, _scaffoldKey, widget.title),
+          drawer:
+              // GetValues.userRoll == '3' ? drawer2(context) :
+              drawer(context),
+          body: Padding(
+            padding: EdgeInsets.only(
+              top: Screens.heigth(context) * 0.01,
+            ), //left: Screens.width(context)*0.02,right: Screens.width(context)*0.02,bottom: Screens.heigth(context)*0.01
             child: TabBarView(
-             //controller: tabController,
-             // physics: const NeverScrollableScrollPhysics(),
-              children: [
-             const HeaderCreation(),
-             const ContentCreation(),
-             const LogisticPage(),
-            ]),
-          )
-        ),
-      ),
+                //controller: tabController,
+                // physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  const HeaderCreation(),
+                  const ContentCreation(),
+                  const LogisticPage(),
+                ]),
+          )),
+      // ),
     );
   }
   // static void changepage(BuildContext context){

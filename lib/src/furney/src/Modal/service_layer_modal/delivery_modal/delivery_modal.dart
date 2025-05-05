@@ -15,7 +15,7 @@ class DeliveryModal{
     if (jsons['value'] != null) {
       final list =  jsons['value'] as List; //jsonDecode
       // print(list);
-      List<DeliveryModaleValue> dataList = list
+      final List<DeliveryModaleValue> dataList = list
           .map((dynamic enquiries) => DeliveryModaleValue.fromJson(enquiries))
           .toList();
       // print(dataList[0]);

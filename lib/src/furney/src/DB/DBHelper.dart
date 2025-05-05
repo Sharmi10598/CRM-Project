@@ -1,6 +1,5 @@
 // ignore_for_file: file_names, omit_local_variable_types, prefer_single_quotes, require_trailing_commas, unawaited_futures
 import 'dart:developer';
-
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:ultimate_bundle/SalesApp/Api/CheckOutPost/CheckOutPostApi.dart';
@@ -59,6 +58,7 @@ class DataBaseHelper {
              ${ItemColumn.wareHouseCose} varchar not null,
              ${ItemColumn.taxCodeName} varchar not null,
              ${ItemColumn.cartoon} varchar not null,
+             ${ItemColumn.deliveryDate} varchar,
              FOREIGN KEY (CusId) REFERENCES $tablename (CusId)
              )
         ''');
@@ -293,7 +293,7 @@ SELECT * FROM $tableNotification;
     SELECT count(NId) from $tableNotification where SeenTime = '0';
     ''');
 //log(result.toList().toString());
-    int? count = Sqflite.firstIntValue(result);
+    final int? count = Sqflite.firstIntValue(result);
     //  await db.close();
     return count;
   }
@@ -494,38 +494,38 @@ SELECT * FROM $tableNotification;
     return List.generate(result.length, (i) {
       return CheckOutModel(
         clgCode: int.parse(result[i]['clgCode'].toString()),
-        Closed: result[i]['Closed'].toString(),
-        Duration: double.parse(result[i]['Duration'].toString()),
-        Notes: result[i]['Notes'].toString(),
-        CloseDate: result[i]['CloseDate'].toString(),
-        DurationType: result[i]['DurationType'].toString(),
-        EndTime: result[i]['EndTime']
+        closed: result[i]['Closed'].toString(),
+        duration: double.parse(result[i]['Duration'].toString()),
+        notes: result[i]['Notes'].toString(),
+        closedate: result[i]['CloseDate'].toString(),
+        durationType: result[i]['DurationType'].toString(),
+        endTime: result[i]['EndTime']
             .toString(), //int.parse(result[i]['EndTime'].toString()),
-        U_AdvFormt: result[i]['UAdvFormt'].toString(),
-        U_Advertise: result[i]['UAdvertise'].toString(),
-        U_BrandContr: result[i]['UBrandContr'].toString(),
-        U_BrandinPromo: result[i]['UBrandinPromo'].toString(),
-        U_COLatitude: result[i]['UCOLatitude'].toString(),
-        U_COLongitude: result[i]['UCOLongitude'].toString(),
-        U_CheckedIn: result[i]['UCheckedIn'].toString(),
-        U_Complaints: result[i]['UComplaints'].toString(),
-        U_Link1: result[i]['ULink1'].toString(),
-        U_Link2: result[i]['ULink2'].toString(),
-        U_Link3: result[i]['ULink3'].toString(),
-        U_Link4: result[i]['ULink4'].toString(),
-        U_NxtFollowup: result[i]['UNxtFollowup'].toString(),
-        U_OrdProsValue: double.parse(result[i]['UOrdProsValue'].toString()),
-        U_PPComp: result[i]['UPPComp'].toString(),
-        U_Products: result[i]['UProducts'].toString(),
-        U_PymntVal: double.parse(result[i]['UPymntVal'].toString()),
-        U_Remarks1: result[i]['URemarks1'].toString(),
-        U_Remarks2: result[i]['URemarks2'].toString(),
-        U_status: result[i]['UStatus'].toString(),
-        U_Consultant: result[i]['UConsultant'].toString(),
-        U_Project: result[i]['UProject'].toString(),
-        U_Customer: result[i]['UCustomer'].toString(),
-        U_Subgroup: result[i]['USubgroup'].toString(),
-        U_CheckOutAdd: result[i]['UCheckOutAdd'].toString(),
+        uAdvFormt: result[i]['UAdvFormt'].toString(),
+        uAdvertise: result[i]['UAdvertise'].toString(),
+        uBrandContr: result[i]['UBrandContr'].toString(),
+        uBrandinPromo: result[i]['UBrandinPromo'].toString(),
+        uCOLatitude: result[i]['UCOLatitude'].toString(),
+        uCOLongitude: result[i]['UCOLongitude'].toString(),
+        uCheckedIn: result[i]['UCheckedIn'].toString(),
+        uComplaints: result[i]['UComplaints'].toString(),
+        uLink1: result[i]['ULink1'].toString(),
+        uLink2: result[i]['ULink2'].toString(),
+        uLink3: result[i]['ULink3'].toString(),
+        uLink4: result[i]['ULink4'].toString(),
+        uNxtFollowup: result[i]['UNxtFollowup'].toString(),
+        uOrdProsValue: double.parse(result[i]['UOrdProsValue'].toString()),
+        uPPComp: result[i]['UPPComp'].toString(),
+        uProducts: result[i]['UProducts'].toString(),
+        uPymntVal: double.parse(result[i]['UPymntVal'].toString()),
+        uRemarks1: result[i]['URemarks1'].toString(),
+        uRemarks2: result[i]['URemarks2'].toString(),
+        ustatus: result[i]['UStatus'].toString(),
+        uConsultant: result[i]['UConsultant'].toString(),
+        uProject: result[i]['UProject'].toString(),
+        uCustomer: result[i]['UCustomer'].toString(),
+        uSubgroup: result[i]['USubgroup'].toString(),
+        uCheckOutAdd: result[i]['UCheckOutAdd'].toString(),
       );
     });
   }
@@ -645,10 +645,10 @@ SELECT * FROM $tableNotification;
       String cusTable, String cusID, String itemTable) async {
     final Database db = await createDB();
     final List<Map<String, Object?>> result = await db.rawQuery(
-        'select B.ItemCode, B.ItemName, B.Price ,B.Qty ,B.DisCount,B.ValueAFDisc,B.Total,B.WareHouseCose,B.Tax,B.TaxCode,B.Discounpercent,B.TaxCodeName from $cusTable A inner join $itemTable B on A.CusId=B.CusId WHERE A.CusId=$cusID');
+        'select B.ItemCode, B.ItemName, B.Price ,B.Qty ,B.DisCount,B.ValueAFDisc,B.Total,B.WareHouseCose,B.Tax,B.TaxCode,B.Discounpercent,B.TaxCodeName,B.DeliveryDate from $cusTable A inner join $itemTable B on A.CusId=B.CusId WHERE A.CusId=$cusID');
     // PageState.cst = result;
     // var result = await db.
-    print(result.toList());
+    log(result.toList().toString());
 
     return List.generate(result.length, (i) {
       return ItemDocuments(
@@ -660,6 +660,7 @@ SELECT * FROM $tableNotification;
         price: result[i]['Price'].toString(),
         qty: result[i]['Qty'].toString(),
         tax: result[i]['Tax'].toString(),
+        deliveryDate: result[i]['DeliveryDate'].toString(),
         taxCode: result[i]['TaxCode'].toString(),
         total: result[i]['Total'].toString(),
         wareHouseCose: result[i]['WareHouseCose'].toString(),

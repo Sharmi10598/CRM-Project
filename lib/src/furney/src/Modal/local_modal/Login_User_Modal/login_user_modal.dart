@@ -30,7 +30,7 @@ class CheckUserLogin {
     if (jsons['data'] != null) {
       final list = jsonDecode(jsons['data'] as String) as List; //jsonDecode
       // print(list);
-      List<LoginUserData> dataList = list
+      final List<LoginUserData> dataList = list
           .map((dynamic enquiries) => LoginUserData.fromJson(enquiries))
           .toList();
       // print(dataList[0]);

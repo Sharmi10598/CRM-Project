@@ -75,7 +75,7 @@ class _FurneyAllProductScreenState extends State<FurneyAllProductScreen> {
                              ],
                            ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -154,7 +154,7 @@ class _FurneyAllProductScreenState extends State<FurneyAllProductScreen> {
                             },
                             child: const Text('Approve'),),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),

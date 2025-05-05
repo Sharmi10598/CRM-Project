@@ -16,7 +16,7 @@ class OrderORDraftModal{
     if (jsons['value'] != null) {
       final list =  jsons['value'] as List; //jsonDecode
       // print(list);
-      List<OrderORDraft> dataList = list
+      final List<OrderORDraft> dataList = list
           .map((dynamic enquiries) => OrderORDraft.fromJson(enquiries))
           .toList();
       // print(dataList[0]);

@@ -13,7 +13,7 @@ class ContactPersonsAPi{
   static Future<ContactPersonModal> getGlobalData() async {
     try {
       log(
-      URL.url+"BusinessPartners('D9219')?\$select=BilltoDefault,ShipToDefault,ContactEmployees",
+      URL.url+r"BusinessPartners('D9219')?$select=BilltoDefault,ShipToDefault,ContactEmployees",
         
       );
     final response = await http.get(

@@ -16,7 +16,7 @@ class CheckOutNFPostAPi {
         Uri.parse(  URL.url+ "Activities"),
         headers: {
           'content-type': 'application/json',
-          "cookie": 'B1SESSION=' + GetValues.sessionID.toString()
+          "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
           },
          body: json.encode({ 
     "CardCode": "${purpVisitModel.cardCode}",
@@ -26,7 +26,7 @@ class CheckOutNFPostAPi {
     "U_PlanDate": "${purpVisitModel.U_PlanDate}",
     "U_PlanTime": "${purpVisitModel.U_PlanTime}",
     "Subject": purpVisitModel.subject,
-     "PreviousActivity": purpVisitModel.PreviousActivity
+     "PreviousActivity": purpVisitModel.PreviousActivity,
 }), );
      
       log(json.encode({ 
@@ -37,11 +37,11 @@ class CheckOutNFPostAPi {
     "U_PlanDate": "${purpVisitModel.U_PlanDate}",
     "U_PlanTime": "${purpVisitModel.U_PlanTime}",
     "Subject": purpVisitModel.subject,
-     "PreviousActivity": purpVisitModel.PreviousActivity
+     "PreviousActivity": purpVisitModel.PreviousActivity,
 }), );
       // print('B1SESSION='+ GetValues.sessionID.toString());
       // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
-     print("customer details: " + response.body);
+     log("customer details: " + response.body);
       print(response.statusCode);
       if (response.statusCode == 200) {
         return PostPurposeVisitModel.fromJson( response.body,response.statusCode);

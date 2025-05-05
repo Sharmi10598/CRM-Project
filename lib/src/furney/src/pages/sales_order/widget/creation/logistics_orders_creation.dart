@@ -2,8 +2,8 @@
 // ignore_for_file: file_names, prefer_single_quotes, require_trailing_commas, unnecessary_new, avoid_void_async, omit_local_variable_types, prefer_is_empty, unnecessary_null_checks, unawaited_futures, avoid_print, prefer_interpolation_to_compose_strings, cascade_invocations, prefer_const_constructors, invariant_booleans, unnecessary_lambdas, unnecessary_parenthesis, prefer_int_literals, unnecessary_string_interpolations, unnecessary_statements, unnecessary_this, prefer_final_locals, non_constant_identifier_names
 
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ultimate_bundle/helpers/constants.dart';
@@ -11,7 +11,6 @@ import 'package:ultimate_bundle/helpers/textstyle.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/local_api/SchemeOrderApi/SchemeOrderApi.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/SOafterApi/SOafterApi.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order/post_order_api/SOLogin/soLoginApi.dart';
-import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order/post_order_api/SOLogin/soPatchApi.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order/post_order_api/checkOrderORDraft/draftSaveApi.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order/post_order_api/checkOrderORDraft/orderordraft.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order/post_order_api/getCreaditDays/getBalanceCreditLimit.dart';
@@ -41,6 +40,10 @@ class LogisticOrderState extends State<LogisticOrder> {
     if (CreateOrderDetailsState.isCameforapprovalsales == true) {
       setValuesToapproval();
     }
+    log("sapDB:::${GetValues.sapDB}");
+    log("sapUserName:::${GetValues.sapUserName}");
+    log("sapPassword:::${GetValues.sapPassword}");
+
     setboolVal();
   }
 
@@ -85,7 +88,8 @@ class LogisticOrderState extends State<LogisticOrder> {
   static double ordersBal = 0.0;
   static List<TextEditingController> mycontroller =
       List.generate(15, (i) => TextEditingController());
-
+  static List<TextEditingController> deldatemycontroller =
+      List.generate(15, (i) => TextEditingController());
   Uuid uuid = Uuid();
   @override
   Widget build(BuildContext context) {
@@ -93,11 +97,7 @@ class LogisticOrderState extends State<LogisticOrder> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.grey[200],
-      body:
-          // Padding(
-          //  padding: EdgeInsets.only(top:Screens.heigth(context)*0.01,),//left: Screens.width(context)*0.01,right: Screens.width(context)*0.01,
-          // child:
-          Stack(
+      body: Stack(
         children: [
           SingleChildScrollView(
             child: Column(
@@ -217,7 +217,7 @@ class LogisticOrderState extends State<LogisticOrder> {
                               thickness: 1.5,
                             ),
                             SizedBox(
-                              height: Screens.heigth(context) * 0.01,
+                              height: Screens.heigth(context) * 0.001,
                             ),
                             Text(
                               "Select Order Type",
@@ -234,6 +234,8 @@ class LogisticOrderState extends State<LogisticOrder> {
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(5)),
                               child: DropdownButton(
+                                dropdownColor: Colors.white,
+
                                 hint: Text(
                                   "Select Order Type: ",
                                   style: TextStyles.headlineBlack1(context),
@@ -263,7 +265,7 @@ class LogisticOrderState extends State<LogisticOrder> {
                               ),
                             ),
                             SizedBox(
-                              height: Screens.heigth(context) * 0.02,
+                              height: Screens.heigth(context) * 0.01,
                             ),
                             Text(
                               "GP Approval Required?",
@@ -280,6 +282,8 @@ class LogisticOrderState extends State<LogisticOrder> {
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(5)),
                               child: DropdownButton(
+                                dropdownColor: Colors.white,
+
                                 hint: Text(
                                   "GP Approval Required?",
                                   style: TextStyles.headlineBlack1(context),
@@ -309,7 +313,7 @@ class LogisticOrderState extends State<LogisticOrder> {
                               ),
                             ),
                             SizedBox(
-                              height: Screens.heigth(context) * 0.02,
+                              height: Screens.heigth(context) * 0.01,
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -374,7 +378,7 @@ class LogisticOrderState extends State<LogisticOrder> {
                               ],
                             ),
                             SizedBox(
-                              height: Screens.heigth(context) * 0.02,
+                              height: Screens.heigth(context) * 0.005,
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -424,7 +428,7 @@ class LogisticOrderState extends State<LogisticOrder> {
                                         ),
                                       ),
                                       Positioned(
-                                          top: Screens.heigth(context) * 0.01,
+                                          top: Screens.heigth(context) * 0.005,
                                           left: Screens.width(context) * 0.86,
                                           child: InkWell(
                                             onTap: () {
@@ -442,7 +446,7 @@ class LogisticOrderState extends State<LogisticOrder> {
                               ],
                             ),
                             SizedBox(
-                              height: Screens.heigth(context) * 0.02,
+                              height: Screens.heigth(context) * 0.005,
                             ),
                           ],
                         ),
@@ -810,6 +814,8 @@ class LogisticOrderState extends State<LogisticOrder> {
       // itemDoc.add(
       var val = ItemDocuments(
         cusID: cusId,
+        deliveryDate:
+            ContentOrderCreationState.itemsDetails[i].deliveryDate.toString(),
         discount: ContentOrderCreationState.itemsDetails[i].discount!
             .toStringAsFixed(2),
         itemCode: ContentOrderCreationState.itemsDetails[i].itemCode,
@@ -984,6 +990,7 @@ class LogisticOrderState extends State<LogisticOrder> {
       SalesOrderPostAPi.method(CreateOrderDetailsState.latitude!,
           CreateOrderDetailsState.longitude!);
       currentDate();
+
       double getcreditLimit;
       GettCreditDaysAPi.cardCode = HeaderOrderCreationState.bpCode;
       GettCreditDaysAPi.date = currentDateTime;
@@ -1012,11 +1019,18 @@ class LogisticOrderState extends State<LogisticOrder> {
       //     HeaderOrderCreationState.isTextFiledEnabled == false)
       {
         await GetBalanceCreditAPi.getGlobalData().then((value) {
-          if (value.balanceCreaditValue!.isNotEmpty) {
-            getcreditLimit = value.balanceCreaditValue![0].CreditLimit!;
-            callSaveApi(getcreditLimit);
-          } else if (value.balanceCreaditValue!.isEmpty) {
-            callSaveApi(0.00);
+          log(' ${value.balanceCreaditValue!.isNotEmpty}');
+          if (value.balanceCreaditValue!.length > 0 ||
+              value.balanceCreaditValue!.isNotEmpty) {
+            setState(() {
+              getcreditLimit = value.balanceCreaditValue![0].CreditLimit!;
+              callSaveApi(getcreditLimit);
+            });
+          } else if (value.balanceCreaditValue!.length < 1 ||
+              value.balanceCreaditValue!.isEmpty) {
+            setState(() {
+              callSaveApi(0.00);
+            });
           }
         });
 
@@ -1060,10 +1074,14 @@ class LogisticOrderState extends State<LogisticOrder> {
       //       }
       //     });
       // } else {
+
+      // if (value.creaditDaysValueValue!.length > 0 ||
+      //     value.creaditDaysValueValue!.isNotEmpty) {
       if (value.creaditDaysValueValue![0].CreditDays == 0) {
         // print("getCredit3333 : " + getCredit.toString());
         await GetBalanceCreditAPi.getGlobalData().then((value) async {
-          if (value.balanceCreaditValue!.isNotEmpty) {
+          if (value.balanceCreaditValue!.length > 0 ||
+              value.balanceCreaditValue!.isNotEmpty) {
             double? balance = value.balanceCreaditValue![0].Balance;
             double? creditLimit = value.balanceCreaditValue![0].CreditLimit;
             double? ordersBal = value.balanceCreaditValue![0].OrdersBal;
@@ -1127,11 +1145,11 @@ class LogisticOrderState extends State<LogisticOrder> {
         });
 
         //  });
+        // }
       } else {
         SalesOrderPostAPi.sessionID = GetValues.sessionID;
         callPostApi();
       }
-      // }
     });
   }
 
@@ -1271,6 +1289,7 @@ class LogisticOrderState extends State<LogisticOrder> {
           builder: (context, setState) {
             final theme = Theme.of(context);
             return AlertDialog(
+              backgroundColor: Colors.white,
               //    title: Text("Title of Dialog"),
               content: SizedBox(
                 //  color: Colors.black12,
@@ -1288,13 +1307,16 @@ class LogisticOrderState extends State<LogisticOrder> {
                       height: Screens.heigth(context) * 0.02,
                     ),
                     ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: theme.primaryColor,
+                            foregroundColor: Colors.white),
                         onPressed: () {
                           setState(() => isLoading = false);
                           Get.offAllNamed<dynamic>(FurneyRoutes.newSalesOrders);
                           //  Navigator.pop(context);
                         },
                         child: Text(
-                          'ok',
+                          'OK',
                           style: TextStyles.whiteText(context),
                         ))
                   ],
@@ -1343,7 +1365,7 @@ class LogisticOrderState extends State<LogisticOrder> {
         installTime = postTime2.replaceAll(")", "");
         mycontroller[0].clear();
         mycontroller[0].text = installTime!;
-        print(installTime);
+        log("installTime::" + installTime.toString());
       });
     }
   }

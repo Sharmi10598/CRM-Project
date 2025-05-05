@@ -15,7 +15,7 @@ class ItemModal {
   factory ItemModal.fromJson(Map<String, dynamic> jsons) {
     // if (jsons['value'] != null) {
     final list = jsons['value'] as List;
-    List<ItemValue> dataList =
+    final List<ItemValue> dataList =
         list.map((dynamic enquiries) => ItemValue.fromJson(enquiries)).toList();
     return ItemModal(
       itemValueValue: dataList,
@@ -47,13 +47,13 @@ class ItemValue {
   String? itemName;
   String? salesUnit;
   String? odataetag;
+
   String? salesperCode;
 
   double? U_Pack_Size;
   int? U_Tins_Per_Box;
   List<ItemPrices>? itemPrices;
   ItemValue({
-    this.warehouse,
     required this.salesperCode,
     required this.itemCode,
     required this.itemName,
@@ -62,11 +62,12 @@ class ItemValue {
     required this.itemPrices,
     required this.U_Pack_Size,
     required this.U_Tins_Per_Box,
+    this.warehouse,
   });
 
   factory ItemValue.fromJson(dynamic jsons) {
     final list = jsons['ItemPrices'] as List;
-    List<ItemPrices> dataList = list
+    final List<ItemPrices> dataList = list
         .map((dynamic enquiries) => ItemPrices.fromJson(enquiries))
         .toList();
     return ItemValue(

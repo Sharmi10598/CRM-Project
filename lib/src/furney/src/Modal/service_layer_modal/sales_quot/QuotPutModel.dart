@@ -2,8 +2,6 @@
 //
 //     final quotPutModel = quotPutModelFromJson(jsonString);
 
-import 'dart:convert';
-import 'dart:ffi';
 
 // QuotPutModel quotPutModelFromJson(String str) => QuotPutModel.fromJson(json.decode(str));
 
@@ -698,11 +696,11 @@ class QuotPutModel {
 
   factory QuotPutModel.fromJson(dynamic json) {
     final list = json['DocumentLines'] as List;
-    List<DocumentLineData> dataList = list
+    final dataList = list
         .map((dynamic enquiries) => DocumentLineData.fromJson(enquiries))
         .toList();
     final list2 = json['DocumentReferences'] as List;
-    List<DocumentReference> dataList2 = list2
+    final dataList2 = list2
         .map((dynamic enquiries) => DocumentReference.fromJson(enquiries))
         .toList();
     return QuotPutModel(
@@ -1082,7 +1080,7 @@ class QuotPutModel {
         'DocType': docType,
         'HandWritten': handWritten,
         'Printed': printed,
-        'DocDate': docDate!,
+        'DocDate': docDate,
         'DocDueDate': docDueDate,
         'CardCode': cardCode,
         'CardName': cardName,
@@ -1115,8 +1113,8 @@ class QuotPutModel {
         'FederalTaxID': federalTaxId,
         'DiscountPercent': discountPercent,
         'PaymentReference': paymentReference,
-        'CreationDate': "${creationDate}",
-        'UpdateDate': "${updateDate}",
+        'CreationDate': '$creationDate',
+        'UpdateDate': '$updateDate',
         'FinancialPeriod': financialPeriod,
         'UserSign': userSign,
         'TransNum': transNum,
@@ -1411,8 +1409,8 @@ class QuotPutModel {
         'U_AUDIT_NAME': uAuditName,
         'U_Request': uRequest,
         'U_PosDocNo': uPosDocNo,
-        'TaxExtension': taxExtension!,
-        'AddressExtension': addressExtension!,
+        'TaxExtension': taxExtension,
+        'AddressExtension': addressExtension,
         'DocumentLines':
             List<dynamic>.from(documentLines!.map((x) => x.toJson())),
 
@@ -1470,49 +1468,49 @@ class DocumentReference {
 
   factory DocumentReference.fromJson(dynamic json) => DocumentReference(
         docEntry: int.parse(json['DocEntry'].toString()),
-        lineNumber: int.parse(json["LineNumber"].toString()),
-        refDocEntr: int.parse(json["RefDocEntr"].toString()),
-        refDocNum: int.parse(json["RefDocNum"].toString()),
-        extDocNum: json["ExtDocNum"],
-        refObjType: json["RefObjType"].toString(),
-        accessKey: json["AccessKey"],
-        issueDate: DateTime.parse(json["IssueDate"].toString()),
-        issuerCnpj: json["IssuerCNPJ"],
-        issuerCode: json["IssuerCode"],
-        model: json["Model"],
-        series: json["Series"],
-        number: json["Number"],
-        refAccKey: json["RefAccKey"],
+        lineNumber: int.parse(json['LineNumber'].toString()),
+        refDocEntr: int.parse(json['RefDocEntr'].toString()),
+        refDocNum: int.parse(json['RefDocNum'].toString()),
+        extDocNum: json['ExtDocNum'],
+        refObjType: json['RefObjType'].toString(),
+        accessKey: json['AccessKey'],
+        issueDate: DateTime.parse(json['IssueDate'].toString()),
+        issuerCnpj: json['IssuerCNPJ'],
+        issuerCode: json['IssuerCode'],
+        model: json['Model'],
+        series: json['Series'],
+        number: json['Number'],
+        refAccKey: json['RefAccKey'],
         refAmount: json['RefAmount'] != null
-            ? double.parse(json["RefAmount"].toString())
+            ? double.parse(json['RefAmount'].toString())
             : null,
-        subSeries: json["SubSeries"],
-        remark: json["Remark"],
-        linkRefTyp: json["LinkRefTyp"] == null || json["LinkRefTyp"] == "null"
+        subSeries: json['SubSeries'],
+        remark: json['Remark'],
+        linkRefTyp: json['LinkRefTyp'] == null || json['LinkRefTyp'] == 'null'
             ? null
-            : json["LinkRefTyp"].toString(),
+            : json['LinkRefTyp'].toString(),
       );
 
   Map<String, dynamic> toJson() => {
-        "DocEntry": docEntry,
-        "LineNumber": lineNumber,
-        "RefDocEntr": refDocEntr,
-        "RefDocNum": refDocNum,
-        "ExtDocNum": extDocNum,
-        "RefObjType": refObjType,
-        "AccessKey": accessKey,
-        "IssueDate":
+        'DocEntry': docEntry,
+        'LineNumber': lineNumber,
+        'RefDocEntr': refDocEntr,
+        'RefDocNum': refDocNum,
+        'ExtDocNum': extDocNum,
+        'RefObjType': refObjType,
+        'AccessKey': accessKey,
+        'IssueDate':
             "${issueDate.year.toString().padLeft(4, '0')}-${issueDate.month.toString().padLeft(2, '0')}-${issueDate.day.toString().padLeft(2, '0')}",
-        "IssuerCNPJ": issuerCnpj,
-        "IssuerCode": issuerCode,
-        "Model": model,
-        "Series": series,
-        "Number": number,
-        "RefAccKey": refAccKey,
-        "RefAmount": refAmount,
-        "SubSeries": subSeries,
-        "Remark": remark,
-        "LinkRefTyp": linkRefTyp,
+        'IssuerCNPJ': issuerCnpj,
+        'IssuerCode': issuerCode,
+        'Model': model,
+        'Series': series,
+        'Number': number,
+        'RefAccKey': refAccKey,
+        'RefAmount': refAmount,
+        'SubSeries': subSeries,
+        'Remark': remark,
+        'LinkRefTyp': linkRefTyp,
       };
 }
 
@@ -1664,12 +1662,8 @@ class AddressExtension {
         billToGlobalLocationNumber: json['BillToGlobalLocationNumber'],
         shipToAddress2: json['ShipToAddress2'],
         shipToAddress3: json['ShipToAddress3'],
-        billToAddress2: json['BillToAddress2'] != null
-            ? json['BillToAddress2'].toString()
-            : null,
-        billToAddress3: json['BillToAddress3'] != null
-            ? json['BillToAddress3'].toString()
-            : null,
+        billToAddress2: json['BillToAddress2']?.toString(),
+        billToAddress3: json['BillToAddress3']?.toString(),
         placeOfSupply: json['PlaceOfSupply'],
         purchasePlaceOfSupply: json['PurchasePlaceOfSupply'],
         docEntry: int.parse(json['DocEntry'].toString()),
@@ -2250,7 +2244,7 @@ class DocumentLineData {
       this.lineNo,
       this.carton,
       this.U_Pack_Size,
-      this.U_Tins_Per_Box
+      this.U_Tins_Per_Box,
       //  this.lineTaxJurisdictions,
       //  this.documentLineAdditionalExpenses,
       });

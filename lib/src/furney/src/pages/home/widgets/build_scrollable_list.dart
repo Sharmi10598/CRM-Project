@@ -58,7 +58,7 @@ class _BuildScrollableList extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyles.bodytextBlack1(context),),
-                  )
+                  ),
                 ],),
               ),
             ),

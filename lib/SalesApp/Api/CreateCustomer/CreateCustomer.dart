@@ -9,31 +9,34 @@ import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
 class CustCreateAPi {
   static Future<CreateCustPostModel> getGlobalData(
-      NewCutomerCrtModel newCutomerModel,) async {
+    NewCutomerCrtModel newCutomerModel,
+  ) async {
     try {
       log(URL.url + "BusinessPartners");
-      final response = await http.post(Uri.parse(URL.url + "BusinessPartners"),
-          headers: {
-            'content-type': 'application/json',
-            "cookie": 'B1SESSION=' + GetValues.sessionID.toString()
-          },
-          body: 
-           json.encode({
-        "CardCode": "${newCutomerModel.cardCode}",
-        "CardName": "${newCutomerModel.cardName}",
-        "CardType": "${newCutomerModel.cardType}"  
-     }), );
-         
-
-      log(  json.encode({
+      final response = await http.post(
+        Uri.parse(URL.url + "BusinessPartners"),
+        headers: {
+          'content-type': 'application/json',
+          "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
+        },
+        body: json.encode({
           "CardCode": "${newCutomerModel.cardCode}",
-        "CardName": "${newCutomerModel.cardName}",
-        "CardType": "${newCutomerModel.cardType}"  
-      }),);
+          "CardName": "${newCutomerModel.cardName}",
+          "CardType": "${newCutomerModel.cardType}",
+        }),
+      );
+
+      log(
+        json.encode({
+          "CardCode": "${newCutomerModel.cardCode}",
+          "CardName": "${newCutomerModel.cardName}",
+          "CardType": "${newCutomerModel.cardType}",
+        }),
+      );
       // print('B1SESSION='+ GetValues.sessionID.toString());
       // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
-      log("customer creation: " + json.decode(response.body).toString());
-      log("customer creation codeeresp "+response.statusCode.toString());
+      // log("customer creation: " + json.decode(response.body).toString());
+      log("customer creation codeeresp " + response.statusCode.toString());
       if (response.statusCode == 200) {
         return CreateCustPostModel.fromJson(response.body, response.statusCode);
       } else {
@@ -58,5 +61,3 @@ class NewCutomerCrtModel {
     this.cardCode,
   });
 }
-
-

@@ -24,7 +24,6 @@ class CheckedINPage extends StatefulWidget {
 class _CheckinPageState extends State<CheckedINPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     init();
     checkInternet();
@@ -77,8 +76,9 @@ class _CheckinPageState extends State<CheckedINPage> {
     setState(() {});
 
     await GetCheckedINAPi.getGlobalData(
-            GetValues.slpCode!, config.currentDateTimeServer())
-        .then((value) {
+      GetValues.slpCode!,
+      config.currentDateTimeServer(),
+    ).then((value) {
       if (value.statusCode! >= 200 && value.statusCode! <= 210) {
         loading = false;
         msg = '';
@@ -130,110 +130,124 @@ class _CheckinPageState extends State<CheckedINPage> {
     return Future.value(true);
   }
 
-  Config config = Config();
+  Configuration config = Configuration();
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return WillPopScope(
-      onWillPop: onbackpress,
-      child: Scaffold(
-        key: _scaffoldKey,
-        resizeToAvoidBottomInset: false,
-        drawer: drawer(context),
-        appBar: salesappBar(context, _scaffoldKey, widget.title),
-        body: (loading == true && msg.isEmpty && checkedINData.isEmpty)
-            ? Center(child: CircularProgressIndicator())
-            : (loading == false && msg.isNotEmpty && checkedINData.isEmpty)
-                ? Center(child: Text(msg))
-                : Container(
-                    width: Screens.width(context),
-                    height: Screens.heigth(context),
-                    padding: EdgeInsets.symmetric(
-                      vertical: Screens.heigth(context) * 0.01,
-                      horizontal: Screens.width(context) * 0.02,
-                    ),
-                    child: Column(
-                      //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: Screens.heigth(context) * 0.01,
-                            horizontal: Screens.width(context) * 0.02,
-                          ),
-                          width: Screens.width(context),
-                          decoration: BoxDecoration(color: Colors.grey[200]),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Text(checkedINData.isEmpty
+    return
+        //  WillPopScope(
+        //   onWillPop: onbackpress,
+        //   child:
+        Scaffold(
+      key: _scaffoldKey,
+      resizeToAvoidBottomInset: false,
+      drawer:
+          //  GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
+      appBar: salesappBar(context, _scaffoldKey, widget.title),
+      body: (loading == true && msg.isEmpty && checkedINData.isEmpty)
+          ? Center(child: CircularProgressIndicator())
+          : (loading == false && msg.isNotEmpty && checkedINData.isEmpty)
+              ? Center(child: Text(msg))
+              : Container(
+                  width: Screens.width(context),
+                  height: Screens.heigth(context),
+                  padding: EdgeInsets.symmetric(
+                    vertical: Screens.heigth(context) * 0.01,
+                    horizontal: Screens.width(context) * 0.02,
+                  ),
+                  child: Column(
+                    //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: Screens.heigth(context) * 0.01,
+                          horizontal: Screens.width(context) * 0.02,
+                        ),
+                        width: Screens.width(context),
+                        decoration: BoxDecoration(color: Colors.grey[200]),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                checkedINData.isEmpty
                                     ? ''
-                                    : checkedINData[0].CardCode!),
+                                    : checkedINData[0].CardCode!,
                               ),
-                              SizedBox(
-                                height: Screens.heigth(context) * 0.01,
-                              ),
-                              Container(
-                                child: Text(checkedINData.isEmpty
+                            ),
+                            SizedBox(
+                              height: Screens.heigth(context) * 0.01,
+                            ),
+                            SizedBox(
+                              child: Text(
+                                checkedINData.isEmpty
                                     ? ''
-                                    : checkedINData[0].CardName!),
+                                    : checkedINData[0].CardName!,
                               ),
-                              SizedBox(
-                                height: Screens.heigth(context) * 0.01,
-                              ),
-                              Container(
-                                child: Text(checkedINData.isEmpty
+                            ),
+                            SizedBox(
+                              height: Screens.heigth(context) * 0.01,
+                            ),
+                            SizedBox(
+                              child: Text(
+                                checkedINData.isEmpty
                                     ? ''
                                     : "Visit regarding " +
-                                        checkedINData[0].VisitReg!),
+                                        checkedINData[0].VisitReg!,
                               ),
-                              SizedBox(
-                                height: Screens.heigth(context) * 0.01,
-                              ),
-                              Container(
-                                child: Text(checkedINData.isEmpty
+                            ),
+                            SizedBox(
+                              height: Screens.heigth(context) * 0.01,
+                            ),
+                            SizedBox(
+                              child: Text(
+                                checkedINData.isEmpty
                                     ? ''
                                     : "checked-in @ " +
                                         config.alignDate(
-                                            checkedINData[0].CntctDate!) +
+                                          checkedINData[0].CntctDate!,
+                                        ) +
                                         ' ' +
                                         config.convertintToTime(
-                                            checkedINData[0].CntctTime!)),
+                                          checkedINData[0].CntctTime!,
+                                        ),
                               ),
-                              SizedBox(
-                                height: Screens.heigth(context) * 0.01,
-                              ),
-                            ],
-                          ),
+                            ),
+                            SizedBox(
+                              height: Screens.heigth(context) * 0.01,
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: Screens.heigth(context) * 0.01,
+                      ),
+                      SizedBox(
+                        height: Screens.heigth(context) * 0.01,
+                      ),
+                      Container(
+                        width: Screens.width(context),
+                        color: Colors.grey[200],
+                        padding:
+                            EdgeInsets.symmetric(vertical: 1, horizontal: 10),
+                        child: Text(
+                          'Visit running since ' + mycontroller[1].text,
                         ),
-                        Container(
-                          width: Screens.width(context),
-                          color: Colors.grey[200],
-                          padding:
-                              EdgeInsets.symmetric(vertical: 1, horizontal: 10),
-                          child: Text(
-                              'Visit running since ' + mycontroller[1].text),
+                      ),
+                      //  config.alignDate(checkedINData[0].CntctDate!) +' '+
+                      //  config.convertintToTime(checkedINData[0].CntctTime!))),
+                      SizedBox(
+                        height: Screens.heigth(context) * 0.01,
+                      ),
+                      Container(
+                        child: CustomSpinkitdButton(
+                          onTap: () async {
+                            Get.toNamed<void>(FurneyRoutes.checkoutPage);
+                          },
+                          label: 'Check out',
                         ),
-                        //  config.alignDate(checkedINData[0].CntctDate!) +' '+
-                        //  config.convertintToTime(checkedINData[0].CntctTime!))),
-                        SizedBox(
-                          height: Screens.heigth(context) * 0.01,
-                        ),
-                        Container(
-                          child: CustomSpinkitdButton(
-                            onTap: () async {
-                              Get.toNamed<void>(FurneyRoutes.checkoutPage);
-                            },
-                            label: 'Check out',
-                          ),
-                        )
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-      ),
+                ),
+      // ),
     );
   }
 }

@@ -9,17 +9,17 @@ class _BuildSignInButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return (isLoading == true)
-        ?const  CustomLoadingIndicator()
+    return (isLoading! == true)
+        ? const CustomLoadingIndicator()
         :
-      //    CustomFadeTransition(
-      // axis: Axis.vertical,
-      //       duration:const Duration(milliseconds: 800),
-      //       child: 
-            CustomElevatedButton(
-              label: AppLocalizations.of(context)!.sign_in,
-              onTap: onSignInTap,
-           // ),
+        //    CustomFadeTransition(
+        // axis: Axis.vertical,
+        //       duration:const Duration(milliseconds: 800),
+        //       child:
+        CustomElevatedButton(
+            label: AppLocalizations.of(context)!.sign_in,
+            onTap: onSignInTap,
+            // ),
           );
   }
 }

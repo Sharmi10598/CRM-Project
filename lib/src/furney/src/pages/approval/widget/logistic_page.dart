@@ -29,7 +29,6 @@ class LogisticPage extends StatefulWidget {
 class LogisticPageState extends State<LogisticPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setboolVal();
   }
@@ -122,9 +121,9 @@ class LogisticPageState extends State<LogisticPage> {
                               color: theme.primaryColor,
                               size: Screens.heigth(context) * 0.06,
                             ),
-                          )
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -173,9 +172,9 @@ class LogisticPageState extends State<LogisticPage> {
                               color: theme.primaryColor,
                               size: Screens.heigth(context) * 0.06,
                             ),
-                          )
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -429,7 +428,7 @@ class LogisticPageState extends State<LogisticPage> {
         for (int i = 0; i < ContentCreationState.itemsDetails.length; i++) {
           basictotal = basictotal +
               (ContentCreationState.itemsDetails[i].qty!.toDouble() *
-                  ContentCreationState.itemsDetails[i].price!.toDouble());
+                  ContentCreationState.itemsDetails[i].price!);
           //  basictotal + ContentCreationState.itemsDetails[i].total!;
           // ContentCreationState.itemsDetails[i].qty!.toDouble()*ContentCreationState.itemsDetails[i].price!.toDouble();
           totalbefordisc = totalbefordisc +
@@ -504,6 +503,7 @@ class LogisticPageState extends State<LogisticPage> {
       String? uuidg = uuid.v1();
       log(' GetValues.slpCode GetValues.slpCode::${GetValues.slpCode}');
       SalesQuotPostAPi.cardCodePost = HeaderCreationState.bpCode;
+      SalesQuotPostAPi.cardNamePost = HeaderCreationState.bpName;
       SalesQuotPostAPi.docLineQout = ContentCreationState.itemsDetails;
       SalesQuotPostAPi.docDate = HeaderCreationState.currentDateTime.toString();
       SalesQuotPostAPi.dueDate = HeaderCreationState.currentDateTime.toString();

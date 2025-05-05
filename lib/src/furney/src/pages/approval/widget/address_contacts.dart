@@ -66,7 +66,7 @@ class AddressContactsState extends State<AddressContacts> {
                           //   ),
                           // )
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -92,13 +92,11 @@ class AddressContactsState extends State<AddressContacts> {
                         SizedBox(
                           width: Screens.width(context) * 0.27,
                         ),
-                        Container(
-                          child: Icon(
-                            Icons.navigate_next_outlined,
-                            color: theme.primaryColor,
-                            size: Screens.heigth(context) * 0.06,
-                          ),
-                        )
+                        Icon(
+                          Icons.navigate_next_outlined,
+                          color: theme.primaryColor,
+                          size: Screens.heigth(context) * 0.06,
+                        ),
                       ],
                     ),
                   ),
@@ -152,7 +150,7 @@ class AddressContactsState extends State<AddressContacts> {
                           //   ),
                           // )
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -192,7 +190,7 @@ class AddressContactsState extends State<AddressContacts> {
                           //   ),
                           // )
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -218,20 +216,18 @@ class AddressContactsState extends State<AddressContacts> {
                         SizedBox(
                           width: Screens.width(context) * 0.22,
                         ),
-                        Container(
-                          child: Icon(
-                            Icons.navigate_next_outlined,
-                            color: theme.primaryColor,
-                            size: Screens.heigth(context) * 0.06,
-                          ),
-                        )
+                        Icon(
+                          Icons.navigate_next_outlined,
+                          color: theme.primaryColor,
+                          size: Screens.heigth(context) * 0.06,
+                        ),
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

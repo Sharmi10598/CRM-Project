@@ -1,60 +1,54 @@
 
-// ignore_for_file: omit_local_variable_types, file_names
-
-
-// ignore_for_file: omit_local_variable_types
-class CreaditDaysModal{
-  String ?odatametadata;
+class CreaditDaysModal {
+  String? odatametadata;
   List<CreaditDaysValue>? creaditDaysValueValue;
   String? error;
- 
-  CreaditDaysModal({
-   required this.odatametadata,
-   this.creaditDaysValueValue,
-   this.error,
 
+  CreaditDaysModal({
+    required this.odatametadata,
+    this.creaditDaysValueValue,
+    this.error,
   });
-   factory CreaditDaysModal.fromJson(Map<String, dynamic> jsons) {
+  factory CreaditDaysModal.fromJson(Map<String, dynamic> jsons) {
     if (jsons['value'] != null) {
-      final list =  jsons['value'] as List; //jsonDecode
+      final list = jsons['value'] as List; //jsonDecode
       // print(list);
-      List<CreaditDaysValue> dataList = list
+      final dataList = list
           .map((dynamic enquiries) => CreaditDaysValue.fromJson(enquiries))
           .toList();
       // print(dataList[0]);
       return CreaditDaysModal(
         creaditDaysValueValue: dataList,
         odatametadata: jsons['odata.metadata'].toString(),
-       // nextLink:  jsons['odata.nextLink'].toString(),
+        // nextLink:  jsons['odata.nextLink'].toString(),
       );
     } else {
       return CreaditDaysModal(
+        creaditDaysValueValue: [],
         odatametadata: null,
-          );
+      );
     }
   }
 
-   factory CreaditDaysModal.issue(String e) {
-      return CreaditDaysModal(
-       odatametadata: null,
-        error:e,
-          );
+  factory CreaditDaysModal.issue(String e) {
+    return CreaditDaysModal(
+      creaditDaysValueValue: [],
+      odatametadata: null,
+      error: e,
+    );
   }
 }
 
-class CreaditDaysValue{
-int? CreditDays;
+class CreaditDaysValue {
+  int? CreditDays;
 
-CreaditDaysValue({
- required  this.CreditDays,
+  CreaditDaysValue({
+    required this.CreditDays,
+  });
 
-});
-
- factory CreaditDaysValue.fromJson(dynamic jsons) {      
+  factory CreaditDaysValue.fromJson(dynamic jsons) {
     return CreaditDaysValue(
-      CreditDays: jsons['CreditDays']as int, 
-       );
- }
+      CreditDays: jsons['CreditDays'] as int,
+    );
+  }
 }
-
-

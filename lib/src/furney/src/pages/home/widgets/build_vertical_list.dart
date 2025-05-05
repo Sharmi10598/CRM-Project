@@ -115,7 +115,7 @@ class _BuildVerticalList extends StatelessWidget {
                       backgroundColor: theme.primaryColor,
                       child: IconButton(
                         icon: const Icon(
-                            FeatherIcons.arrowRight), //arrowRightCircle
+                            FeatherIcons.arrowRight,), //arrowRightCircle
                         iconSize: Screens.width(context) / 18.0,
                         color: Colors.white,
                         onPressed: () {

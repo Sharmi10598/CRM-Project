@@ -151,7 +151,7 @@ class HeaderEditCreationState extends State<HeaderEditCreation> {
                                     style: TextStyles.headlineBlack1(context),
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   child: Icon(
                                     Icons.navigate_next_outlined,
                                     color: theme.primaryColor,
@@ -268,28 +268,24 @@ class HeaderEditCreationState extends State<HeaderEditCreation> {
                           Container(
                             // width: Screens.width(context) * 0.83,
                             // color: Colors.blue,
-                            child: SizedBox(
-                              //   height: 50,
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'ENTER ADDRESS';
+                                }
 
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'ENTER ADDRESS';
-                                  }
-
-                                  return null;
-                                },
-                                controller: mycontroller[0],
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(color: Colors.green),
-                                  ),
+                                return null;
+                              },
+                              controller: mycontroller[0],
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(color: Colors.green),
                                 ),
-                                cursorColor: theme.primaryColor,
                               ),
+                              cursorColor: theme.primaryColor,
                             ),
                           ),
                         ],

@@ -1,5 +1,7 @@
 // ignore_for_file: noop_primitive_operations, omit_local_variable_types, prefer_interpolation_to_compose_strings, prefer_is_empty
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -12,7 +14,7 @@ import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/widget/creation/content_creation.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/widget/creation/header_creation.dart';
 
-import '../../../widgets/Drawer.dart';
+import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
 class ItemsDetails extends StatefulWidget {
   const ItemsDetails({required this.title, Key? key}) : super(key: key);
@@ -53,7 +55,7 @@ class ItemsDetailsState extends State<ItemsDetails> {
     });
   }
 
-  List<AddItem> additem = [];
+  List<AddQuotItem> additem = [];
   @override
   void dispose() {
     super.dispose();
@@ -109,12 +111,18 @@ class ItemsDetailsState extends State<ItemsDetails> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return WillPopScope(
-      onWillPop: onbackpress,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didpop) {
+        if (didpop) return;
+        log('bbbbbbbb');
+        onbackpress();
+      },
       child: Scaffold(
         // backgroundColor: Colors.grey[200],
         // key: _scaffoldKey,
-        // drawer: drawer(context),
+        //   drawer:
+        // GetValues.userRoll == '3' ? drawer2(context) : drawer(context),
         // appBar: appBar(context, _scaffoldKey, widget.title),
         //  ),
 
@@ -234,7 +242,8 @@ class ItemsDetailsState extends State<ItemsDetails> {
                                   // ));
                                   ContentCreationState.itemsDetails = additem;
                                   Get.toNamed<dynamic>(
-                                      FurneyRoutes.creationDetails);
+                                    FurneyRoutes.creationDetails,
+                                  );
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
@@ -288,7 +297,7 @@ class ItemsDetailsState extends State<ItemsDetails> {
                                                 //  fontWeight: FontWeight.bold
                                               ),
                                             ),
-                                          )
+                                          ),
                                         ],
                                       ),
                                       Container(
@@ -297,7 +306,7 @@ class ItemsDetailsState extends State<ItemsDetails> {
                                           color: theme.primaryColor,
                                           size: Screens.width(context) * 0.1,
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),

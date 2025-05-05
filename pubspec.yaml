@@ -1,7 +1,7 @@
 name: ultimate_bundle
 description: A new Flutter project.
 publish_to: 'none'
-version: 1.2.6
+version: 1.2.4
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -12,7 +12,7 @@ dependencies:
   #   git:
   #     url: git://github.com/google/charts.git
   #     path: charts_flutter    
-  charts_flutter_new: ^0.12.0
+  # charts_flutter_new: ^0.12.0
   chunked_stream: ^1.4.1
   connectivity: ^3.0.6
   path_provider: ^2.0.2
@@ -20,7 +20,6 @@ dependencies:
   pdf: ^3.4.2
   convex_bottom_bar: ^3.0.0
   cupertino_icons: ^1.0.2
-  # device_info_plus: ^9.0.3
   easy_pdf_viewer: ^1.0.1
   # flutter_dynamic_icon: ^2.1.0
   lazy_load_scrollview: ^1.3.0
@@ -65,8 +64,12 @@ dependencies:
   flutter_local_notifications: ^17.1.0
   firebase_messaging: ^14.1.2
   firebase_core: ^2.3.0
+  firebase_auth: ^4.4.0
   google_maps_flutter: ^2.5.3
   dio: ^5.4.2
+  connectivity_plus: ^6.0.3
+  package_info_plus: ^8.0.0
+  upgrader: ^10.3.0
   # workmanager: ^0.4.1
 
 dependency_overrides:

@@ -10,6 +10,8 @@ class ItemColumn {
   static const String discount = 'DisCount';
   static const String total = 'Total';
   static const String wareHouseCose = 'WareHouseCose';
+  static const String deliveryDate = 'DeliveryDate';
+
   static const String tax = 'Tax';
   static const String taxCode = 'TaxCode';
   static const String discounpercent = 'Discounpercent';
@@ -29,6 +31,8 @@ class ItemDocuments {
   final String wareHouseCose;
   final String tax;
   final String taxCode;
+  final String deliveryDate;
+
   final String discounpercent;
   final String taxCodeName;
   final String carton;
@@ -41,6 +45,7 @@ class ItemDocuments {
     required this.itemName,
     required this.price,
     required this.qty,
+    required this.deliveryDate,
     required this.discount,
     required this.total,
     required this.wareHouseCose,
@@ -65,7 +70,8 @@ class ItemDocuments {
         ItemColumn.taxCode: taxCode,
         ItemColumn.discounpercent: discounpercent,
         ItemColumn.taxCodeName: taxCodeName,
-        ItemColumn.cartoon: carton
+        ItemColumn.cartoon: carton,
+        ItemColumn.deliveryDate: deliveryDate,
       };
 
 // Map<String, dynamic> toJson() => <String, dynamic>{

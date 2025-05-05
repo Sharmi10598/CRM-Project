@@ -122,7 +122,7 @@ class ContactPersonState extends State<ContactPerson> {
                               Icons.arrow_back,
                               color: theme.primaryColor,
                               size: Screens.width(context) * 0.08,
-                            ),),)
+                            ),),),
                   ],),
        Expanded(
                   child: ListView.builder(

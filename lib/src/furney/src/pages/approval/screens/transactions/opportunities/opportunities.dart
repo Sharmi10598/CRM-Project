@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_single_quotes, sort_child_properties_last
 
-
 import 'package:flutter/material.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/approval/screens/transactions/opportunities/opportunities_listView.dart';
@@ -23,41 +22,46 @@ class OpportunitiesState extends State<Opportunities> {
       backgroundColor: Colors.grey[200],
       key: _scaffoldKey,
       appBar: appBar(context, _scaffoldKey, widget.title),
-      drawer: drawer(context),
+      drawer:
+          // GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(
-             left: Screens.width(context) * 0.02,
-             right: Screens.width(context) * 0.02,
-              top: Screens.heigth(context) * 0.01,
-              bottom: Screens.width(context) * 0.01,),
+            left: Screens.width(context) * 0.02,
+            right: Screens.width(context) * 0.02,
+            top: Screens.heigth(context) * 0.01,
+            bottom: Screens.width(context) * 0.01,
+          ),
           child: Column(
             children: [
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      child: Icon(Icons.search,
-                      color: theme.primaryColor,
-                      size: Screens.width(context)*0.1,),
-                    ),
-                    SizedBox(width:  Screens.width(context)*0.03,),
-                       Container(
-                      child: Icon(Icons.alt_route_sharp,
-                      color: theme.primaryColor,
-                      size: Screens.width(context)*0.1,),
-                    ),
-                     SizedBox(width:  Screens.width(context)*0.03,),
-                    Container(
-                      child: Icon(Icons.add,
-                      color: theme.primaryColor,
-                      size: Screens.width(context)*0.1,),
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(
+                    Icons.search,
+                    color: theme.primaryColor,
+                    size: Screens.width(context) * 0.1,
+                  ),
+                  SizedBox(
+                    width: Screens.width(context) * 0.03,
+                  ),
+                  Icon(
+                    Icons.alt_route_sharp,
+                    color: theme.primaryColor,
+                    size: Screens.width(context) * 0.1,
+                  ),
+                  SizedBox(
+                    width: Screens.width(context) * 0.03,
+                  ),
+                  Icon(
+                    Icons.add,
+                    color: theme.primaryColor,
+                    size: Screens.width(context) * 0.1,
+                  ),
+                ],
               ),
-              const ListOfOpportunities()
+              const ListOfOpportunities(),
             ],
           ),
         ),

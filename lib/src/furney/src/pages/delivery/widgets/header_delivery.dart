@@ -112,7 +112,7 @@ static String? totalBeforeDisc;//no
                                     //   ),
                                     // )
                                   ],
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -468,7 +468,7 @@ static String? totalBeforeDisc;//no
                       // )
                 ],
               ),
-            )
+            ),
             ],
           ),
         ),

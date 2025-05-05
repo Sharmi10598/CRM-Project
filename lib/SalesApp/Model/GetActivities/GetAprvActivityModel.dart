@@ -90,6 +90,6 @@ factory GetActivityApvdData.fromJson(dynamic jsons) {
   ApprovedCustomer.Details:Details,
   ApprovedCustomer.Name:Name,
   ApprovedCustomer.status: status,
-  ApprovedCustomer.slpCode:GetValues.slpCode
+  ApprovedCustomer.slpCode:GetValues.slpCode,
 };
 }

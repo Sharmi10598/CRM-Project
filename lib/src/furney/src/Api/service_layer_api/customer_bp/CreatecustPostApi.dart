@@ -16,7 +16,7 @@ class PostCustCreateAPi {
       final response = await http.post(Uri.parse(URL.url + "BusinessPartners"),
           headers: {
             'content-type': 'application/json',
-            "cookie": 'B1SESSION=' + GetValues.sessionID.toString()
+            "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
           },
           body: 
           newCutomerModel.cardCode== null?
@@ -40,7 +40,7 @@ class PostCustCreateAPi {
         "U_VatCer":newCutomerModel.vatcer,
         "BPAddresses": newCutomerModel.newModel!.map((e) => 
         e.tojson(),).toList(),
-        "ContactEmployees":newCutomerModel.contEmp!.map((e) => e.tojson()).toList()
+        "ContactEmployees":newCutomerModel.contEmp!.map((e) => e.tojson()).toList(),
       }) 
           :
           json.encode({
@@ -64,7 +64,7 @@ class PostCustCreateAPi {
         "U_VatCer":newCutomerModel.vatcer,
         "BPAddresses": newCutomerModel.newModel!.map((e) => 
         e.tojson(),).toList(),
-        "ContactEmployees":newCutomerModel.contEmp!.map((e) => e.tojson()).toList()
+        "ContactEmployees":newCutomerModel.contEmp!.map((e) => e.tojson()).toList(),
       }),);
 
       log( newCutomerModel.cardCode== null?
@@ -88,7 +88,7 @@ class PostCustCreateAPi {
         "U_VatCer":newCutomerModel.vatcer,
          "BPAddresses": newCutomerModel.newModel!.map((e) => 
         e.tojson(),).toList(),
-        "ContactEmployees":newCutomerModel.contEmp!.map((e) => e.tojson()).toList()
+        "ContactEmployees":newCutomerModel.contEmp!.map((e) => e.tojson()).toList(),
       }) 
           :
           json.encode({
@@ -110,7 +110,7 @@ class PostCustCreateAPi {
         "Series": newCutomerModel.Series,
          "BPAddresses": newCutomerModel.newModel!.map((e) => 
         e.tojson(),).toList(),
-        "ContactEmployees":newCutomerModel.contEmp!.map((e) => e.tojson()).toList()
+        "ContactEmployees":newCutomerModel.contEmp!.map((e) => e.tojson()).toList(),
       }),);
       // print('B1SESSION='+ GetValues.sessionID.toString());
       // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
@@ -203,7 +203,7 @@ class NewCutomeAdrsModel {
       "State": State,
       "AddressType": AddressType,
       "AddressName2": AddressName2,
-      "AddressName3": AddressName3
+      "AddressName3": AddressName3,
     };
     return data;
   }

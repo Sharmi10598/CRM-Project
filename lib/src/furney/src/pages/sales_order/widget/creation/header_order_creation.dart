@@ -24,8 +24,6 @@ import 'package:ultimate_bundle/src/furney/src/pages/sales_order/widget/creation
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../Modal/service_layer_modal/sales_oder/sales_orderdetails_modal.dart';
-
 class HeaderOrderCreation extends StatefulWidget {
   const HeaderOrderCreation({Key? key}) : super(key: key);
 
@@ -52,7 +50,7 @@ class HeaderOrderCreationState extends State<HeaderOrderCreation> {
   static double discountpercent = 0;
   static double tax = 0;
   static double total = 0;
-  static List<AddItem>? documentLines = [];
+  static List<AddOrderItem>? documentLines = [];
 
   static List<TextEditingController> mycontroller =
       List.generate(15, (i) => TextEditingController());
@@ -89,28 +87,36 @@ class HeaderOrderCreationState extends State<HeaderOrderCreation> {
     for (int i = 0; i < documentLines!.length; i++) {
       basictotal =
           basictotal + (documentLines![i].price! * documentLines![i].qty!);
+      log('basictotal::$basictotal');
 
       totalBeforeDiscount = totalBeforeDiscount +
           (documentLines![i].price! * documentLines![i].qty!);
+      log('totalBeforeDiscount::$totalBeforeDiscount');
 
       discount = discount +
           ((documentLines![i].price! * documentLines![i].qty!) *
               (documentLines![i].discounpercent! / 100));
+      log('discount::$discount');
+
+      log('documentLines![i].tax::${documentLines![i].tax}');
 
       // (documentLines![i].lineTotal!));
       tax = tax + documentLines![i].tax!;
-      log("taxtaxvalll::${tax}");
-      netvalue = (basictotal - discount) + tax;
-      total = netvalue;
+      log("taxtaxvalll::$tax");
+
       //
     }
+    netvalue = (basictotal - discount) + tax;
+    log('netvaluenetvalue::$netvalue');
+
+    total = netvalue;
   }
 
   static bool isTextFiledEnabled = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    log('GetValues.sapPassword::${CreateOrderDetailsState.isCameFromqutation}');
     setHeaderValue();
   }
 
@@ -197,7 +203,9 @@ class HeaderOrderCreationState extends State<HeaderOrderCreation> {
                         onTap: () {
                           if (CreateOrderDetailsState.isCameFromqutation ==
                               false) {
+                            log('message11');
                             CustomerPageState.isCameFromCreationOrder = true;
+                            Navigator.pop(context);
                             Get.toNamed<dynamic>(FurneyRoutes.customerpage);
                           } else {
                             null;
@@ -224,54 +232,40 @@ class HeaderOrderCreationState extends State<HeaderOrderCreation> {
                                               context),
                                         ),
                                       ),
-                                      Container(
-                                        child: Icon(
-                                          Icons.navigate_next_outlined,
-                                          color: theme.primaryColor,
-                                          size: Screens.heigth(context) * 0.06,
-                                        ),
+                                      Icon(
+                                        Icons.navigate_next_outlined,
+                                        color: theme.primaryColor,
+                                        size: Screens.heigth(context) * 0.06,
                                       )
                                     ],
                                   )
-                                : Container(
-                                    // width: Screens.width(context) * 0.83,
-                                    // color: Colors.blue,
-                                    child: SizedBox(
-                                      //   height: 50,
+                                : SizedBox(
+                                    //   height: 50,
 
-                                      child: TextFormField(
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return "Enter Business Partner Name";
-                                          }
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Enter Business Partner Name";
+                                        }
 
-                                          return null;
-                                        },
-                                        // onEditingComplete: (){
-                                        //   bpName =  mycontroller[2].text;
-                                        //   print("bpname: "+bpName);
-                                        // },
-                                        // onFieldSubmitted: (v){
-                                        //    bpName =  mycontroller[2].text;
-                                        //    print("bpname: "+bpName);
-                                        // },
-                                        onChanged: (v) {
-                                          bpName = mycontroller[2].text;
-                                          print("bpname: $bpName");
-                                        },
-                                        controller: mycontroller[2],
-                                        decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.symmetric(
-                                              vertical: 10, horizontal: 10),
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            borderSide:
-                                                BorderSide(color: Colors.green),
-                                          ),
+                                        return null;
+                                      },
+                                      onChanged: (v) {
+                                        bpName = mycontroller[2].text;
+                                        print("bpname: $bpName");
+                                      },
+                                      controller: mycontroller[2],
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 10),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          borderSide:
+                                              BorderSide(color: Colors.green),
                                         ),
-                                        cursorColor: theme.primaryColor,
                                       ),
+                                      cursorColor: theme.primaryColor,
                                     ),
                                   ),
                           ],
@@ -379,31 +373,27 @@ class HeaderOrderCreationState extends State<HeaderOrderCreation> {
                           SizedBox(
                             height: Screens.heigth(context) * 0.005,
                           ),
-                          Container(
-                            // width: Screens.width(context) * 0.83,
-                            // color: Colors.blue,
-                            child: SizedBox(
-                              //   height: 50,
+                          SizedBox(
+                            //   height: 50,
 
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Enter Customer Ref.No";
-                                  }
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Enter Customer Ref.No";
+                                }
 
-                                  return null;
-                                },
-                                controller: mycontroller[0],
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(color: Colors.green),
-                                  ),
+                                return null;
+                              },
+                              controller: mycontroller[0],
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(color: Colors.green),
                                 ),
-                                cursorColor: theme.primaryColor,
                               ),
+                              cursorColor: theme.primaryColor,
                             ),
                           ),
                         ],
@@ -856,7 +846,6 @@ class HeaderOrderCreationState extends State<HeaderOrderCreation> {
           if (value.balanceCreaditValue!.isNotEmpty) {
             double? balance = value.balanceCreaditValue![0].Balance;
             double? creditLimit = value.balanceCreaditValue![0].CreditLimit;
-            print("Bala: $balance");
             print("creditLimit: $creditLimit");
             double ans = creditLimit! - balance! - total;
             print("assssaasasa: $ans");
@@ -975,7 +964,7 @@ class HeaderOrderCreationState extends State<HeaderOrderCreation> {
                           //  Navigator.pop(context);
                         },
                         child: Text(
-                          'ok',
+                          'OK',
                           style: TextStyles.whiteText(context),
                         ))
                   ],

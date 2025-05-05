@@ -1,22 +1,22 @@
 import 'dart:convert';
 import 'dart:developer';
-import '../../../Modal/service_layer_modal/Login_sap_modal/login_data.dart';
-import '../../../widgets/Drawer.dart';
-import '../../url/url.dart';
 import 'package:http/http.dart' as http;
+import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
+import 'package:ultimate_bundle/src/furney/src/Modal/service_layer_modal/Login_sap_modal/login_data.dart';
+import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
 class PostSAPLoginAPi {
   static String? username;
   static String? password;
 
   static Future<Logindata> getGlobaldData() async {
-    log('message::' '${URL.url}Login' 
-        '---' +
-        json.encode({
-          'CompanyDB': '${GetValues.sapDB}',
-          'UserName': '$username',
-          'Password': '$password',
-        }));
+    log(
+      'sapDet:${URL.url}Login::${json.encode({
+            'CompanyDB': '${GetValues.sapDB}',
+            'UserName': '$username',
+            'Password': '$password',
+          })}',
+    );
     try {
       final response = await http.post(
         Uri.parse(
@@ -26,7 +26,7 @@ class PostSAPLoginAPi {
         body: json.encode({
           'CompanyDB': '${GetValues.sapDB}',
           'UserName': '$username',
-          'Password': '$password'
+          'Password': '$password',
         }),
       );
       log('saplogin sts: ${response.statusCode}');
@@ -34,14 +34,13 @@ class PostSAPLoginAPi {
       log('saplogin: ${response.body}');
 
       if (response.statusCode >= 200 && response.statusCode <= 210) {
-        log('statusCode::${response.statusCode}');
         return Logindata.fromJson(
           json.decode(response.body) as Map<String, dynamic>,
           response.statusCode,
         );
       } else if (response.statusCode >= 200 && response.statusCode <= 210) {
-        print('saplogin: ${json.decode(response.body)}');
-        print(response.statusCode);
+        // print('saplogin: ${json.decode(response.body)}');
+        // print(response.statusCode);
         return Logindata.error(
           json.decode(response.body) as Map<String, dynamic>,
           response.statusCode,

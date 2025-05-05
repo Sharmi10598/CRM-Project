@@ -15,7 +15,7 @@ class SalesOrderPostAPi {
   static String? sessionID;
   static String? cardCodePost;
   static String? cardNamePost;
-  static List<AddItem>? docLineQout;
+  static List<AddOrderItem>? docLineQout;
   static String? docDate;
   static String? dueDate;
   static String? remarks;
@@ -29,6 +29,7 @@ class SalesOrderPostAPi {
   static String? slpCode;
 
   static void method(String latitude, String longitude) {
+    log(URL.url + "Orders");
     final dat = CreateOrderDetailsState.isCameFromqutation == true
         ? json.encode({
             "AppVersion": AppVersion.version,
@@ -77,8 +78,12 @@ class SalesOrderPostAPi {
   }
 
   static Future<SalesQuotStatus> getGlobalData(
-      String latitude, String longitude) async {
+    String latitude,
+    String longitude,
+  ) async {
     try {
+      log(URL.url + "Orders");
+
       //  log(URL.url+"Orders  ${ CreateOrderDetailsState.isCameFromqutation}");
       //   print(sessionID);
       final data = CreateOrderDetailsState.isCameFromqutation == true
@@ -124,7 +129,8 @@ class SalesOrderPostAPi {
               "U_longitude": longitude,
               "DocumentLines": docLineQout!.map((e) => e.tojson()).toList(),
             });
-            log('U_Request dataaaaa::$data');
+      log('U_Request dataaaaa::$data');
+      log('sessionIDsessionIDsessionID::$sessionID');
       final response = await http.post(
         Uri.parse(
           URL.url + "Orders",
@@ -132,7 +138,7 @@ class SalesOrderPostAPi {
         headers: {
           "content-type": "application/json",
           "cookie": 'B1SESSION=' + sessionID!,
-          "Prefer": "return-no-content"
+          "Prefer": "return-no-content",
         },
         body: CreateOrderDetailsState.isCameFromqutation == true
             ? json.encode({
@@ -228,7 +234,7 @@ class SalesOrderPostAPi {
                 "DocumentLines": docLineQout!.map((e) => e.tojson()).toList(),
               }),
             );
-      print("statucCode: " + response.statusCode.toString());
+      log("statucCode: " + response.statusCode.toString());
       log("bodyyy post order: " + response.body);
       if (response.statusCode >= 200 && response.statusCode <= 210) {
         ///bedor 201
@@ -237,14 +243,16 @@ class SalesOrderPostAPi {
         //  print("statucCode post order: "+response.statusCode.toString());
         // throw Exception('Restart the app or contact the admin!!..');
         return SalesQuotStatus.errorIN(
-            json.decode(response.body) as Map<String, dynamic>,
-            response.statusCode);
+          json.decode(response.body) as Map<String, dynamic>,
+          response.statusCode,
+        );
       }
     } catch (e) {
       print(e);
       //  throw Exception(e);
       return SalesQuotStatus.issue(
-          'Restart the app or contact the admin!!..\n',); //+e.toString()
+        'Restart the app or contact the admin!!..\n',
+      ); //+e.toString()
     }
   }
 }

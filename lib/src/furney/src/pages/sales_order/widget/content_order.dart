@@ -40,7 +40,8 @@ class ContentOrderState extends State<ContentOrder> {
               itemBuilder: (context, i) {
                 return Container(
                   padding: EdgeInsets.symmetric(
-                      horizontal: Screens.width(context) * 0.02),
+                    horizontal: Screens.width(context) * 0.02,
+                  ),
                   color: Colors.white,
                   width: Screens.width(context),
                   child: Column(
@@ -53,7 +54,7 @@ class ContentOrderState extends State<ContentOrder> {
                         onTap: () {
                           SalesOrderItemsState.index = i;
                           SalesOrderItemsState.documentLines = documentLines;
-                          log("documentLinesdiscountper::${documentLines![0].discountPercent}");
+                          log('documentLinesdiscountper::${documentLines![0].discountPercent}');
 
                           Get.toNamed<dynamic>(FurneyRoutes.salesOrderItems);
                         },
@@ -79,19 +80,22 @@ class ContentOrderState extends State<ContentOrder> {
                                             child: Text(
                                               '${documentLines![i].ItemDescription}',
                                               style: TextStyles.bodytextBlack1(
-                                                  context),
+                                                context,
+                                              ),
                                             ),
                                           ),
                                           SizedBox(
-                                              width: Screens.width(context) *
-                                                  0.03),
+                                            width:
+                                                Screens.width(context) * 0.03,
+                                          ),
                                           SizedBox(
                                             //  color: Colors.pink,
                                             width: Screens.width(context) * 0.2,
                                             child: Text(
                                               '${documentLines![i].Quantity}',
                                               style: TextStyles.bodytextBlack2(
-                                                  context),
+                                                context,
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -108,43 +112,45 @@ class ContentOrderState extends State<ContentOrder> {
                                             child: Text(
                                               '${documentLines![i].ItemCode}',
                                               style: TextStyles.bodytextBlack2(
-                                                  context),
+                                                context,
+                                              ),
                                             ),
                                           ),
                                           SizedBox(
-                                              width: Screens.width(context) *
-                                                  0.03),
+                                            width:
+                                                Screens.width(context) * 0.03,
+                                          ),
                                           SizedBox(
                                             width: Screens.width(context) * 0.2,
                                             child: Text(
                                               //  '${documentLines![i].Price}',
                                               TextStyles.splitValues(
-                                                  '${documentLines![i].UnitPrice}'),
+                                                '${documentLines![i].UnitPrice}',
+                                              ),
                                               style: TextStyles.bodytextBlack2(
-                                                  context),
+                                                context,
+                                              ),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ],
                                   ),
-                                  Container(
-                                    //     color: Colors.blue,
-                                    child: Icon(
-                                      Icons.navigate_next_outlined,
-                                      color: theme.primaryColor,
-                                      size: Screens.heigth(context) * 0.05,
-                                    ),
-                                  )
+                                  Icon(
+                                    Icons.navigate_next_outlined,
+                                    color: theme.primaryColor,
+                                    size: Screens.heigth(context) * 0.05,
+                                  ),
                                 ],
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: Screens.width(context) * 0.1),
+                                  horizontal: Screens.width(context) * 0.1,
+                                ),
                                 child: const Divider(
                                   thickness: 1.5,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),

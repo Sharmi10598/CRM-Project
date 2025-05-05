@@ -82,7 +82,7 @@ class LogisticQuotState extends State<LogisticQuot> {
                             //   ),
                             // )
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -129,7 +129,7 @@ class LogisticQuotState extends State<LogisticQuot> {
                             //   ),
                             // )
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),

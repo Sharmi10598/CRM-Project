@@ -10,7 +10,7 @@ class GetVolumeChartApi {
   static String? slpCode;
 
   static Future<VolumeChartModal> getVolumeChartData() async {
-    print('GetValues.slpCode ${GetValues.slpCode}');
+    log('GetValues.slpCode ${GetValues.slpCode}');
     try {
       final response = await http.post(
         Uri.parse(URL.dynamicUrl),
@@ -26,7 +26,7 @@ class GetVolumeChartApi {
               "exec SalesTarget_AchVolume '${GetValues.slpCode}'", //'${GetValues.slpCode}'
         }),
       );
-      log('VolumeChartApi::' + json.decode(response.body).toString());
+      log('VolumeChartApi::${json.decode(response.body)}');
       // print('B1SESSION='+ GetValues.sessionID.toString());
       // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
       if (response.statusCode == 200) {

@@ -4,13 +4,13 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geocoding/geocoding.dart';
 //import 'package:location/location.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/route_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ultimate_bundle/SalesApp/Api/AddressGetApi/AddressGetApi.dart';
 import 'package:ultimate_bundle/helpers/textstyle.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/local_api/attendance_api/attendance_api.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
@@ -18,8 +18,6 @@ import 'package:ultimate_bundle/src/furney/src/pages/sign_in/widgets/custom_elev
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/appBar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
-import '../../../../../../SalesApp/Api/AddressGetApi/AddressGetApi.dart';
 
 // changed
 class AttendancePage extends StatefulWidget {
@@ -42,7 +40,9 @@ class _AttendancePageState extends State<AttendancePage> {
     );
     //"${DateTime.now().hour} : ${DateTime.now().minute}";
     _timer = Timer.periodic(
-        const Duration(seconds: 1), (Timer t) => _getCurrentTime());
+      const Duration(seconds: 1),
+      (Timer t) => _getCurrentTime(),
+    );
 
     // determinePosition(); //old
     super.initState();
@@ -74,7 +74,7 @@ class _AttendancePageState extends State<AttendancePage> {
           // await config.getSetup();
 
           // if (permission == LocationPermission.deniedForever) {}
-          var pos = await Geolocator.getCurrentPosition();
+          final pos = await Geolocator.getCurrentPosition();
           latitude = pos.latitude == '' || pos.latitude == 'null'
               ? '0.0'
               : pos.latitude.toString();
@@ -98,28 +98,29 @@ class _AttendancePageState extends State<AttendancePage> {
           url = 'https://www.openstreetmap.org/#map=11/$latitude/$langitude';
           // MapSampleState.lati1 = double.parse(latitude);
           // MapSampleState.lang2 = double.parse(langitude);
-          var lat = double.parse(latitude);
-          var long = double.parse(langitude);
+          final lat = double.parse(latitude);
+          final long = double.parse(langitude);
           lati1 = double.parse(latitude);
           lang2 = double.parse(langitude);
           AttendanceAPi.latitude = latitude;
           AttendanceAPi.longitude = langitude;
           await AddressMasterApi.getData(lat.toString(), long.toString())
               .then((value) {
-            log("value.stcode::" + value!.stcode.toString());
+            log("value.stcode::" + value.stcode.toString());
             if (200 >= value.stcode! && 210 <= value.stcode!) {
               adrresss = value.results[1].formattedAddress;
 
-              log("adress::" + adrresss.toString());
+              log("adress::" + adrresss);
             } else {
               print("error:api");
             }
           });
         } catch (e) {
           const snackBar = SnackBar(
-              duration: Duration(seconds: 1),
-              backgroundColor: Colors.red,
-              content: Text('Please turn on the Location!!..'));
+            duration: Duration(seconds: 1),
+            backgroundColor: Colors.red,
+            content: Text('Please turn on the Location!!..'),
+          );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
           Future.delayed(
             const Duration(seconds: 2),
@@ -127,7 +128,7 @@ class _AttendancePageState extends State<AttendancePage> {
           );
         }
       } else if (serviceEnabled == true) {
-        var pos = await Geolocator.getCurrentPosition();
+        final pos = await Geolocator.getCurrentPosition();
         // print('lattitude: ' + pos.latitude.toString());
         // await config.getSetup();
 
@@ -159,8 +160,8 @@ class _AttendancePageState extends State<AttendancePage> {
         //     : pos.longitude.toString());
         // url = 'https://www.openstreetmap.org/#map=11/$latitude/$langitude';
 
-        var lat = double.parse(latitude);
-        var long = double.parse(langitude);
+        final lat = double.parse(latitude);
+        final long = double.parse(langitude);
         lati1 = double.parse(latitude);
         lang2 = double.parse(langitude);
         AttendanceAPi.latitude = latitude;
@@ -170,7 +171,7 @@ class _AttendancePageState extends State<AttendancePage> {
           log("value.stcode::" + value.stcode.toString());
           if (value.stcode! >= 200 && value.stcode! <= 210) {
             adrresss = value.results[1].formattedAddress;
-            log("adress::" + adrresss.toString());
+            log("adress::" + adrresss);
           } else {
             print("error:api");
           }
@@ -206,7 +207,6 @@ class _AttendancePageState extends State<AttendancePage> {
   String latitude = '';
   String langitude = '';
 
-  bool? _serviceEnabled;
   bool? backEnabled;
 
   String? longi;
@@ -246,7 +246,7 @@ class _AttendancePageState extends State<AttendancePage> {
           final double lat = double.parse(latitude);
           final double long = double.parse(langitude);
 
-          List<Placemark> placemarks =
+          final List<Placemark> placemarks =
               await placemarkFromCoordinates(lat, long);
           setState(() {
             adrress = placemarks[0].street.toString() +
@@ -284,7 +284,8 @@ class _AttendancePageState extends State<AttendancePage> {
         final double lat = double.parse(latitude);
         final double long = double.parse(langitude);
 
-        List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
+        final List<Placemark> placemarks =
+            await placemarkFromCoordinates(lat, long);
         setState(() {
           adrress = placemarks[0].street.toString() +
               " " +
@@ -351,7 +352,9 @@ class _AttendancePageState extends State<AttendancePage> {
     final theme = Theme.of(context);
     return Scaffold(
       key: _scaffoldKey,
-      drawer: drawer(context),
+      drawer:
+          // GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.grey[200],
       appBar: appBar(context, _scaffoldKey, widget.title),
@@ -370,7 +373,7 @@ class _AttendancePageState extends State<AttendancePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   width: Screens.width(context),
                   height: Screens.heigth(context) * 0.22,
                   // color: Colors.blue,
@@ -563,97 +566,95 @@ class _AttendancePageState extends State<AttendancePage> {
                 ),
                 SingleChildScrollView(
                   child: CustomSpinkitdButton(
-                      onTap: _isLoading == true
-                          ? null
-                          : adrresss == null || adrresss.isEmpty
-                              ? null
-                              : () async {
-                                  setState(() => _isLoading = true);
-                                  // Future.delayed(const Duration(seconds: 2), () {
-                                  //    setState(() => _isLoading = false);
-                                  //  // Get.offAllNamed<dynamic>(FurneyRoutes.home);
-                                  // });
-                                  currentDate();
-                                  AttendanceAPi.location = adrresss;
-                                  AttendanceAPi.comments =
-                                      textController[0].text;
-                                  AttendanceAPi.locationType =
-                                      isAtCustomer == true ? '2' : '1';
-                                  print(
-                                    "location: " +
-                                        AttendanceAPi.location.toString(),
-                                  );
-                                  print(
-                                    "comments: " + AttendanceAPi.comments,
-                                  );
-                                  print(
-                                    "deviceID: " +
-                                        AttendanceAPi.deviceID.toString(),
-                                  );
-                                  print(
-                                    "latitude: " +
-                                        AttendanceAPi.latitude.toString(),
-                                  );
-                                  print(
-                                    "longitude: " +
-                                        AttendanceAPi.longitude.toString(),
-                                  );
-                                  print(
-                                    "timeStamp: " +
-                                        AttendanceAPi.timeStamp.toString(),
-                                  );
-                                  print(
-                                    "userid: " +
-                                        AttendanceAPi.userid.toString(),
-                                  );
-                                  print(
-                                    "locationType: " +
-                                        AttendanceAPi.locationType.toString(),
-                                  );
-                                  await AttendanceAPi.getGlobalData()
-                                      .then((value) {
-                                    if (value.attendanceData![0].msg ==
-                                        "Successfully Inserted") {
-                                      setState(() => _isLoading = true);
-                                      const snackBar = SnackBar(
-                                        backgroundColor: Colors.green,
-                                        duration: Duration(seconds: 1),
-                                        content: Text(
-                                          'Attendance Successfully Completed',
-                                        ),
-                                      );
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackBar);
-                                      Future.delayed(
-                                        const Duration(seconds: 2),
-                                        () => Get.back<dynamic>(),
-                                      );
-                                    } else if (value.attendanceData == null &&
-                                        value.status == false) {
-                                      setState(() => _isLoading = false);
-                                      const snackBar = SnackBar(
-                                        backgroundColor: Colors.red,
-                                        duration: Duration(seconds: 1),
-                                        content: Text(
-                                          'Attendance NotSuccessfully Completed',
-                                        ),
-                                      );
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackBar);
-                                      Future.delayed(
-                                        const Duration(seconds: 2),
-                                        () => Get.back<dynamic>(),
-                                      );
-                                    }
-                                    // print(value.attendanceData![0].msg);
-                                  });
-                                },
-                      isLoading: _isLoading,
-                      labelLoading:
-                          '', //AppLocalizations.of(context)!.checking_in,
-                      label:
-                          'Check In - Check Out' //AppLocalizations.of(context)!.check_in,
-                      ),
+                    onTap: _isLoading == true
+                        ? null
+                        : adrresss.isEmpty
+                            ? null
+                            : () async {
+                                setState(() => _isLoading = true);
+                                // Future.delayed(const Duration(seconds: 2), () {
+                                //    setState(() => _isLoading = false);
+                                //  // Get.offAllNamed<dynamic>(FurneyRoutes.home);
+                                // });
+                                currentDate();
+                                AttendanceAPi.location = adrresss;
+                                AttendanceAPi.comments = textController[0].text;
+                                AttendanceAPi.locationType =
+                                    isAtCustomer == true ? '2' : '1';
+                                print(
+                                  "location: " +
+                                      AttendanceAPi.location.toString(),
+                                );
+                                print(
+                                  "comments: " + AttendanceAPi.comments,
+                                );
+                                print(
+                                  "deviceID: " +
+                                      AttendanceAPi.deviceID.toString(),
+                                );
+                                print(
+                                  "latitude: " +
+                                      AttendanceAPi.latitude.toString(),
+                                );
+                                print(
+                                  "longitude: " +
+                                      AttendanceAPi.longitude.toString(),
+                                );
+                                print(
+                                  "timeStamp: " +
+                                      AttendanceAPi.timeStamp.toString(),
+                                );
+                                print(
+                                  "userid: " + AttendanceAPi.userid.toString(),
+                                );
+                                print(
+                                  "locationType: " +
+                                      AttendanceAPi.locationType.toString(),
+                                );
+                                await AttendanceAPi.getGlobalData()
+                                    .then((value) {
+                                  if (value.attendanceData![0].msg ==
+                                      "Successfully Inserted") {
+                                    setState(() => _isLoading = true);
+                                    const snackBar = SnackBar(
+                                      backgroundColor: Colors.green,
+                                      duration: Duration(seconds: 1),
+                                      content: Text(
+                                        'Attendance Successfully Completed',
+                                      ),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                    Future.delayed(
+                                      const Duration(seconds: 2),
+                                      () => Get.back<dynamic>(),
+                                    );
+                                  } else if (value.attendanceData == null &&
+                                      value.status == false) {
+                                    setState(() => _isLoading = false);
+                                    const snackBar = SnackBar(
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 1),
+                                      content: Text(
+                                        'Attendance NotSuccessfully Completed',
+                                      ),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                    Future.delayed(
+                                      const Duration(seconds: 2),
+                                      () => Get.back<dynamic>(),
+                                    );
+                                  }
+                                  // print(value.attendanceData![0].msg);
+                                });
+                              },
+                    isLoading: _isLoading,
+                    labelLoading:
+                        '', //AppLocalizations.of(context)!.checking_in,
+                    label:
+                        'Check In - Check Out', //AppLocalizations.of(context)!.check_in,
+                  ),
                 ),
                 SizedBox(
                   height: Screens.heigth(context) * 0.015,
@@ -666,7 +667,7 @@ class _AttendancePageState extends State<AttendancePage> {
     );
   }
 
-  bool? isAtCustomer = false;
+  bool isAtCustomer = false;
   String? _timeString;
   bool _isLoading = false;
   void _getCurrentTime() {

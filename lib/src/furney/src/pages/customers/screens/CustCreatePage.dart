@@ -49,7 +49,6 @@ class _CustomerCreatePageState extends State<CustomerCreatePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getGroup();
   }
@@ -129,7 +128,7 @@ class _CustomerCreatePageState extends State<CustomerCreatePage> {
       groCustLoad = false;
       if (value.statusCode! >= 200 && value.statusCode! <= 210) {
         if (value.groupcustData != null) {
-          paygroupData = value.groupcustData!;
+          paygroupData = value.groupcustData;
           errormsg = '';
           setState(() {});
         } else {
@@ -152,7 +151,9 @@ class _CustomerCreatePageState extends State<CustomerCreatePage> {
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset: true,
-      drawer: drawer(context),
+      drawer:
+          // GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       appBar: appBar(context, _scaffoldKey, widget.title),
       body: (groCustLoad == true && errormsg.isEmpty && groupcData.isEmpty)
           ? Center(child: CircularProgressIndicator())
@@ -207,7 +208,7 @@ class _CustomerCreatePageState extends State<CustomerCreatePage> {
                                         ?.copyWith(color: theme.primaryColor)),
                                 onChanged: (String? value) {
                                   setState(() {
-                                    seriesValue = value!;
+                                    seriesValue = value;
                                     log('seriesValue $seriesValue');
                                     if (seriesValue.toString().toLowerCase() ==
                                         '218') {
@@ -216,8 +217,8 @@ class _CustomerCreatePageState extends State<CustomerCreatePage> {
                                     } else {
                                       seriesValuebool = true;
                                     }
-                                    print("sleect code: " +
-                                        seriesValue.toString());
+                                    // print("sleect code: " +
+                                    //     seriesValue.toString());
                                   });
                                 }),
                           ),
@@ -296,9 +297,9 @@ class _CustomerCreatePageState extends State<CustomerCreatePage> {
                                         ?.copyWith(color: theme.primaryColor)),
                                 onChanged: (String? value) {
                                   setState(() {
-                                    codeValue = value!;
-                                    print(
-                                        "sleect code: " + codeValue.toString());
+                                    codeValue = value;
+                                    // print(
+                                    //     "sleect code: " + codeValue.toString());
                                   });
                                 }),
                           ),
@@ -1339,9 +1340,9 @@ class _CustomerCreatePageState extends State<CustomerCreatePage> {
                                         ?.copyWith(color: theme.primaryColor)),
                                 onChanged: (String? value) {
                                   setState(() {
-                                    teriteriValue = value!;
-                                    print("teriteriValue: " +
-                                        teriteriValue.toString());
+                                    teriteriValue = value;
+                                    // print("teriteriValue: " +
+                                    //     teriteriValue.toString());
                                   });
                                 }),
                           ),
@@ -1444,20 +1445,20 @@ class _CustomerCreatePageState extends State<CustomerCreatePage> {
                                 items: paygroupData!.map((e) {
                                   return DropdownMenuItem(
                                       // ignore: unnecessary_brace_in_string_interps
-                                      value: "${e.GroupNum}",
+                                      value: "${e.groupNum}",
                                       child: Container(
                                           // height: Screens.bodyheight(context)*0.1,
                                           child:
-                                              Text(e.PymntGroup.toString())));
+                                              Text(e.pymntGroup.toString())));
                                 }).toList(),
                                 hint: Text("Payment terms",
                                     style: theme.textTheme.bodyLarge
                                         ?.copyWith(color: theme.primaryColor)),
                                 onChanged: (String? value) {
                                   setState(() {
-                                    paygrpValue = value!;
-                                    print("paygrpValue: " +
-                                        paygrpValue.toString());
+                                    paygrpValue = value;
+                                    // print("paygrpValue: " +
+                                    //     paygrpValue.toString());
                                   });
                                 }),
                           ),
@@ -1585,7 +1586,7 @@ class _CustomerCreatePageState extends State<CustomerCreatePage> {
     if (result != null) {
       //filedata.clear();
       List<File> filesz = result!.paths.map((path) => File(path!)).toList();
-      print(tinFiles);
+      // print(tinFiles);
 
       for (int i = 0; i < filesz.length; i++) {
         setState(() {
@@ -1639,7 +1640,7 @@ class _CustomerCreatePageState extends State<CustomerCreatePage> {
         fileName: vatFiles!.path.split('/').last));
   }
 
-  Config config = Config();
+  Configuration config = Configuration();
   void callPostApi() async {
     loadingBtn = true;
     setState(() {});
@@ -1655,9 +1656,9 @@ class _CustomerCreatePageState extends State<CustomerCreatePage> {
             setState(() {
               log("Api PAth $i: " + value.filepath.toString());
               if (i == 0) {
-                newCutomerModel.tincer = value.filepath!;
+                newCutomerModel.tincer = value.filepath;
               } else if (i == 1) {
-                newCutomerModel.vatcer = value.filepath!;
+                newCutomerModel.vatcer = value.filepath;
               }
             });
           } else if (value.stCode! >= 400 && value.stCode! <= 410) {

@@ -88,7 +88,9 @@ class ApprovalsInfoState extends State<ApprovalsInfo> {
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       appBar: appBar(context, _scaffoldKey, widget.title),
-      drawer: drawer(context),
+      drawer:
+          // GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       body: approvalDetailsValue == null
           ? Center(
               child: SpinKitThreeBounce(
@@ -399,16 +401,14 @@ class ApprovalsInfoState extends State<ApprovalsInfo> {
                                                                       context),
                                                             ),
                                                           ),
-                                                          Container(
-                                                            child: Icon(
-                                                              Icons
-                                                                  .navigate_next_outlined,
-                                                              color: theme
-                                                                  .primaryColor,
-                                                              size: Screens.heigth(
-                                                                      context) *
-                                                                  0.06,
-                                                            ),
+                                                          Icon(
+                                                            Icons
+                                                                .navigate_next_outlined,
+                                                            color: theme
+                                                                .primaryColor,
+                                                            size: Screens.heigth(
+                                                                    context) *
+                                                                0.06,
                                                           )
                                                         ],
                                                       )

@@ -6,7 +6,7 @@ import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 AppBar loadappBar(
     BuildContext context, GlobalKey<ScaffoldState> key, String title,
     [VoidCallback? tap]) {
-  key:key;
+  key;
   final width = MediaQuery.of(context).size.width;
   const isTSH = false;
   final theme = Theme.of(context);
@@ -25,26 +25,27 @@ AppBar loadappBar(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-                  Column(
-                    children: [
-                      Text(
-                        title, //AppLocalizations.of(context)!.dashboard,
-                        style: TextStyle(
-                            fontSize:
+              Column(
+                children: [
+                  Text(
+                    title, //AppLocalizations.of(context)!.dashboard,
+                    style: TextStyle(
+                        fontSize:
                             //Screens.width(context) * 0.04,
-                            title.length>10? Screens.width(context) * 0.04:  Screens.width(context) * 0.045,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
+                            title.length > 10
+                                ? Screens.width(context) * 0.04
+                                : Screens.width(context) * 0.045,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600),
                   ),
-
-                  InkWell(
-                    onTap: tap,
-                    child: Container(
-                      child: Icon(Icons.replay_outlined),
-                    ),
-                  )
+                ],
+              ),
+              InkWell(
+                onTap: tap,
+                child: Container(
+                  child: Icon(Icons.replay_outlined),
+                ),
+              )
             ],
           ),
         ),

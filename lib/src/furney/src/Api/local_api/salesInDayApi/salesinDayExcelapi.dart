@@ -3,22 +3,21 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'package:excel/excel.dart';
+import 'dart:typed_data';
 
 import 'package:chunked_stream/chunked_stream.dart';
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
+import 'package:excel/excel.dart';
+import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import 'package:ultimate_bundle/helpers/constants.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/reports/screens/reports.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/showPdf/ShowPdf.dart';
-import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_xlsio/xlsio.dart';
-import 'dart:typed_data';
-
 import 'package:url_launcher/url_launcher.dart';
 
 class SalesOnDayExcelAPi {
@@ -28,9 +27,11 @@ class SalesOnDayExcelAPi {
 
   static Future<int> getGlobalData() async {
     try {
-      log("SalesOnDayExcelAPi" +
-          URL.reportUrl +
-          'SalesInDay/$fromDate,$toDate,$slpCode');
+      log(
+        "SalesOnDayExcelAPi::" +
+            URL.reportUrl +
+            'SalesInDayExcel/$fromDate,$toDate,$slpCode',
+      );
       final response = await http.get(
         Uri.parse(
           URL.reportUrl +
@@ -40,7 +41,9 @@ class SalesOnDayExcelAPi {
           'content-type': 'application/octet-stream',
         },
       );
-      log("bodyBytes: " + response.bodyBytes.toString());
+      log("SalesOnDayExcelSts: " + response.statusCode.toString());
+
+      log("SalesOnDayExcelRes: " + response.bodyBytes.toString());
 
       if (response.statusCode == 200) {
         // log("bodyBytes: "+ response.bodyBytes.toString());
@@ -91,7 +94,7 @@ _importFromExcel(File path) async {
 
     for (var table in excel.tables.keys) {
       print(table); //sheet Name
-      var sheet = excel.tables[table]!;
+      final sheet = excel.tables[table]!;
       print(sheet.maxColumns);
       print(sheet.maxRows);
 

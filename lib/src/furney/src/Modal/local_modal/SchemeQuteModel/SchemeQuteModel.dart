@@ -5,11 +5,13 @@ import 'dart:developer';
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
 class SchemeQuteModal {
-  SchemeQuteModal(
-      {required this.status,
-      required this.message,
-      required this.statuscode, this.saleOrder,
-      this.exception,});
+  SchemeQuteModal({
+    required this.status,
+    required this.message,
+    required this.statuscode,
+    this.saleOrder,
+    this.exception,
+  });
 
   bool? status;
   String? message;
@@ -17,9 +19,9 @@ class SchemeQuteModal {
   String? exception;
   int statuscode;
 
-  factory SchemeQuteModal.fromJson(Map<String, dynamic> jsons, int Statuscode) {
+  factory SchemeQuteModal.fromJson(Map<String, dynamic> jsons, int statuscode) {
     if (jsons['saleQuoatation'] != null) {
-      // log("stcode1"+Statuscode.toString());
+      // log("stcode1"+statuscode.toString());
       var list = jsons['saleQuoatation'] as List;
       //jsonDecode(jsons['data'] as String) as List; //jsonDecode
       // print(list);
@@ -28,29 +30,35 @@ class SchemeQuteModal {
           .toList();
       // print(dataList[0]);
       return SchemeQuteModal(
-          saleOrder: dataList,
-          message: jsons['message'].toString(),
-          status: jsons['status'] as bool,
-          statuscode: Statuscode,);
+        saleOrder: dataList,
+        message: jsons['message'].toString(),
+        status: jsons['status'] as bool,
+        statuscode: statuscode,
+      );
     } else {
-      log("stcode" + Statuscode.toString());
+      log("stcode" + statuscode.toString());
       return SchemeQuteModal(
-          message: jsons['message'].toString(),
-          status: jsons['status'] as bool,
-          statuscode: Statuscode,);
+        message: jsons['message'].toString(),
+        status: jsons['status'] as bool,
+        statuscode: statuscode,
+      );
     }
   }
   factory SchemeQuteModal.issue(int statuscode) {
     return SchemeQuteModal(
-        status: null, message: null, statuscode: statuscode,);
+      status: null,
+      message: null,
+      statuscode: statuscode,
+    );
   }
 
   factory SchemeQuteModal.exception(String e, int statuscode) {
     return SchemeQuteModal(
-        status: null,
-        message: null,
-        exception: e,
-        statuscode: statuscode,);
+      status: null,
+      message: null,
+      exception: e,
+      statuscode: statuscode,
+    );
   }
 }
 
@@ -61,12 +69,13 @@ class SchemeQuteModalData {
   double discPer;
   double discVal;
 
-  SchemeQuteModalData(
-      {required this.docEntry,
-      required this.schemeEntry,
-      required this.lineNum,
-      required this.discPer,
-      required this.discVal,});
+  SchemeQuteModalData({
+    required this.docEntry,
+    required this.schemeEntry,
+    required this.lineNum,
+    required this.discPer,
+    required this.discVal,
+  });
 
   factory SchemeQuteModalData.fromJson(dynamic jsons) {
     return SchemeQuteModalData(
@@ -90,14 +99,15 @@ class SalesQuteScheme {
   String balance;
   String customer;
 
-  SalesQuteScheme(
-      {required this.ItemCode,
-      required this.PriceBefDi,
-      required this.Quantity,
-      required this.UCartons,
-      required this.lineno,
-      required this.balance,
-      required this.customer,});
+  SalesQuteScheme({
+    required this.ItemCode,
+    required this.PriceBefDi,
+    required this.Quantity,
+    required this.UCartons,
+    required this.lineno,
+    required this.balance,
+    required this.customer,
+  });
 
   Map<String, dynamic> toMap() {
     Map<String, String> map = {

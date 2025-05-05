@@ -16,8 +16,8 @@ class DiscountAPi{
 "CardCode": cardcode,
 "ItemCode": itemcode,
 "UoMQuantity": qty,
-"Date":date
-}
+"Date":date,
+},
 //}"
          }),);
     try {
@@ -37,8 +37,8 @@ class DiscountAPi{
 "CardCode": cardcode,
 "ItemCode": itemcode,
 "UoMQuantity": qty,
-"Date":date
-}
+"Date":date,
+},
 //}"
          }),
       );

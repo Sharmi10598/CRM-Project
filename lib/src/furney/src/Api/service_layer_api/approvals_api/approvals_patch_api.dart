@@ -18,8 +18,8 @@ class ApprovalsPatchAPi{
       body: jsonEncode({
         "ApprovalRequestDecisions": [{
         "Status": "$status",
-        "Remarks": "$remarks"
-        }]
+        "Remarks": "$remarks",
+        }],
         }),
         headers: {
         "content-type": "application/json",

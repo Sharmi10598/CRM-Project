@@ -12,7 +12,6 @@ class ProfileScreen extends StatefulWidget {
 class ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getAllmethods();
   }
@@ -45,7 +44,9 @@ class ProfileScreenState extends State<ProfileScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       key: _scaffoldKey,
-      drawer: drawer(context),
+      drawer:
+          //  GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       appBar: appBar(context, _scaffoldKey, widget.title),
       body: branch == null
           ? Center(

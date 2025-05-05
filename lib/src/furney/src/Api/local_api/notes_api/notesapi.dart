@@ -22,7 +22,7 @@ class NotesAPi {
 
       if (response.statusCode == 200) {
         return NotesModal.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+            json.decode(response.body) as Map<String, dynamic>,);
       } else {
         //  print(json.decode(response.body));
         // print(json.decode(response.statusCode.toString()));

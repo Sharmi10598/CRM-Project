@@ -9,7 +9,7 @@ import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 class GetLeadToken {
   static Future<String> getGlobalData() async {
     print(
-        '${URL.urlLocal}GetUserDetails/${GetValues.deviceID}/${GetValues.UserToken}'); //44f40157df6d90af  7d9ff2bd3c00f082
+        '${URL.urlLocal}GetUserDetails/${GetValues.deviceID}/${GetValues.UserToken}',); //44f40157df6d90af  7d9ff2bd3c00f082
     try {
       final response = await http.get(
         Uri.parse(
@@ -22,7 +22,7 @@ class GetLeadToken {
       if (response.statusCode == 200) {
         print("GetLeadToken: " + json.decode(response.body).toString());
         CheckUserLogin data = CheckUserLogin.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+            json.decode(response.body) as Map<String, dynamic>,);
 
         return data.loginUserData![0].ManagerFCM!;
       } else {

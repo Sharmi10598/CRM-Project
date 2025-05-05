@@ -22,19 +22,25 @@ class MoreState extends State<More> {
       backgroundColor: Colors.grey[200],
       key: _scaffoldKey,
       appBar: appBar(context, _scaffoldKey, widget.title),
-      drawer: drawer(context),
+      drawer:
+          // GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(
-             left: Screens.width(context) * 0.02,
-             right: Screens.width(context) * 0.02,
-              top: Screens.heigth(context) * 0.01,
-              bottom: Screens.width(context) * 0.01,),
+            left: Screens.width(context) * 0.02,
+            right: Screens.width(context) * 0.02,
+            top: Screens.heigth(context) * 0.01,
+            bottom: Screens.width(context) * 0.01,
+          ),
           child: Center(
-            child: Text("No Data",
-            style: GoogleFonts.poppins(
+            child: Text(
+              "No Data",
+              style: GoogleFonts.poppins(
                 fontSize: Screens.width(context) * 0.07,
-                color: Colors.black,),),
+                color: Colors.black,
+              ),
+            ),
           ),
         ),
       ),

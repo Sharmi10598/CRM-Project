@@ -1,5 +1,7 @@
 // ignore_for_file: unused_element
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/constants.dart';
 import 'package:ultimate_bundle/src/furney/src/models/allmenudata.dart';
@@ -7,18 +9,14 @@ import 'package:ultimate_bundle/src/furney/src/models/allmenudata.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/others/widget/category_all_menu.dart';
 // ignore: always_use_package_imports
 
-
-
-
-
 class Allmenu extends StatelessWidget {
-  final List<AllMenuData> itemCount;
+  final List<AllMenuData> itemCountt;
 
-  const Allmenu({required this.itemCount, Key? key}) : super(key: key);
+  const Allmenu({required this.itemCountt, Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      itemCount: itemCount.length,
+      itemCount: itemCountt.length,
       physics: const ScrollPhysics(),
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(horizontal: Const.margin),
@@ -29,8 +27,10 @@ class Allmenu extends StatelessWidget {
         mainAxisSpacing: 10,
       ),
       itemBuilder: (context, index) {
-        final category = itemCount[index];
-        return CategoryAllMenu(category: category);
+        final category = itemCountt[index];
+        return category.name != null
+            ? CategoryAllMenu(category: category)
+            : Container();
       },
     );
   }

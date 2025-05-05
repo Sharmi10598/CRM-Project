@@ -1,14 +1,16 @@
-// ignore: file_names
 // ignore_for_file: file_names, prefer_interpolation_to_compose_strings, require_trailing_commas, prefer_const_constructors, unnecessary_new, omit_local_variable_types, noop_primitive_operations, prefer_single_quotes, unnecessary_statements, prefer_is_empty, unnecessary_lambdas, unawaited_futures, unnecessary_parenthesis, unnecessary_string_interpolations, prefer_final_locals, prefer_conditional_assignment, prefer_if_null_operators
 
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ultimate_bundle/SalesApp/Pages/Planning/UnplannedVisit.dart';
 import 'package:ultimate_bundle/helpers/constants.dart';
 import 'package:ultimate_bundle/helpers/textstyle.dart';
+import 'package:ultimate_bundle/helpers/uikit_model.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/items_api/items_api.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/items_api/mainsubApi/mainGroup.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/items_api/mainsubApi/subGroup.dart';
@@ -31,6 +33,10 @@ import 'package:ultimate_bundle/src/furney/src/pages/sales_order/widget/creation
 import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/screens/create_quot.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 import 'package:uuid/uuid.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../Api/local_api/LeadDateApi/LeadDateApi.dart';
+import '../../../../Modal/local_modal/LeadDatrModels/LeadDateMdl.dart';
 
 class ContentOrderCreation extends StatefulWidget {
   const ContentOrderCreation({Key? key}) : super(key: key);
@@ -41,9 +47,9 @@ class ContentOrderCreation extends StatefulWidget {
 
 class ContentOrderCreationState extends State<ContentOrderCreation> {
   PageController pageController = PageController();
-  static List<AddItem> itemsDetails = [];
-  static List<AddItem> itemsDetails2 = [];
-  static List<AddItem> itemsDetails3 = [];
+  static List<AddOrderItem> itemsDetails = [];
+  static List<AddOrderItem> itemsDetails2 = [];
+  static List<AddOrderItem> itemsDetails3 = [];
   static bool isCalculated = false;
   int pageChanged = 0;
   //
@@ -54,15 +60,22 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
   int minuslength = 0;
   List<TextEditingController> mycontroller =
       List.generate(15, (i) => TextEditingController());
+  List<TextEditingController> delDateMyController =
+      List.generate(15, (i) => TextEditingController());
+  Configuration configg = Configuration();
+
   //
   @override
   void initState() {
+    super.initState();
     log("isCameFromqutation::" +
         CreateOrderDetailsState.isCameFromqutation.toString());
 
     if (CreateOrderDetailsState.isCameforapprovalsales == true) {
       log("GetValues.sapUserName:::::" + GetValues.sapUserName!.toString());
       log("GetValues   UserName:::::" + GetValues.userName!.toString());
+      log("GetValues   UserName:::::" + GetValues.sapPassword!.toString());
+
       setValuesToListPageapproval();
     }
     if (CreateOrderDetailsState.isCameFromqutation == true &&
@@ -84,7 +97,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
     MainGroupAPi.getGlobalData().then((value) {
       if (mounted) {
         setState(() {
-          print(value.itemValueValue![0].code);
+          // print(value.itemValueValue![0].code);
           mainValueValue = value.itemValueValue!;
         });
       }
@@ -138,9 +151,9 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
         }
         setState(() {
           swipeLoad = false;
-          print('lenthofList: ' + lenthofList.toString());
-          print('lennList: ' + filteritemValue.length.toString());
-          print(val.nextLink);
+          // print('lenthofList: ' + lenthofList.toString());
+          // print('lennList: ' + filteritemValue.length.toString());
+          // print(val.nextLink);
           // minuslength = 0;
         });
       }
@@ -159,7 +172,6 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[200],
       body: PageView(
-        // ignore: prefer_const_constructors
         physics: NeverScrollableScrollPhysics(),
         controller: pageController,
         onPageChanged: (index) {
@@ -593,47 +605,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                     ],
                                   ),
                                 ),
-                                //   SizedBox(
-                                //   height: Screens.heigth(context) * 0.005,
-                                // ),
-                                // Container(
-                                //   //   color: Colors.blueGrey,
-                                //   width: Screens.width(context) * 0.9,
-                                //   child: Row(
-                                //     //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                //     children: [
-                                //       Container(
-                                //         //  color: Colors.greenAccent,
-                                //         width: Screens.width(context) * 0.25,
-                                //         child: Text(
-                                //           'Total', //'${quotDataFilter[i].DocNum}',
-                                //           style:
-                                //               TextStyles.bodytextBlack1(context),
-                                //         ),
-                                //       ),
-                                //       Container(
-                                //         //  color: Colors.greenAccent,
-                                //         width: Screens.width(context) * 0.05,
-                                //         child: Text(
-                                //           ':', //'${quotDataFilter[i].DocNum}',
-                                //           style:
-                                //               TextStyles.bodytextBlack1(context),
-                                //         ),
-                                //       ),
-                                //       Container(
-                                //         //  color: Colors.greenAccent,
-                                //         width: Screens.width(context) * 0.2,
-                                //         child: Text(
 
-                                //           TextStyles.splitValues(
-                                //               '${itemsDetails[i].total! }'),//- itemsDetails[i].discount!
-                                //           style:
-                                //               TextStyles.bodytextBlack1(context),
-                                //         ),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
                                 SizedBox(
                                   height: Screens.heigth(context) * 0.005,
                                 ),
@@ -673,141 +645,181 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                     ],
                                   ),
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    // Container(
-                                    //   alignment: Alignment.bottomRight,
-                                    //   // color: Colors.greenAccent,
-                                    //   //  width: Screens.width(context) * 0.18,
-                                    //   child: Row(
-                                    //     children: [
-                                    //       InkWell(
-                                    //         onTap: () {},
-                                    //         child: Container(
-                                    //           padding: EdgeInsets.all(
-                                    //               Screens.width(context) * 0.01),
-                                    //           decoration: BoxDecoration(
-                                    //               shape: BoxShape.circle,
-                                    //               color: theme.primaryColor),
-                                    //           child: Icon(
-                                    //             Icons.add,
-                                    //             size: Screens.width(context) * 0.05,
-                                    //             color: Colors.white,
-                                    //           ),
-                                    //         ),
-                                    //       ),
-                                    //       SizedBox(
-                                    //         width: Screens.width(context) * 0.02,
-                                    //       ),
-                                    //       InkWell(
-                                    //         onTap: () {},
-                                    //         child: Container(
-                                    //           padding: EdgeInsets.all(
-                                    //               Screens.width(context) * 0.01),
-                                    //           decoration: BoxDecoration(
-                                    //               shape: BoxShape.circle,
-                                    //               color: theme.primaryColor),
-                                    //           child: Icon(
-                                    //             Icons.remove,
-                                    //             size: Screens.width(context) * 0.05,
-                                    //             color: Colors.white,
-                                    //           ),
-                                    //         ),
-                                    //       )
-                                    //     ],
-                                    //   ),
-                                    // ),
-                                    // SizedBox(
-                                    //   width: Screens.width(context) * 0.04,
-                                    // ),
-                                    InkWell(
-                                      onTap: () {
-                                        mycontroller[4].text = itemsDetails[i]
-                                            .price!
-                                            .toStringAsFixed(2);
-                                        mycontroller[5].text =
-                                            itemsDetails[i].qty!.toString();
-                                        mycontroller[6].text = itemsDetails[i]
-                                            .discounpercent!
-                                            .toStringAsFixed(2);
-                                        // valueChossed =
-                                        //     itemsDetails[i].valuechoosed;
-                                        print("valuechoosed: " +
-                                            itemsDetails[i]
-                                                .valuechoosed
-                                                .toString());
-                                        print("taxName: " +
-                                            itemsDetails[i].taxName.toString());
-                                        if (GetValues.countryCode!
-                                                .toLowerCase() ==
-                                            'tanzania') {
-                                          if (itemsDetails[i]
-                                              .taxName
-                                              .toString()
-                                              .contains("18 %")) {
-                                            taxSelected = 0.00;
-                                            taxSelected = 18.0;
-                                          }
-                                        } else {
-                                          if (itemsDetails[i]
-                                              .taxName
-                                              .toString()
-                                              .contains("16%")) {
-                                            taxSelected = 0.00;
-                                            taxSelected = 16.0;
-                                          }
-                                        }
+                                SizedBox(
+                                  width: Screens.width(context) * 0.9,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: Screens.width(context) * 0.5,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            SizedBox(
+                                              // color: Colors.greenAccent,
+                                              width:
+                                                  Screens.width(context) * 0.25,
+                                              child: Text(
+                                                'Del date', //'${quotDataFilter[i].DocNum}',
+                                                style:
+                                                    TextStyles.bodytextBlack1(
+                                                        context),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              // color: Colors.greenAccent,
+                                              width:
+                                                  Screens.width(context) * 0.05,
+                                              child: Text(
+                                                ':', //'${quotDataFilter[i].DocNum}',
+                                                style:
+                                                    TextStyles.bodytextBlack1(
+                                                        context),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              // color: Colors.red,
+                                              width:
+                                                  Screens.width(context) * 0.2,
+                                              child: Text(
+                                                itemsDetails[i].deliveryDate ==
+                                                            null ||
+                                                        itemsDetails[i]
+                                                                .deliveryDate ==
+                                                            'null' ||
+                                                        itemsDetails[i]
+                                                            .deliveryDate!
+                                                            .isEmpty
+                                                    ? ''
+                                                    : '${configg.alignDate(itemsDetails[i].deliveryDate.toString())}', //'${quotDataFilter[i].DocNum}',
+                                                style:
+                                                    TextStyles.bodytextBlack1(
+                                                        context),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              mycontroller[4].text =
+                                                  itemsDetails[i]
+                                                      .price!
+                                                      .toStringAsFixed(2);
+                                              mycontroller[5].text =
+                                                  itemsDetails[i]
+                                                      .qty!
+                                                      .toString();
+                                              mycontroller[6].text =
+                                                  itemsDetails[i]
+                                                      .discounpercent!
+                                                      .toStringAsFixed(2);
 
-                                        selectedtaxName =
-                                            itemsDetails[i].taxName.toString();
-                                        //itemsDetails[i].tax!;
-                                        if (itemsDetails[i].valuechoosed !=
-                                            null) {
-                                          valueChossed =
-                                              itemsDetails[i].valuechoosed;
-                                        } else if (itemsDetails[i].taxName !=
-                                            null) {
-                                          valueChossed =
-                                              itemsDetails[i].taxName;
-                                        }
-                                        showBottomSheetUpdate(i, theme);
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.bottomRight,
-                                        // color: Colors.greenAccent,
-                                        // width: Screens.width(context) * 0.1,
-                                        child: Icon(
-                                          Icons.mode_edit_outline_outlined,
-                                          color: theme.primaryColor,
-                                          size: Screens.width(context) * 0.065,
-                                        ),
+                                              delDateMyController[1].text =
+                                                  configg.alignDate(
+                                                      itemsDetails[i]
+                                                          .deliveryDate!);
+
+                                              // leadDatePicker(
+                                              //     context, 'update');
+                                              // callLeadApiandDate(
+                                              //     itemsDetails[i].itemCode,
+                                              //     context,
+                                              //     'update');
+
+                                              // valueChossed =
+                                              //     itemsDetails[i].valuechoosed;
+                                              print("taxName: " +
+                                                  itemsDetails[i]
+                                                      .taxName
+                                                      .toString());
+                                              if (GetValues.countryCode!
+                                                      .toLowerCase()
+                                                      .trim() ==
+                                                  'tanzania') {
+                                                if (itemsDetails[i]
+                                                    .taxName
+                                                    .toString()
+                                                    .contains("18 %")) {
+                                                  taxSelected = 0.00;
+                                                  taxSelected = 18.0;
+                                                }
+                                              } else {
+                                                if (itemsDetails[i]
+                                                    .taxName
+                                                    .toString()
+                                                    .contains("16%")) {
+                                                  taxSelected = 0.00;
+                                                  taxSelected = 16.0;
+                                                }
+                                              }
+
+                                              selectedtaxName = itemsDetails[i]
+                                                  .taxName
+                                                  .toString();
+                                              //itemsDetails[i].tax!;
+                                              if (itemsDetails[i]
+                                                      .valuechoosed !=
+                                                  null) {
+                                                valueChossed = itemsDetails[i]
+                                                    .valuechoosed;
+                                              } else if (itemsDetails[i]
+                                                      .taxName !=
+                                                  null) {
+                                                valueChossed =
+                                                    itemsDetails[i].taxName;
+                                              }
+
+                                              showBottomSheetUpdate(i, theme);
+                                            },
+                                            child: Container(
+                                              alignment: Alignment.bottomRight,
+                                              // color: Colors.greenAccent,
+                                              // width: Screens.width(context) * 0.1,
+                                              child: Icon(
+                                                Icons
+                                                    .mode_edit_outline_outlined,
+                                                color: theme.primaryColor,
+                                                size: Screens.width(context) *
+                                                    0.065,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width:
+                                                Screens.width(context) * 0.02,
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                grandtotal = 0.00;
+                                                discount = 0.00;
+                                                itemsDetails.removeAt(i);
+                                                sumofTotal();
+                                              });
+                                            },
+                                            child: Container(
+                                              alignment: Alignment.bottomRight,
+                                              // color: Colors.greenAccent,
+                                              // width: Screens.width(context) * 0.1,
+                                              child: Icon(
+                                                Icons.delete_outline_sharp,
+                                                color: theme.primaryColor,
+                                                size: Screens.width(context) *
+                                                    0.065,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: Screens.width(context) * 0.04,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          grandtotal = 0.00;
-                                          discount = 0.00;
-                                          itemsDetails.removeAt(i);
-                                          sumofTotal();
-                                        });
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.bottomRight,
-                                        // color: Colors.greenAccent,
-                                        // width: Screens.width(context) * 0.1,
-                                        child: Icon(
-                                          Icons.delete_outline_sharp,
-                                          color: theme.primaryColor,
-                                          size: Screens.width(context) * 0.065,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 )
                               ],
                             ),
@@ -891,7 +903,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                 });
                               },
                               decoration: InputDecoration(
-                                hintText: 'Filter for Items',
+                                hintText: 'Filter for Itemsss',
                                 hintStyle: TextStyles.bodytextBlack1(context),
                                 // AppLocalizations.of(context)!
                                 //     .search_sales_quot,
@@ -965,7 +977,6 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                 if (swipeLoad == true) {
                                   if (mycontroller[0].text.isEmpty) {
                                     if (ItemsAPi.nextUrl != 'null') {
-                                      print("1111111");
                                       return SizedBox(
                                         width: Screens.width(context),
                                         height: Screens.heigth(context) * 0.9,
@@ -990,21 +1001,20 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                             HeaderOrderCreationState.bpCode;
                                         SpecialDiscountAPi.itemCode =
                                             filteritemValue[i].itemCode;
-                                        print(
-                                            "ABBBVVV1:::::+${SpecialDiscountAPi.cardCode}");
-                                        print(SpecialDiscountAPi.itemCode);
+                                        // print(
+                                        //     "ABBBVVV1:::::+${SpecialDiscountAPi.cardCode}");
+                                        // print(SpecialDiscountAPi.itemCode);
                                         SpecialDiscountAPi.getGlobalData()
                                             .then((value) {
                                           if (value.specialValue!.length > 0) {
                                             setState(() {
                                               loadingscrn = false;
                                             });
-                                            print(value.specialValue![0].Price);
                                             mycontroller[1].text = value
                                                         .specialValue![0]
-                                                        .Price! >
+                                                        .price! >
                                                     0
-                                                ? value.specialValue![0].Price
+                                                ? value.specialValue![0].price
                                                     .toString()
                                                 : filteritemValue[i]
                                                             .itemPrices![0]
@@ -1017,6 +1027,13 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                                     : "";
                                             mycontroller[2].text = '';
                                             valueChossed = null;
+
+                                            callLeadApiandDate(
+                                                filteritemValue[i]
+                                                    .itemCode
+                                                    .toString(),
+                                                context,
+                                                'Add');
                                             showBottomSheetInsert(i, theme);
                                             // showModalBottomSheet<dynamic>(context: context, builder:  (_) {
                                             //                     return
@@ -1109,13 +1126,11 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                                 )
                                               ],
                                             ),
-                                            Container(
-                                              child: Icon(
-                                                Icons.chevron_right_outlined,
-                                                color: theme.primaryColor,
-                                                size: Screens.width(context) *
-                                                    0.1,
-                                              ),
+                                            Icon(
+                                              Icons.chevron_right_outlined,
+                                              color: theme.primaryColor,
+                                              size:
+                                                  Screens.width(context) * 0.1,
                                             )
                                           ],
                                         ),
@@ -1199,6 +1214,8 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(5)),
                               child: DropdownButton(
+                                dropdownColor: Colors.white,
+
                                 hint: Text(
                                   "Select Main Group: ",
                                   style: TextStyles.headlineBlack1(context),
@@ -1213,7 +1230,6 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                 onChanged: (val) {
                                   setState(() {
                                     valueSelectedMain = val.toString();
-                                    print(valueSelectedMain);
                                   });
                                 },
                                 items: mainValueValue.map((e) {
@@ -1249,6 +1265,8 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(5)),
                               child: DropdownButton(
+                                dropdownColor: Colors.white,
+
                                 hint: Text(
                                   "Select Sub Group: ",
                                   style: TextStyles.headlineBlack1(context),
@@ -1263,7 +1281,6 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                 onChanged: (val) {
                                   setState(() {
                                     valueSelectedSub = val.toString();
-                                    print(valueSelectedSub.toString());
                                   });
                                 },
                                 items: subValueValue.map((e) {
@@ -1357,7 +1374,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                       });
                                     },
                                     child: Text(
-                                      "cancel",
+                                      "Cancel",
                                       style: TextStyles.whiteText(context),
                                     )),
                                 ElevatedButton(
@@ -1412,14 +1429,11 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
       ItemsAPi.getGlobalData(mycontroller[8].text).then((value) {
         setState(() {
           if (value.itemValueValue!.isNotEmpty) {
-            print(value.itemValueValue![0].itemName);
             itemValue = value.itemValueValue!;
             filteritemValue = itemValue;
-            print(value.nextLink);
             ItemsAPi.nextUrl = value.nextLink;
             loadItemValues = false;
 
-            print(ItemsAPi.nextUrl);
             lenthofList = filteritemValue.length;
           } else if (value.itemValueValue!.isEmpty) {
             itemValue = [];
@@ -1559,7 +1573,6 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
           }
         });
       } else {
-        print("hold");
         callPostApi();
       }
     }
@@ -1574,11 +1587,8 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
 
             double? creditLimit = value.balanceCreaditValue![0].CreditLimit;
 
-            print("Bala: $balance");
-            print("creditLimit: $creditLimit");
             double ans =
                 creditLimit! - balance! - HeaderOrderCreationState.total;
-            print("assssaasasa: $ans");
             if (ans < 0) {
               PostMaxCommitAPi.cardCodePost = HeaderOrderCreationState.bpCode;
               PostMaxCommitAPi.value = "${100.00 + getCredit}";
@@ -1680,7 +1690,6 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
         // String contentText = "Content of Dialog";
         return StatefulBuilder(
           builder: (context, setState) {
-            final theme = Theme.of(context);
             return AlertDialog(
               //    title: Text("Title of Dialog"),
               content: SizedBox(
@@ -1705,7 +1714,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                           //  Navigator.pop(context);
                         },
                         child: Text(
-                          'ok',
+                          'OK',
                           style: TextStyles.whiteText(context),
                         ))
                   ],
@@ -1782,7 +1791,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                       Radius.circular(10),
                                     ),
                                   ),
-                                  labelText: "unit price",
+                                  labelText: "Unit price",
                                   labelStyle:
                                       TextStyles.bodytextBlack1(context),
                                 ),
@@ -1803,7 +1812,6 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                   return null;
                                 },
                                 onEditingComplete: () {
-                                  print("onEditingComplete");
                                   setState(() {
                                     loadingscrn = true;
                                   });
@@ -1844,17 +1852,6 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                 readOnly: true,
                                 controller: mycontroller[3],
                                 onChanged: (val) {},
-                                // validator: (value) {
-                                //   if (value!.isEmpty) {
-                                //     return "ENTER DISCOUNT";
-                                //   } else if (value.isNotEmpty) {
-                                //     double dis = double.parse(value);
-                                //     if (dis > 100) {
-                                //       return "DISCOUNT MORE THAN 100";
-                                //     }
-                                //   }
-                                //   return null;
-                                // },
                                 keyboardType: TextInputType.number,
                                 style: TextStyle(fontSize: 15),
                                 decoration: InputDecoration(
@@ -1874,139 +1871,37 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                             SizedBox(
                               height: 10,
                             ),
-                            Container(
-                              width: Screens.width(context),
-                              padding:
-                                  EdgeInsets.only(top: 1, left: 10, right: 10),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: GetValues.countryCode!.toLowerCase() ==
-                                      'tanzania'
-                                  ? DropdownButton(
-                                      hint: Text(
-                                        "Select Tax: ",
-                                        style:
-                                            TextStyles.bodytextBlack1(context),
-                                      ),
-                                      value: valueChossed,
-                                      //dropdownColor:Colors.green,
-                                      icon: Icon(Icons.arrow_drop_down),
-                                      iconSize: 30,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 16),
-                                      isExpanded: true,
-                                      onChanged: (val) {
-                                        setState(() {
-                                          if (val == 'O0 - 0 % Output VAT') {
-                                            valueChosedReason = '0';
-                                            taxCode = 'O0';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          } else if (val ==
-                                              'O1 - 18 % Output VAT') {
-                                            valueChosedReason = '18';
-                                            taxCode = 'O1';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          } else if (val ==
-                                              'O3 - Exempted Output VAT') {
-                                            taxCode = 'O3';
-                                            valueChosedReason = '0';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          } else if (val ==
-                                              'X0 - Exempt Output') {
-                                            valueChosedReason = '0';
-                                            taxCode = 'X0';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          }
-
-                                          valueChossed = val.toString();
-
-                                          print(val.toString());
-                                          print("valavalaa: .........." +
-                                              valueChosedReason.toString());
-                                          print("taxSelected: .........." +
-                                              taxSelected.toString());
-                                          print("taxCode: .........." +
-                                              taxCode.toString());
-                                        });
-                                      },
-                                      items: taxData2.map((e) {
-                                        return DropdownMenuItem(
-                                            value: "${e['name']}",
-                                            child: Text(
-                                              e['name'].toString(),
-                                              style: TextStyles.headlineBlack1(
-                                                  context),
-                                            ));
-                                      }).toList(),
-                                    )
-                                  : DropdownButton(
-                                      hint: Text(
-                                        "Select Tax: ",
-                                        style:
-                                            TextStyles.bodytextBlack1(context),
-                                      ),
-                                      value: valueChossed,
-                                      //dropdownColor:Colors.green,
-                                      icon: Icon(Icons.arrow_drop_down),
-                                      iconSize: 30,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 16),
-                                      isExpanded: true,
-                                      onChanged: (val) {
-                                        setState(() {
-                                          if (val == 'O0 - 0 % Output VAT') {
-                                            valueChosedReason = '0';
-                                            taxCode = 'O0';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          } else if (val ==
-                                              'O1 - 16 % Output VAT') {
-                                            valueChosedReason = '16';
-                                            taxCode = 'O1';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          } else if (val ==
-                                              'O3 - Exempted Output VAT') {
-                                            taxCode = 'O3';
-                                            valueChosedReason = '0';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          } else if (val ==
-                                              'X0 - Exempt Output') {
-                                            valueChosedReason = '0';
-                                            taxCode = 'X0';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          }
-
-                                          valueChossed = val.toString();
-
-                                          print(val.toString());
-                                          print("valavalaa: .........." +
-                                              valueChosedReason.toString());
-                                          print("taxSelected: .........." +
-                                              taxSelected.toString());
-                                          print("taxCode: .........." +
-                                              taxCode.toString());
-                                        });
-                                      },
-                                      items: taxData3.map((e) {
-                                        return DropdownMenuItem(
-                                            value: "${e['name']}",
-                                            child: Text(
-                                              e['name'].toString(),
-                                              style: TextStyles.headlineBlack1(
-                                                  context),
-                                            ));
-                                      }).toList(),
+                            SizedBox(
+                              child: new TextFormField(
+                                readOnly: true,
+                                controller: delDateMyController[0],
+                                onChanged: (val) {},
+                                keyboardType: TextInputType.number,
+                                style: TextStyle(fontSize: 15),
+                                decoration: InputDecoration(
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(
+                                        () {
+                                          leadDatePicker(context, '');
+                                        },
+                                      );
+                                    },
+                                    icon: Icon(Icons.calendar_month),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
                                     ),
+                                  ),
+                                  labelText: "Del Date",
+                                  labelStyle:
+                                      TextStyles.bodytextBlack1(context),
+                                ),
+                              ),
                             ),
-
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -2023,7 +1918,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                       });
                                     },
                                     child: Text(
-                                      "cancel",
+                                      "Cancel",
                                       style: TextStyles.whiteText(context),
                                     )),
                                 ElevatedButton(
@@ -2034,10 +1929,26 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                       backgroundColor: theme.primaryColor,
                                     ),
                                     onPressed: () {
+                                      valueChosedReason = null;
+                                      if (GetValues.countryCode!
+                                              .toLowerCase()
+                                              .trim() ==
+                                          'tanzania') {
+                                        valueChosedReason = '18';
+                                        taxCode = 'O1';
+                                        taxSelected = double.parse(
+                                            valueChosedReason.toString());
+                                      } else {
+                                        valueChosedReason = '16';
+                                        taxCode = 'O1';
+                                        taxSelected = double.parse(
+                                            valueChosedReason.toString());
+                                      }
+
                                       validation4Insert(context, i);
                                     },
                                     child: Text(
-                                      "ok",
+                                      "OK",
                                       style: TextStyles.whiteText(context),
                                     )),
                               ],
@@ -2095,7 +2006,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                       Radius.circular(10),
                                     ),
                                   ),
-                                  labelText: "unit price",
+                                  labelText: "Unit price",
                                   labelStyle:
                                       TextStyles.bodytextBlack1(context),
                                 ),
@@ -2125,7 +2036,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                       Radius.circular(10),
                                     ),
                                   ),
-                                  labelText: "quantity",
+                                  labelText: "Quantity",
                                   labelStyle:
                                       TextStyles.bodytextBlack1(context),
                                 ),
@@ -2170,137 +2081,177 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                             SizedBox(
                               height: 15,
                             ),
-                            Container(
-                              width: Screens.width(context),
-                              padding:
-                                  EdgeInsets.only(top: 1, left: 10, right: 10),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: GetValues.countryCode == 'tanzania'
-                                  ? DropdownButton(
-                                      hint: Text(
-                                        "Select Tax: ",
-                                        style:
-                                            TextStyles.bodytextBlack1(context),
-                                      ),
-                                      value: valueChossed,
-                                      //dropdownColor:Colors.green,
-                                      icon: Icon(Icons.arrow_drop_down),
-                                      iconSize: 30,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 16),
-                                      isExpanded: true,
-                                      onChanged: (val) {
-                                        setState(() {
-                                          if (val == 'O0 - 0 % Output VAT') {
-                                            valueChosedReason = '0';
-                                            taxCode = 'O0';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          } else if (val ==
-                                              'O1 - 18 % Output VAT') {
-                                            valueChosedReason = '18';
-                                            taxCode = 'O1';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          } else if (val ==
-                                              'O3 - Exempted Output VAT') {
-                                            taxCode = 'O3';
-                                            valueChosedReason = '0';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          } else if (val ==
-                                              'X0 - Exempt Output') {
-                                            valueChosedReason = '0';
-                                            taxCode = 'X0';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          }
 
-                                          valueChossed = val.toString();
-
-                                          print(val.toString());
-                                          print("valavalaa: .........." +
-                                              valueChosedReason.toString());
-                                          print("taxSelected: .........." +
-                                              taxSelected.toString());
-                                          print("taxCode: .........." +
-                                              taxCode.toString());
-                                        });
-                                      },
-                                      items: taxData2.map((e) {
-                                        return DropdownMenuItem(
-                                            value: "${e['name']}",
-                                            child: Text(
-                                              e['name'].toString(),
-                                              style: TextStyles.headlineBlack1(
-                                                  context),
-                                            ));
-                                      }).toList(),
-                                    )
-                                  : DropdownButton(
-                                      hint: Text(
-                                        "Select Tax: ",
-                                        style:
-                                            TextStyles.bodytextBlack1(context),
-                                      ),
-                                      value: valueChossed,
-                                      //dropdownColor:Colors.green,
-                                      icon: Icon(Icons.arrow_drop_down),
-                                      iconSize: 30,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 16),
-                                      isExpanded: true,
-                                      onChanged: (val) {
-                                        setState(() {
-                                          if (val == 'O0 - 0 % Output VAT') {
-                                            valueChosedReason = '0';
-                                            taxCode = 'O0';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          } else if (val ==
-                                              'O1 - 16 % Output VAT') {
-                                            valueChosedReason = '16';
-                                            taxCode = 'O1';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          } else if (val ==
-                                              'O3 - Exempted Output VAT') {
-                                            taxCode = 'O3';
-                                            valueChosedReason = '0';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          } else if (val ==
-                                              'X0 - Exempt Output') {
-                                            valueChosedReason = '0';
-                                            taxCode = 'X0';
-                                            taxSelected = double.parse(
-                                                valueChosedReason.toString());
-                                          }
-
-                                          valueChossed = val.toString();
-
-                                          print(val.toString());
-                                          print("valavalaa: .........." +
-                                              valueChosedReason.toString());
-                                          print("taxSelected: .........." +
-                                              taxSelected.toString());
-                                          print("taxCode: .........." +
-                                              taxCode.toString());
-                                        });
-                                      },
-                                      items: taxData3.map((e) {
-                                        return DropdownMenuItem(
-                                            value: "${e['name']}",
-                                            child: Text(
-                                              e['name'].toString(),
-                                              style: TextStyles.headlineBlack1(
-                                                  context),
-                                            ));
-                                      }).toList(),
+                            SizedBox(
+                              child: new TextFormField(
+                                readOnly: true,
+                                controller: delDateMyController[1],
+                                onChanged: (val) {},
+                                keyboardType: TextInputType.number,
+                                style: TextStyle(fontSize: 15),
+                                decoration: InputDecoration(
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(
+                                        () {
+                                          leadDatePicker(context, 'update');
+                                        },
+                                      );
+                                    },
+                                    icon: Icon(Icons.calendar_month),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
                                     ),
+                                  ),
+                                  labelText: "Del Date",
+                                  labelStyle:
+                                      TextStyles.bodytextBlack1(context),
+                                ),
+                              ),
                             ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            // Container(
+                            //   width: Screens.width(context),
+                            //   padding:
+                            //       EdgeInsets.only(top: 1, left: 10, right: 10),
+                            //   decoration: BoxDecoration(
+                            //       border: Border.all(color: Colors.grey),
+                            //       borderRadius: BorderRadius.circular(5)),
+                            //   child: GetValues.countryCode!.toLowerCase() ==
+                            //           'tanzania'
+                            //       ? DropdownButton(
+                            //           dropdownColor: Colors.white,
+
+                            //           hint: Text(
+                            //             "Select Tax: ",
+                            //             style:
+                            //                 TextStyles.bodytextBlack1(context),
+                            //           ),
+                            //           value: valueChossed,
+                            //           //dropdownColor:Colors.green,
+                            //           icon: Icon(Icons.arrow_drop_down),
+                            //           iconSize: 30,
+                            //           style: TextStyle(
+                            //               color: Colors.black, fontSize: 16),
+                            //           isExpanded: true,
+                            //           onChanged: (val) {
+                            //             setState(() {
+                            //               if (val == 'O0 - 0 % Output VAT') {
+                            //                 valueChosedReason = '0';
+                            //                 taxCode = 'O0';
+                            //                 taxSelected = double.parse(
+                            //                     valueChosedReason.toString());
+                            //               } else if (val ==
+                            //                   'O1 - 18 % Output VAT') {
+                            //                 valueChosedReason = '18';
+                            //                 taxCode = 'O1';
+                            //                 taxSelected = double.parse(
+                            //                     valueChosedReason.toString());
+                            //               } else if (val ==
+                            //                   'O3 - Exempted Output VAT') {
+                            //                 taxCode = 'O3';
+                            //                 valueChosedReason = '0';
+                            //                 taxSelected = double.parse(
+                            //                     valueChosedReason.toString());
+                            //               } else if (val ==
+                            //                   'X0 - Exempt Output') {
+                            //                 valueChosedReason = '0';
+                            //                 taxCode = 'X0';
+                            //                 taxSelected = double.parse(
+                            //                     valueChosedReason.toString());
+                            //               }
+
+                            //               valueChossed = val.toString();
+
+                            //               print(val.toString());
+                            //               print("valavalaa: .........." +
+                            //                   valueChosedReason.toString());
+                            //               print("taxSelected: .........." +
+                            //                   taxSelected.toString());
+                            //               print("taxCode: .........." +
+                            //                   taxCode.toString());
+                            //             });
+                            //           },
+                            //           items: taxData2.map((e) {
+                            //             return DropdownMenuItem(
+                            //                 value: "${e['name']}",
+                            //                 child: Text(
+                            //                   e['name'].toString(),
+                            //                   style: TextStyles.headlineBlack1(
+                            //                       context),
+                            //                 ));
+                            //           }).toList(),
+                            //         )
+                            //       : DropdownButton(
+                            //           dropdownColor: Colors.white,
+
+                            //           hint: Text(
+                            //             "Select Tax: ",
+                            //             style:
+                            //                 TextStyles.bodytextBlack1(context),
+                            //           ),
+                            //           value: valueChossed,
+                            //           //dropdownColor:Colors.green,
+                            //           icon: Icon(Icons.arrow_drop_down),
+                            //           iconSize: 30,
+                            //           style: TextStyle(
+                            //               color: Colors.black, fontSize: 16),
+                            //           isExpanded: true,
+                            //           onChanged: (val) {
+                            //             setState(() {
+                            //               if (val == 'O0 - 0 % Output VAT') {
+                            //                 valueChosedReason = '0';
+                            //                 taxCode = 'O0';
+                            //                 taxSelected = double.parse(
+                            //                     valueChosedReason.toString());
+                            //               } else if (val ==
+                            //                   'O1 - 16 % Output VAT') {
+                            //                 valueChosedReason = '16';
+                            //                 taxCode = 'O1';
+                            //                 taxSelected = double.parse(
+                            //                     valueChosedReason.toString());
+                            //               } else if (val ==
+                            //                   'O3 - Exempted Output VAT') {
+                            //                 taxCode = 'O3';
+                            //                 valueChosedReason = '0';
+                            //                 taxSelected = double.parse(
+                            //                     valueChosedReason.toString());
+                            //               } else if (val ==
+                            //                   'X0 - Exempt Output') {
+                            //                 valueChosedReason = '0';
+                            //                 taxCode = 'X0';
+                            //                 taxSelected = double.parse(
+                            //                     valueChosedReason.toString());
+                            //               }
+
+                            //               valueChossed = val.toString();
+
+                            //               print(val.toString());
+                            //               print("valavalaa: .........." +
+                            //                   valueChosedReason.toString());
+                            //               print("taxSelected: .........." +
+                            //                   taxSelected.toString());
+                            //               print("taxCode: .........." +
+                            //                   taxCode.toString());
+                            //             });
+                            //           },
+                            //           items: taxData3.map((e) {
+                            //             return DropdownMenuItem(
+                            //                 value: "${e['name']}",
+                            //                 child: Text(
+                            //                   e['name'].toString(),
+                            //                   style: TextStyles.headlineBlack1(
+                            //                       context),
+                            //                 ));
+                            //           }).toList(),
+                            //         ),
+                            // ),
 
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -2318,7 +2269,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                       });
                                     },
                                     child: Text(
-                                      "cancel",
+                                      "Cancel",
                                       style: TextStyles.whiteText(context),
                                     )),
                                 ElevatedButton(
@@ -2329,6 +2280,21 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
                                       backgroundColor: theme.primaryColor,
                                     ),
                                     onPressed: () {
+                                      valueChosedReason = null;
+                                      if (GetValues.countryCode!
+                                              .toLowerCase()
+                                              .trim() ==
+                                          'tanzania') {
+                                        valueChosedReason = '18';
+                                        taxCode = 'O1';
+                                        taxSelected = double.parse(
+                                            valueChosedReason.toString());
+                                      } else {
+                                        valueChosedReason = '16';
+                                        taxCode = 'O1';
+                                        taxSelected = double.parse(
+                                            valueChosedReason.toString());
+                                      }
                                       validation4AlertUpdate(context, i);
                                     },
                                     child: Text(
@@ -2360,10 +2326,124 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
   String? valueChosedReason = '0';
   double taxSelected = 0;
 
+  List<LeadDateMdlData> leadDataList = [];
+
+  callLeadDateApi(String itemCode) async {
+    leadDataList = [];
+    await NewLeadDateApi.getGlobalData('$itemCode').then((value) async {
+      if (value.statusCode! >= 200 && value.statusCode! <= 210) {
+        leadDataList = value.leadDataList!;
+      } else if (value.statusCode! >= 400 && value.statusCode! <= 410) {}
+    });
+  }
+
+  callLeadApiandDate(
+      String itemcodee, BuildContext context, String type) async {
+    await callLeadDateApi(itemcodee);
+    await leadDatePicker2(
+      type,
+      context,
+    );
+  }
+
+  leadDatePicker2(
+    String type,
+    BuildContext context,
+  ) async {
+    delDateMyController[0].text = '';
+    DateTime date1 = DateTime.parse(DateTime.now().toString());
+
+    log('leadDataList[0].leadDays:::$type:${leadDataList[0].leadDays!.toString()}');
+    DateTime futureDate = date1
+        .add(Duration(days: int.parse(leadDataList[0].leadDays!.toString())));
+
+    log("date1 date: $date1");
+    log("Date after 90 days: $futureDate");
+    String datetype2 = DateFormat('yyyy-MM-dd').format(futureDate);
+
+    if (type == 'update') {
+      delDateMyController[1].text = configg.alignDate(datetype2.toString());
+      log('message11::${delDateMyController[1].text}');
+    } else {
+      delDateMyController[0].text = configg.alignDate(datetype2.toString());
+      log('message22::${delDateMyController[0].text}');
+    }
+  }
+
+  leadDatePicker(BuildContext context, String type) async {
+    DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2100));
+    String datetype2 = DateFormat('yyyy-MM-dd').format(pickedDate!);
+
+    if (type == 'update') {
+      log('step1');
+
+      delDateMyController[1].text = configg.alignDate(datetype2.toString());
+    } else {
+      delDateMyController[0].text = configg.alignDate(datetype2.toString());
+    }
+  }
+
+  // leadDatePicker(BuildContext context, String type) async {
+  //   DateTime? pickedDate = await showDatePicker(
+  //       context: context,
+  //       initialDate: DateTime.now(),
+  //       firstDate: DateTime.now(),
+  //       lastDate: DateTime(2100));
+  //   if (pickedDate == null) {
+  //     return;
+  //   }
+  //   // String datetype = DateFormat('yyyy-MM-dd').format(pickedDate);
+
+  //   DateTime date1 = DateTime.parse(pickedDate.toString());
+
+  //   log('leadDataList[0].leadDays11::${leadDataList[0].leadDays!.toString()}');
+  //   DateTime futureDate = date1
+  //       .add(Duration(days: int.parse(leadDataList[0].leadDays!.toString())));
+
+  //   log("date1 date11: $date1");
+  //   log("Date after 90 days11: $futureDate");
+  //   String datetype2 = DateFormat('yyyy-MM-dd').format(futureDate);
+
+  // if (type == 'update') {
+  //   log('step1');
+
+  //   delDateMyController[1].text = configg.alignDate(datetype2.toString());
+  // } else {
+  //   delDateMyController[0].text = configg.alignDate(datetype2.toString());
+  // }
+  //   log('message33::${delDateMyController[1].text}');
+  // }
+
+  void showDelDate(BuildContext context) {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1980),
+      lastDate: DateTime(2050),
+    ).then((value) {
+      if (value == null) {
+        return;
+      }
+      setState(() {
+        delDateMyController[0].text = value.toString();
+        var date = DateTime.parse(delDateMyController[0].text);
+        delDateMyController[0].text = "";
+        delDateMyController[0].text =
+            "${date.year.toString().padLeft(2, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+        print("date: " + delDateMyController[1].text);
+      });
+    });
+  }
+
   Future validation4Insert(BuildContext context, int i) async {
     log('valueChossed::$valueChossed');
     if (valueChossed == null) {
-      valueChossed = 'O0 - 0 % Output VAT';
+      // valueChossed = 'O0 - 0 % Output VAT';
+      valueChossed = 'O1 - 18 % Output VAT';
     }
 
     if (formkey[0].currentState!.validate()) {
@@ -2393,6 +2473,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
               ? value.price!.toStringAsFixed(2)
               : mycontroller[1].text;
           mycontroller[3].text = value.discount!.toStringAsFixed(2);
+
           setValuesToListPage(i);
 
           // value.price
@@ -2443,11 +2524,12 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
       // }
 
       double valueAFdisc1 = (qty * price) - discount;
-      itemsDetails.add(AddItem(
+      itemsDetails.add(AddOrderItem(
         itemCode: itemsDetails3[i].itemCode.toString(),
         itemName: itemsDetails3[i].itemName.toString(),
         discount: discount,
         price: price,
+        deliveryDate: '',
         qty: qty,
         total: total,
         tax: taxs,
@@ -2499,10 +2581,11 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
       log("tax vaues list: " + taxvalue.toStringAsFixed(0));
 
       double valueAFdisc1 = (qty * price) - discount;
-      itemsDetails.add(AddItem(
+      itemsDetails.add(AddOrderItem(
           itemCode: itemsDetails2[i].itemCode.toString(),
           itemName: itemsDetails2[i].itemName.toString(),
           discount: discount,
+          deliveryDate: itemsDetails2[i].deliveryDate,
           price: price,
           qty: qty,
           total: total,
@@ -2512,7 +2595,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
           taxCode: itemsDetails2[i].taxCode,
           discounpercent: discountper.toDouble(),
           wareHouseCode: itemsDetails2[i].wareHouseCode,
-          taxName: GetValues.countryCode!.toLowerCase() == "tanzania"
+          taxName: GetValues.countryCode!.toLowerCase().trim() == "tanzania"
               ? getTaxNane(itemsDetails2[i].taxCode.toString())
               : getTaxNameZam(itemsDetails2[i].taxCode.toString()),
           carton: carton1,
@@ -2528,6 +2611,14 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
     }
     isCalculated = true;
     sumofTotal();
+    if (itemsDetails.isNotEmpty) {
+      for (var i = 0; i < itemsDetails.length; i++) {
+        if (itemsDetails[i].tax != 0) {
+//     itemsDetails[i].
+// taxName=
+        }
+      }
+    }
   }
 
   String getTaxNane(String code) {
@@ -2557,7 +2648,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
   }
 
   String getTaxNameZam(String code) {
-    log('codecodecode::${code}');
+    log('codecodecode::$code');
     String res = '';
     switch (code) {
       case "O0":
@@ -2590,6 +2681,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
         double.parse(mycontroller[3].text == '' ? "0" : mycontroller[3].text);
     double discount = (price * qty) * discountper / 100;
     double taxper = taxSelected;
+    print("*taxpertaxper " + taxper.toString());
 
     double taxs = ((qty * price) - discount) * taxper / 100;
     print("qty*price " + (qty * price).toString());
@@ -2611,13 +2703,14 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
     }
 
     double valueAFdisc1 = (qty * price) - discount;
-    itemsDetails.add(AddItem(
+    itemsDetails.add(AddOrderItem(
         itemCode: filteritemValue[i].itemCode.toString(),
         itemName: filteritemValue[i].itemName.toString(),
         discount: discount,
         price: price,
         qty: qty,
         total: total,
+        deliveryDate: configg.alignDate1(delDateMyController[0].text),
         tax: taxs,
         valueBFdisc: bfd,
         valuechoosed: valueChossed,
@@ -2710,9 +2803,8 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
             value.exception == null &&
             value.price != null &&
             value.discount != null) {
-          print("priceeeee");
-          print(
-              "value.discount!.toStringAsFixed(2) ${value.discount!.toStringAsFixed(2)}");
+          log("priceeeee");
+          log("value.discount!.toStringAsFixed(2) ${value.discount!.toStringAsFixed(2)}");
           mycontroller[4].text = value.price != 0.0
               ? value.price!.toStringAsFixed(2)
               : mycontroller[4].text;
@@ -2753,7 +2845,11 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
     // itemsDetails[i].tax = taxper; change to down line because if we update the tax its show percentage not show amount
     itemsDetails[i].tax = taxs;
     itemsDetails[i].taxCode = taxCode;
-    itemsDetails[i].taxName = selectedtaxName;
+    itemsDetails[i].taxName = valueChossed;
+
+    itemsDetails[i].deliveryDate =
+        configg.alignDate1(delDateMyController[1].text);
+    // ?selectedtaxName;
     itemsDetails[i].valuechoosed = valueChossed.toString();
     itemsDetails[i].discounpercent = discountpers.toDouble(); //selectedtaxName
     itemsDetails[i].valueAFdisc = valueAFDisc;
@@ -2773,7 +2869,7 @@ class ContentOrderCreationState extends State<ContentOrderCreation> {
   }
 }
 
-class AddItem {
+class AddOrderItem {
   String itemName;
   String itemCode;
   double? price;
@@ -2798,12 +2894,12 @@ class AddItem {
   int? U_Tins_Per_Box;
   String? basedocentry;
   String? baseline;
+  String? deliveryDate;
+
   double? BaseType;
-  AddItem(
+  AddOrderItem(
       {required this.itemCode,
       required this.itemName,
-      this.lineTotal,
-      this.unitPrice,
       required this.price,
       required this.discount,
       required this.qty,
@@ -2815,6 +2911,9 @@ class AddItem {
       required this.taxPer,
       required this.wareHouseCode,
       required this.taxName,
+      this.deliveryDate,
+      this.lineTotal,
+      this.unitPrice,
       this.baseline,
       this.basedocentry,
       this.shipToCode,
@@ -2834,8 +2933,11 @@ class AddItem {
       "TaxCode": taxCode.toString(),
       "Quantity": qty.toString(),
       "UnitPrice": price.toString(),
+      "ShipDate": deliveryDate!.toString(),
+      "U_AMDD": deliveryDate!.toString(),
+
       "Currency": GetValues.currency.toString(),
-      "ShipToCode": LogisticOrderState.shipto.toString(),
+      // "ShipToCode": LogisticOrderState.shipto.toString(),
       "WarehouseCode": GetValues.branch.toString(),
       "valueAFdisc": valueAFdisc.toString()
     };
@@ -2852,9 +2954,12 @@ class AddItem {
         "Quantity": qty.toString(),
         "UnitPrice": price.toString(),
         "Currency": GetValues.currency.toString(),
-        "ShipToCode": LogisticOrderState.shipto.toString(),
+        // "ShipToCode": LogisticOrderState.shipto.toString(),
         "WarehouseCode": GetValues.branch.toString(),
         "valueAFdisc": valueAFdisc.toString(),
+        "ShipDate": deliveryDate,
+        "U_AMDD": deliveryDate,
+
         // "BaseType": BaseType,
         // "BaseEntry": basedocentry.toString(),
         // "BaseLine": baseline.toString(),
@@ -2870,9 +2975,12 @@ class AddItem {
         "Quantity": qty.toString(),
         "UnitPrice": price.toString(),
         "Currency": GetValues.currency.toString(),
-        "ShipToCode": LogisticOrderState.shipto.toString(),
+        // "ShipToCode": LogisticOrderState.shipto.toString(),
         "WarehouseCode": GetValues.branch.toString(),
         "valueAFdisc": valueAFdisc.toString(),
+        "ShipDate": deliveryDate,
+        "U_AMDD": deliveryDate,
+
         // "BaseType": BaseType,
         // "BaseEntry": basedocentry.toString(),
         // "BaseLine": baseline.toString(),
@@ -2887,7 +2995,10 @@ class AddItem {
         "Quantity": qty.toString(),
         "UnitPrice": price.toString(),
         "Currency": GetValues.currency.toString(),
-        "ShipToCode": LogisticOrderState.shipto.toString(),
+        "ShipDate": deliveryDate,
+        "U_AMDD": deliveryDate,
+
+        // "ShipToCode": LogisticOrderState.shipto.toString(),
         "WarehouseCode": GetValues.branch.toString(),
         "valueAFdisc": valueAFdisc.toString(),
         "BaseType": "23",
@@ -2908,7 +3019,10 @@ class AddItem {
       "Quantity": qty.toString(),
       "UnitPrice": price.toString(),
       "Currency": GetValues.currency.toString(),
-      "ShipToCode": LogisticOrderState.shipto.toString(),
+      "ShipDate": deliveryDate,
+      "U_AMDD": deliveryDate,
+
+      // "ShipToCode": LogisticOrderState.shipto.toString(),
       "WarehouseCode": GetValues.branch.toString(),
       "valueAFdisc": valueAFdisc.toString(),
       "BaseType": "23",

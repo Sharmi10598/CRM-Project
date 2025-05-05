@@ -22,7 +22,7 @@ class ApprovalsQuotAPi{
         headers: {
         "content-type": "application/json",
         "cookie": 'B1SESSION='+ GetValues.sessionID.toString(),
-        'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}'
+        'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}',
         },
       );
       if (response.statusCode == 200) {

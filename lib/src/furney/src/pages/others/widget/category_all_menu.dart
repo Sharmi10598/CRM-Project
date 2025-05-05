@@ -7,7 +7,6 @@ import 'package:ultimate_bundle/src/furney/src/helpers/constants.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 import 'package:ultimate_bundle/src/furney/src/models/allmenudata.dart';
 
-
 class CategoryAllMenu extends StatelessWidget {
   final AllMenuData category;
 
@@ -28,20 +27,23 @@ class CategoryAllMenu extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: Const.space15),
-             FaIcon(category.icon,
-             color: theme.primaryColor,
-             size: Screens.width(context)*0.08,//30,
-             ),
+            FaIcon(
+              category.icon,
+              color: theme.primaryColor,
+              size: Screens.width(context) * 0.08, //30,
+            ),
             const SizedBox(height: Const.space15),
             Expanded(
-              child: Text(
-                category.name!,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.titleSmall!.copyWith(
-                  height: 1.2,
-                  fontSize: 10,
-                ),
-              ),
+              child: category.name != null
+                  ? Text(
+                      category.name!,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.titleSmall!.copyWith(
+                        height: 1.2,
+                        fontSize: 10,
+                      ),
+                    )
+                  : Container(),
             ),
           ],
         ),

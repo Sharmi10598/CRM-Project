@@ -80,7 +80,7 @@ class Documents {
         Columns.selectOrderType: selectOrderType,
         Columns.gPApprovalReq: gPApprovalReq,
         Columns.orderRecTime: orderRecTime,
-        Columns.orderRecDate: orderRecDate
+        Columns.orderRecDate: orderRecDate,
       };
 
 // Map<String, dynamic> toJson() => <String, dynamic>{

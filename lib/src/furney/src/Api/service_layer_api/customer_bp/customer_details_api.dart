@@ -26,7 +26,7 @@ class CustomerDetailsAPi {
 
       if (response.statusCode == 200) {
         return CustomerDetailsValue.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+            json.decode(response.body) as Map<String, dynamic>,);
       } else {
         log(json.decode(response.body).toString());
         //    print(response.statusCode);

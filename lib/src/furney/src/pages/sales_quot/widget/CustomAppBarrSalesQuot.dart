@@ -2,18 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/constants.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 
-import '../../../widgets/Drawer.dart';
 
 AppBar appBarTabbar(
     BuildContext context, GlobalKey<ScaffoldState> key, String title) {
   key:
   key;
   final width = MediaQuery.of(context).size.width;
-  var isTSH = false;
+  const isTSH = false;
   final theme = Theme.of(context);
   return AppBar(
     leading: GestureDetector(
@@ -51,37 +49,38 @@ AppBar appBarTabbar(
             // SizedBox(
             //   width: width *0.02,
             // ),
-            Row(
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.usd,
-                  style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      textStyle:
-                          TextStyle(fontSize: Screens.width(context) * 0.042)),
-                ),
-                Switch(
-                  onChanged: (value) {
-                    print(value);
-                    setState(() {
-                      isTSH = value;
-                    });
-                  },
-                  activeColor: Colors.white,
-                  activeTrackColor: Colors.white,
-                  value: isTSH,
-                ),
-                Text(
-                  GetValues.currency == "TZS"
-                      ? AppLocalizations.of(context)!.tzs
-                      : AppLocalizations.of(context)!.zmw,
-                  style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      textStyle:
-                          TextStyle(fontSize: Screens.width(context) * 0.042)),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Text(
+            //       AppLocalizations.of(context)!.usd,
+            //       style: GoogleFonts.poppins(
+            //           color: Colors.white,
+            //           textStyle:
+            //               TextStyle(fontSize: Screens.width(context) * 0.042)),
+            //     ),
+            //     Switch(
+            //       onChanged: (value) {
+            //         print(value);
+            //         setState(() {
+            //           isTSH = value;
+            //         });
+            //       },
+            //       activeColor: Colors.white,
+            //       activeTrackColor: Colors.white,
+            //       value: isTSH,
+            //     ),
+            //     Text(
+            //       GetValues.currency == "TZS"
+            //           ? AppLocalizations.of(context)!.tzs
+            //           : AppLocalizations.of(context)!.zmw,
+            //       style: GoogleFonts.poppins(
+            //           color: Colors.white,
+            //           textStyle:
+            //               TextStyle(fontSize: Screens.width(context) * 0.042)),
+            //     ),
+            //   ],
+            // ),
+         
           ],
         ),
       ),
@@ -93,8 +92,8 @@ AppBar appBarTabbar(
         width: Screens.width(context),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Const.space5),
-            border: Border.all(color: theme.colorScheme.background),
-            color: theme.colorScheme.background),
+            border: Border.all(color: theme.colorScheme.surface),
+            color: theme.colorScheme.surface),
         child: TabBar(
           labelStyle:
               theme.textTheme.titleSmall?.copyWith(color: theme.primaryColor),
@@ -103,7 +102,7 @@ AppBar appBarTabbar(
             border: Border.all(color: theme.primaryColor),
             color: theme.primaryColor,
           ),
-          labelColor: theme.colorScheme.background,
+          labelColor: theme.colorScheme.surface,
           unselectedLabelColor: theme.primaryColor,
           tabs: [
             Tab(text: AppLocalizations.of(context)!.upcoming),

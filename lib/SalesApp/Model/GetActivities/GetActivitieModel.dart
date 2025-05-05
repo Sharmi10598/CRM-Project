@@ -55,42 +55,42 @@ class GetActivitiesModel {
 }
 
 class GetActivitiesData {
-  int? ClgCode;
-  String? CardCode;
-  String? CardName;
-  String? Purpose;
-  String? U_PlanDate;
-  int? U_PlanTime;
-  String? Details;
-  int? SlpCode;
-  String? SlpName;
-  String? FCMToken;
+  int? clgCode;
+  String? cardCode;
+  String? cardName;
+  String? purpose;
+  String? uPlanDate;
+  int? uPlanTime;
+  String? details;
+  int? slpCode;
+  String? slpName;
+  String? fcmToken;
 
   GetActivitiesData({
-    required this.ClgCode,
-    required this.CardCode,
-    required this.CardName,
-    required this.Details,
-    required this.Purpose,
-    required this.SlpCode,
-    required this.SlpName,
-    required this.U_PlanDate,
-    required this.U_PlanTime,
-    required this.FCMToken,
+    required this.clgCode,
+    required this.cardCode,
+    required this.cardName,
+    required this.details,
+    required this.purpose,
+    required this.slpCode,
+    required this.slpName,
+    required this.uPlanDate,
+    required this.uPlanTime,
+    required this.fcmToken,
   });
 
   factory GetActivitiesData.fromJson(dynamic jsons) {
     return GetActivitiesData(
-      ClgCode: jsons['ClgCode'] as int,
-      CardCode: jsons['CardCode'] as String,
-      CardName: jsons['CardName'] as String,
-      Details: jsons['Details'] == null ? '' : jsons['Details'].toString(),
-      Purpose: jsons['Purpose'] as String,
-      SlpCode: jsons['SlpCode'] as int,
-      SlpName: jsons['SlpName'] as String,
-      U_PlanDate: jsons['U_PlanDate'] as String,
-      U_PlanTime: jsons['U_PlanTime'] as int,
-      FCMToken: jsons['FCMToken'].toString(),
+      clgCode: jsons['ClgCode'] as int,
+      cardCode: jsons['CardCode'] as String,
+      cardName: jsons['CardName'] as String,
+      details: jsons['Details'] == null ? '' : jsons['Details'].toString(),
+      purpose: jsons['Purpose'] as String,
+      slpCode: jsons['SlpCode'] as int,
+      slpName: jsons['SlpName'] as String,
+      uPlanDate: jsons['U_PlanDate'] as String,
+      uPlanTime: jsons['U_PlanTime'] as int,
+      fcmToken: jsons['FCMToken'].toString(),
     );
   }
 }

@@ -28,7 +28,8 @@ class _HeaderPageState extends State<HeaderPage> {
           children: [
             Container(
               padding: EdgeInsets.symmetric(
-                  horizontal: Screens.width(context) * 0.02),
+                horizontal: Screens.width(context) * 0.02,
+              ),
               color: Colors.white,
               width: Screens.width(context),
               child: Column(
@@ -93,15 +94,13 @@ class _HeaderPageState extends State<HeaderPage> {
                                 ),
                               ),
                             ),
-                            Container(
-                              child: Icon(
-                                Icons.navigate_next_outlined,
-                                color: theme.primaryColor,
-                                size: Screens.heigth(context) * 0.06,
-                              ),
-                            )
+                            Icon(
+                              Icons.navigate_next_outlined,
+                              color: theme.primaryColor,
+                              size: Screens.heigth(context) * 0.06,
+                            ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -136,15 +135,13 @@ class _HeaderPageState extends State<HeaderPage> {
                                 ),
                               ),
                             ),
-                            Container(
-                              child: Icon(
-                                Icons.navigate_next_outlined,
-                                color: theme.primaryColor,
-                                size: Screens.heigth(context) * 0.06,
-                              ),
-                            )
+                            Icon(
+                              Icons.navigate_next_outlined,
+                              color: theme.primaryColor,
+                              size: Screens.heigth(context) * 0.06,
+                            ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -237,7 +234,8 @@ class _HeaderPageState extends State<HeaderPage> {
             ),
             Container(
               padding: EdgeInsets.symmetric(
-                  horizontal: Screens.width(context) * 0.02),
+                horizontal: Screens.width(context) * 0.02,
+              ),
               color: Colors.white,
               width: Screens.width(context),
               child: Column(
@@ -388,7 +386,8 @@ class _HeaderPageState extends State<HeaderPage> {
               color: Colors.white,
               width: Screens.width(context),
               padding: EdgeInsets.symmetric(
-                  horizontal: Screens.width(context) * 0.02),
+                horizontal: Screens.width(context) * 0.02,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -551,20 +550,18 @@ class _HeaderPageState extends State<HeaderPage> {
                           SizedBox(
                             width: Screens.width(context) * 0.25,
                           ),
-                          Container(
-                            child: Icon(
-                              Icons.navigate_next_outlined,
-                              color: theme.primaryColor,
-                              size: Screens.heigth(context) * 0.06,
-                            ),
-                          )
+                          Icon(
+                            Icons.navigate_next_outlined,
+                            color: theme.primaryColor,
+                            size: Screens.heigth(context) * 0.06,
+                          ),
                         ],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

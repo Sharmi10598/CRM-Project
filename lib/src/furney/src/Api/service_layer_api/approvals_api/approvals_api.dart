@@ -16,8 +16,11 @@ class ApprovalsAPi {
       "SQLQueries('ApprovalList')/List?UserID=${GetValues.sapUserID}";
   static Future<ApprovalsModal> getGlobalData() async {
     try {
-      log("ApprovalsAPi:"+URL.url +
-          "SQLQueries('ApprovalList')/List?UserID=${GetValues.sapUserID}",);
+      log(
+        "ApprovalsAPi:" +
+            URL.url +
+            "SQLQueries('ApprovalList')/List?UserID=${GetValues.sapUserID}",
+      );
       final response = await http.get(
         Uri.parse(
           URL.url +
@@ -28,13 +31,14 @@ class ApprovalsAPi {
           "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
         },
       );
-        log("ApprovalsAPi sts::"+response.statusCode.toString());
+      log("ApprovalsAPi sts::" + response.statusCode.toString());
 
-        log("ApprovalsAPi res::"+json.decode(response.body).toString());
+      // log("ApprovalsAPi res::"+json.decode(response.body).toString());
 
       if (response.statusCode == 200) {
         return ApprovalsModal.fromJson(
-            json.decode(response.body) as Map<String, dynamic>,);
+          json.decode(response.body) as Map<String, dynamic>,
+        );
       } else {
         //  print(json.decode(response.body));
         //  print(response.statusCode);
@@ -57,13 +61,14 @@ class ApprovalsAPi {
         headers: {
           "content-type": "application/json",
           "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
-          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}'
+          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}',
         },
       );
       if (response.statusCode == 200) {
         //  print(json.decode(response.body));
         return ApprovalsModal.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+          json.decode(response.body) as Map<String, dynamic>,
+        );
       } else {
         throw Exception('Restart the app or contact the admin!!..');
         //  return SalesOrderModal.issue('Restart the app or contact the admin!!..');

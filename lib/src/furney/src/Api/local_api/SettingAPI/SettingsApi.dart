@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
 
-import '../../../Modal/local_modal/SettingModel/SettingModels.dart';
+import 'package:ultimate_bundle/src/furney/src/Modal/local_modal/SettingModel/SettingModels.dart';
 
 class SettingModelAPi {
   static String countryCode = '';

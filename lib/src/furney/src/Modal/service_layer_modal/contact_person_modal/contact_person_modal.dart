@@ -15,7 +15,7 @@ class ContactPersonModal{
     if (jsons['ContactEmployees'] != null) {
       final list =  jsons['ContactEmployees'] as List; //jsonDecode
       // print(list);
-      List<ContactEmployeValue> dataList = list
+      final List<ContactEmployeValue> dataList = list
           .map((dynamic enquiries) => ContactEmployeValue.fromJson(enquiries))
           .toList();
       // print(dataList[0]);

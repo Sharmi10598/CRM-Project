@@ -21,13 +21,13 @@ class DeliveryAPi {
         headers: {
           "content-type": "application/json",
           "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
-          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}'
+          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}',
         },
       );
       log('DeliveryModal::' + json.decode(response.body).toString());
       if (response.statusCode == 200) {
         return DeliveryModal.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+            json.decode(response.body) as Map<String, dynamic>,);
       } else {
         print(json.decode(response.body));
         print(json.decode(response.statusCode.toString()));
@@ -51,7 +51,7 @@ class DeliveryAPi {
         headers: {
           "content-type": "application/json",
           "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
-          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}'
+          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}',
         },
       );
       log(json.decode(response.body).toString());
@@ -59,7 +59,7 @@ class DeliveryAPi {
       if (response.statusCode == 200) {
         ///   print(json.decode(response.body));
         return DeliveryModal.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+            json.decode(response.body) as Map<String, dynamic>,);
       } else {
         // throw Exception('Restart the app or contact the admin!!..');
         return DeliveryModal.issue('Restart the app or contact the admin!!..');
@@ -81,13 +81,13 @@ class DeliveryAPi {
         headers: {
           "content-type": "application/json",
           "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
-          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}'
+          'Prefer': 'odata.maxpagesize=${GetValues.maximumfetchValue}',
         },
       );
       if (response.statusCode == 200) {
         print(json.decode(response.body));
         return DeliveryModal.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+            json.decode(response.body) as Map<String, dynamic>,);
       } else {
         print(json.decode(response.body));
         print(json.decode(response.statusCode.toString()));

@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 
 class Screens {
   static double heigth(BuildContext context) {
-    return MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+    return MediaQuery.of(context).size.height -
+        MediaQuery.of(context).padding.top;
   }
 
   static double statusbarHeight(BuildContext context) {
@@ -43,8 +44,10 @@ class Screens {
   }
 
   static void showSystemBars() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: SystemUiOverlay.values,);
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: SystemUiOverlay.values,
+    );
   }
 
   static double logoSize(BuildContext context) {
@@ -57,15 +60,19 @@ class Screens {
 
   static void setPortrait() {
     SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],);
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+    );
   }
 
   static void setLandscape() {
     SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight],);
+      [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight],
+    );
   }
 
   static void resetOrientation() {
     SystemChrome.setPreferredOrientations([]);
   }
+
+  static bodyheight(BuildContext context) {}
 }

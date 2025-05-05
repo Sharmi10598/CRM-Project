@@ -81,7 +81,7 @@ class LogisticOrderState extends State<LogisticOrder> {
                             //   ),
                             // )
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -128,7 +128,7 @@ class LogisticOrderState extends State<LogisticOrder> {
                             //   ),
                             // )
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),

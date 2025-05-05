@@ -54,13 +54,11 @@ class TransactionsState extends State<Transactions> {
                           SizedBox(
                             width: Screens.width(context) * 0.2,
                           ),
-                          Container(
-                            child: Icon(
-                              Icons.navigate_next_outlined,
-                              color: theme.primaryColor,
-                              size: Screens.heigth(context) * 0.06,
-                            ),
-                          )
+                          Icon(
+                            Icons.navigate_next_outlined,
+                            color: theme.primaryColor,
+                            size: Screens.heigth(context) * 0.06,
+                          ),
                         ],
                       ),
                     ),
@@ -158,13 +156,11 @@ class TransactionsState extends State<Transactions> {
                       SizedBox(
                         width: Screens.width(context) * 0.2,
                       ),
-                      Container(
-                        child: Icon(
-                          Icons.navigate_next_outlined,
-                          color: theme.primaryColor,
-                          size: Screens.heigth(context) * 0.06,
-                        ),
-                      )
+                      Icon(
+                        Icons.navigate_next_outlined,
+                        color: theme.primaryColor,
+                        size: Screens.heigth(context) * 0.06,
+                      ),
                     ],
                   ),
                 ),
@@ -195,7 +191,7 @@ class TransactionsState extends State<Transactions> {
                           color: theme.primaryColor,
                           size: Screens.heigth(context) * 0.06,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -227,7 +223,7 @@ class TransactionsState extends State<Transactions> {
                           color: theme.primaryColor,
                           size: Screens.heigth(context) * 0.06,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

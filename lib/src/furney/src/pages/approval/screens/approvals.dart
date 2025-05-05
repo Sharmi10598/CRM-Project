@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_single_quotes, prefer_interpolation_to_compose_strings, prefer_is_empty, unrelated_type_equality_checks, omit_local_variable_types
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/route_manager.dart';
@@ -40,8 +42,6 @@ class ApprovalsState extends State<Approvals> {
         if (value.approvalsvalue!.length > 0) {
           setState(() {
             isapprovalslengthNull = false;
-            print("approvalsvalue: " +
-                value.approvalsvalue![0].ObjType.toString());
             // value.Customervalue![0].salesPersonCode!.toStringAsFixed(0);
             //print(value.nextLink);
             // valuesReturn(value.approvalsvalue![0].ObjType.toString());
@@ -128,9 +128,6 @@ class ApprovalsState extends State<Approvals> {
             );
           }
           swipeLoad = false;
-          print("lenthofList: " + lenthofList.toString());
-          print("lennList: " + filtervalue.length.toString());
-          print(val.nextLink);
         }
       });
     });
@@ -160,7 +157,6 @@ class ApprovalsState extends State<Approvals> {
     if (currentBackPressTime == null ||
         now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
       currentBackPressTime = now;
-      print("are you sure");
       if (backBtnreload == true) {
         Get.offAllNamed<dynamic>(FurneyRoutes.home);
         return Future.value(true);
@@ -177,12 +173,20 @@ class ApprovalsState extends State<Approvals> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return WillPopScope(
-      onWillPop: onbackpress,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didpop) {
+        if (didpop) return;
+        log("bbbbbbbb");
+
+        onbackpress();
+      },
       child: Scaffold(
         key: _scaffoldKey,
         // appBar: appBar(context, _scaffoldKey, widget.title),
-        drawer: drawer(context),
+        drawer:
+            // GetValues.userRoll == '3' ? drawer2(context) :
+            drawer(context),
         body: isapprovalslengthNull == true
             ? Center(
                 child: SpinKitThreeBounce(
@@ -299,7 +303,8 @@ class ApprovalsState extends State<Approvals> {
                                                     ? 'Deliveries'
                                                     : '';
                                 Get.toNamed<dynamic>(
-                                    FurneyRoutes.approvalsInfo);
+                                  FurneyRoutes.approvalsInfo,
+                                );
                               },
                               child: Padding(
                                 padding: EdgeInsets.only(
@@ -315,7 +320,8 @@ class ApprovalsState extends State<Approvals> {
                                     //   child:
 
                                     SizedBox(
-                                        height: Screens.heigth(context) * 0.02),
+                                      height: Screens.heigth(context) * 0.02,
+                                    ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -354,13 +360,15 @@ class ApprovalsState extends State<Approvals> {
                                                                     .ObjType
                                                                     .toString()
                                                                     .contains(
-                                                                        '14')
+                                                                      '14',
+                                                                    )
                                                                 ? 'Sales Return'
                                                                 : filtervalue[i]
                                                                         .ObjType
                                                                         .toString()
                                                                         .contains(
-                                                                            '15')
+                                                                          '15',
+                                                                        )
                                                                     ? 'Deliveries'
                                                                     : '',
                                                 //"Request for "+filtervalue![i].ObjType .toString(),
@@ -376,7 +384,8 @@ class ApprovalsState extends State<Approvals> {
                                                 "From: ${filtervalue[i].FromUser}",
                                                 style:
                                                     TextStyles.bodytextBlack1(
-                                                        context),
+                                                  context,
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -390,7 +399,7 @@ class ApprovalsState extends State<Approvals> {
                                             size: Screens.width(context) * 0.1,
                                             color: theme.primaryColor,
                                           ),
-                                        )
+                                        ),
                                         //   SizedBox(width: Screens.width(context) * 0.05),
                                       ],
                                     ),
@@ -404,7 +413,8 @@ class ApprovalsState extends State<Approvals> {
                                           child: Text(
                                             "${filtervalue[i].cardName}",
                                             style: TextStyles.bodytextBlack1(
-                                                context),
+                                              context,
+                                            ),
                                           ),
                                         ),
                                         // SizedBox(width: Screens.width(context) * 0.1),
@@ -412,11 +422,12 @@ class ApprovalsState extends State<Approvals> {
                                           child: Text(
                                             "${filtervalue[i].createDate}",
                                             style: TextStyles.bodytextBlack1(
-                                                context),
+                                              context,
+                                            ),
                                           ),
-                                        )
+                                        ),
                                       ],
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),

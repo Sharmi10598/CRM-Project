@@ -11,41 +11,40 @@ import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 class GetSaleEmpAPi {
   static Future<GetSalesEmpModel> getGlobalData() async {
     try {
-      final response = await http.post(
-        Uri.parse(URL.dynamicUrl),
-        headers: {
-          'content-type': 'application/json',
+      log('Location query::' +
+          json.encode({
+            "constr":
+                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+            // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+            "query":
+                "select slpcode, slpname from oslp where U_RepotingTo = '${GetValues.slpCode}", //'${GetValues.slpCode}'
+          }));
+      log('URL.dynamicUrl::${URL.dynamicUrl}');
+      final response = await http.post(Uri.parse(URL.dynamicUrl),
+          headers: {
+            'content-type': 'application/json',
           },
-         body: json.encode({
-              "constr": 
+          body: json.encode({
+            "constr":
                 "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
 
-              // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
-              "query": "select slpcode, slpname from oslp where U_RepotingTo = '${GetValues.slpCode}'",//'${GetValues.slpCode}' 
-          })
-      );
-     
-      log(json.encode({
-        
-              "constr":
-                "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+            // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+            "query":
+                "select slpcode, slpname from oslp where U_RepotingTo = '${GetValues.slpCode}'", //'${GetValues.slpCode}'
+          }));
 
-              //"Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
-              "query": "select slpcode, slpname from oslp where U_RepotingTo = '${GetValues.slpCode}'",
-   }));
-      // print('B1SESSION='+ GetValues.sessionID.toString());
-      // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
       log("SaleEmpAPi details: " + json.decode(response.body).toString());
-      log("SaleEmpAPi::"+response.statusCode.toString());
+      log("SaleEmpAPi::" + response.statusCode.toString());
       if (response.statusCode == 200) {
-        return GetSalesEmpModel.fromJson( response.body,response.statusCode);
+        return GetSalesEmpModel.fromJson(response.body, response.statusCode);
       } else {
         // throw Exception("Error!!...");
-        return GetSalesEmpModel.fromJson( response.body,response.statusCode);
+        return GetSalesEmpModel.fromJson(response.body, response.statusCode);
       }
     } catch (e) {
       //  throw Exception("Exception: $e");
-      return GetSalesEmpModel.fromJson(e.toString(),500);
+      return GetSalesEmpModel.fromJson(e.toString(), 500);
     }
   }
 }

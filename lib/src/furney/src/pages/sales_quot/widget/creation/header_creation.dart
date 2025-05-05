@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, require_trailing_commas, prefer_if_elements_to_conditional_expressions, unnecessary_lambdas, prefer_is_empty
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/route_manager.dart';
@@ -39,6 +41,8 @@ class HeaderCreationState extends State<HeaderCreation> {
   static double discountpercent = 0;
   static double tax = 0;
   static double total = 0;
+  static bool isTextFiledEnabled = false;
+
   static List<TextEditingController> mycontroller =
       List.generate(15, (i) => TextEditingController());
   static String? currentDateTime;
@@ -50,7 +54,6 @@ class HeaderCreationState extends State<HeaderCreation> {
   List<ContactEmployeValue> filtercontactValue = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // mycontroller = List.generate(15, (i) => TextEditingController());
   }
@@ -126,6 +129,7 @@ class HeaderCreationState extends State<HeaderCreation> {
                       GestureDetector(
                         onTap: () {
                           CustomerPageState.isCameFromCreation = true;
+                          Navigator.pop(context);
                           Get.toNamed<dynamic>(FurneyRoutes.customerpage);
                         },
                         child: Column(
@@ -135,26 +139,77 @@ class HeaderCreationState extends State<HeaderCreation> {
                               'Business Partner',
                               style: TextStyles.boldPC1(context),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: Screens.width(context) * 0.83,
-                                  // color: Colors.blue,
-                                  child: Text(
-                                    bpName,
-                                    style: TextStyles.headlineBlack1(context),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //   children: [
+                            //     SizedBox(
+                            //       width: Screens.width(context) * 0.83,
+                            //       // color: Colors.blue,
+                            //       child: Text(
+                            //         bpName,
+                            //         style: TextStyles.headlineBlack1(context),
+                            //       ),
+                            //     ),
+                            //     Container(
+                            //       child: Icon(
+                            //         Icons.navigate_next_outlined,
+                            //         color: theme.primaryColor,
+                            //         size: Screens.heigth(context) * 0.06,
+                            //       ),
+                            //     )
+                            //   ],
+                            // )
+                            isTextFiledEnabled == false
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: Screens.width(context) * 0.83,
+                                        // color: Colors.blue,
+                                        child: Text(
+                                          bpName,
+                                          style: TextStyles.headlineBlack1(
+                                              context),
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.navigate_next_outlined,
+                                        color: theme.primaryColor,
+                                        size: Screens.heigth(context) * 0.06,
+                                      )
+                                    ],
+                                  )
+                                : SizedBox(
+                                    //   height: 50,
+
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Enter Business Partner Name';
+                                        }
+
+                                        return null;
+                                      },
+                                      onChanged: (v) {
+                                        bpName = mycontroller[2].text;
+                                        // bpName = v;
+                                        log('bpNamebpName:$bpName');
+                                      },
+                                      controller: mycontroller[2],
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 10),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          borderSide:
+                                              BorderSide(color: Colors.green),
+                                        ),
+                                      ),
+                                      cursorColor: theme.primaryColor,
+                                    ),
                                   ),
-                                ),
-                                Container(
-                                  child: Icon(
-                                    Icons.navigate_next_outlined,
-                                    color: theme.primaryColor,
-                                    size: Screens.heigth(context) * 0.06,
-                                  ),
-                                )
-                              ],
-                            )
                           ],
                         ),
                       ),
@@ -260,31 +315,27 @@ class HeaderCreationState extends State<HeaderCreation> {
                           SizedBox(
                             height: Screens.heigth(context) * 0.005,
                           ),
-                          Container(
-                            // width: Screens.width(context) * 0.83,
-                            // color: Colors.blue,
-                            child: SizedBox(
-                              //   height: 50,
+                          SizedBox(
+                            //   height: 50,
 
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'ENTER ADDRESS';
-                                  }
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'ENTER ADDRESS';
+                                }
 
-                                  return null;
-                                },
-                                controller: mycontroller[0],
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(color: Colors.green),
-                                  ),
+                                return null;
+                              },
+                              controller: mycontroller[0],
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(color: Colors.green),
                                 ),
-                                cursorColor: theme.primaryColor,
                               ),
+                              cursorColor: theme.primaryColor,
                             ),
                           ),
                         ],
@@ -401,30 +452,27 @@ class HeaderCreationState extends State<HeaderCreation> {
                           SizedBox(
                             height: Screens.heigth(context) * 0.005,
                           ),
-                          Container(
-                            // color: Colors.blue,
-                            child: SizedBox(
-                              //   height: 50,
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'ENTER ADDRESS';
-                                  }
+                          SizedBox(
+                            //   height: 50,
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'ENTER ADDRESS';
+                                }
 
-                                  return null;
-                                },
-                                maxLines: 4,
-                                controller: mycontroller[1],
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(color: Colors.green),
-                                  ),
+                                return null;
+                              },
+                              maxLines: 4,
+                              controller: mycontroller[1],
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(color: Colors.green),
                                 ),
-                                cursorColor: theme.primaryColor,
                               ),
+                              cursorColor: theme.primaryColor,
                             ),
                           ),
                         ],
@@ -634,18 +682,17 @@ class HeaderCreationState extends State<HeaderCreation> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } else {
       final uuid = Uuid();
-      String? uuidg = uuid.v1();
+      final uuidg = uuid.v1();
       setState(() => isLoading = true);
       SalesQuotPostAPi.cardCodePost = bpCode;
       SalesQuotPostAPi.docLineQout = ContentCreationState.itemsDetails;
       SalesQuotPostAPi.docDate = currentDateTime.toString();
       SalesQuotPostAPi.dueDate = currentDateTime.toString();
       SalesQuotPostAPi.remarks = mycontroller[1].text;
-      print('remarks: ${SalesQuotPostAPi.remarks}');
       SalesQuotPostAPi.deviceTransID = uuid.v1();
       SalesQuotPostAPi.method();
       SalesQuotPostAPi.getGlobalData().then((value) {
-        if (value.statusCode == '201' || value.statusCode == '204') {
+        if (value.statusCode == 201 || value.statusCode == 204) {
           setState(() => isLoading = false);
           const snackBar = SnackBar(
             duration: Duration(seconds: 5),

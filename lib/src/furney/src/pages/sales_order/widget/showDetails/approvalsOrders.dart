@@ -101,7 +101,7 @@ class ApprovalsOrdersDetailsState extends State<ApprovalsOrdersDetails> {
                                     //   quotData.clear();
                                     //   quotDataFilter.clear();
                                     //   });
-                
+
                                     //   SalesQuotAPi.searchData().then((value) {
                                     //         if(value.salesQuotValue!=null){
                                     //           setState(() {
@@ -125,7 +125,7 @@ class ApprovalsOrdersDetailsState extends State<ApprovalsOrdersDetails> {
                           //     left: Screens.width(context)*0.8,
                           //     child: IconButton(onPressed: (){
                           //       //print("object");
-                
+
                           //       // Get.toNamed<dynamic>(FurneyRoutes.creationDetails);
                           //     }, icon: Icon(Icons.add,
                           //     color: theme.primaryColor,
@@ -133,7 +133,7 @@ class ApprovalsOrdersDetailsState extends State<ApprovalsOrdersDetails> {
                           //     )))
                         ],
                       ),
-                
+
                       SizedBox(
                         //width: Screens.width(context),
                         //  maxHeight: Screens.heigth(context)*0.67,
@@ -147,45 +147,50 @@ class ApprovalsOrdersDetailsState extends State<ApprovalsOrdersDetails> {
                                 itemBuilder: (c, i) {
                                   return InkWell(
                                     onTap: () {
-                                      ApprovalsDetailsOrdersState.docTypeName =
-                                          filterapprovals[i]
+                                      ApprovalsDetailsOrdersState
+                                          .docTypeName = filterapprovals[i]
+                                              .ObjType
+                                              .toString()
+                                              .contains('13')
+                                          ? 'A/R Invoice'
+                                          : filterapprovals[i]
                                                   .ObjType
                                                   .toString()
-                                                  .contains('13')
-                                              ? 'A/R Invoice'
+                                                  .contains('23')
+                                              ? 'Sales Quotation'
                                               : filterapprovals[i]
                                                       .ObjType
                                                       .toString()
-                                                      .contains('23')
-                                                  ? 'Sales Quotation'
+                                                      .contains('17')
+                                                  ? 'Sales Order'
                                                   : filterapprovals[i]
                                                           .ObjType
                                                           .toString()
-                                                          .contains('17')
-                                                      ? 'Sales Order'
+                                                          .contains('14')
+                                                      ? 'Sales Return'
                                                       : filterapprovals[i]
                                                               .ObjType
                                                               .toString()
-                                                              .contains('14')
-                                                          ? 'Sales Return'
-                                                          : filterapprovals[i]
-                                                                  .ObjType
-                                                                  .toString()
-                                                                  .contains('15')
-                                                              ? 'Deliveries'
-                                                              : '';
+                                                              .contains('15')
+                                                          ? 'Deliveries'
+                                                          : '';
                                       ApprovalsDetailsAPi.draftEntry =
-                                          filterapprovals[i].docEntry.toString();
+                                          filterapprovals[i]
+                                              .docEntry
+                                              .toString();
                                       ApprovalsDetailsOrdersState
                                           .isCameFormSalesORder = false;
-                                      Get.toNamed<dynamic>(FurneyRoutes
-                                          .approvalsDetailsSalesOrders);
+                                      Get.toNamed<dynamic>(
+                                        FurneyRoutes
+                                            .approvalsDetailsSalesOrders,
+                                      );
                                     },
                                     child: Card(
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                                Screens.width(context) * 0.01),
+                                          horizontal:
+                                              Screens.width(context) * 0.01,
+                                        ),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -202,36 +207,42 @@ class ApprovalsOrdersDetailsState extends State<ApprovalsOrdersDetails> {
                                                 //SizedBox(width: Screens.width(context)*0.01,),
                                                 SizedBox(
                                                   ///  color: Colors.greenAccent,
-                                                  width: Screens.width(context) *
-                                                      0.2,
+                                                  width:
+                                                      Screens.width(context) *
+                                                          0.2,
                                                   child: Text(
                                                     '${filterapprovals[i].cardCode}',
-                                                    style:
-                                                        TextStyles.bodytextBlack1(
-                                                            context),
+                                                    style: TextStyles
+                                                        .bodytextBlack1(
+                                                      context,
+                                                    ),
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                  width: Screens.width(context) *
-                                                      0.01,
+                                                  width:
+                                                      Screens.width(context) *
+                                                          0.01,
                                                 ),
                                                 SizedBox(
                                                   //   color: Colors.blue,
-                                                  width: Screens.width(context) *
-                                                      0.4,
+                                                  width:
+                                                      Screens.width(context) *
+                                                          0.4,
                                                   child: Text(
                                                     '${filterapprovals[i].cardName}',
-                                                    style:
-                                                        TextStyles.bodytextBlack1(
-                                                            context),
+                                                    style: TextStyles
+                                                        .bodytextBlack1(
+                                                      context,
+                                                    ),
                                                   ),
-                                                )
+                                                ),
                                               ],
                                             ),
                                             Padding(
                                               padding: EdgeInsets.only(
-                                                  top: Screens.width(context) *
-                                                      0.02),
+                                                top: Screens.width(context) *
+                                                    0.02,
+                                              ),
                                               child: Row(
                                                 children: [
                                                   Container(
@@ -247,13 +258,15 @@ class ApprovalsOrdersDetailsState extends State<ApprovalsOrdersDetails> {
                                                           '${filterapprovals[i].docEntry}',
                                                           style: TextStyles
                                                               .bodytextBlack1(
-                                                                  context),
+                                                            context,
+                                                          ),
                                                         ),
                                                         Text(
                                                           '${filterapprovals[i].DocDate}',
                                                           style: TextStyles
                                                               .bodytextBlack1(
-                                                                  context),
+                                                            context,
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
@@ -261,10 +274,10 @@ class ApprovalsOrdersDetailsState extends State<ApprovalsOrdersDetails> {
                                                   Icon(
                                                     Icons.chevron_right,
                                                     color: theme.primaryColor,
-                                                  )
+                                                  ),
                                                 ],
                                               ),
-                                            )
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -311,141 +324,138 @@ class ApprovalsOrdersDetailsState extends State<ApprovalsOrdersDetails> {
           padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
           child: Form(
             key: formkey,
-            child: Container(
-              child: Padding(
-                padding: MediaQuery.of(context).viewInsets,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Stack(
-                      children: [
-                        SizedBox(
-                          child: TextFormField(
-                            onTap: () {
-                              showDate(context);
-                            },
-                            readOnly: true,
-                            controller: mycontroller[3],
-                            onChanged: (val) {},
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'ENTER FROM DATE';
-                              }
-                              return null;
-                            },
-                            keyboardType: TextInputType.number,
-                            style: TextStyle(fontSize: 15),
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: 10,
-                                horizontal: 10,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              labelText: 'Choose from date',
-                              labelStyle: TextStyles.bodytextBlack1(context),
+            child: Padding(
+              padding: MediaQuery.of(context).viewInsets,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Stack(
+                    children: [
+                      SizedBox(
+                        child: TextFormField(
+                          onTap: () {
+                            showDate(context);
+                          },
+                          readOnly: true,
+                          controller: mycontroller[3],
+                          onChanged: (val) {},
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'ENTER FROM DATE';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(fontSize: 15),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 10,
                             ),
-                          ),
-                        ),
-                        Positioned(
-                          top: Screens.heigth(context) * 0.01,
-                          left: Screens.width(context) * 0.8,
-                          child: InkWell(
-                            onTap: () {
-                              showDate(context);
-                            },
-                            child: Icon(
-                              Icons.calendar_today_outlined,
-                              color: theme.primaryColor,
-                              size: Screens.width(context) * 0.08,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Stack(
-                      children: [
-                        SizedBox(
-                          child: TextFormField(
-                            onTap: () {
-                              showToDate(context);
-                            },
-                            readOnly: true,
-                            controller: mycontroller[4],
-                            onChanged: (val) {},
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'ENTER TO DATE';
-                              }
-                              return null;
-                            },
-                            keyboardType: TextInputType.number,
-                            style: TextStyle(fontSize: 15),
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: 10,
-                                horizontal: 10,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
                               ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  // ignore: prefer_const_constructors
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              labelText: 'Choose to date',
-                              labelStyle: TextStyles.bodytextBlack1(context),
                             ),
+                            labelText: 'Choose from date',
+                            labelStyle: TextStyles.bodytextBlack1(context),
                           ),
-                        ),
-                        Positioned(
-                          top: Screens.heigth(context) * 0.01,
-                          left: Screens.width(context) * 0.8,
-                          child: InkWell(
-                            onTap: () {
-                              showToDate(context);
-                            },
-                            child: Icon(
-                              Icons.calendar_today_outlined,
-                              color: theme.primaryColor,
-                              size: Screens.width(context) * 0.08,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Center(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          backgroundColor: theme.primaryColor,
-                        ),
-                        onPressed: () {
-                          clickedSearch();
-                        },
-                        child: Text(
-                          'Search',
-                          style: TextStyles.whiteText(context),
                         ),
                       ),
-                    )
-                  ],
-                ),
+                      Positioned(
+                        top: Screens.heigth(context) * 0.01,
+                        left: Screens.width(context) * 0.8,
+                        child: InkWell(
+                          onTap: () {
+                            showDate(context);
+                          },
+                          child: Icon(
+                            Icons.calendar_today_outlined,
+                            color: theme.primaryColor,
+                            size: Screens.width(context) * 0.08,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Stack(
+                    children: [
+                      SizedBox(
+                        child: TextFormField(
+                          onTap: () {
+                            showToDate(context);
+                          },
+                          readOnly: true,
+                          controller: mycontroller[4],
+                          onChanged: (val) {},
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'ENTER TO DATE';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(fontSize: 15),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 10,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            labelText: 'Choose to date',
+                            labelStyle: TextStyles.bodytextBlack1(context),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: Screens.heigth(context) * 0.01,
+                        left: Screens.width(context) * 0.8,
+                        child: InkWell(
+                          onTap: () {
+                            showToDate(context);
+                          },
+                          child: Icon(
+                            Icons.calendar_today_outlined,
+                            color: theme.primaryColor,
+                            size: Screens.width(context) * 0.08,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        backgroundColor: theme.primaryColor,
+                      ),
+                      onPressed: () {
+                        clickedSearch();
+                      },
+                      child: Text(
+                        'Search',
+                        style: TextStyles.whiteText(context),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

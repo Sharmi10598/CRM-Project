@@ -1,4 +1,3 @@
-
 part of '../home_page.dart';
 
 class _BuildSwiper extends StatelessWidget {
@@ -14,10 +13,10 @@ class _BuildSwiper extends StatelessWidget {
         // color: Colors.black,
       ),
       child: Swiper(
-        itemCount:2,
+        itemCount: 2,
         autoplay: true,
         itemBuilder: (context, index) {
-       //   final data = SwiperList.series[index];
+          //   final data = SwiperList.series[index];
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
@@ -25,15 +24,14 @@ class _BuildSwiper extends StatelessWidget {
               //   fit: BoxFit.fitWidth,
               //   image: CachedNetworkImageProvider(data.images!.first),
               // ),
-           
-             // color: Colors.red
+
+              // color: Colors.red
             ),
-              child: charts.BarChart(SwiperList.series,
-                  animate: true,
-                  animationDuration:const Duration(milliseconds: 500),
-                   barGroupingType: charts.BarGroupingType.stacked,
-                  ) ,
-          
+            // child: charts.BarChart(SwiperList.series,
+            //     animate: true,
+            //     animationDuration:const Duration(milliseconds: 500),
+            //      barGroupingType: charts.BarGroupingType.stacked,
+            //     ) ,
           );
         },
       ),

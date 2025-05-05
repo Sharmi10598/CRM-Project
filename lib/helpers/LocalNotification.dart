@@ -10,43 +10,52 @@ import 'package:path_provider/path_provider.dart';
 
 class LocalNotificationService {
   AndroidNotificationChannel channel = AndroidNotificationChannel(
-      'hig_importance_channel', 'High Importance Notification',
-      importance: Importance.high,);
+    'hig_importance_channel',
+    'High Importance Notification',
+    importance: Importance.high,
+  );
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  Future<void> showNitification(
-      {int? notifycount,String? titile, String? msg, RemoteMessage? message,}) async {
-    if (message!.notification!.android!.imageUrl!= null) {
-      final url = _getImageUrl(message.notification!);
-      final filePath = await _downloadAndSavePicture(url, 'notify');
+  Future<void> showNitification({
+    int? notifycount,
+    String? titile,
+    String? msg,
+    RemoteMessage? message,
+  }) async {
+    if (message != null) {
+      if (message.notification!.android!.imageUrl != null) {
+        final url = _getImageUrl(message.notification!);
+        final filePath = await _downloadAndSavePicture(url, 'notify');
 
-      final notificationDetails =
-          _buildDetails(titile!, msg!, filePath, true);
-           await flutterLocalNotificationsPlugin.show(
-       notifycount!, // 0id!,
-        titile,
-        msg,
-        notificationDetails,
+        final notificationDetails =
+            _buildDetails(titile!, msg!, filePath, true);
+        await flutterLocalNotificationsPlugin.show(
+          notifycount!, // 0id!,
+          titile,
+          msg,
+          notificationDetails,
         );
-    }else{
-  await flutterLocalNotificationsPlugin.show(
-        1,
-        titile ?? 'Testing !!!',
-        msg ?? 'Testing how are you',
-        NotificationDetails(
+      } else {
+        await flutterLocalNotificationsPlugin.show(
+          1,
+          titile ?? 'Testing !!!',
+          msg ?? 'Testing how are you',
+          NotificationDetails(
             android: AndroidNotificationDetails(
-          channel.id, channel.name,
-          importance: Importance.high,
-          color: Colors.red,
-          enableLights: true,
-          priority: Priority.high,
-          icon: '@mipmap/ic_launcher',
-          // styleInformation: StyleInformation()
-        ),),
+              channel.id, channel.name,
+              importance: Importance.high,
+              color: Colors.red,
+              enableLights: true,
+              priority: Priority.high,
+              icon: '@mipmap/ic_launcher',
+              // styleInformation: StyleInformation()
+            ),
+          ),
         );
-    }  
+      }
+    }
   }
 
   String? _getImageUrl(RemoteNotification notification) {
@@ -70,14 +79,21 @@ class LocalNotificationService {
   }
 
   NotificationDetails _buildDetails(
-      String title, String body, String? picturePath, bool showBigPicture,) {
-    final androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
+    String title,
+    String body,
+    String? picturePath,
+    bool showBigPicture,
+  ) {
+    final androidPlatformChannelSpecifics = AndroidNotificationDetails(
       channel.id,
       channel.name,
       channelDescription: channel.description,
       styleInformation: buildBigPictureStyleInformation(
-          title, body, picturePath, showBigPicture,),
+        title,
+        body,
+        picturePath,
+        showBigPicture,
+      ),
       importance: Importance.high,
       color: Colors.red,
       enableLights: true,

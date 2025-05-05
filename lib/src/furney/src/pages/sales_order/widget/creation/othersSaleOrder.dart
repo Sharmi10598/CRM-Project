@@ -18,8 +18,8 @@ class OthersOrder extends StatefulWidget {
 }
 
 class OthersOrderState extends State<OthersOrder> {
- static String billto='';
- static String shipto='';
+  static String billto = '';
+  static String shipto = '';
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -30,14 +30,15 @@ class OthersOrderState extends State<OthersOrder> {
           //  padding: EdgeInsets.only(top:Screens.heigth(context)*0.01,),//left: Screens.width(context)*0.01,right: Screens.width(context)*0.01,
           // child:
           Stack(
-            children: [
-              SingleChildScrollView(
-        child: Column(
+        children: [
+          SingleChildScrollView(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   padding: EdgeInsets.symmetric(
-                      horizontal: Screens.width(context) * 0.02,),
+                    horizontal: Screens.width(context) * 0.02,
+                  ),
                   color: Colors.white,
                   width: Screens.width(context),
                   child: const Column(
@@ -48,86 +49,87 @@ class OthersOrderState extends State<OthersOrder> {
                   height: Screens.heigth(context) * 0.01,
                 ),
               ],
-        ),
-      ),
-
-         Align(
-             alignment: Alignment.bottomCenter,
-             child:  CustomSpinkitdButton(
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: CustomSpinkitdButton(
               onTap: () async {
-               validateAndCallApi();
+                validateAndCallApi();
                 //callServiceLayerApi();
               },
               isLoading: isLoading,
-            //  labelLoading: AppLocalizations.of(context)!.signing,
+              //  labelLoading: AppLocalizations.of(context)!.signing,
               label: 'Save',
             ),
-           )
-            ],
           ),
+        ],
+      ),
       // ),
     );
   }
-bool isLoading = false;
-    void validateAndCallApi(){
-                    if (HeaderOrderCreationState.bpCode == '') {
-                    const snackBar = SnackBar(
-                      duration: Duration(seconds: 5),
-                      backgroundColor: Colors.red,
-                      content: Text(
-                        'Please Choose Business Partner!!...',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  } else if (ContentOrderCreationState. itemsDetails.isEmpty) {
-                    const snackBar = SnackBar(
-                      duration: Duration(seconds: 5),
-                      backgroundColor: Colors.red,
-                      content: Text(
-                        'Please Add Items!!...',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
-                   else{
-                     setState(()=> isLoading = true);
-          SalesOrderPostAPi.cardCodePost = HeaderOrderCreationState.bpCode;
-          SalesOrderPostAPi.docLineQout =   ContentOrderCreationState. itemsDetails;   
-           SalesOrderPostAPi.docDate =  HeaderOrderCreationState.currentDateTime.toString();
-          SalesOrderPostAPi.dueDate = HeaderOrderCreationState.currentDateTime.toString();
-          SalesOrderPostAPi.remarks =  HeaderOrderCreationState.mycontroller[1].text;
-               SalesOrderPostAPi.getGlobalData(CreateOrderDetailsState.latitude!,CreateOrderDetailsState.longitude!).then((value) {
-                 if(value.statusCode=='201' ||value.statusCode=='204'  ){
 
-                   setState(()=> isLoading = false);
-                     const snackBar = SnackBar(
-                      duration: Duration(seconds: 5),
-                      backgroundColor: Colors.green,
-                      content: Text(
-                        'Orders Created Successfully!!...',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                   // nullallValues();
-                     Get.offAllNamed<dynamic>(FurneyRoutes.salesorder);
-                 }
-                 else{
-                    setState(()=> isLoading = false);
-                     final snackBar = SnackBar(
-                      duration: const Duration(seconds: 5),
-                      backgroundColor: Colors.red,
-                      content: Text(
-                        '${value.error!.message!.value}!!..',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                 }
-               });
+  bool isLoading = false;
+  void validateAndCallApi() {
+    if (HeaderOrderCreationState.bpCode == '') {
+      const snackBar = SnackBar(
+        duration: Duration(seconds: 5),
+        backgroundColor: Colors.red,
+        content: Text(
+          'Please Choose Business Partner!!...',
+          style: TextStyle(color: Colors.white),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else if (ContentOrderCreationState.itemsDetails.isEmpty) {
+      const snackBar = SnackBar(
+        duration: Duration(seconds: 5),
+        backgroundColor: Colors.red,
+        content: Text(
+          'Please Add Items!!...',
+          style: TextStyle(color: Colors.white),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      setState(() => isLoading = true);
+      SalesOrderPostAPi.cardCodePost = HeaderOrderCreationState.bpCode;
+      SalesOrderPostAPi.docLineQout = ContentOrderCreationState.itemsDetails;
+      SalesOrderPostAPi.docDate =
+          HeaderOrderCreationState.currentDateTime.toString();
+      SalesOrderPostAPi.dueDate =
+          HeaderOrderCreationState.currentDateTime.toString();
+      SalesOrderPostAPi.remarks = HeaderOrderCreationState.mycontroller[1].text;
+      SalesOrderPostAPi.getGlobalData(
+        CreateOrderDetailsState.latitude!,
+        CreateOrderDetailsState.longitude!,
+      ).then((value) {
+        if (value.statusCode == '201' || value.statusCode == '204') {
+          setState(() => isLoading = false);
+          const snackBar = SnackBar(
+            duration: Duration(seconds: 5),
+            backgroundColor: Colors.green,
+            content: Text(
+              'Orders Created Successfully!!...',
+              style: TextStyle(color: Colors.white),
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          // nullallValues();
+          Get.offAllNamed<dynamic>(FurneyRoutes.salesorder);
+        } else {
+          setState(() => isLoading = false);
+          final snackBar = SnackBar(
+            duration: const Duration(seconds: 5),
+            backgroundColor: Colors.red,
+            content: Text(
+              '${value.error!.message!.value}!!..',
+              style: const TextStyle(color: Colors.white),
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      });
     }
   }
-  
 }

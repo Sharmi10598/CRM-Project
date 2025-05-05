@@ -10,22 +10,21 @@ import 'package:ultimate_bundle/helpers/constants.dart';
 import 'package:ultimate_bundle/helpers/textstyle.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/local_api/SchemeQuteApi/SchemeQuteApi.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/SOafterApi/SOafterApi.dart';
+import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_quotations_api/EditApi/PostPatch_quot_api.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_quotations_api/EditApi/PostPut_sales_quot.dart';
 import 'package:ultimate_bundle/src/furney/src/Modal/local_modal/SchemeQuteModel/SchemeQuteModel.dart';
+import 'package:ultimate_bundle/src/furney/src/Modal/service_layer_modal/approvals_modal/approvals_details.modal.dart';
+import 'package:ultimate_bundle/src/furney/src/Modal/service_layer_modal/sales_quot/QuotPutModel.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/SalesQuotEdit/widget/creation/contentEdit_creation.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/SalesQuotEdit/widget/creation/headerEdit_creation.dart';
+import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/screens/SalesQutDetails.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/sign_in/widgets/custom_elevatedBtn.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../Api/service_layer_api/sales_quotations_api/EditApi/PostPatch_quot_api.dart';
-import '../../../../Modal/service_layer_modal/approvals_modal/approvals_details.modal.dart';
-import '../../../../Modal/service_layer_modal/sales_quot/QuotPutModel.dart';
-import '../../../sales_quot/screens/SalesQutDetails.dart';
-
 class LogisticEditPage extends StatefulWidget {
-  LogisticEditPage({Key? key, required this.docentry}) : super(key: key);
+  LogisticEditPage({required this.docentry, Key? key}) : super(key: key);
   int docentry;
   @override
   LogisticEditPageState createState() => LogisticEditPageState();
@@ -54,7 +53,6 @@ class LogisticEditPageState extends State<LogisticEditPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setboolVal();
   }
@@ -123,15 +121,13 @@ class LogisticEditPageState extends State<LogisticEditPage> {
                               // ),
                             ],
                           ),
-                          Container(
-                            child: Icon(
-                              Icons.navigate_next_outlined,
-                              color: theme.primaryColor,
-                              size: Screens.heigth(context) * 0.06,
-                            ),
-                          )
+                          Icon(
+                            Icons.navigate_next_outlined,
+                            color: theme.primaryColor,
+                            size: Screens.heigth(context) * 0.06,
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -174,15 +170,13 @@ class LogisticEditPageState extends State<LogisticEditPage> {
                               // ),
                             ],
                           ),
-                          Container(
-                            child: Icon(
-                              Icons.navigate_next_outlined,
-                              color: theme.primaryColor,
-                              size: Screens.heigth(context) * 0.06,
-                            ),
-                          )
+                          Icon(
+                            Icons.navigate_next_outlined,
+                            color: theme.primaryColor,
+                            size: Screens.heigth(context) * 0.06,
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -455,19 +449,17 @@ class LogisticEditPageState extends State<LogisticEditPage> {
           // ContentEditCreationState.contentitemsDetails[i].qty!.toDouble()*ContentEditCreationState.contentitemsDetails[i].price!.toDouble();
           totalbefordisc = totalbefordisc +
               (ContentEditCreationState.contentitemsDetails[i].price! *
-                  ContentEditCreationState.contentitemsDetails[i].qty!
-                      .toDouble());
+                  ContentEditCreationState.contentitemsDetails[i].qty!);
           log("ContentEditCreationState.contentitemsDetails[i].discount::${ContentEditCreationState.contentitemsDetails[i].discount}");
           discount = discount +
               ContentEditCreationState.contentitemsDetails[i].discount!;
 
-          log("discount::${discount}");
+          log("discount::$discount");
 
           tax = tax +
               (ContentEditCreationState.contentitemsDetails[i].total! -
                   ContentEditCreationState.contentitemsDetails[i].valueAF!);
         }
-        print("grandtotal: " + basictotal.toString());
         //total over
         HeaderEditCreationState.discount = discount;
         HeaderEditCreationState.tax = tax;
@@ -1835,12 +1827,8 @@ class LogisticEditPageState extends State<LogisticEditPage> {
       documentReferences: quotputdataval55!.documentReferences!.isNotEmpty
           ? quotputdataval55!.documentReferences
           : [],
-      taxExtension: quotputdataval55!.taxExtension == null
-          ? null
-          : quotputdataval55!.taxExtension,
-      addressExtension: quotputdataval55!.addressExtension == null
-          ? null
-          : quotputdataval55!.addressExtension,
+      taxExtension: quotputdataval55!.taxExtension,
+      addressExtension: quotputdataval55!.addressExtension,
     );
 
     getdocitemsDetailsData = quotputdataval55!.documentLines!;
@@ -1862,298 +1850,300 @@ class LogisticEditPageState extends State<LogisticEditPage> {
       log("contentitemsDetails55[ij].lineNo::${contentitemsDetails55[ij].lineNumm}");
       // log("message:::");
       if (contentitemsDetails55[ij].lineNumm != null) {
-        itemsDetailsData.add(DocumentLineData(
-          lineNum: contentitemsDetails55[ij].lineNumm,
-          // contentitemsDetails55[ij].lineNum,
-          itemCode: contentitemsDetails55[ij].itemCode,
-          itemDescription: contentitemsDetails55[ij].itemName,
-          quantity: contentitemsDetails55[ij].qty,
-          shipDate: contentitemsDetails55[ij].shipDate,
-          price: contentitemsDetails55[ij].price,
-          priceAfterVat: contentitemsDetails55[ij].priceAfterVat,
-          currency: GetValues.currency,
-          rate: contentitemsDetails55[ij].rate,
-          discountPercent: contentitemsDetails55[ij].discounpercent,
-          vendorNum: contentitemsDetails55[ij].vendorNum,
-          serialNum: contentitemsDetails55[ij].serialNum,
-          warehouseCode: contentitemsDetails55[ij].warehouse,
-          salesPersonCode: contentitemsDetails55[ij].salesPersonCode,
-          commisionPercent: contentitemsDetails55[ij].commisionPercent,
-          treeType: contentitemsDetails55[ij].treeType,
-          accountCode: contentitemsDetails55[ij].accountCode,
-          useBaseUnits: contentitemsDetails55[ij].useBaseUnits,
-          supplierCatNum: contentitemsDetails55[ij].supplierCatNum,
-          costingCode: contentitemsDetails55[ij].costingCode,
-          projectCode: contentitemsDetails55[ij].projectCode == null ||
-                  contentitemsDetails55[ij].projectCode == "null"
-              ? null
-              : contentitemsDetails55[ij].projectCode,
-          // contentitemsDetails55[ij].projectCode,
-          barCode: contentitemsDetails55[ij].barCode == null ||
-                  contentitemsDetails55[ij].barCode == "null"
-              ? null
-              : contentitemsDetails55[ij].barCode,
-          vatGroup: contentitemsDetails55[ij].vatGroup,
-          height1: contentitemsDetails55[ij].height1,
-          hight1Unit: contentitemsDetails55[ij].hight1Unit == null ||
-                  contentitemsDetails55[ij].hight1Unit == "null"
-              ? null
-              : contentitemsDetails55[ij].hight1Unit,
-          height2: contentitemsDetails55[ij].height2,
-          height2Unit: contentitemsDetails55[ij].height2Unit == null ||
-                  contentitemsDetails55[ij].height2Unit == "null"
-              ? null
-              : contentitemsDetails55[ij].height2Unit,
-          lengh1: contentitemsDetails55[ij].lengh1,
-          lengh1Unit: contentitemsDetails55[ij].lengh1Unit == null ||
-                  contentitemsDetails55[ij].lengh1Unit == "null"
-              ? null
-              : contentitemsDetails55[ij].lengh1Unit,
-          lengh2: contentitemsDetails55[ij].lengh2,
-          lengh2Unit: contentitemsDetails55[ij].lengh2Unit == null ||
-                  contentitemsDetails55[ij].lengh2Unit == "null"
-              ? null
-              : contentitemsDetails55[ij].lengh2Unit,
-          weight1: contentitemsDetails55[ij].weight1,
-          weight1Unit: contentitemsDetails55[ij].weight1Unit,
-          weight2: contentitemsDetails55[ij].weight2,
-          weight2Unit: contentitemsDetails55[ij].weight2Unit,
-          factor1: contentitemsDetails55[ij].factor1,
-          factor2: contentitemsDetails55[ij].factor2,
-          factor3: contentitemsDetails55[ij].factor3,
-          factor4: contentitemsDetails55[ij].factor4,
-          baseType: contentitemsDetails55[ij].baseType,
-          baseEntry: contentitemsDetails55[ij].baseEntry,
-          baseLine: contentitemsDetails55[ij].baseLine,
-          volume: contentitemsDetails55[ij].volume,
-          volumeUnit: contentitemsDetails55[ij].volumeUnit,
-          width1: contentitemsDetails55[ij].weight1,
-          width1Unit: contentitemsDetails55[ij].width1Unit,
-          width2: contentitemsDetails55[ij].weight2,
-          width2Unit: contentitemsDetails55[ij].width2Unit,
-          address: contentitemsDetails55[ij].address,
-          taxCode: contentitemsDetails55[ij].taxCode,
-          taxType: contentitemsDetails55[ij].taxType,
-          taxLiable: contentitemsDetails55[ij].taxLiable,
-          pickStatus: contentitemsDetails55[ij].pickStatus,
-          pickQuantity: contentitemsDetails55[ij].pickQuantity,
-          pickListIdNumber: contentitemsDetails55[ij].pickListIdNumber,
-          originalItem: contentitemsDetails55[ij].originalItem,
-          backOrder: contentitemsDetails55[ij].backOrder,
-          freeText: contentitemsDetails55[ij].freeText,
-          shippingMethod: contentitemsDetails55[ij].shippingMethod,
-          poTargetNum: contentitemsDetails55[ij].poTargetNum == null ||
-                  contentitemsDetails55[ij].poTargetNum == "null"
-              ? null
-              : contentitemsDetails55[ij].poTargetNum,
-          poTargetEntry: contentitemsDetails55[ij].poTargetEntry,
-          poTargetRowNum: contentitemsDetails55[ij].poTargetRowNum,
-          correctionInvoiceItem:
-              contentitemsDetails55[ij].correctionInvoiceItem,
-          corrInvAmountToStock: contentitemsDetails55[ij].corrInvAmountToStock,
-          corrInvAmountToDiffAcct:
-              contentitemsDetails55[ij].corrInvAmountToDiffAcct,
-          appliedTax: contentitemsDetails55[ij].appliedTax,
-          appliedTaxFc: contentitemsDetails55[ij].appliedTaxFc,
-          appliedTaxSc: contentitemsDetails55[ij].appliedTaxSc,
-          wtLiable: contentitemsDetails55[ij].wtLiable,
-          deferredTax: contentitemsDetails55[ij].deferredTax,
-          equalizationTaxPercent:
-              contentitemsDetails55[ij].equalizationTaxPercent,
-          totalEqualizationTax: contentitemsDetails55[ij].totalEqualizationTax,
-          totalEqualizationTaxFc:
-              contentitemsDetails55[ij].totalEqualizationTaxFc,
-          totalEqualizationTaxSc:
-              contentitemsDetails55[ij].totalEqualizationTaxSc,
-          netTaxAmount: contentitemsDetails55[ij].netTaxAmount,
-          netTaxAmountFc: contentitemsDetails55[ij].netTaxAmountFc,
-          netTaxAmountSc: contentitemsDetails55[ij].netTaxAmountSc,
-          measureUnit: contentitemsDetails55[ij].measureUnit,
-          unitsOfMeasurment: contentitemsDetails55[ij].unitsOfMeasurment,
-          lineTotal: contentitemsDetails55[ij].lineTotal,
-          taxPercentagePerRow: contentitemsDetails55[ij].taxPercentagePerRow,
-          taxTotal: contentitemsDetails55[ij].taxTotal,
-          consumerSalesForecast:
-              contentitemsDetails55[ij].consumerSalesForecast,
-          exciseAmount: contentitemsDetails55[ij].exciseAmount,
-          taxPerUnit: contentitemsDetails55[ij].taxPerUnit,
-          totalInclTax: contentitemsDetails55[ij].totalInclTax,
-          countryOrg: contentitemsDetails55[ij].countryOrg,
-          sww: contentitemsDetails55[ij].sww,
-          transactionType: contentitemsDetails55[ij].transactionType == null ||
-                  contentitemsDetails55[ij].transactionType == "null"
-              ? null
-              : contentitemsDetails55[ij].transactionType,
-          distributeExpense: contentitemsDetails55[ij].distributeExpense,
-          rowTotalFc: contentitemsDetails55[ij].rowTotalFc,
-          rowTotalSc: contentitemsDetails55[ij].rowTotalSc,
-          lastBuyInmPrice: contentitemsDetails55[ij].lastBuyInmPrice,
-          lastBuyDistributeSumFc:
-              contentitemsDetails55[ij].lastBuyDistributeSumFc,
-          lastBuyDistributeSumSc:
-              contentitemsDetails55[ij].lastBuyDistributeSumSc,
-          lastBuyDistributeSum: contentitemsDetails55[ij].lastBuyDistributeSum,
-          stockDistributesumForeign:
-              contentitemsDetails55[ij].stockDistributesumForeign,
-          stockDistributesumSystem:
-              contentitemsDetails55[ij].stockDistributesumSystem,
-          stockDistributesum: contentitemsDetails55[ij].stockDistributesum,
-          stockInmPrice: contentitemsDetails55[ij].stockInmPrice,
-          pickStatusEx: contentitemsDetails55[ij].pickStatusEx,
-          taxBeforeDpm: contentitemsDetails55[ij].taxBeforeDpm,
-          taxBeforeDpmfc: contentitemsDetails55[ij].taxBeforeDpmfc,
-          taxBeforeDpmsc: contentitemsDetails55[ij].taxBeforeDpmsc,
-          cfopCode: contentitemsDetails55[ij].cfopCode,
-          cstCode: contentitemsDetails55[ij].cstCode,
-          usage: contentitemsDetails55[ij].usage,
-          taxOnly: contentitemsDetails55[ij].taxOnly,
-          visualOrder: contentitemsDetails55[ij].visualOrder,
-          baseOpenQuantity: contentitemsDetails55[ij].baseOpenQuantity,
-          unitPrice: double.parse(contentitemsDetails55[ij].price.toString()),
-          lineStatus: contentitemsDetails55[ij].lineStatus,
-          packageQuantity: contentitemsDetails55[ij].packageQuantity,
-          text: contentitemsDetails55[ij].text,
-          lineType: contentitemsDetails55[ij].lineType,
-          cogsCostingCode: contentitemsDetails55[ij].cogsCostingCode,
-          cogsAccountCode: contentitemsDetails55[ij].cogsAccountCode,
-          changeAssemlyBoMWarehouse:
-              contentitemsDetails55[ij].changeAssemlyBoMWarehouse,
-          grossBuyPrice: contentitemsDetails55[ij].grossBuyPrice,
-          grossBase: contentitemsDetails55[ij].grossBase,
-          grossProfitTotalBasePrice:
-              contentitemsDetails55[ij].grossProfitTotalBasePrice,
-          costingCode2: contentitemsDetails55[ij].costingCode2,
-          costingCode3: contentitemsDetails55[ij].costingCode3,
-          costingCode4: contentitemsDetails55[ij].costingCode5,
-          costingCode5: contentitemsDetails55[ij].costingCode5,
-          itemDetails: contentitemsDetails55[ij].itemDetails,
-          locationCode: contentitemsDetails55[ij].locationCode,
-          actualDeliveryDate: contentitemsDetails55[ij].actualDeliveryDate,
-          remainingOpenQuantity: 0,
-          openAmount: 0,
-          openAmountFc: 0,
-          openAmountSc: 0,
-          exLineNo: contentitemsDetails55[ij].exLineNo,
-          Date: contentitemsDetails55[ij].Date,
-          Quantity: contentitemsDetails55[ij].Quantity,
-          cogsCostingCode2: contentitemsDetails55[ij].cogsCostingCode2,
-          cogsCostingCode3: contentitemsDetails55[ij].cogsCostingCode3,
-          cogsCostingCode4: contentitemsDetails55[ij].cogsCostingCode4,
-          cogsCostingCode5: contentitemsDetails55[ij].cogsCostingCode5,
-          csTforIpi: contentitemsDetails55[ij].csTforIpi,
-          csTforPis: contentitemsDetails55[ij].csTforPis,
-          csTforCofins: contentitemsDetails55[ij].csTforCofins,
-          creditOriginCode: contentitemsDetails55[ij].creditOriginCode,
-          withoutInventoryMovement:
-              contentitemsDetails55[ij].withoutInventoryMovement,
-          agreementNo: contentitemsDetails55[ij].agreementNo,
-          agreementRowNumber: contentitemsDetails55[ij].agreementRowNumber,
-          actualBaseEntry: contentitemsDetails55[ij].actualBaseEntry,
-          actualBaseLine: contentitemsDetails55[ij].actualBaseLine,
-          docEntry: contentitemsDetails55[ij].docEntry,
-          surpluses: contentitemsDetails55[ij].surpluses,
-          defectAndBreakup: contentitemsDetails55[ij].defectAndBreakup,
-          shortages: contentitemsDetails55[ij].shortages,
-          considerQuantity: contentitemsDetails55[ij].considerQuantity,
-          partialRetirement: contentitemsDetails55[ij].partialRetirement,
-          retirementQuantity: contentitemsDetails55[ij].retirementQuantity,
-          retirementApc: contentitemsDetails55[ij].retirementApc,
-          thirdParty: contentitemsDetails55[ij].thirdParty,
-          poNum: contentitemsDetails55[ij].poNum,
-          poItmNum: contentitemsDetails55[ij].poItmNum,
-          expenseType: contentitemsDetails55[ij].expenseType,
-          receiptNumber: contentitemsDetails55[ij].receiptNumber,
-          expenseOperationType: contentitemsDetails55[ij].expenseOperationType,
-          federalTaxId: contentitemsDetails55[ij].federalTaxId == null ||
-                  contentitemsDetails55[ij].federalTaxId == "null"
-              ? null
-              : quotputdataval55!.federalTaxId,
-          //  contentitemsDetails55[ij].federalTaxId,
-          grossProfit: contentitemsDetails55[ij].grossProfit,
-          grossProfitFc: contentitemsDetails55[ij].grossProfitFc,
-          grossProfitSc: contentitemsDetails55[ij].grossProfitSc,
-          priceSource: contentitemsDetails55[ij].priceSource,
-          stgSeqNum: contentitemsDetails55[ij].stgSeqNum,
-          stgEntry: contentitemsDetails55[ij].stgEntry,
-          stgDesc: contentitemsDetails55[ij].stgDesc,
-          uoMEntry: contentitemsDetails55[ij].uoMEntry,
-          uoMCode: contentitemsDetails55[ij].uoMCode,
-          inventoryQuantity: contentitemsDetails55[ij].inventoryQuantity,
-          remainingOpenInventoryQuantity:
-              contentitemsDetails55[ij].remainingOpenInventoryQuantity,
-          parentLineNum: contentitemsDetails55[ij].parentLineNum == null ||
-                  contentitemsDetails55[ij].parentLineNum == "null"
-              ? null
-              : contentitemsDetails55[ij].parentLineNum,
-          incoterms: contentitemsDetails55[ij].incoterms,
-          transportMode: contentitemsDetails55[ij].transportMode,
-          natureOfTransaction: contentitemsDetails55[ij].natureOfTransaction,
-          destinationCountryForImport:
-              contentitemsDetails55[ij].destinationCountryForImport,
-          destinationRegionForImport:
-              contentitemsDetails55[ij].destinationRegionForImport,
-          originCountryForExport:
-              contentitemsDetails55[ij].originCountryForExport,
-          originRegionForExport:
-              contentitemsDetails55[ij].originRegionForExport,
-          itemType: 'dit_Item',
-          changeInventoryQuantityIndependently:
-              contentitemsDetails55[ij].changeInventoryQuantityIndependently,
-          freeOfChargeBp: contentitemsDetails55[ij].freeOfChargeBp,
-          sacEntry: contentitemsDetails55[ij].sacEntry,
-          hsnEntry: contentitemsDetails55[ij].hsnEntry,
-          grossPrice: contentitemsDetails55[ij].grossPrice,
-          grossTotal: contentitemsDetails55[ij].grossTotal,
-          grossTotalFc: contentitemsDetails55[ij].grossTotalFc,
-          grossTotalSc: contentitemsDetails55[ij].grossTotalSc,
-          ncmCode: contentitemsDetails55[ij].ncmCode,
-          nveCode: contentitemsDetails55[ij].nveCode,
-          indEscala: "tNO",
-          ctrSealQty: contentitemsDetails55[ij].ctrSealQty,
-          cnjpMan: contentitemsDetails55[ij].cnjpMan,
-          cestCode: contentitemsDetails55[ij].cestCode == null
-              ? null
-              : contentitemsDetails55[ij].cestCode,
-          ufFiscalBenefitCode:
-              contentitemsDetails55[ij].ufFiscalBenefitCode == null
-                  ? null
-                  : contentitemsDetails55[ij].ufFiscalBenefitCode,
-          shipToCode: contentitemsDetails55[ij].shipToCode == null ||
-                  contentitemsDetails55[ij].shipToCode == "null"
-              ? null
-              : contentitemsDetails55[ij].shipToCode,
-          shipToDescription: contentitemsDetails55[ij].shipToDescription,
-          externalCalcTaxRate: contentitemsDetails55[ij].externalCalcTaxRate,
-          externalCalcTaxAmount:
-              contentitemsDetails55[ij].externalCalcTaxAmount,
-          externalCalcTaxAmountFc:
-              contentitemsDetails55[ij].externalCalcTaxAmountFc,
-          externalCalcTaxAmountSc:
-              contentitemsDetails55[ij].externalCalcTaxAmountSc,
-          standardItemIdentification:
-              contentitemsDetails55[ij].standardItemIdentification,
-          commodityClassification:
-              contentitemsDetails55[ij].commodityClassification,
-          unencumberedReason: contentitemsDetails55[ij].unencumberedReason,
-          cuSplit: "tNO",
-          uQtyOrdered: contentitemsDetails55[ij].uQtyOrdered,
-          uOpenQty: contentitemsDetails55[ij].uOpenQty,
-          uTonnage: contentitemsDetails55[ij].uTonnage,
-          uPackSize: contentitemsDetails55[ij].U_Pack_Size,
-          uProfitCentre: contentitemsDetails55[ij].uProfitCentre,
-          uNumberDrums: contentitemsDetails55[ij].uNumberDrums,
-          uDrumSize: contentitemsDetails55[ij].uDrumSize,
-          uPails: contentitemsDetails55[ij].uPails,
-          uCartons: contentitemsDetails55[ij].uCartons ?? null,
-          uLooseTins: contentitemsDetails55[ij].uLooseTins,
-          uNettWt: contentitemsDetails55[ij].uNettWt,
-          uGrossWt: contentitemsDetails55[ij].uGrossWt,
-          uAppLinId: contentitemsDetails55[ij].uAppLinId,
-          uMuQty: contentitemsDetails55[ij].uMuQty,
-          uRvc: contentitemsDetails55[ij].uRvc,
-          uVrn: contentitemsDetails55[ij].uVrn,
-          uIdentifier: contentitemsDetails55[ij].uIdentifier,
-        ));
+        itemsDetailsData.add(
+          DocumentLineData(
+            lineNum: contentitemsDetails55[ij].lineNumm,
+            // contentitemsDetails55[ij].lineNum,
+            itemCode: contentitemsDetails55[ij].itemCode,
+            itemDescription: contentitemsDetails55[ij].itemName,
+            quantity: contentitemsDetails55[ij].qty,
+            shipDate: contentitemsDetails55[ij].shipDate,
+            price: contentitemsDetails55[ij].price,
+            priceAfterVat: contentitemsDetails55[ij].priceAfterVat,
+            currency: GetValues.currency,
+            rate: contentitemsDetails55[ij].rate,
+            discountPercent: contentitemsDetails55[ij].discounpercent,
+            vendorNum: contentitemsDetails55[ij].vendorNum,
+            serialNum: contentitemsDetails55[ij].serialNum,
+            warehouseCode: contentitemsDetails55[ij].warehouse,
+            salesPersonCode: contentitemsDetails55[ij].salesPersonCode,
+            commisionPercent: contentitemsDetails55[ij].commisionPercent,
+            treeType: contentitemsDetails55[ij].treeType,
+            accountCode: contentitemsDetails55[ij].accountCode,
+            useBaseUnits: contentitemsDetails55[ij].useBaseUnits,
+            supplierCatNum: contentitemsDetails55[ij].supplierCatNum,
+            costingCode: contentitemsDetails55[ij].costingCode,
+            projectCode: contentitemsDetails55[ij].projectCode == null ||
+                    contentitemsDetails55[ij].projectCode == "null"
+                ? null
+                : contentitemsDetails55[ij].projectCode,
+            // contentitemsDetails55[ij].projectCode,
+            barCode: contentitemsDetails55[ij].barCode == null ||
+                    contentitemsDetails55[ij].barCode == "null"
+                ? null
+                : contentitemsDetails55[ij].barCode,
+            vatGroup: contentitemsDetails55[ij].vatGroup,
+            height1: contentitemsDetails55[ij].height1,
+            hight1Unit: contentitemsDetails55[ij].hight1Unit == null ||
+                    contentitemsDetails55[ij].hight1Unit == "null"
+                ? null
+                : contentitemsDetails55[ij].hight1Unit,
+            height2: contentitemsDetails55[ij].height2,
+            height2Unit: contentitemsDetails55[ij].height2Unit == null ||
+                    contentitemsDetails55[ij].height2Unit == "null"
+                ? null
+                : contentitemsDetails55[ij].height2Unit,
+            lengh1: contentitemsDetails55[ij].lengh1,
+            lengh1Unit: contentitemsDetails55[ij].lengh1Unit == null ||
+                    contentitemsDetails55[ij].lengh1Unit == "null"
+                ? null
+                : contentitemsDetails55[ij].lengh1Unit,
+            lengh2: contentitemsDetails55[ij].lengh2,
+            lengh2Unit: contentitemsDetails55[ij].lengh2Unit == null ||
+                    contentitemsDetails55[ij].lengh2Unit == "null"
+                ? null
+                : contentitemsDetails55[ij].lengh2Unit,
+            weight1: contentitemsDetails55[ij].weight1,
+            weight1Unit: contentitemsDetails55[ij].weight1Unit,
+            weight2: contentitemsDetails55[ij].weight2,
+            weight2Unit: contentitemsDetails55[ij].weight2Unit,
+            factor1: contentitemsDetails55[ij].factor1,
+            factor2: contentitemsDetails55[ij].factor2,
+            factor3: contentitemsDetails55[ij].factor3,
+            factor4: contentitemsDetails55[ij].factor4,
+            baseType: contentitemsDetails55[ij].baseType,
+            baseEntry: contentitemsDetails55[ij].baseEntry,
+            baseLine: contentitemsDetails55[ij].baseLine,
+            volume: contentitemsDetails55[ij].volume,
+            volumeUnit: contentitemsDetails55[ij].volumeUnit,
+            width1: contentitemsDetails55[ij].weight1,
+            width1Unit: contentitemsDetails55[ij].width1Unit,
+            width2: contentitemsDetails55[ij].weight2,
+            width2Unit: contentitemsDetails55[ij].width2Unit,
+            address: contentitemsDetails55[ij].address,
+            taxCode: contentitemsDetails55[ij].taxCode,
+            taxType: contentitemsDetails55[ij].taxType,
+            taxLiable: contentitemsDetails55[ij].taxLiable,
+            pickStatus: contentitemsDetails55[ij].pickStatus,
+            pickQuantity: contentitemsDetails55[ij].pickQuantity,
+            pickListIdNumber: contentitemsDetails55[ij].pickListIdNumber,
+            originalItem: contentitemsDetails55[ij].originalItem,
+            backOrder: contentitemsDetails55[ij].backOrder,
+            freeText: contentitemsDetails55[ij].freeText,
+            shippingMethod: contentitemsDetails55[ij].shippingMethod,
+            poTargetNum: contentitemsDetails55[ij].poTargetNum == null ||
+                    contentitemsDetails55[ij].poTargetNum == "null"
+                ? null
+                : contentitemsDetails55[ij].poTargetNum,
+            poTargetEntry: contentitemsDetails55[ij].poTargetEntry,
+            poTargetRowNum: contentitemsDetails55[ij].poTargetRowNum,
+            correctionInvoiceItem:
+                contentitemsDetails55[ij].correctionInvoiceItem,
+            corrInvAmountToStock:
+                contentitemsDetails55[ij].corrInvAmountToStock,
+            corrInvAmountToDiffAcct:
+                contentitemsDetails55[ij].corrInvAmountToDiffAcct,
+            appliedTax: contentitemsDetails55[ij].appliedTax,
+            appliedTaxFc: contentitemsDetails55[ij].appliedTaxFc,
+            appliedTaxSc: contentitemsDetails55[ij].appliedTaxSc,
+            wtLiable: contentitemsDetails55[ij].wtLiable,
+            deferredTax: contentitemsDetails55[ij].deferredTax,
+            equalizationTaxPercent:
+                contentitemsDetails55[ij].equalizationTaxPercent,
+            totalEqualizationTax:
+                contentitemsDetails55[ij].totalEqualizationTax,
+            totalEqualizationTaxFc:
+                contentitemsDetails55[ij].totalEqualizationTaxFc,
+            totalEqualizationTaxSc:
+                contentitemsDetails55[ij].totalEqualizationTaxSc,
+            netTaxAmount: contentitemsDetails55[ij].netTaxAmount,
+            netTaxAmountFc: contentitemsDetails55[ij].netTaxAmountFc,
+            netTaxAmountSc: contentitemsDetails55[ij].netTaxAmountSc,
+            measureUnit: contentitemsDetails55[ij].measureUnit,
+            unitsOfMeasurment: contentitemsDetails55[ij].unitsOfMeasurment,
+            lineTotal: contentitemsDetails55[ij].lineTotal,
+            taxPercentagePerRow: contentitemsDetails55[ij].taxPercentagePerRow,
+            taxTotal: contentitemsDetails55[ij].taxTotal,
+            consumerSalesForecast:
+                contentitemsDetails55[ij].consumerSalesForecast,
+            exciseAmount: contentitemsDetails55[ij].exciseAmount,
+            taxPerUnit: contentitemsDetails55[ij].taxPerUnit,
+            totalInclTax: contentitemsDetails55[ij].totalInclTax,
+            countryOrg: contentitemsDetails55[ij].countryOrg,
+            sww: contentitemsDetails55[ij].sww,
+            transactionType:
+                contentitemsDetails55[ij].transactionType == null ||
+                        contentitemsDetails55[ij].transactionType == "null"
+                    ? null
+                    : contentitemsDetails55[ij].transactionType,
+            distributeExpense: contentitemsDetails55[ij].distributeExpense,
+            rowTotalFc: contentitemsDetails55[ij].rowTotalFc,
+            rowTotalSc: contentitemsDetails55[ij].rowTotalSc,
+            lastBuyInmPrice: contentitemsDetails55[ij].lastBuyInmPrice,
+            lastBuyDistributeSumFc:
+                contentitemsDetails55[ij].lastBuyDistributeSumFc,
+            lastBuyDistributeSumSc:
+                contentitemsDetails55[ij].lastBuyDistributeSumSc,
+            lastBuyDistributeSum:
+                contentitemsDetails55[ij].lastBuyDistributeSum,
+            stockDistributesumForeign:
+                contentitemsDetails55[ij].stockDistributesumForeign,
+            stockDistributesumSystem:
+                contentitemsDetails55[ij].stockDistributesumSystem,
+            stockDistributesum: contentitemsDetails55[ij].stockDistributesum,
+            stockInmPrice: contentitemsDetails55[ij].stockInmPrice,
+            pickStatusEx: contentitemsDetails55[ij].pickStatusEx,
+            taxBeforeDpm: contentitemsDetails55[ij].taxBeforeDpm,
+            taxBeforeDpmfc: contentitemsDetails55[ij].taxBeforeDpmfc,
+            taxBeforeDpmsc: contentitemsDetails55[ij].taxBeforeDpmsc,
+            cfopCode: contentitemsDetails55[ij].cfopCode,
+            cstCode: contentitemsDetails55[ij].cstCode,
+            usage: contentitemsDetails55[ij].usage,
+            taxOnly: contentitemsDetails55[ij].taxOnly,
+            visualOrder: contentitemsDetails55[ij].visualOrder,
+            baseOpenQuantity: contentitemsDetails55[ij].baseOpenQuantity,
+            unitPrice: double.parse(contentitemsDetails55[ij].price.toString()),
+            lineStatus: contentitemsDetails55[ij].lineStatus,
+            packageQuantity: contentitemsDetails55[ij].packageQuantity,
+            text: contentitemsDetails55[ij].text,
+            lineType: contentitemsDetails55[ij].lineType,
+            cogsCostingCode: contentitemsDetails55[ij].cogsCostingCode,
+            cogsAccountCode: contentitemsDetails55[ij].cogsAccountCode,
+            changeAssemlyBoMWarehouse:
+                contentitemsDetails55[ij].changeAssemlyBoMWarehouse,
+            grossBuyPrice: contentitemsDetails55[ij].grossBuyPrice,
+            grossBase: contentitemsDetails55[ij].grossBase,
+            grossProfitTotalBasePrice:
+                contentitemsDetails55[ij].grossProfitTotalBasePrice,
+            costingCode2: contentitemsDetails55[ij].costingCode2,
+            costingCode3: contentitemsDetails55[ij].costingCode3,
+            costingCode4: contentitemsDetails55[ij].costingCode5,
+            costingCode5: contentitemsDetails55[ij].costingCode5,
+            itemDetails: contentitemsDetails55[ij].itemDetails,
+            locationCode: contentitemsDetails55[ij].locationCode,
+            actualDeliveryDate: contentitemsDetails55[ij].actualDeliveryDate,
+            remainingOpenQuantity: 0,
+            openAmount: 0,
+            openAmountFc: 0,
+            openAmountSc: 0,
+            exLineNo: contentitemsDetails55[ij].exLineNo,
+            Date: contentitemsDetails55[ij].Date,
+            Quantity: contentitemsDetails55[ij].Quantity,
+            cogsCostingCode2: contentitemsDetails55[ij].cogsCostingCode2,
+            cogsCostingCode3: contentitemsDetails55[ij].cogsCostingCode3,
+            cogsCostingCode4: contentitemsDetails55[ij].cogsCostingCode4,
+            cogsCostingCode5: contentitemsDetails55[ij].cogsCostingCode5,
+            csTforIpi: contentitemsDetails55[ij].csTforIpi,
+            csTforPis: contentitemsDetails55[ij].csTforPis,
+            csTforCofins: contentitemsDetails55[ij].csTforCofins,
+            creditOriginCode: contentitemsDetails55[ij].creditOriginCode,
+            withoutInventoryMovement:
+                contentitemsDetails55[ij].withoutInventoryMovement,
+            agreementNo: contentitemsDetails55[ij].agreementNo,
+            agreementRowNumber: contentitemsDetails55[ij].agreementRowNumber,
+            actualBaseEntry: contentitemsDetails55[ij].actualBaseEntry,
+            actualBaseLine: contentitemsDetails55[ij].actualBaseLine,
+            docEntry: contentitemsDetails55[ij].docEntry,
+            surpluses: contentitemsDetails55[ij].surpluses,
+            defectAndBreakup: contentitemsDetails55[ij].defectAndBreakup,
+            shortages: contentitemsDetails55[ij].shortages,
+            considerQuantity: contentitemsDetails55[ij].considerQuantity,
+            partialRetirement: contentitemsDetails55[ij].partialRetirement,
+            retirementQuantity: contentitemsDetails55[ij].retirementQuantity,
+            retirementApc: contentitemsDetails55[ij].retirementApc,
+            thirdParty: contentitemsDetails55[ij].thirdParty,
+            poNum: contentitemsDetails55[ij].poNum,
+            poItmNum: contentitemsDetails55[ij].poItmNum,
+            expenseType: contentitemsDetails55[ij].expenseType,
+            receiptNumber: contentitemsDetails55[ij].receiptNumber,
+            expenseOperationType:
+                contentitemsDetails55[ij].expenseOperationType,
+            federalTaxId: contentitemsDetails55[ij].federalTaxId == null ||
+                    contentitemsDetails55[ij].federalTaxId == "null"
+                ? null
+                : quotputdataval55!.federalTaxId,
+            //  contentitemsDetails55[ij].federalTaxId,
+            grossProfit: contentitemsDetails55[ij].grossProfit,
+            grossProfitFc: contentitemsDetails55[ij].grossProfitFc,
+            grossProfitSc: contentitemsDetails55[ij].grossProfitSc,
+            priceSource: contentitemsDetails55[ij].priceSource,
+            stgSeqNum: contentitemsDetails55[ij].stgSeqNum,
+            stgEntry: contentitemsDetails55[ij].stgEntry,
+            stgDesc: contentitemsDetails55[ij].stgDesc,
+            uoMEntry: contentitemsDetails55[ij].uoMEntry,
+            uoMCode: contentitemsDetails55[ij].uoMCode,
+            inventoryQuantity: contentitemsDetails55[ij].inventoryQuantity,
+            remainingOpenInventoryQuantity:
+                contentitemsDetails55[ij].remainingOpenInventoryQuantity,
+            parentLineNum: contentitemsDetails55[ij].parentLineNum == null ||
+                    contentitemsDetails55[ij].parentLineNum == "null"
+                ? null
+                : contentitemsDetails55[ij].parentLineNum,
+            incoterms: contentitemsDetails55[ij].incoterms,
+            transportMode: contentitemsDetails55[ij].transportMode,
+            natureOfTransaction: contentitemsDetails55[ij].natureOfTransaction,
+            destinationCountryForImport:
+                contentitemsDetails55[ij].destinationCountryForImport,
+            destinationRegionForImport:
+                contentitemsDetails55[ij].destinationRegionForImport,
+            originCountryForExport:
+                contentitemsDetails55[ij].originCountryForExport,
+            originRegionForExport:
+                contentitemsDetails55[ij].originRegionForExport,
+            itemType: 'dit_Item',
+            changeInventoryQuantityIndependently:
+                contentitemsDetails55[ij].changeInventoryQuantityIndependently,
+            freeOfChargeBp: contentitemsDetails55[ij].freeOfChargeBp,
+            sacEntry: contentitemsDetails55[ij].sacEntry,
+            hsnEntry: contentitemsDetails55[ij].hsnEntry,
+            grossPrice: contentitemsDetails55[ij].grossPrice,
+            grossTotal: contentitemsDetails55[ij].grossTotal,
+            grossTotalFc: contentitemsDetails55[ij].grossTotalFc,
+            grossTotalSc: contentitemsDetails55[ij].grossTotalSc,
+            ncmCode: contentitemsDetails55[ij].ncmCode,
+            nveCode: contentitemsDetails55[ij].nveCode,
+            indEscala: "tNO",
+            ctrSealQty: contentitemsDetails55[ij].ctrSealQty,
+            cnjpMan: contentitemsDetails55[ij].cnjpMan,
+            cestCode: contentitemsDetails55[ij].cestCode,
+            ufFiscalBenefitCode: contentitemsDetails55[ij].ufFiscalBenefitCode,
+            shipToCode: contentitemsDetails55[ij].shipToCode == null ||
+                    contentitemsDetails55[ij].shipToCode == "null"
+                ? null
+                : contentitemsDetails55[ij].shipToCode,
+            shipToDescription: contentitemsDetails55[ij].shipToDescription,
+            externalCalcTaxRate: contentitemsDetails55[ij].externalCalcTaxRate,
+            externalCalcTaxAmount:
+                contentitemsDetails55[ij].externalCalcTaxAmount,
+            externalCalcTaxAmountFc:
+                contentitemsDetails55[ij].externalCalcTaxAmountFc,
+            externalCalcTaxAmountSc:
+                contentitemsDetails55[ij].externalCalcTaxAmountSc,
+            standardItemIdentification:
+                contentitemsDetails55[ij].standardItemIdentification,
+            commodityClassification:
+                contentitemsDetails55[ij].commodityClassification,
+            unencumberedReason: contentitemsDetails55[ij].unencumberedReason,
+            cuSplit: "tNO",
+            uQtyOrdered: contentitemsDetails55[ij].uQtyOrdered,
+            uOpenQty: contentitemsDetails55[ij].uOpenQty,
+            uTonnage: contentitemsDetails55[ij].uTonnage,
+            uPackSize: contentitemsDetails55[ij].U_Pack_Size,
+            uProfitCentre: contentitemsDetails55[ij].uProfitCentre,
+            uNumberDrums: contentitemsDetails55[ij].uNumberDrums,
+            uDrumSize: contentitemsDetails55[ij].uDrumSize,
+            uPails: contentitemsDetails55[ij].uPails,
+            uCartons: contentitemsDetails55[ij].uCartons,
+            uLooseTins: contentitemsDetails55[ij].uLooseTins,
+            uNettWt: contentitemsDetails55[ij].uNettWt,
+            uGrossWt: contentitemsDetails55[ij].uGrossWt,
+            uAppLinId: contentitemsDetails55[ij].uAppLinId,
+            uMuQty: contentitemsDetails55[ij].uMuQty,
+            uRvc: contentitemsDetails55[ij].uRvc,
+            uVrn: contentitemsDetails55[ij].uVrn,
+            uIdentifier: contentitemsDetails55[ij].uIdentifier,
+          ),
+        );
       }
     }
     log("itemsDetailsData::${itemsDetailsData.length}");
@@ -2161,13 +2151,14 @@ class LogisticEditPageState extends State<LogisticEditPage> {
   //  quotputdataval55!.documentLines!
 
   List<AddItem2> contentdocitemsDetails = [];
-  List<AddItem3> edititemsDetails = [];
+  List<AddQuotEditItem> edititemsDetails = [];
   Future<int?> patchhcheckitem() async {
     edititemsDetails = [];
     contentdocitemsDetails = [];
     log("getdocitemsDetailsData::::${getdocitemsDetailsData.length}");
     // for (int i = 0; i < getdocitemsDetailsData.length; i++) {
     addEditList();
+    return null;
     // }
   }
 
@@ -2181,27 +2172,30 @@ class LogisticEditPageState extends State<LogisticEditPage> {
       // if (contentdocitemsDetails[im].itemCode ==
       //     getdocitemsDetailsData[i].itemCode) {
       log("IMIMIM:::${contentdocitemsDetails[im].lineNumm}");
-      edititemsDetails.add(AddItem3(
-        lineNo: contentdocitemsDetails[im].lineNumm,
-        itemCode: contentdocitemsDetails[im].itemCode!,
-        itemName: contentdocitemsDetails[im].itemName!,
-        price: contentdocitemsDetails[im].price,
-        discount: contentdocitemsDetails[im].discount,
-        qty: double.parse(contentdocitemsDetails[im].qty!.toStringAsFixed(0)),
-        total: contentdocitemsDetails[im].lineTotal,
-        tax: contentdocitemsDetails[im].taxTotal,
-        valuechoosed: contentdocitemsDetails[im].taxCode.toString(),
-        discounpercent: contentdocitemsDetails[im].discounpercent,
-        taxCode: contentdocitemsDetails[im].taxCode.toString(),
-        // contentdocitemsDetails[im].taxCode.toString() == "null" ||
-        //         contentdocitemsDetails[im].taxCode == ""
-        //     ? contentdocitemsDetails(
-        //         contentdocitemsDetails[im].lineTotal!, contentdocitemsDetails[im].taxTotal!)
-        //     : contentdocitemsDetails[im].taxCode!.toString(),
-        taxPer: contentdocitemsDetails[im].taxPer,
-        // caluclateTaxpercent(
-        //     contentdocitemsDetails[im].lineTotal!, contentdocitemsDetails[im].taxTotal!),
-      ));
+      edititemsDetails.add(
+        AddQuotEditItem(
+          lineNo: contentdocitemsDetails[im].lineNumm,
+          itemCode: contentdocitemsDetails[im].itemCode!,
+          itemName: contentdocitemsDetails[im].itemName,
+          price: contentdocitemsDetails[im].price,
+          discount: contentdocitemsDetails[im].discount,
+          qty: double.parse(contentdocitemsDetails[im].qty!.toStringAsFixed(0)),
+          total: contentdocitemsDetails[im].lineTotal,
+          tax: contentdocitemsDetails[im].taxTotal,
+          valuechoosed: contentdocitemsDetails[im].taxCode.toString(),
+          discounpercent: contentdocitemsDetails[im].discounpercent,
+          taxCode: contentdocitemsDetails[im].taxCode.toString(),
+          warehouse: GetValues.branch.toString(),
+          // contentdocitemsDetails[im].taxCode.toString() == "null" ||
+          //         contentdocitemsDetails[im].taxCode == ""
+          //     ? contentdocitemsDetails(
+          //         contentdocitemsDetails[im].lineTotal!, contentdocitemsDetails[im].taxTotal!)
+          //     : contentdocitemsDetails[im].taxCode!.toString(),
+          taxPer: contentdocitemsDetails[im].taxPer,
+          // caluclateTaxpercent(
+          //     contentdocitemsDetails[im].lineTotal!, contentdocitemsDetails[im].taxTotal!),
+        ),
+      );
     }
     //     else {
     //         if (contentdocitemsDetails[im].itemCode != null) {
@@ -2284,7 +2278,6 @@ class LogisticEditPageState extends State<LogisticEditPage> {
       var uuid = Uuid();
       String? uuidg = uuid.v1();
       SalesQuotPutAPi.method(uuidg);
-
       await SalesQuotPutAPi.getGlobalData(uuidg, widget.docentry)
           .then((value) async {
         SalesOrderAfterAPi.baseEntry = value.docEntry.toString();
@@ -2356,6 +2349,7 @@ class LogisticEditPageState extends State<LogisticEditPage> {
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       });
+
       if (schmDisableBtn == true) {
         SalesOrderAfterAPi.sessionID = GetValues.sessionID;
         SalesOrderAfterAPi.baseType = "23";
@@ -2372,9 +2366,7 @@ class LogisticEditPageState extends State<LogisticEditPage> {
           SalesOrderAfterAPi.discper = saleOrderdata[i].discPer.toString();
           SalesOrderAfterAPi.schemeEntry = saleOrderdata[i].schemeEntry;
           await SalesOrderAfterAPi.getData(uuidg).then((value) async {
-            if (value.statusCode! >= 200 && value.statusCode! <= 210) {
-              print("Post Successfully..");
-            }
+            if (value.statusCode! >= 200 && value.statusCode! <= 210) {}
           });
         }
       }

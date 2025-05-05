@@ -6,9 +6,6 @@ import 'package:ultimate_bundle/src/furney/src/models/home_Menu.dart';
 // ignore: always_use_package_imports
 import 'menu_catagorycard.dart';
 
-
-
-
 class BuildCategory2 extends StatelessWidget {
   final List<CategoryModel2> itemCount;
 

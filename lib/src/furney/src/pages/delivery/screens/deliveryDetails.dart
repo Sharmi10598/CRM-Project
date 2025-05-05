@@ -82,7 +82,9 @@ class DeliveryDetailsState extends State<DeliveryDetails> {
             key: _scaffoldKey,
             backgroundColor: Colors.grey[200],
             appBar: appBar(context, _scaffoldKey, widget.title),
-            drawer: drawer(context),
+            drawer:
+                // GetValues.userRoll == '3' ? drawer2(context) :
+                drawer(context),
             body: Center(
               child: SpinKitThreeBounce(
                 size: Screens.heigth(context) * 0.06,
@@ -96,7 +98,9 @@ class DeliveryDetailsState extends State<DeliveryDetails> {
                 key: _scaffoldKey,
                 backgroundColor: Colors.grey[200],
                 appBar: deliveryAppBar(context, _scaffoldKey, widget.title),
-                drawer: drawer(context),
+                drawer:
+                    // GetValues.userRoll == '3' ? drawer2(context) :
+                    drawer(context),
                 body: Padding(
                   padding: EdgeInsets.only(
                     top: Screens.heigth(context) * 0.01,

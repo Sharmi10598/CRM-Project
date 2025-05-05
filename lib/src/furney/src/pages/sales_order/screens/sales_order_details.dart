@@ -69,11 +69,11 @@ class SalesOrderDetailsState extends State<SalesOrderDetails> {
       //     totalbeforeDiscount.toStringAsFixed(2);
       // HeaderOrderstState.discnt = val.totalDiscount.toString();
       HeaderOrderstState.GP_Approval = val.U_GP_Approval.toString();
-      HeaderOrderstState.OrderDate = val.U_OrderDate;
-      HeaderOrderstState.Order_Type = val.U_Order_Type;
-      HeaderOrderstState.Received_Time = val.U_Received_Time;
+      HeaderOrderstState.orderDate = val.U_OrderDate;
+      HeaderOrderstState.order_Type = val.U_Order_Type;
+      HeaderOrderstState.received_Time = val.U_Received_Time;
       // HeaderDeliveryState.discntpercent = val.documentLines;
-      HeaderOrderstState.Tax = val.vatSum.toString();
+      HeaderOrderstState.tax = val.vatSum.toString();
       HeaderOrderstState.total = val.docTotal!.toStringAsFixed(2);
 
       //cn
@@ -92,7 +92,9 @@ class SalesOrderDetailsState extends State<SalesOrderDetails> {
             key: _scaffoldKey,
             backgroundColor: Colors.grey[200],
             appBar: appBar(context, _scaffoldKey, widget.title),
-            drawer: drawer(context),
+            drawer:
+                // GetValues.userRoll == '3' ? drawer2(context) :
+                drawer(context),
             body: Center(
               child: SpinKitThreeBounce(
                 size: Screens.heigth(context) * 0.06,
@@ -106,7 +108,11 @@ class SalesOrderDetailsState extends State<SalesOrderDetails> {
                 key: _scaffoldKey,
                 backgroundColor: Colors.grey[200],
                 appBar: approvalAppBar(context, _scaffoldKey, widget.title),
-                drawer: drawer(context),
+                drawer:
+                    // GetValues.userRoll == '3'
+                    //     ? drawer2(context)
+                    // :
+                    drawer(context),
                 body: Padding(
                   padding: EdgeInsets.only(
                     top: Screens.heigth(context) * 0.01,

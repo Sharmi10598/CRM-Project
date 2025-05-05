@@ -3,14 +3,10 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:chunked_stream/chunked_stream.dart';
-import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
-import 'package:get/route_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:ultimate_bundle/helpers/constants.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
-import 'package:ultimate_bundle/src/furney/src/pages/showPdf/ShowPdf.dart';
 
 class NetPendingOrderExcelAPi {
   static String? slpCode;
@@ -18,18 +14,18 @@ class NetPendingOrderExcelAPi {
   static String? toDate;
 
   static Future<int> getGlobalData() async {
-    print(URL.reportUrl + 'NetPendingOrderExcel/$slpCode,$fromDate,$toDate');
+    log('NetPendingExcel::${URL.reportUrl}NetPendingOrderExcel/$slpCode,$fromDate,$toDate');
     try {
       final response = await http.get(
         Uri.parse(
-          URL.reportUrl +
-              'NetPendingOrderExcel/$slpCode,$fromDate,$toDate', //866   $docEntry
+          '${URL.reportUrl}NetPendingOrderExcel/$slpCode,$fromDate,$toDate', //866   $docEntry
         ),
         headers: {
           'content-type': 'application/octet-stream',
         },
       );
-      log('response.statusCode::${response.statusCode}');
+      log('NetPendingExcelstsCode::${response.statusCode}');
+
       if (response.statusCode == 200) {
         final bytes = response.bodyBytes;
         //  log("Uint8List bytes: "+bytes.toString());

@@ -16,7 +16,7 @@ AppBar CustomAppBar(
   final theme = Theme.of(context);
   return AppBar(
     backgroundColor:
-        (backgroundColor == null) ? theme.colorScheme.background : backgroundColor,
+        (backgroundColor == null) ? theme.colorScheme.surface : backgroundColor,
     centerTitle: centerTitle,
     leading: enableLeading
         ? IconButton(

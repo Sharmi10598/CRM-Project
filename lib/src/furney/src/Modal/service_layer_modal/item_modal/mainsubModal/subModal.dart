@@ -20,7 +20,7 @@ class SubModal{
    factory SubModal.fromJson(Map<String, dynamic> jsons) {
     if (jsons['value'] != null) {
       final list =  jsons['value'] as List; 
-      List<SubModalValue> dataList = list
+      final List<SubModalValue> dataList = list
           .map((dynamic enquiries) => SubModalValue.fromJson(enquiries))
           .toList();
       return SubModal(

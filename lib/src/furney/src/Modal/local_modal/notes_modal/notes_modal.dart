@@ -30,7 +30,7 @@ class NotesModal {
     if (jsons['data'] != null) {
       final list = jsonDecode(jsons['data'] as String) as List; //jsonDecode
       // print(list);
-      List<NotesData> dataList = list
+      final List<NotesData> dataList = list
           .map((dynamic enquiries) => NotesData.fromJson(enquiries))
           .toList();
       // print(dataList[0]);
@@ -47,7 +47,7 @@ class NotesModal {
     }
   }
   factory NotesModal.issue(String e) {
-    return NotesModal(status: null, message: null, error: e, notesData: null);
+    return NotesModal(status: null, message: null, error: e);
   }
 
   factory NotesModal.exception(String e) {
@@ -55,7 +55,6 @@ class NotesModal {
       status: null,
       message: null,
       error: e,
-      notesData: null,
       exception: e,
     );
   }

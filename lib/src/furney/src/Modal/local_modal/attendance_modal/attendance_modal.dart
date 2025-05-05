@@ -29,7 +29,7 @@ class AttendanceModal {
     if (jsons['data'] != null) {
       final list = jsonDecode(jsons['data'] as String) as List; 
  
-      List<AttendanceData> dataList = list
+      final List<AttendanceData> dataList = list
           .map((dynamic enquiries) => AttendanceData.fromJson(enquiries))
           .toList();
   

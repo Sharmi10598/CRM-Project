@@ -1,7 +1,6 @@
 part of '../forgot_password_success_page.dart';
 
-class FurneyForgotPasswordSuccessScreen extends StatelessWidget { 
-
+class FurneyForgotPasswordSuccessScreen extends StatelessWidget {
   const FurneyForgotPasswordSuccessScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -14,7 +13,7 @@ class FurneyForgotPasswordSuccessScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              //  _BuildIconSuccess(),
+                //  _BuildIconSuccess(),
                 SizedBox(height: Screens.width(context) / 7),
                 _BodySection(),
                 SizedBox(height: Screens.width(context) / 5),

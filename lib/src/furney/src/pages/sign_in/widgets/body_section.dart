@@ -2,7 +2,11 @@ part of '../sign_in_page.dart';
 
 class _BodySection extends StatelessWidget {
   const _BodySection({
-    required this.emailController, required this.passwordController, Key? key, this.obscureText, this.onObscureTextTap,
+    required this.emailController,
+    required this.passwordController,
+    Key? key,
+    this.obscureText,
+    this.onObscureTextTap,
   }) : super(key: key);
 
   final TextEditingController? emailController;
@@ -17,16 +21,16 @@ class _BodySection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomShakeTransition(
-          duration:const Duration(milliseconds: 900),
+          duration: const Duration(milliseconds: 900),
           child: AutoSizeText(
             '${AppLocalizations.of(context)!.userCode}*',
             style: theme.textTheme.bodyMedium,
             maxLines: 1,
           ),
         ),
-       const SizedBox(height: 5),
+        const SizedBox(height: 5),
         CustomShakeTransition(
-          duration:const Duration(milliseconds: 1000),
+          duration: const Duration(milliseconds: 1000),
           child: CustomTextFormField(
             controller: emailController,
             borderType: BorderType.outline,
@@ -34,18 +38,18 @@ class _BodySection extends StatelessWidget {
             textFieldType: TextFieldType.email,
           ),
         ),
-      const  SizedBox(height: Const.space25),
+        const SizedBox(height: Const.space25),
         CustomShakeTransition(
-          duration:const Duration(milliseconds: 1100),
+          duration: const Duration(milliseconds: 1100),
           child: AutoSizeText(
             '${AppLocalizations.of(context)!.password}*',
             style: theme.textTheme.bodyMedium,
             maxLines: 1,
           ),
         ),
-       const SizedBox(height: 5),
+        const SizedBox(height: 5),
         CustomShakeTransition(
-          duration:const Duration(milliseconds: 1200),
+          duration: const Duration(milliseconds: 1200),
           child: CustomTextFormField(
             obscureText: obscureText,
             controller: passwordController,

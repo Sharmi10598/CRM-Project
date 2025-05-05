@@ -1,0 +1,5 @@
+{
+  "search.useGlobalIgnoreFiles": true,
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "dart.flutterSdkPath": ".fvm/versions/3.19.6"
+}

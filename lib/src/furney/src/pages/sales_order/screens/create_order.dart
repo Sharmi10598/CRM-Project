@@ -25,7 +25,6 @@ class CreateOrderDetails extends StatefulWidget {
 
 class CreateOrderDetailsState extends State<CreateOrderDetails> {
   static bool isCameFromqutation = false;
-
   static bool isCameforapprovalsales = false;
   static bool contentAddItems = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -41,7 +40,6 @@ class CreateOrderDetailsState extends State<CreateOrderDetails> {
     });
   }
 
-  @override
   DateTime? currentBackPressTime;
   Future<bool> onbackpress() {
     final DateTime now = DateTime.now();
@@ -65,7 +63,7 @@ class CreateOrderDetailsState extends State<CreateOrderDetails> {
     isCameFromqutation = false;
     isCameforapprovalsales = false;
     ContentOrderCreationState.isCalculated = false;
-    List<AddItem> itemsDetails2 = [];
+    // final List<AddItem> itemsDetails2 = [];
     Get.offAllNamed<dynamic>(FurneyRoutes.newSalesOrders);
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     return Future.value(true);
@@ -97,12 +95,12 @@ class CreateOrderDetailsState extends State<CreateOrderDetails> {
       showsnb();
     } else if (checkper == true) {
       final bool isa = await isLocationAvailable();
-      print("isa $isa");
+      // print("isa $isa");
       if (isa == false) {
         showsnb();
       } else if (isa == true) {
         final Position pos = await Geolocator.getCurrentPosition();
-        print("lattitude: ${pos.latitude}");
+        // print("lattitude: ${pos.latitude}");
         latitude = pos.latitude.toString();
         longitude = pos.longitude.toString();
         setState(() {
@@ -196,32 +194,33 @@ class CreateOrderDetailsState extends State<CreateOrderDetails> {
     final theme = Theme.of(context);
     return DefaultTabController(
       length: 3,
-      child: WillPopScope(
-        onWillPop: onbackpress,
-        child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            key: _scaffoldKey,
-            backgroundColor: Colors.grey[200],
-            appBar: saleOrderAppBar(context, _scaffoldKey, widget.title),
-            drawer: drawer(context),
-            body: Padding(
-              padding: EdgeInsets.only(
-                top: Screens.heigth(context) * 0.01,
-              ), //left: Screens.width(context)*0.02,right: Screens.width(context)*0.02,bottom: Screens.heigth(context)*0.01
-              child: TabBarView(
-                  //  physics: const ScrollPhysics(parent: ),
-                  children: [
-                    isloading == true
-                        ? lodingWid()
-                        : const HeaderOrderCreation(),
-                    isloading == true
-                        ? lodingWid()
-                        : const ContentOrderCreation(),
-                    isloading == true ? lodingWid() : const LogisticOrder(),
-                    // const OthersOrder()
-                  ]),
-            )),
-      ),
+      // child:
+      //  WillPopScope(
+      //   onWillPop: onbackpress,
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          key: _scaffoldKey,
+          backgroundColor: Colors.grey[200],
+          appBar: saleOrderAppBar(context, _scaffoldKey, widget.title),
+          drawer:
+              // GetValues.userRoll == '3' ? drawer2(context) :
+              drawer(context),
+          body: Padding(
+            padding: EdgeInsets.only(
+              top: Screens.heigth(context) * 0.01,
+            ), //left: Screens.width(context)*0.02,right: Screens.width(context)*0.02,bottom: Screens.heigth(context)*0.01
+            child: TabBarView(
+                //  physics: const ScrollPhysics(parent: ),
+                children: [
+                  isloading == true ? lodingWid() : const HeaderOrderCreation(),
+                  isloading == true
+                      ? lodingWid()
+                      : const ContentOrderCreation(),
+                  isloading == true ? lodingWid() : const LogisticOrder(),
+                  // const OthersOrder()
+                ]),
+          )),
+      // ),
     );
   }
 }

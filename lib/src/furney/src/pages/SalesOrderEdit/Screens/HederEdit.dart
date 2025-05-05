@@ -12,7 +12,6 @@ import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order/post_order_api/getCreaditDays/getBalanceCreditLimit.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order/post_order_api/getCreaditDays/getCreaditDaysApi.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order/post_order_api/getCreaditDays/postMaxCommit.dart';
-import 'package:ultimate_bundle/src/furney/src/Api/service_layer_api/sales_order/post_order_api/post_sales_order_api.dart';
 import 'package:ultimate_bundle/src/furney/src/Modal/service_layer_modal/contact_person_modal/contact_person_modal.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 import 'package:ultimate_bundle/src/furney/src/pages/SalesOrderEdit/Screens/ContentEdit.dart';
@@ -35,7 +34,7 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
   static String bpCode = '';
   static String currentACbalance = '';
   static String ordersBal = '';
-  static String paymentTerms ='';
+  static String paymentTerms = '';
   static String docNo = '0'; //
   static String contactPerson = ''; //
   // static String currency = 'TZS'; //
@@ -46,13 +45,14 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
   static double discountpercent = 0;
   static double tax = 0;
   static double total = 0;
-  static List<TextEditingController> mycontroller = List.generate(15, (i) => TextEditingController());
+  static List<TextEditingController> mycontroller =
+      List.generate(15, (i) => TextEditingController());
   static String? currentDateTime;
   static PageController pageController = PageController();
   int pageChanged = 0;
   static String isHaveAdvance = '';
   static bool isCameFromqutation = false;
-  
+
   //
   List<ContactEmployeValue> contactValue = [];
   List<ContactEmployeValue> filtercontactValue = [];
@@ -65,9 +65,7 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
           LogisticPageState.shipto = value.ShipToDefault.toString();
           LogisticPageState.billto = value.BilltoDefault.toString();
         });
-      }else{
-        
-      }
+      } else {}
     });
   }
 
@@ -150,18 +148,17 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
                       SizedBox(
                         height: Screens.heigth(context) * 0.01,
                       ),
-                      
+
                       GestureDetector(
-                       
                         onTap: () {
-                       if(CreateOrderDetailsState.isCameFromqutation == false)  { 
-                          CustomerPageState.isCameFromCreationOrder = true;
-                          Get.toNamed<dynamic>(FurneyRoutes.customerpage);
-                       }else{
-                          null;
-                        }
+                          if (CreateOrderDetailsState.isCameFromqutation ==
+                              false) {
+                            CustomerPageState.isCameFromCreationOrder = true;
+                            Get.toNamed<dynamic>(FurneyRoutes.customerpage);
+                          } else {
+                            null;
+                          }
                         },
-                        
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -216,7 +213,6 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
                                         // },
                                         onChanged: (v) {
                                           bpName = mycontroller[2].text;
-                                          print("bpname: $bpName");
                                         },
                                         controller: mycontroller[2],
                                         decoration: InputDecoration(
@@ -297,8 +293,7 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
                             width: Screens.width(context) * 0.83,
                             // color: Colors.blue,
                             child: Text(
-                               GetValues.currency .toString(),
-                     
+                              GetValues.currency.toString(),
                               style: TextStyles.headlineBlack1(context),
                             ),
                           ),
@@ -339,31 +334,27 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
                           SizedBox(
                             height: Screens.heigth(context) * 0.005,
                           ),
-                          Container(
-                            // width: Screens.width(context) * 0.83,
-                            // color: Colors.blue,
-                            child: SizedBox(
-                              //   height: 50,
+                          SizedBox(
+                            //   height: 50,
 
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Enter Customer Ref.No";
-                                  }
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Enter Customer Ref.No";
+                                }
 
-                                  return null;
-                                },
-                                controller: mycontroller[0],
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(color: Colors.green),
-                                  ),
+                                return null;
+                              },
+                              controller: mycontroller[0],
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(color: Colors.green),
                                 ),
-                                cursorColor: theme.primaryColor,
                               ),
+                              cursorColor: theme.primaryColor,
                             ),
                           ),
                         ],
@@ -480,30 +471,27 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
                           SizedBox(
                             height: Screens.heigth(context) * 0.005,
                           ),
-                          Container(
-                            // color: Colors.blue,
-                            child: SizedBox(
-                              //   height: 50,
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "ENTER ADDRESS";
-                                  }
+                          SizedBox(
+                            //   height: 50,
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "ENTER ADDRESS";
+                                }
 
-                                  return null;
-                                },
-                                maxLines: 4,
-                                controller: mycontroller[1],
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(color: Colors.green),
-                                  ),
+                                return null;
+                              },
+                              maxLines: 4,
+                              controller: mycontroller[1],
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(color: Colors.green),
                                 ),
-                                cursorColor: theme.primaryColor,
                               ),
+                              cursorColor: theme.primaryColor,
                             ),
                           ),
                         ],
@@ -766,24 +754,27 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } else {
       setState(() => isLoading = true);
-     SalesOrderPatchAPi.cardCodePost = bpCode;
-     SalesOrderPatchAPi.cardNamePost = bpName;
-     SalesOrderPatchAPi.docLineQout = ContentOrderEditState.itemsDetails;
-     SalesOrderPatchAPi.docDate = currentDateTime.toString();
-     SalesOrderPatchAPi.dueDate = currentDateTime.toString();
-     SalesOrderPatchAPi.remarks = mycontroller[1].text;
-     SalesOrderPatchAPi.orderDate = LogisticEditORderState.mycontroller[1].text;
-     SalesOrderPatchAPi.orderType = LogisticEditORderState.valueSelectedOrder;
-     SalesOrderPatchAPi.gpApproval = LogisticEditORderState.valueSelectedGPApproval;
-     SalesOrderPatchAPi.orderTime = LogisticEditORderState.mycontroller[0].text;
-     SalesOrderPatchAPi.custREfNo = mycontroller[0].text;
+      SalesOrderPatchAPi.cardCodePost = bpCode;
+      SalesOrderPatchAPi.cardNamePost = bpName;
+      SalesOrderPatchAPi.docLineQout = ContentOrderEditState.itemsDetails;
+      SalesOrderPatchAPi.docDate = currentDateTime.toString();
+      SalesOrderPatchAPi.dueDate = currentDateTime.toString();
+      SalesOrderPatchAPi.remarks = mycontroller[1].text;
+      SalesOrderPatchAPi.orderDate =
+          LogisticEditORderState.mycontroller[1].text;
+      SalesOrderPatchAPi.orderType = LogisticEditORderState.valueSelectedOrder;
+      SalesOrderPatchAPi.gpApproval =
+          LogisticEditORderState.valueSelectedGPApproval;
+      SalesOrderPatchAPi.orderTime =
+          LogisticEditORderState.mycontroller[0].text;
+      SalesOrderPatchAPi.custREfNo = mycontroller[0].text;
       // print( "remarks: "+ SalesOrderPatchAPi.remarks.toString());
-     SalesOrderPatchAPi.deviceTransID = uuid.v1();
-     SalesOrderPatchAPi.deviceCode = GetValues.deviceID;
-      CheckOrderORDraftAPi.deviceTransID =SalesOrderPatchAPi.deviceTransID;
-      CheckOrderORDraftAPi.deviceCode =SalesOrderPatchAPi.deviceCode;
-      DraftSaveAPi.deviceCode =SalesOrderPatchAPi.deviceCode;
-      DraftSaveAPi.deviceTransID =SalesOrderPatchAPi.deviceTransID;
+      SalesOrderPatchAPi.deviceTransID = uuid.v1();
+      SalesOrderPatchAPi.deviceCode = GetValues.deviceID;
+      CheckOrderORDraftAPi.deviceTransID = SalesOrderPatchAPi.deviceTransID;
+      CheckOrderORDraftAPi.deviceCode = SalesOrderPatchAPi.deviceCode;
+      DraftSaveAPi.deviceCode = SalesOrderPatchAPi.deviceCode;
+      DraftSaveAPi.deviceTransID = SalesOrderPatchAPi.deviceTransID;
       currentDate();
       double getcreditLimit;
       GettCreditDaysAPi.cardCode = bpCode;
@@ -816,10 +807,7 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
           if (value.balanceCreaditValue!.isNotEmpty) {
             double? balance = value.balanceCreaditValue![0].Balance;
             double? creditLimit = value.balanceCreaditValue![0].CreditLimit;
-            print("Bala: $balance");
-            print("creditLimit: $creditLimit");
             double ans = creditLimit! - balance! - total;
-            print("assssaasasa: $ans");
             if (ans < 0) {
               PostMaxCommitAPi.cardCodePost = bpCode;
               PostMaxCommitAPi.value = "${100.00 + getCredit}";
@@ -852,7 +840,6 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
       String val =
           "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
       currentDateTime2 = val;
-      print(currentDateTime2);
     });
   }
 
@@ -935,7 +922,7 @@ class HeaderEditOrderPageState extends State<HeaderEditOrderPage> {
                           //  Navigator.pop(context);
                         },
                         child: Text(
-                          'ok',
+                          'OK',
                           style: TextStyles.whiteText(context),
                         ))
                   ],

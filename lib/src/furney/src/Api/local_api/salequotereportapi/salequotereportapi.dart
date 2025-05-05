@@ -19,7 +19,7 @@ class salequoteReportApi {
   static Future<int> getGlobalData(String Docentry) async {
     log("AAHAJJAJA");
     try {
-      log(URL.reportUrl + 'http://102.69.167.106:84/api/Quatation/$Docentry');
+      log('AAHAJJAJA22::' + URL.reportUrl + '/Quatation/$Docentry');
       final response = await http.get(
         Uri.parse(
           URL.reportUrl + 'Quatation/$Docentry',
@@ -29,7 +29,7 @@ class salequoteReportApi {
         },
       );
       print(response.statusCode);
-      log("message::::" + response.body.toString());
+      // log("message::::" + response.body.toString());
       if (response.statusCode == 200) {
         final Uint8List bytes = response.bodyBytes;
         final tempDir = await getTemporaryDirectory();

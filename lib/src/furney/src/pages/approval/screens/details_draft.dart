@@ -10,8 +10,8 @@ import 'package:ultimate_bundle/src/furney/src/pages/approval/widget/logistic_pa
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
 class DraftDetails extends StatefulWidget {
-  const DraftDetails({ required this.title, Key? key }) : super(key: key);
-   final String title;
+  const DraftDetails({required this.title, Key? key}) : super(key: key);
+  final String title;
   @override
   _DraftDetailsState createState() => _DraftDetailsState();
 }
@@ -24,22 +24,25 @@ class _DraftDetailsState extends State<DraftDetails> {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        key:_scaffoldKey ,
-        backgroundColor: Colors.grey[200],
-        appBar: approvalAppBar(context,_scaffoldKey,widget.title),
-        drawer: drawer(context),
-        body:Padding(
-          padding: EdgeInsets.only(top:Screens.heigth(context)*0.01,),//left: Screens.width(context)*0.02,right: Screens.width(context)*0.02,bottom: Screens.heigth(context)*0.01
-          child: TabBarView(
-          //  physics: const ScrollPhysics(parent: ),
-            children: [
-           const HeaderPage(),
-            const ContentPage(),
-           const LogisticPage(),
-          const  AccountingPage()
-          ]),
-        )
-      ),
+          key: _scaffoldKey,
+          backgroundColor: Colors.grey[200],
+          appBar: approvalAppBar(context, _scaffoldKey, widget.title),
+          drawer:
+              // GetValues.userRoll == '3' ? drawer2(context) :
+              drawer(context),
+          body: Padding(
+            padding: EdgeInsets.only(
+              top: Screens.heigth(context) * 0.01,
+            ), //left: Screens.width(context)*0.02,right: Screens.width(context)*0.02,bottom: Screens.heigth(context)*0.01
+            child: TabBarView(
+                //  physics: const ScrollPhysics(parent: ),
+                children: [
+                  const HeaderPage(),
+                  const ContentPage(),
+                  const LogisticPage(),
+                  const AccountingPage()
+                ]),
+          )),
     );
   }
 }

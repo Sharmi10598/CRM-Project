@@ -27,7 +27,7 @@ class SalesOrderAfterAPi {
       "U_SchemeEntry": "$schemeEntry",
       "U_DiscPer": "$discper",
       "U_DiscValue": "$disValue",
-      "U_DeviceCode": uuids
+      "U_DeviceCode": uuids,
     });
     print("SO After body: " + data);
 
@@ -40,7 +40,7 @@ class SalesOrderAfterAPi {
           "content-type": "application/json",
           "cookie":
               'B1SESSION=' + sessionID!, // GetValues.sessionID.toString(),
-          "Prefer": "return-no-content"
+          "Prefer": "return-no-content",
         },
         body: json.encode({
           //  SOAfterdata.map((e) => e.toMap()).toList(),
@@ -50,7 +50,7 @@ class SalesOrderAfterAPi {
           "U_SchemeEntry": "$schemeEntry",
           "U_DiscPer": "$discper",
           "U_DiscValue": "$disValue",
-          "U_DeviceCode": uuids
+          "U_DeviceCode": uuids,
         }),
       );
       log("response:::" + response.body);

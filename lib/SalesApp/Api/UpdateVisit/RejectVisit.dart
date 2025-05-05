@@ -16,17 +16,17 @@ class RejectVisitAPi {
         Uri.parse(  URL.url+ "Activities(${apdata.clgCode})"),
         headers: {
           'content-type': 'application/json',
-          "cookie": 'B1SESSION=' + GetValues.sessionID.toString()
+          "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
           },
          body: json.encode({ 
     "U_Status": "${apdata.status}",
-    "U_RejReason": "${apdata.remarks}"
+    "U_RejReason": "${apdata.remarks}",
 }),
       );
      
       log(json.encode( { 
     "U_Status": "${apdata.status}",
-    "U_RejReason": "${apdata.remarks}"
+    "U_RejReason": "${apdata.remarks}",
 }),);
         return PatchVisitModel.fromJson(response.body, response.statusCode);
     } catch (e) {

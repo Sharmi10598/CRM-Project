@@ -85,8 +85,8 @@ class DeliveryPageState extends State<DeliveryPage> {
       setState(() {
         swipeLoad = true;
         if (val.deliveryModaleValue != null) {
-          print(
-              'deliveryValueFilter3:' + deliveryValueFilter.length.toString());
+          // print(
+          //     'deliveryValueFilter3:' + deliveryValueFilter.length.toString(),);
           for (int i = 0; i < lenthofList; i++) {
             deliveryValueFilter.add(
               DeliveryModaleValue(
@@ -99,9 +99,9 @@ class DeliveryPageState extends State<DeliveryPage> {
             );
           }
           swipeLoad = false;
-          print('lenthofList: ' + lenthofList.toString());
-          print('filterList: ' + deliveryValueFilter.length.toString());
-          print(val.nextLink);
+          // print('lenthofList: ' + lenthofList.toString());
+          // print('filterList: ' + deliveryValueFilter.length.toString());
+          // print(val.nextLink);
         }
       });
     });
@@ -113,7 +113,9 @@ class DeliveryPageState extends State<DeliveryPage> {
     final theme = Theme.of(context);
     return Scaffold(
       key: _scaffoldKey,
-      drawer: drawer(context),
+      drawer:
+          //  GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       appBar: appBar(context, _scaffoldKey, widget.title),
       //  ),
       body: deliveryValue.isEmpty
@@ -231,7 +233,8 @@ class DeliveryPageState extends State<DeliveryPage> {
                                 DeliveryDetailsAPi.docEntry =
                                     deliveryValueFilter[i].docEntry.toString();
                                 Get.toNamed<dynamic>(
-                                    FurneyRoutes.deliveyDetails);
+                                  FurneyRoutes.deliveyDetails,
+                                );
                               },
                               child: Container(
                                 height: Screens.heigth(context) * 0.07,
@@ -264,7 +267,8 @@ class DeliveryPageState extends State<DeliveryPage> {
                                           child: Text(
                                             '${deliveryValueFilter[i].DocNum}',
                                             style: TextStyles.bodytextBlack1(
-                                                context),
+                                              context,
+                                            ),
                                           ),
                                         ),
                                         SizedBox(
@@ -276,14 +280,16 @@ class DeliveryPageState extends State<DeliveryPage> {
                                           child: Text(
                                             '${deliveryValueFilter[i].cardName}',
                                             style: TextStyles.bodytextBlack1(
-                                                context),
+                                              context,
+                                            ),
                                           ),
-                                        )
+                                        ),
                                       ],
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          top: Screens.width(context) * 0.02),
+                                        top: Screens.width(context) * 0.02,
+                                      ),
                                       child: Row(
                                         children: [
                                           Container(
@@ -305,7 +311,8 @@ class DeliveryPageState extends State<DeliveryPage> {
                                                 Text(
                                               '${deliveryValueFilter[i].DocDate}',
                                               style: TextStyles.bodytextBlack1(
-                                                  context),
+                                                context,
+                                              ),
                                             ),
                                             //   ],
                                             // ),
@@ -313,10 +320,10 @@ class DeliveryPageState extends State<DeliveryPage> {
                                           Icon(
                                             Icons.chevron_right,
                                             color: theme.primaryColor,
-                                          )
+                                          ),
                                         ],
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),

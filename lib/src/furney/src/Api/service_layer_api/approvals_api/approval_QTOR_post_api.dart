@@ -25,7 +25,7 @@ class ApprovalsQuotPostAPi {
         "U_GP_Approval": "$gpApproval",
         "U_Received_Time": "$orderTime",
         "NumAtCard": "$custREfNo",
-      }
+      },
     });
 
     print("Body request:" + data);
@@ -58,6 +58,20 @@ class ApprovalsQuotPostAPi {
       log("ApprovalsQuotPost sts " + response.statusCode.toString());
       log("ApprovalsQuotPost res " + response.body);
 
+      log(
+        'message::' +
+            json.encode({
+              "Document": {
+                "DocDueDate": "$docDueDate",
+                "DocEntry": "$docEntry",
+                "U_OrderDate": "$orderDate",
+                "U_Order_Type": "$orderType",
+                "U_GP_Approval": "$gpApproval",
+                "U_Received_Time": "$orderTime",
+                "NumAtCard": "$custREfNo",
+              },
+            }),
+      );
       if (response.statusCode == 200 || response.statusCode == 204) {
         // print("statucCode: "+response.statusCode.toString());
         return ApprovalsOTORModal.fromJson(

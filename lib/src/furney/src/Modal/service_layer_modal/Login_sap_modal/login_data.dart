@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 // Logindata logindataFromJson(String str,int st) =>
 //     Logindata.fromJson(json.decode(str) as Map<String, dynamic>,st);

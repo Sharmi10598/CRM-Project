@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_final_locals, omit_local_variable_types
-
 import 'dart:convert';
 
 class GetPackSizeModel {
@@ -19,11 +17,11 @@ class GetPackSizeModel {
 
   factory GetPackSizeModel.fromJson(String resp, int stcode) {
     if (stcode >= 200 && stcode <= 210) {
-      var jsons = json.decode(resp) as Map<String, dynamic>;
+      final jsons = json.decode(resp) as Map<String, dynamic>;
 
       if (jsons['data'] != 'No data found') {
-        var list = jsonDecode(jsons['data'] as String) as List; //jsonDecode
-        List<GetPackSizeData> dataList = list
+        final list = jsonDecode(jsons['data'] as String) as List; //jsonDecode
+        var dataList = list
             .map((dynamic enquiries) => GetPackSizeData.fromJson(enquiries))
             .toList();
 
@@ -66,7 +64,8 @@ class GetPackSizeData {
 
   factory GetPackSizeData.fromJson(dynamic jsons) {
     return GetPackSizeData(
-      U_Pack_Size: jsons['U_Pack_Size'] == null ? 0.0 : jsons['U_Pack_Size'] as double,
+      U_Pack_Size:
+          jsons['U_Pack_Size'] == null ? 0.0 : jsons['U_Pack_Size'] as double,
       U_Tins_Per_Box:
           jsons['U_Tins_Per_Box'] == null ? 0 : jsons['U_Tins_Per_Box'] as int,
     );

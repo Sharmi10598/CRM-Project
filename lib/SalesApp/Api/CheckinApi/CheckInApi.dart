@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_single_quotes, avoid_print, prefer_interpolation_to_compose_strings, use_raw_strings, unnecessary_string_interpolations, require_trailing_commas
-
 import 'dart:convert';
 import 'dart:developer';
 
@@ -10,38 +8,55 @@ import 'package:ultimate_bundle/src/furney/src/DB/DBModal/GetApprovedCust.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
 class CheckinAPi {
+  static checkINMethod(CheckinModel apdata) {
+    log(
+      'CheckinAPi::::${json.encode({
+            'ActivityDate': apdata.ActivityDate,
+            "ActivityTime": apdata.ActivityTime,
+            "StartDate": apdata.StartDate,
+            "StartTime": apdata.StartTime,
+            "U_Latitude": apdata.U_Latitude,
+            "U_Longitude": apdata.U_Longitude,
+            "U_CheckedIn": apdata.U_CheckedIn,
+            ".U_CheckinAdd": apdata.U_CheckinAdd,
+          })}',
+    );
+  }
+
   static Future<PatchVisitModel> getGlobalData(CheckinModel apdata) async {
     try {
-      log("Activities::" + URL.url + "Activities");
-      final response =
-          await http.patch(Uri.parse(URL.url + "Activities(${apdata.clgcode})"),
-              headers: {
-                'content-type': 'application/json',
-                "cookie": 'B1SESSION=' + GetValues.sessionID.toString()
-              },
-              body: json.encode({
-                "ActivityDate": "${apdata.ActivityDate}",
-                "ActivityTime": "${apdata.ActivityTime}",
-                "StartDate": "${apdata.StartDate}",
-                "StartTime": "${apdata.StartTime}",
-                "U_Latitude": "${apdata.U_Latitude}",
-                "U_Longitude": "${apdata.U_Longitude}",
-                "U_CheckedIn": "${apdata.U_CheckedIn}",
-                "U_CheckinAdd": "${apdata.U_CheckinAdd}",
-              }));
+      log('Activities::${URL.url}Activities');
+      final response = await http.patch(
+        Uri.parse('${URL.url}Activities(${apdata.clgcode})'),
+        headers: {
+          'content-type': 'application/json',
+          'cookie': 'B1SESSION=${GetValues.sessionID}',
+        },
+        body: json.encode({
+          'ActivityDate': apdata.ActivityDate,
+          'ActivityTime': apdata.ActivityTime,
+          'StartDate': apdata.StartDate,
+          'StartTime': apdata.StartTime,
+          'U_Latitude': apdata.U_Latitude,
+          'U_Longitude': apdata.U_Longitude,
+          'U_CheckedIn': apdata.U_CheckedIn,
+          'U_CheckinAdd': apdata.U_CheckinAdd,
+        }),
+      );
 
-      log('CheckinAPi::::' +
-          json.encode({
-            "ActivityDate": "${apdata.ActivityDate}",
-            "ActivityTime": "${apdata.ActivityTime}",
-            "StartDate": "${apdata.StartDate}",
-            "StartTime": "${apdata.StartTime}",
-            "U_Latitude": "${apdata.U_Latitude}",
-            "U_Longitude": "${apdata.U_Longitude}",
-            "U_CheckedIn": "${apdata.U_CheckedIn}",
-            ".U_CheckinAdd": "${apdata.U_CheckinAdd}",
-          }));
-      log("statuscode: " + response.statusCode.toString());
+      log(
+        'CheckinAPi::::${json.encode({
+              'ActivityDate': apdata.ActivityDate,
+              'ActivityTime': apdata.ActivityTime,
+              'StartDate': apdata.StartDate,
+              'StartTime': apdata.StartTime,
+              'U_Latitude': apdata.U_Latitude,
+              'U_Longitude': apdata.U_Longitude,
+              'U_CheckedIn': apdata.U_CheckedIn,
+              '.U_CheckinAdd': apdata.U_CheckinAdd,
+            })}',
+      );
+      log('statuscode: ${response.body}');
       return PatchVisitModel.fromJson(response.body, response.statusCode);
     } catch (e) {
       //  throw Exception("Exception: $e");
@@ -62,17 +77,18 @@ class CheckinModel {
   String U_CheckinAdd;
   String status;
 
-  CheckinModel(
-      {required this.U_CheckinAdd,
-      required this.clgcode,
-      required this.ActivityDate,
-      required this.ActivityTime,
-      required this.StartDate,
-      required this.StartTime,
-      required this.U_Latitude,
-      required this.U_Longitude,
-      required this.U_CheckedIn,
-      required this.status});
+  CheckinModel({
+    required this.U_CheckinAdd,
+    required this.clgcode,
+    required this.ActivityDate,
+    required this.ActivityTime,
+    required this.StartDate,
+    required this.StartTime,
+    required this.U_Latitude,
+    required this.U_Longitude,
+    required this.U_CheckedIn,
+    required this.status,
+  });
 
   Map<String, Object?> toMap() => {
         PostCheckInModel.U_CheckinAdd: U_CheckinAdd,

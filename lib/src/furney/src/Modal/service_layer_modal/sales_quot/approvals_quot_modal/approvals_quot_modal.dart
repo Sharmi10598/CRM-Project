@@ -19,7 +19,7 @@ class ApprovalsQuotModal{
     if (jsons['value'] != null) {
       final list =  jsons['value'] as List; //jsonDecode
       // print(list);
-      List<ApprovalsQuotValue> dataList = list
+      final List<ApprovalsQuotValue> dataList = list
           .map((dynamic enquiries) => ApprovalsQuotValue.fromJson(enquiries))
           .toList();
       // print(dataList[0]);

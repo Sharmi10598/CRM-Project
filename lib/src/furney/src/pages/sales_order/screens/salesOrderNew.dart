@@ -64,30 +64,32 @@ class SalesOrdernNewState extends State<SalesOrderNew> {
   static TabController? tabController;
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return DefaultTabController(
       length: 3,
-      child: WillPopScope(
-        onWillPop: onbackpress,
-        child: Scaffold(
-            key: _scaffoldKey,
-            backgroundColor: Colors.grey[200],
-            appBar: orderAppBar(context, _scaffoldKey, widget.title),
-            drawer: drawer(context),
-            body: Padding(
-              padding: EdgeInsets.only(
-                top: Screens.heigth(context) * 0.01,
-              ), //left: Screens.width(context)*0.02,right: Screens.width(context)*0.02,bottom: Screens.heigth(context)*0.01
-              child: TabBarView(
-                  //controller: tabController,
-                  // physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    const SalesOrder(),
-                    const ApprovalsOrdersDetails(),
-                    const ClosedOrders(),
-                  ]),
-            )),
-      ),
+      // child:
+      //  WillPopScope(
+      //   onWillPop: onbackpress,
+      child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.grey[200],
+          appBar: orderAppBar(context, _scaffoldKey, widget.title),
+          drawer:
+              // GetValues.userRoll == '3' ? drawer2(context) :
+              drawer(context),
+          body: Padding(
+            padding: EdgeInsets.only(
+              top: Screens.heigth(context) * 0.01,
+            ), //left: Screens.width(context)*0.02,right: Screens.width(context)*0.02,bottom: Screens.heigth(context)*0.01
+            child: TabBarView(
+                //controller: tabController,
+                // physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  const SalesOrder(),
+                  const ApprovalsOrdersDetails(),
+                  const ClosedOrders(),
+                ]),
+          )),
+      // ),
     );
   }
   // static void changepage(BuildContext context){

@@ -21,22 +21,25 @@ class CheckUserAPi {
         headers: {
           'content-type': 'application/json',
         },
-      );
-      log('UserDetails1: ${json.decode(response.body)}');
+      ); //346842.18
+      // log('UserDetails1: ${json.decode(response.body)}');
       if (response.statusCode == 200) {
         // log('UserDetails2: ${json.decode(response.body)}');
         return CheckUserLogin.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+          json.decode(response.body) as Map<String, dynamic>,
+        );
       } else {
-        print(json.decode(response.body));
-        print(response.statusCode);
-        throw Exception("Error!!...");
+        // print(json.decode(response.body));
+        // print(response.statusCode);
+        throw Exception('Error!!...');
         //   return CheckUserLogin.issue('Restart the app or contact the admin!!..');
       }
     } catch (e) {
-      print("Anbu" + e.toString());
-      throw Exception("Exceptionsss: $e");
-      //  return CheckUserLogin.exception('Restart the app or contact the admin!!..');
+      // print('Anbu$e');
+      // throw Exception('Exceptionsss: $e');
+      return CheckUserLogin.exception(
+        'Restart the app or contact the admin!!..',
+      );
     }
   }
 }

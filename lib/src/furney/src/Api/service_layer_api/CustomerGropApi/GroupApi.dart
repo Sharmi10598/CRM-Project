@@ -8,38 +8,36 @@ import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
 import 'package:ultimate_bundle/src/furney/src/Modal/service_layer_modal/customer_bp/PamentGroupModel.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
-
 class GetPaymentGroupAPi {
   static Future<GetPaymentGroupModel> getGlobalData() async {
     try {
-      final response = await http.post(
-        Uri.parse(URL.dynamicUrl),
-        headers: {
-          'content-type': 'application/json',
+      final response = await http.post(Uri.parse(URL.dynamicUrl),
+          headers: {
+            'content-type': 'application/json',
           },
-         body: json.encode({
-              "constr": 
+          body: json.encode({
+            "constr":
                 "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
 
-              // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
-              "query": "Select GroupNum, PymntGroup from OCTG",
-          })
-      );
-     
+            // "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+            "query": "Select GroupNum, PymntGroup from OCTG",
+          }));
       // print('B1SESSION='+ GetValues.sessionID.toString());
       // print('odata.maxpagesize=${GetValues.maximumfetchValue}');
-       log("PaymentGroupAPi: " + json.decode(response.body).toString());
-       print(response.statusCode);
+      log("PaymentGroupAPi: " + json.decode(response.body).toString());
+      print(response.statusCode);
       if (response.statusCode == 200) {
-        return GetPaymentGroupModel.fromJson( response.body,response.statusCode);
+        return GetPaymentGroupModel.fromJson(
+            response.body, response.statusCode);
       } else {
         print("Exception: Error");
-        return GetPaymentGroupModel.fromJson( response.body,response.statusCode);
+        return GetPaymentGroupModel.fromJson(
+            response.body, response.statusCode);
       }
     } catch (e) {
       print("Exception: $e");
       //  throw Exception("Exception: $e");
-      return GetPaymentGroupModel.fromJson(e.toString(),500);
+      return GetPaymentGroupModel.fromJson(e.toString(), 500);
     }
   }
 }

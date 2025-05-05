@@ -1,15 +1,10 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, require_trailing_commas, prefer_single_quotes, prefer_const_constructors, file_names
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ultimate_bundle/helpers/textstyle.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/constants.dart';
 import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
-
-import '../../../widgets/Drawer.dart';
 
 class SwitchBtn {
   static bool siwtchTrue = false;
@@ -17,10 +12,10 @@ class SwitchBtn {
 
 AppBar deliveryAppBar(
     BuildContext context, GlobalKey<ScaffoldState> key, String title) {
-  key:
-  key;
-  final width = MediaQuery.of(context).size.width;
-  var isTSH = false;
+  // key:
+  // key;
+  // final width = MediaQuery.of(context).size.width;
+  // const isTSH = false;
 
   final theme = Theme.of(context);
   return AppBar(
@@ -59,56 +54,56 @@ AppBar deliveryAppBar(
             // SizedBox(
             //   width: width *0.02,
             // ),
-            Row(
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.usd,
-                  style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      textStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: Screens.width(context) * 0.042)),
-                ),
-                Switch(
-                  value: isTSH,
-                  onChanged: (value) {
-                    setState(() {
-                      isTSH = value;
-                      log("isTSH Q:::${isTSH}");
-                    });
-                  },
-                  // activeColor: theme.primaryColor,
-                  // activeTrackColor: Colors.white,
-                  inactiveTrackColor: theme.primaryColor,
-                ),
-                // Switch(
-                //   onChanged: (value) {
-                //     print("value::"+value.toString());
-                //     setState(() {
-                //       if (SwitchBtn.siwtchTrue == true) {
-                //         SwitchBtn.siwtchTrue = true;
-                //       } else {
-                //         SwitchBtn.siwtchTrue = value;
-                //       }
-                //     });
-                //   },
-                //   activeColor: Colors.white,
-                //   activeTrackColor: Colors.white,
-                //   //theme.primaryColor,
-                //   value: SwitchBtn.siwtchTrue,
-                // ),
-                Text(
-                  GetValues.currency == 'TZS'
-                      ? AppLocalizations.of(context)!.tzs
-                      : AppLocalizations.of(context)!.zmw,
-                  style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      textStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: Screens.width(context) * 0.042)),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Text(
+            //       AppLocalizations.of(context)!.usd,
+            //       style: GoogleFonts.poppins(
+            //           color: Colors.white,
+            //           textStyle: TextStyle(
+            //               color: Colors.black,
+            //               fontSize: Screens.width(context) * 0.042)),
+            //     ),
+            //     Switch(
+            //       value: isTSH,
+            //       onChanged: (value) {
+            //         setState(() {
+            //           isTSH = value;
+            //           log("isTSH Q:::${isTSH}");
+            //         });
+            //       },
+            //       // activeColor: theme.primaryColor,
+            //       // activeTrackColor: Colors.white,
+            //       inactiveTrackColor: theme.primaryColor,
+            //     ),
+            //     // Switch(
+            //     //   onChanged: (value) {
+            //     //     print("value::"+value.toString());
+            //     //     setState(() {
+            //     //       if (SwitchBtn.siwtchTrue == true) {
+            //     //         SwitchBtn.siwtchTrue = true;
+            //     //       } else {
+            //     //         SwitchBtn.siwtchTrue = value;
+            //     //       }
+            //     //     });
+            //     //   },
+            //     //   activeColor: Colors.white,
+            //     //   activeTrackColor: Colors.white,
+            //     //   //theme.primaryColor,
+            //     //   value: SwitchBtn.siwtchTrue,
+            //     // ),
+            //     Text(
+            //       GetValues.currency == 'TZS'
+            //           ? AppLocalizations.of(context)!.tzs
+            //           : AppLocalizations.of(context)!.zmw,
+            //       style: GoogleFonts.poppins(
+            //           color: Colors.white,
+            //           textStyle: TextStyle(
+            //               color: Colors.black,
+            //               fontSize: Screens.width(context) * 0.042)),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),
@@ -120,8 +115,8 @@ AppBar deliveryAppBar(
         width: Screens.width(context),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Const.space5),
-            border: Border.all(color: theme.colorScheme.background),
-            color: theme.colorScheme.background),
+            border: Border.all(color: theme.colorScheme.surface),
+            color: theme.colorScheme.surface),
         child: TabBar(
           labelStyle: TextStyles.bodytextBlack2(context),
           indicator: BoxDecoration(
@@ -129,7 +124,7 @@ AppBar deliveryAppBar(
             border: Border.all(color: theme.primaryColor),
             color: theme.primaryColor,
           ),
-          labelColor: theme.colorScheme.background,
+          labelColor: theme.colorScheme.surface,
           unselectedLabelColor: theme.primaryColor,
           tabs: [
             Tab(text: AppLocalizations.of(context)!.header),
@@ -150,11 +145,11 @@ class CreationAppbar extends StatefulWidget {
 }
 
 class _CreationAppbarState extends State<CreationAppbar> {
-  static bool isTSH = false;
+  // static bool isTSH = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    // final width = MediaQuery.of(context).size.width;
 
     final theme = Theme.of(context);
     return AppBar(
@@ -193,41 +188,41 @@ class _CreationAppbarState extends State<CreationAppbar> {
               // SizedBox(
               //   width: width *0.02,
               // ),
-              Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.usd,
-                    style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        textStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: Screens.width(context) * 0.042)),
-                  ),
-                      Switch(
-                  onChanged: (value) {
-                    setState(() {
-                      isTSH = value;
-                      log('value or::${value}');
-                    });
-                  },
-                  inactiveTrackColor: theme.primaryColor,
-                  // activeColor: Colors.white,
-                  // activeTrackColor: Colors.white,
-                  //theme.primaryColor,
-                  value: isTSH,
-                ),
-                  Text(
-                    GetValues.currency == 'TZS'
-                        ? AppLocalizations.of(context)!.tzs
-                        : AppLocalizations.of(context)!.zmw,
-                    style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        textStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: Screens.width(context) * 0.042)),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Text(
+              //       AppLocalizations.of(context)!.usd,
+              //       style: GoogleFonts.poppins(
+              //           color: Colors.white,
+              //           textStyle: TextStyle(
+              //               color: Colors.black,
+              //               fontSize: Screens.width(context) * 0.042)),
+              //     ),
+              //         Switch(
+              //     onChanged: (value) {
+              //       setState(() {
+              //         isTSH = value;
+              //         log('value or::${value}');
+              //       });
+              //     },
+              //     inactiveTrackColor: theme.primaryColor,
+              //     // activeColor: Colors.white,
+              //     // activeTrackColor: Colors.white,
+              //     //theme.primaryColor,
+              //     value: isTSH,
+              //   ),
+              //     Text(
+              //       GetValues.currency == 'TZS'
+              //           ? AppLocalizations.of(context)!.tzs
+              //           : AppLocalizations.of(context)!.zmw,
+              //       style: GoogleFonts.poppins(
+              //           color: Colors.white,
+              //           textStyle: TextStyle(
+              //               color: Colors.black,
+              //               fontSize: Screens.width(context) * 0.042)),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),
@@ -239,8 +234,8 @@ class _CreationAppbarState extends State<CreationAppbar> {
           width: Screens.width(context),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(Const.space5),
-              border: Border.all(color: theme.colorScheme.background),
-              color: theme.colorScheme.background),
+              border: Border.all(color: theme.colorScheme.surface),
+              color: theme.colorScheme.surface),
           child: TabBar(
             labelStyle:
                 theme.textTheme.titleSmall?.copyWith(color: theme.primaryColor),
@@ -249,7 +244,7 @@ class _CreationAppbarState extends State<CreationAppbar> {
               border: Border.all(color: theme.primaryColor),
               color: theme.primaryColor,
             ),
-            labelColor: theme.colorScheme.background,
+            labelColor: theme.colorScheme.surface,
             unselectedLabelColor: theme.primaryColor,
             tabs: [
               Tab(text: AppLocalizations.of(context)!.header),

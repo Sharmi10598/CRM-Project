@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, omit_local_variable_types, unawaited_futures, prefer_single_quotes, prefer_interpolation_to_compose_strings, unnecessary_string_interpolations
 
-import 'package:connectivity/connectivity.dart';
+import 'dart:developer';
+import 'package:connectivity_plus/connectivity_plus.dart';
+// import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ultimate_bundle/helpers/constants.dart';
+import 'package:intl/intl.dart';
 
 class UIKitModel {
   final String? name;
@@ -14,173 +17,184 @@ class UIKitModel {
   UIKitModel({this.name, this.totalScreen, this.image, this.navigation});
 }
 
-
-class Config {
-
-  Future<void> showDialog(String msg,String title) async{
-      Get.defaultDialog<void>(
-        title: title,
-        content: Container(
-          child: Column(
-            children: [
-              Text(msg),
-            ],
-          ),
+class Configuration {
+  Future<void> showDialog(String msg, String title) async {
+    Get.defaultDialog<void>(
+      title: title,
+      content: Container(
+        child: Column(
+          children: [
+            Text(msg),
+          ],
         ),
-      );
-  }
- 
-
-    void showDialogSucessB(String msg,String title){
-      Get.defaultDialog<void>(
-        title: title,
-        content: Container(
-          child: Column(
-            children: [
-              Text(msg),
-            ],
-          ),
-        ),
-      ).then((value) {
-        Get.back<void>();
-      });
+      ),
+    );
   }
 
-    void showDialogSucessDB(String msg,String title){
-      Get.defaultDialog<void>(
-        title: title,
-        content: Container(
-          child: Column(
-            children: [
-              Text(msg),
-            ],
-          ),
+  void showDialogSucessB(String msg, String title) {
+    Get.defaultDialog<void>(
+      title: title,
+      content: Container(
+        child: Column(
+          children: [
+            Text(msg),
+          ],
         ),
-      ).then((value) {
-        Get.offAllNamed<dynamic>(FurneyRoutes.home);
-      });
+      ),
+    ).then((value) {
+      Get.back<void>();
+    });
   }
-   
-      String alignDate(String date) {
-   final String dateT = date.replaceAll("T", "");
+
+  void showDialogSucessDB(String msg, String title) {
+    Get.defaultDialog<void>(
+      title: title,
+      content: Container(
+        child: Column(
+          children: [
+            Text(msg),
+          ],
+        ),
+      ),
+    ).then((value) {
+      Get.offAllNamed<dynamic>(FurneyRoutes.home);
+    });
+  }
+
+  String alignDate(String date) {
+    log('datedatedate:$date');
     final dates = DateTime.parse(date);
-    print(
-        "${dates.day.toString().padLeft(2, '0')}-${dates.month.toString().padLeft(2, '0')}-${dates.year}",);
-    return "${dates.day.toString().padLeft(2, '0')}-${dates.month.toString().padLeft(2, '0')}-${dates.year}";
-  }
-   String alignDate2(String date) {
-  //  String dateT = date.replaceAll("T", "");
- if(date=='null'){
-  return '';
- }
-    final dates = DateTime.parse(date);
+    log(
+      "${dates.day.toString().padLeft(2, '0')}-${dates.month.toString().padLeft(2, '0')}-${dates.year}",
+    );
     return "${dates.day.toString().padLeft(2, '0')}-${dates.month.toString().padLeft(2, '0')}-${dates.year}";
   }
 
-   String convertintToTime(int value){
-  final String data = value.toString();
-  String retunData = '';
-  for(int i=0; i<data.length; i++ ){
-    if(data.length == 3){
-       if(i == 0 ){
-          
-        retunData = retunData + data[i]+ ":";
-  
-       }else{
-        retunData = retunData  +data[i] ;
-      }
-       //else{
-      //    if(i.isEven){
-      //   retunData = retunData + data[i];
-      // }else{
-      //   retunData = retunData  +data[i] + ":";
-      // }
-      // }
+  String alignDate2(String date) {
+    //  String dateT = date.replaceAll("T", "");
+    if (date == 'null') {
+      return '';
     }
-  else  if(data.length == 4){
-      if(i == data.length -1){
-           if(i.isEven){
-        retunData = retunData + data[i];
-      }else{
-        retunData = retunData  +data[i] ;
-      }
-      }else{
-         if(i.isEven){
-        retunData = retunData + data[i];
-      }else{
-        retunData = retunData  +data[i] + ":";
-      }
-      }
-     
-      
-    }else if (data.length == 6){
-         if(i == data.length -1){
-           if(i.isEven){
-        retunData = retunData + data[i];
-      }else{
-        retunData = retunData  +data[i] ;
-      }
-      }else{
-         if(i.isEven){
-        retunData = retunData + data[i];
-      }else{
-        retunData = retunData  +data[i] + ":";
-      }
-      }
-    }
+    final dates = DateTime.parse(date);
+    return "${dates.day.toString().padLeft(2, '0')}-${dates.month.toString().padLeft(2, '0')}-${dates.year}";
   }
 
-  return retunData;
+  String alignDate1(String date) {
+    var inputFormat = DateFormat('dd-MM-yyyy');
+    var date1 = inputFormat.parse(date);
+
+    var dates = DateTime.parse(date1.toString());
+    return "${dates.year}-${dates.month.toString().padLeft(2, '0')}-${dates.day.toString().padLeft(2, '0')}";
   }
-String currentDate() {
+
+  String alignDateT(String date) {
+    //  String dateT = date.replaceAll("T", "");
+    if (date == 'null') {
+      return '';
+    }
+    final dates = DateTime.parse(date);
+    return "${dates.year.toString().padLeft(2, '0')}-${dates.month.toString().padLeft(2, '0')}-${dates.day}";
+  }
+
+  String convertintToTime(int value) {
+    log('valuevalue:$value');
+    final String data = value.toString();
+    String retunData = '';
+    for (int i = 0; i < data.length; i++) {
+      if (data.length == 3) {
+        if (i == 0) {
+          retunData = retunData + data[i] + ":";
+        } else {
+          retunData = retunData + data[i];
+        }
+        //else{
+        //    if(i.isEven){
+        //   retunData = retunData + data[i];
+        // }else{
+        //   retunData = retunData  +data[i] + ":";
+        // }
+        // }
+      } else if (data.length == 4) {
+        if (i == data.length - 1) {
+          if (i.isEven) {
+            retunData = retunData + data[i];
+          } else {
+            retunData = retunData + data[i];
+          }
+        } else {
+          if (i.isEven) {
+            retunData = retunData + data[i];
+          } else {
+            retunData = retunData + data[i] + ":";
+          }
+        }
+      } else if (data.length == 6) {
+        if (i == data.length - 1) {
+          if (i.isEven) {
+            retunData = retunData + data[i];
+          } else {
+            retunData = retunData + data[i];
+          }
+        } else {
+          if (i.isEven) {
+            retunData = retunData + data[i];
+          } else {
+            retunData = retunData + data[i] + ":";
+          }
+        }
+      }
+    }
+    log('retunDate::$retunData');
+    return retunData;
+  }
+
+  String currentDate() {
     final DateTime now = DateTime.now();
 
     final String currentDateTime =
         "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}";
-    print("date: " + currentDateTime);
+    log("date: " + currentDateTime);
     return currentDateTime;
   }
-      String currentDateTimeServer() {
+
+  String currentDateTimeServer() {
     final DateTime now = DateTime.now();
-    return
-          "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
-   
+    return "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
   }
 
-    String currentTimeServer() {
+  String currentTimeServer() {
     final DateTime now = DateTime.now();
-    return
-          "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}";
-   
+    return "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}";
   }
 
- Future<bool> haveInterNet()async{
-     final result = await Connectivity().checkConnectivity();
+  Future<bool> haveInterNet() async {
+    final result = await Connectivity().checkConnectivity();
     final hasInternet = result != ConnectivityResult.none;
     return hasInternet;
   }
 
- int checkedinExpired(String date){
-  final String onlydate = date.replaceAll("T", "").replaceAll(":", "").replaceAll("00",""); 
-  // List<String> data =  onlydate.split("-");
-  // String fromDate = '';
-  // for(int i= (data.length-1) ; i>0; i--){
-  //    // data
-  //    fromDate = fromDate + data[i] ;
-  //    log(data[i]);
-  // }
-  final parsedDate = DateTime.parse('$onlydate');//2023-05-30
-  final int value  =   daysBetween(parsedDate);
-  return value;
+  int checkedinExpired(String date) {
+    final String onlydate =
+        date.replaceAll("T", "").replaceAll(":", "").replaceAll("00", "");
+    // List<String> data =  onlydate.split("-");
+    // String fromDate = '';
+    // for(int i= (data.length-1) ; i>0; i--){
+    //    // data
+    //    fromDate = fromDate + data[i] ;
+    //    log(data[i]);
+    // }
+    final parsedDate = DateTime.parse('$onlydate'); //2023-05-30
+    final int value = daysBetween(parsedDate);
+    log('checkedinExpired::$value');
+    return value;
   }
-  
-   int daysBetween(DateTime from) {
-    final DateTime fromDate = DateTime(from.year, from.month, from.day);
-final DateTime to = DateTime.now();
-  final DateTime   toDate = DateTime(to.year, to.month, to.day);
-   return (toDate.difference(fromDate).inHours / 24).round();
-  }   
 
+  int daysBetween(DateTime from) {
+    final DateTime fromDate = DateTime(from.year, from.month, from.day);
+    final DateTime to = DateTime.now();
+    final DateTime toDate = DateTime(to.year, to.month, to.day);
+    return (toDate.difference(fromDate).inHours / 24).round();
+  }
 }
 
 // List<UIKitModel> allFullUIKitList(BuildContext context) => [

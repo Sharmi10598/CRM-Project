@@ -26,7 +26,7 @@ class GetInPaymentChartApi{
               'query': "exec SalesTarget_AchCollection '${GetValues.slpCode}'",//'${GetValues.slpCode}'
           }),
       );
-          log('PaymentChar::'+json.decode(response.body).toString());
+          log('PaymentChar::${json.decode(response.body)}');
     
      if (response.statusCode == 200) {
         //   print(json.decode(response.body));

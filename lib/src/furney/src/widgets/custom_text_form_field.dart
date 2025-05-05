@@ -89,7 +89,7 @@ class CustomTextFormField extends StatelessWidget {
     //       errorText: AppLocalizations.of(context)!.invalid_number_format),
     // ]);
 
-    TextInputType _keyboardType(TextFieldType textFieldType) {
+    TextInputType keyboardType(TextFieldType textFieldType) {
       switch (textFieldType) {
         case TextFieldType.alphabet:
           return TextInputType.text;
@@ -127,7 +127,7 @@ class CustomTextFormField extends StatelessWidget {
     //   }
     // }
 
-    InputBorder _enabledBorder(BorderType borderType) {
+    InputBorder enabledBorder(BorderType borderType) {
       switch (borderType) {
         case BorderType.underline:
           return UnderlineInputBorder(
@@ -150,7 +150,7 @@ class CustomTextFormField extends StatelessWidget {
       }
     }
 
-    InputBorder _focusedBorder(BorderType borderType) {
+    InputBorder focusedBorder(BorderType borderType) {
       switch (borderType) {
         case BorderType.underline:
           return UnderlineInputBorder(
@@ -177,7 +177,7 @@ class CustomTextFormField extends StatelessWidget {
       }
     }
 
-    InputBorder _errorBorder(BorderType borderType) {
+    InputBorder errorBorder(BorderType borderType) {
       switch (borderType) {
         case BorderType.underline:
           return UnderlineInputBorder(
@@ -199,7 +199,7 @@ class CustomTextFormField extends StatelessWidget {
       }
     }
 
-    EdgeInsets _contentPadding(BorderType borderType) {
+    EdgeInsets contentPadding(BorderType borderType) {
       switch (borderType) {
         case BorderType.underline:
           return  EdgeInsets.zero;
@@ -220,22 +220,22 @@ class CustomTextFormField extends StatelessWidget {
       obscureText: obscureText ?? false,
       style: theme.textTheme.bodyLarge,
       inputFormatters: inputFormatters,
-      keyboardType: _keyboardType(textFieldType),
+      keyboardType: keyboardType(textFieldType),
      // validator: _validator(textFieldType),
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: theme.textTheme.titleMedium,
         suffixIcon: suffixIcon,
         contentPadding: (suffixIcon == null)
-            ? _contentPadding(borderType)
+            ? contentPadding(borderType)
             : const EdgeInsets.only(
                 left: Const.margin,
                 top: 12,
               ),
-        enabledBorder: _enabledBorder(borderType),
-        focusedBorder: _focusedBorder(borderType),
-        errorBorder: _errorBorder(borderType),
-        focusedErrorBorder: _errorBorder(borderType),
+        enabledBorder: enabledBorder(borderType),
+        focusedBorder: focusedBorder(borderType),
+        errorBorder: errorBorder(borderType),
+        focusedErrorBorder: errorBorder(borderType),
       ),
     );
   }

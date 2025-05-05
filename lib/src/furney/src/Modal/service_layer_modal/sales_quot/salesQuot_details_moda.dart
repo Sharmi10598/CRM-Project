@@ -50,7 +50,7 @@ SalesQuotDetailsValue({
      if (jsons['DocumentLines'] != null  && jsons['AddressExtension']!=null) {
       final list =  jsons['DocumentLines'] as List; //jsonDecode
       // print(list);
-      List<DocumentSalesQuotValue> dataList = list
+      final List<DocumentSalesQuotValue> dataList = list
           .map((dynamic enquiries) => DocumentSalesQuotValue.fromJson(enquiries))
           .toList();
     return SalesQuotDetailsValue(

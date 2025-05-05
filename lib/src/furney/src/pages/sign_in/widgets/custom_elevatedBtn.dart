@@ -59,7 +59,7 @@ class CustomSpinkitdButton extends StatelessWidget {
                   Text(
                     labelLoading ?? '',
                     style: theme.textTheme.labelLarge,
-                  )
+                  ),
                 ],
               )
             : (label == '' || label == null)

@@ -1,7 +1,5 @@
 // ignore_for_file: unnecessary_lambdas, prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable, unnecessary_new, omit_local_variable_types, prefer_single_quotes, prefer_if_elements_to_conditional_expressions
 
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimate_bundle/SalesApp/Api/CheckinApi/GetApprovedApi.dart';
@@ -81,6 +79,7 @@ class MyDialogState extends State<SlctcustApDialog> {
     final heigth = MediaQuery.of(context).size.height;
     final theme = Theme.of(context);
     return AlertDialog(
+      backgroundColor: Colors.grey[300],
       insetPadding: EdgeInsets.all(10),
       content: SizedBox(
         width: Screens.width(context),
@@ -96,7 +95,7 @@ class MyDialogState extends State<SlctcustApDialog> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Center(
-                        child: Container(
+                        child: SizedBox(
                           child: Text(message),
                         ),
                       ),
@@ -124,10 +123,10 @@ class MyDialogState extends State<SlctcustApDialog> {
                                   width: Screens.width(context),
                                   child: Column(
                                     children: [
-                                      Container(
+                                      SizedBox(
                                         child: Text('${data[index].CardCode}'),
                                       ),
-                                      Container(
+                                      SizedBox(
                                         child: Text('${data[index].CardName}'),
                                       ),
                                     ],
@@ -137,7 +136,7 @@ class MyDialogState extends State<SlctcustApDialog> {
                             );
                           },
                         ),
-                      )
+                      ),
                     ],
                   ),
       ),

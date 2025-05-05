@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_single_quotes, sort_child_properties_last, avoid_print, prefer_interpolation_to_compose_strings, unnecessary_null_comparison, unnecessary_lambdas, invariant_booleans, file_names
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/route_manager.dart';
@@ -30,7 +32,7 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
   ApprovalDetailsValue? approvalDetailsValue;
   List<DocumentApprovalValue> documentApprovalValue = [];
   String docEntry = '';
-  String docDueDate ='';
+  String docDueDate = '';
   @override
   void initState() {
     super.initState();
@@ -78,13 +80,20 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return WillPopScope(
-      onWillPop: onbackpress,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didpop) {
+        if (didpop) return;
+        log("bbbbbbbb");
+        onbackpress();
+      },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
         appBar: appBar(context, _scaffoldKey, widget.title),
-        drawer: drawer(context),
+        drawer:
+            // GetValues.userRoll == '3' ? drawer2(context) :
+            drawer(context),
         body: approvalDetailsValue == null
             ? Center(
                 child: SpinKitThreeBounce(
@@ -95,10 +104,11 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
             : SafeArea(
                 child: Padding(
                   padding: EdgeInsets.only(
-                      left: Screens.width(context) * 0.02,
-                      right: Screens.width(context) * 0.02,
-                      top: Screens.heigth(context) * 0.01,
-                      bottom: Screens.width(context) * 0.01,),
+                    left: Screens.width(context) * 0.02,
+                    right: Screens.width(context) * 0.02,
+                    top: Screens.heigth(context) * 0.01,
+                    bottom: Screens.width(context) * 0.01,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,8 +130,10 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Doc.type",
-                                        style: TextStyles.boldPC1(context),),
+                                    Text(
+                                      "Doc.type",
+                                      style: TextStyles.boldPC1(context),
+                                    ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -131,7 +143,9 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
                                           // color: Colors.blue,
                                           child: Text(
                                             "$docTypeName based on draft no. ${approvalDetailsValue!.docNum}", //${approvalDetailsValue!.DocNum}
-                                            style:  TextStyles.headlineBlack1(context),
+                                            style: TextStyles.headlineBlack1(
+                                              context,
+                                            ),
                                           ),
                                         ),
                                         // Container(
@@ -143,7 +157,7 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
                                         //   ),
                                         // )
                                       ],
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -162,7 +176,7 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
                                     // color: Colors.blue,
                                     child: Text(
                                       "Sales Doc",
-                                      style:  TextStyles.headlineBlack1(context),
+                                      style: TextStyles.headlineBlack1(context),
                                     ),
                                   ),
                                 ],
@@ -182,7 +196,7 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
                                     // color: Colors.blue,
                                     child: Text(
                                       " ",
-                                      style:  TextStyles.headlineBlack1(context),
+                                      style: TextStyles.headlineBlack1(context),
                                     ),
                                   ),
                                 ],
@@ -203,7 +217,7 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
                                     // color: Colors.blue,
                                     child: Text(
                                       "${approvalDetailsValue!.cardCode}",
-                                      style:  TextStyles.headlineBlack1(context),
+                                      style: TextStyles.headlineBlack1(context),
                                     ),
                                   ),
                                 ],
@@ -224,7 +238,7 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
                                     // color: Colors.blue,
                                     child: Text(
                                       "${approvalDetailsValue!.cardName}",
-                                      style:  TextStyles.headlineBlack1(context),
+                                      style: TextStyles.headlineBlack1(context),
                                     ),
                                   ),
                                 ],
@@ -237,14 +251,14 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
                                 children: [
                                   Text(
                                     "Date",
-                                    style:TextStyles.boldPC1(context),
+                                    style: TextStyles.boldPC1(context),
                                   ),
                                   SizedBox(
                                     width: Screens.width(context) * 0.83,
                                     // color: Colors.blue,
                                     child: Text(
                                       "${approvalDetailsValue!.docDate}",
-                                      style:  TextStyles.headlineBlack1(context),
+                                      style: TextStyles.headlineBlack1(context),
                                     ),
                                   ),
                                 ],
@@ -280,15 +294,17 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
                                 children: [
                                   Text(
                                     "Tax",
-                                    style:TextStyles.boldPC1(context),
+                                    style: TextStyles.boldPC1(context),
                                   ),
                                   SizedBox(
                                     width: Screens.width(context) * 0.83,
                                     // color: Colors.blue,
                                     child: Text(
-                                    //  " ${approvalDetailsValue!.vatSum}",
-                                      TextStyles.splitValues('${approvalDetailsValue!.vatSum}'),
-                                      style:  TextStyles.headlineBlack1(context),
+                                      //  " ${approvalDetailsValue!.vatSum}",
+                                      TextStyles.splitValues(
+                                        '${approvalDetailsValue!.vatSum}',
+                                      ),
+                                      style: TextStyles.headlineBlack1(context),
                                     ),
                                   ),
                                 ],
@@ -301,14 +317,16 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
                                 children: [
                                   Text(
                                     "Total",
-                                    style:TextStyles.boldPC1(context),
+                                    style: TextStyles.boldPC1(context),
                                   ),
                                   SizedBox(
                                     width: Screens.width(context) * 0.83,
                                     // color: Colors.blue,
                                     child: Text(
-                                     // "${approvalDetailsValue!.docTotal}",
-                                      TextStyles.splitValues('${approvalDetailsValue!.docTotal}'),
+                                      // "${approvalDetailsValue!.docTotal}",
+                                      TextStyles.splitValues(
+                                        '${approvalDetailsValue!.docTotal}',
+                                      ),
                                       style: TextStyles.headlineBlack1(context),
                                     ),
                                   ),
@@ -322,7 +340,7 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
                                 children: [
                                   Text(
                                     "Line Details",
-                                    style:TextStyles.boldPC1(context),
+                                    style: TextStyles.boldPC1(context),
                                   ),
                                   SizedBox(
                                     width: Screens.width(context) * 0.83,
@@ -339,78 +357,83 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
                                 thickness: 1.5,
                               ),
                               LimitedBox(
-                                  // width: Screens.width(context),
-                                  //color: Colors.red,
-                                  maxHeight: Screens.heigth(context) * 0.6,
-                                  //  child: Expanded(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Flexible(
-                                        child: ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount:
-                                                documentApprovalValue.length,
-                                            itemBuilder: (c, i) {
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  DetailsPageState.index = i;
-                                                  print(DetailsPageState.index);
-                                                  DetailsPageState
-                                                          .documentApprovalValue =
-                                                      documentApprovalValue;
-                                                  Get.toNamed<dynamic>(
-                                                      FurneyRoutes.details,);
-                                                },
-                                                child: Container(
-                                                    color: Colors.transparent,
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          "${i + 1}:",
-                                                          style: TextStyles.boldPC1(context),
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            SizedBox(
-                                                              width: Screens.width(
-                                                                      context,) *
-                                                                  0.83,
-                                                              // color: Colors.blue,
-                                                              child: Text(
-                                                                "${documentApprovalValue[i].itemCode}\n${documentApprovalValue[i].itemDescription} (${documentApprovalValue[i].quantity})",
-                                                                style:  TextStyles.headlineBlack1(context),
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              child: Icon(
-                                                                Icons
-                                                                    .navigate_next_outlined,
-                                                                color: theme
-                                                                    .primaryColor,
-                                                                size: Screens
-                                                                        .heigth(
-                                                                            context,) *
-                                                                    0.06,
-                                                              ),
-                                                            )
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),),
+                                // width: Screens.width(context),
+                                //color: Colors.red,
+                                maxHeight: Screens.heigth(context) * 0.6,
+                                //  child: Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Flexible(
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: documentApprovalValue.length,
+                                        itemBuilder: (c, i) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              DetailsPageState.index = i;
+                                              print(DetailsPageState.index);
+                                              DetailsPageState
+                                                      .documentApprovalValue =
+                                                  documentApprovalValue;
+                                              Get.toNamed<dynamic>(
+                                                FurneyRoutes.details,
                                               );
-                                            },),
+                                            },
+                                            child: Container(
+                                              color: Colors.transparent,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${i + 1}:",
+                                                    style: TextStyles.boldPC1(
+                                                      context,
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      SizedBox(
+                                                        width: Screens.width(
+                                                              context,
+                                                            ) *
+                                                            0.83,
+                                                        // color: Colors.blue,
+                                                        child: Text(
+                                                          "${documentApprovalValue[i].itemCode}\n${documentApprovalValue[i].itemDescription} (${documentApprovalValue[i].quantity})",
+                                                          style: TextStyles
+                                                              .headlineBlack1(
+                                                            context,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Icon(
+                                                        Icons
+                                                            .navigate_next_outlined,
+                                                        color:
+                                                            theme.primaryColor,
+                                                        size: Screens.heigth(
+                                                              context,
+                                                            ) *
+                                                            0.06,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
-                                    ],
-                                  ),
-                                  //),
-                                  )
+                                    ),
+                                  ],
+                                ),
+                                //),
+                              ),
                             ],
                           ),
                         ),
@@ -443,38 +466,43 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
         isLoading = true;
         ApprovalsQuotPostAPi.docEntry = docEntry;
         ApprovalsQuotPostAPi.docDueDate = docDueDate;
-        print(' ApprovalsQuotPostAPi.docEntry: '+ ApprovalsQuotPostAPi.docEntry.toString());
-        print(' ApprovalsQuotPostAPi.docEntry: '+ ApprovalsQuotPostAPi.docDueDate .toString());
+        print(
+          ' ApprovalsQuotPostAPi.docEntry: ' +
+              ApprovalsQuotPostAPi.docEntry.toString(),
+        );
+        print(
+          ' ApprovalsQuotPostAPi.docEntry: ' +
+              ApprovalsQuotPostAPi.docDueDate.toString(),
+        );
         ApprovalsQuotPostAPi.getGlobalData().then((value) {
-          if(value.statusCode=='201' ||value.statusCode=='204' ){
-             isLoading = true;
-             const snackBar = SnackBar(
-                      duration: Duration(seconds: 5),
-                      backgroundColor: Colors.green,
-                      content: Text(
-                        'Quotation Created Successfully!!...',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                   Get.offAllNamed<dynamic>(FurneyRoutes.newSalesQuot);
-          }    else{
-                   isLoading = false;
-                    print(value.statusCode);
-                     const snackBar = SnackBar(
-                      duration: Duration(seconds: 5),
-                      backgroundColor: Colors.red,
-                      content: Text(
-                        'Restart the app or contact the admin!!..',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                 }
+          if (value.statusCode == '201' || value.statusCode == '204') {
+            isLoading = true;
+            const snackBar = SnackBar(
+              duration: Duration(seconds: 5),
+              backgroundColor: Colors.green,
+              content: Text(
+                'Quotation Created Successfully!!...',
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            Get.offAllNamed<dynamic>(FurneyRoutes.newSalesQuot);
+          } else {
+            isLoading = false;
+            print(value.statusCode);
+            const snackBar = SnackBar(
+              duration: Duration(seconds: 5),
+              backgroundColor: Colors.red,
+              content: Text(
+                'Restart the app or contact the admin!!..',
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
         });
       });
     }
-    
   }
 
   bool isLoading = false;
@@ -494,71 +522,77 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
             return AlertDialog(
               //    title: Text("Title of Dialog"),
               content: SizedBox(
-                  //  color: Colors.black12,
+                //  color: Colors.black12,
 
-                  width: Screens.width(context) * 0.8,
-                  child: Form(
-                    key: formkey[0],
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Remarks: ',
-                          style: GoogleFonts.poppins(
-                              fontSize: Screens.heigth(context) * 0.018,
-                              color: theme.primaryColor,
-                              fontWeight: FontWeight.bold,),
+                width: Screens.width(context) * 0.8,
+                child: Form(
+                  key: formkey[0],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Remarks: ',
+                        style: GoogleFonts.poppins(
+                          fontSize: Screens.heigth(context) * 0.018,
+                          color: theme.primaryColor,
+                          fontWeight: FontWeight.bold,
                         ),
-                        TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Remarks field is mandatory";
-                            }
+                      ),
+                      TextFormField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Remarks field is mandatory";
+                          }
 
-                            return null;
-                          },
-                          controller: mycontroller[0],
-                          maxLines: 4,
-                          keyboardType: TextInputType.multiline,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 10,),
+                          return null;
+                        },
+                        controller: mycontroller[0],
+                        maxLines: 4,
+                        keyboardType: TextInputType.multiline,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 10,
+                          ),
 
-                            //check
-                            labelText: '',
-                            labelStyle: TextStyle(
-                              color: theme.primaryColor,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
-                              borderSide: const BorderSide(color: Colors.green),
-                            ),
+                          //check
+                          labelText: '',
+                          labelStyle: TextStyle(
+                            color: theme.primaryColor,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: const BorderSide(color: Colors.green),
                           ),
                         ),
-                        SizedBox(
-                          height: Screens.heigth(context) * 0.01,
+                      ),
+                      SizedBox(
+                        height: Screens.heigth(context) * 0.01,
+                      ),
+                      Center(
+                        child: SizedBox(
+                          width: Screens.width(context) * 0.2,
+                          height: Screens.heigth(context) * 0.04,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              validateAlertBox();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              backgroundColor:
+                                  btnColor == false ? Colors.green : Colors.red,
+                            ),
+                            child: const Icon(Icons.done),
+                          ),
                         ),
-                        Center(
-                          child: SizedBox(
-                              width: Screens.width(context) * 0.2,
-                              height: Screens.heigth(context) * 0.04,
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    validateAlertBox();
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10),), backgroundColor: btnColor == false
-                                        ? Colors.green
-                                        : Colors.red,
-                                  ),
-                                  child: const Icon(Icons.done),),),
-                        )
-                      ],
-                    ),
-                  ),),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             );
           },
         );
@@ -595,8 +629,7 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
       print(ApprovalsPatchAPi.status);
 
       ApprovalsPatchAPi.getGlobalData().then((value) {
-       
-          if (value.Value == "400") {
+        if (value.Value == "400") {
           mycontroller[0].text = '400';
           completed = false;
           Navigator.pop(context);
@@ -609,8 +642,7 @@ class ApprovalsDetailsQuotState extends State<ApprovalsDetailsQuot> {
             ),
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        } 
-        else if (value.Value == '204') {
+        } else if (value.Value == '204') {
           mycontroller[0].text = '';
           completed = true;
           ApprovalsState.backBtnreload = true;

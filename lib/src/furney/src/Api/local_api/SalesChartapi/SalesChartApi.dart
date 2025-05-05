@@ -34,7 +34,7 @@ class GetSalesChartApi {
             'query':
                 "exec SalesTarget_AchSales '${GetValues.slpCode}'", //'${GetValues.slpCode}'
           }));
-      log("SalesChart res::${json.decode(response.body)}");
+      log('SalesChart res::${json.decode(response.body)}');
       if (response.statusCode == 200) {
         return SalesChartModal.fromJson(
             (json.decode(response.body) as Map<String, dynamic>),

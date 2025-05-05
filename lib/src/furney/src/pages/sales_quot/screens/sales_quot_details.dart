@@ -26,7 +26,6 @@ class SalesQtDetailsState extends State<SalesQtDetails> {
     super.initState();
     SalesOuotDetailsAPi.getGlobalData().then((val) {
       if (val.cardCode != null) {
-        print('cardName ${val.cardName}');
         setHeaderValue(val);
       } else if (val.error != null) {
         final snackBar = SnackBar(
@@ -65,7 +64,7 @@ class SalesQtDetailsState extends State<SalesQtDetails> {
           (val.docTotal! - (totaldiscnt + vatsum)).toString();
       HeaderQuotState.discnt = val.totalDiscount.toString();
       // HeaderDeliveryState.discntpercent = val.documentLines;
-      HeaderQuotState.Tax = val.vatSum.toString();
+      HeaderQuotState.tax = val.vatSum.toString();
       HeaderQuotState.total = val.docTotal.toString();
       //cn
       ContentQuotState.documentLines = val.documentLines;
@@ -83,7 +82,9 @@ class SalesQtDetailsState extends State<SalesQtDetails> {
             key: _scaffoldKey,
             backgroundColor: Colors.grey[200],
             appBar: appBar(context, _scaffoldKey, widget.title),
-            drawer: drawer(context),
+            drawer:
+                // GetValues.userRoll == '3' ? drawer2(context) :
+                drawer(context),
             body: Center(
               child: SpinKitThreeBounce(
                 size: Screens.heigth(context) * 0.06,
@@ -97,7 +98,9 @@ class SalesQtDetailsState extends State<SalesQtDetails> {
                 key: _scaffoldKey,
                 backgroundColor: Colors.grey[200],
                 appBar: approvalAppBar(context, _scaffoldKey, widget.title),
-                drawer: drawer(context),
+                drawer:
+                    // GetValues.userRoll == '3' ? drawer2(context) :
+                    drawer(context),
                 body: Padding(
                   padding: EdgeInsets.only(
                     top: Screens.heigth(context) * 0.01,

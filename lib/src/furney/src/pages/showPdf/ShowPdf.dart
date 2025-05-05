@@ -50,7 +50,7 @@ class ShowPdfs extends State<ShowPdf> {
           children: [
             InkWell(
               onTap: () async {
-                // direc: /data/user/0/com.buson.crm/cache
+                // direc: /data/user/0/com.buson.insigniacrm/cache
                 if (notstream) {
                   final tempDir = await getTemporaryDirectory();
                   print('direc: ${tempDir.path}/$title-$docNO.pdf');
@@ -67,7 +67,7 @@ class ShowPdfs extends State<ShowPdf> {
                 Icons.file_upload_outlined,
                 size: width * 0.1,
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -96,6 +96,17 @@ class ShowPdfs extends State<ShowPdf> {
               ),
             ),
       //  ),
+    );
+  }
+
+  SingleChildScrollView contentOfTab(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(top: 40, bottom: 10, left: 40, right: 40),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+        ),
+      ),
     );
   }
 
@@ -225,17 +236,6 @@ class ShowPdfs extends State<ShowPdf> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  SingleChildScrollView contentOfTab(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.only(top: 40, bottom: 10, left: 40, right: 40),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-        ),
       ),
     );
   }

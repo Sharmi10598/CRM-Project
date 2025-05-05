@@ -22,11 +22,11 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
   @override
   void initState() {
     super.initState();
-
     // GetValues.isAtive[0]=true;
     // GetValues.isAtive[1]=false;
     //
     notifycheck2();
+    checkCountryCodeMethod();
     checkHaveInternet();
     createDB();
     // DataBaseHelper. deletedata();
@@ -56,12 +56,10 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
     });
   }
 
-  Config config = new Config();
+  Configuration config = new Configuration();
   void checkHaveInternet() async {
     final bool internet = await config.haveInterNet();
-    log('message::${internet}');
     if (internet) {
-      await checkCountryCodeMethod();
       // saleschartapi();
       // Collectionchartapi();
       // Volumechartapi();
@@ -76,38 +74,44 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
   }
 
   void checkVersion() {
-    CheckVersionAPi.getGlobalData().then((value) {
-      if (value.deviceData != null) {
-        log('value.deviceData![0].Version::${value.deviceData![0].Version}');
-        if (AppVersion.version == value.deviceData![0].Version) {
-          setState(() {
-            log("comeeeeee: ${AppVersion.version} ");
-            callServiceLayerApi();
-            getAllMEthods();
-          });
-        } else {
-          Get.offAllNamed<void>(FurneyRoutes.splash);
-        }
-      }
+    // CheckVersionAPi.getGlobalData().then((value) {
+    //   if (value.deviceData != null) {
+    //     log('value.deviceData![0].Version::${value.deviceData![0].Version}');
+    //     if (AppVersion.version == value.deviceData![0].Version) {
+    setState(() {
+      log("comeeeeee: ${AppVersion.version} ");
+      callServiceLayerApi();
+      getAllMEthods();
     });
+    //     } else {
+    //       Get.offAllNamed<void>(FurneyRoutes.splash);
+    //     }
+    //   }
+    // });
   }
 
   checkCountryCodeMethod() async {
     final pref2 = await pref;
-    if (pref2.getString('countryCode') == 'tanzania' ||
-        pref2.getString('countryCode') == 'Tanzania') {
-      log('Tanzania message1');
-      GetValues.sapPassword = 'Insignia@2021#';
+    final ctryCode = pref2.getString('countryCode') ?? '';
+    // log('pref2.getString countryCode::${pref2.getString('countryCode')!.toLowerCase()}');
+
+    if (ctryCode.trim().toLowerCase() == 'tanzania') {
+      pref2.setString('TSapPassword', 'Insignia@2021#');
+
+      // GetValues.sapPassword = 'Insignia@2021#';
+      GetValues.sapPassword = pref2.getString('TSapPassword');
       GetValues.currency = 'TZS';
       GetValues.countryCode = pref2.getString('countryCode');
-      log('${GetValues.sapPassword},${GetValues.currency} ,${GetValues.countryCode}');
-    } else if (pref2.getString('countryCode') == 'zambia' ||
-        pref2.getString('countryCode') == 'Zambia') {
-      log('Zambia message2');
-      GetValues.sapPassword = 'Insignia@2023#';
+      log('sapdetails::${GetValues.sapPassword},${GetValues.currency} ,${GetValues.countryCode}');
+    } else if (ctryCode.trim().toLowerCase() == 'zambia') {
+      pref2.setString('ZSapPassword', 'Insignia@2023#');
+
+      // GetValues.sapPassword = 'Insignia@2023#';
+      GetValues.sapPassword = pref2.getString('ZSapPassword');
+
       GetValues.currency = 'ZMW';
       GetValues.countryCode = pref2.getString('countryCode');
-      log('${GetValues.sapPassword},${GetValues.currency} ,${GetValues.countryCode}');
+      log('sapdetails::${GetValues.sapPassword},${GetValues.currency} ,${GetValues.countryCode}');
     }
   }
 
@@ -140,13 +144,13 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
   }
 
   void checkoutPost(CheckinModel postData) async {
-    List<FilesData> filedata = [];
+    final List<FilesData> filedata = [];
     // =[];
-    List<FilesPostData> filedataDB =
+    final List<FilesPostData> filedataDB =
         await DataBaseHelper.getFileData(postData.clgcode);
     for (int i = 0; i < filedataDB.length; i++) {
       final File files = File(filedataDB[i].filePath);
-      List<int> intdata = files.readAsBytesSync();
+      final List<int> intdata = files.readAsBytesSync();
       filedata.add(
         FilesData(
           fileBytes: base64Encode(intdata),
@@ -154,7 +158,7 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
         ),
       );
     }
-    List<CheckOutModel> checkoutdata =
+    final List<CheckOutModel> checkoutdata =
         await DataBaseHelper.getPostCheckoutData(postData.clgcode);
     for (int i = 0; i < filedata.length; i++) {
       await FilePostApi.getFilePostData(
@@ -167,13 +171,13 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
               print("Api PAth: " + value.filepath.toString());
               // filelink.add(value.filepath!);
               if (i == 0) {
-                checkoutdata[0].U_Link1 = value.filepath!;
+                checkoutdata[0].uLink1 = value.filepath;
               } else if (i == 1) {
-                checkoutdata[0].U_Link2 = value.filepath!;
+                checkoutdata[0].uLink2 = value.filepath;
               } else if (i == 2) {
-                checkoutdata[0].U_Link3 = value.filepath!;
+                checkoutdata[0].uLink3 = value.filepath;
               } else if (i == 3) {
-                checkoutdata[0].U_Link4 = value.filepath!;
+                checkoutdata[0].uLink4 = value.filepath;
               }
             });
           } else if (value.stCode! >= 400 && value.stCode! <= 410) {
@@ -189,43 +193,43 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
       });
     }
     final CheckOutModel chekcOut = new CheckOutModel();
-    chekcOut.U_CheckOutAdd = checkoutdata[0].U_CheckOutAdd;
-    chekcOut.Notes = checkoutdata[0].Notes;
-    chekcOut.U_NxtFollowup = checkoutdata[0].U_NxtFollowup;
-    chekcOut.U_COLatitude = checkoutdata[0].U_COLatitude;
-    chekcOut.U_COLongitude = checkoutdata[0].U_COLongitude;
-    chekcOut.U_Advertise = checkoutdata[0].U_Advertise;
-    chekcOut.U_AdvFormt = checkoutdata[0].U_AdvFormt;
-    chekcOut.U_Products = checkoutdata[0].U_Products;
-    chekcOut.U_BrandContr = checkoutdata[0].U_BrandContr;
-    chekcOut.U_PPComp = checkoutdata[0].U_PPComp;
-    chekcOut.U_BrandinPromo = checkoutdata[0].U_BrandinPromo;
-    chekcOut.U_OrdProsValue = checkoutdata[0].U_OrdProsValue;
-    chekcOut.U_PymntVal = checkoutdata[0].U_PymntVal;
-    chekcOut.U_Complaints = checkoutdata[0].U_Complaints;
-    chekcOut.U_Remarks1 = checkoutdata[0].U_Remarks1;
-    chekcOut.U_Remarks2 = checkoutdata[0].U_Remarks2;
+    chekcOut.uCheckOutAdd = checkoutdata[0].uCheckOutAdd;
+    chekcOut.notes = checkoutdata[0].notes;
+    chekcOut.uNxtFollowup = checkoutdata[0].uNxtFollowup;
+    chekcOut.uCOLatitude = checkoutdata[0].uCOLatitude;
+    chekcOut.uCOLongitude = checkoutdata[0].uCOLongitude;
+    chekcOut.uAdvertise = checkoutdata[0].uAdvertise;
+    chekcOut.uAdvFormt = checkoutdata[0].uAdvFormt;
+    chekcOut.uProducts = checkoutdata[0].uProducts;
+    chekcOut.uBrandContr = checkoutdata[0].uBrandContr;
+    chekcOut.uPPComp = checkoutdata[0].uPPComp;
+    chekcOut.uBrandinPromo = checkoutdata[0].uBrandinPromo;
+    chekcOut.uOrdProsValue = checkoutdata[0].uOrdProsValue;
+    chekcOut.uPymntVal = checkoutdata[0].uPymntVal;
+    chekcOut.uComplaints = checkoutdata[0].uComplaints;
+    chekcOut.uRemarks1 = checkoutdata[0].uRemarks1;
+    chekcOut.uRemarks2 = checkoutdata[0].uRemarks2;
     chekcOut.clgCode = checkoutdata[0].clgCode;
-    chekcOut.Duration = checkoutdata[0].Duration;
-    chekcOut.U_Link1 = checkoutdata[0].U_Link1;
-    chekcOut.U_Link2 = checkoutdata[0].U_Link2;
-    chekcOut.U_Link3 = checkoutdata[0].U_Link3;
-    chekcOut.U_Link4 = checkoutdata[0].U_Link4;
-    chekcOut.Closed = 'Y';
-    chekcOut.U_status = 'C';
-    chekcOut.CloseDate = config.currentDateTimeServer();
-    chekcOut.EndTime =
+    chekcOut.duration = checkoutdata[0].duration;
+    chekcOut.uLink1 = checkoutdata[0].uLink1;
+    chekcOut.uLink2 = checkoutdata[0].uLink2;
+    chekcOut.uLink3 = checkoutdata[0].uLink3;
+    chekcOut.uLink4 = checkoutdata[0].uLink4;
+    chekcOut.closed = 'Y';
+    chekcOut.ustatus = 'C';
+    chekcOut.closedate = config.currentDateTimeServer();
+    chekcOut.endTime =
         config.currentTimeServer().replaceAll(":", "").padLeft(6, '0');
-    chekcOut.U_Customer = checkoutdata[0].U_Customer;
-    chekcOut.U_Consultant = checkoutdata[0].U_Consultant;
-    chekcOut.U_Project = checkoutdata[0].U_Project;
-    chekcOut.U_Subgroup = checkoutdata[0].U_Subgroup;
+    chekcOut.uCustomer = checkoutdata[0].uCustomer;
+    chekcOut.uConsultant = checkoutdata[0].uConsultant;
+    chekcOut.uProject = checkoutdata[0].uProject;
+    chekcOut.uSubgroup = checkoutdata[0].uSubgroup;
     await CheckOutPatchAPi.getGlobalData(chekcOut).then((value) async {
       if (value.statusCode! >= 200 && value.statusCode! <= 210) {
-        if (chekcOut.U_NxtFollowup!.isNotEmpty &&
-            chekcOut.U_NxtFollowup != null &&
-            chekcOut.U_NxtFollowup != 'null') {
-          callNFCheckOtApi(chekcOut.U_NxtFollowup!, postData);
+        if (chekcOut.uNxtFollowup!.isNotEmpty &&
+            chekcOut.uNxtFollowup != null &&
+            chekcOut.uNxtFollowup != 'null') {
+          callNFCheckOtApi(chekcOut.uNxtFollowup!, postData);
         } else {
           await DataBaseHelper.deletePostedCheckin(chekcOut.clgCode!);
           await DataBaseHelper.deleteApproved(chekcOut.clgCode!);
@@ -304,7 +308,7 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
     //   });
   }
 
-  void Collectionchartapi() async {
+  void collectionchartapi() async {
     await GetInPaymentChartApi.getInPaymentChartData().then((value) {
       if (mounted) {
         setState(() {
@@ -318,7 +322,7 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
     });
   }
 
-  void Volumechartapi() {
+  void volumechartapi() {
     // GetVolumeChartApi.getVolumeChartData().then((value) {
     //   setState(() {
     //     if (value.CustomerData != null) {
@@ -410,92 +414,92 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
     });
   }
 
-  List<charts.Series<ChartRecord, String>> cretaedChart() {
-    return [
-      new charts.Series<ChartRecord, String>(
-        id: 'Desktop',
-        domainFn: (ChartRecord sales, _) => sales.name,
-        measureFn: (ChartRecord sales, _) => sales.sales,
-        data: targetsales,
-        overlaySeries: true,
-        colorFn: (ChartRecord sales, _) =>
-            charts.ColorUtil.fromDartColor(sales.barColor),
-        labelAccessorFn: (ChartRecord sales, _) =>
-            sales.sales.toStringAsFixed(0),
-        displayName: "atatata",
-      ),
-      new charts.Series<ChartRecord, String>(
-        id: 'Tablet',
-        domainFn: (ChartRecord sales, _) => sales.name,
-        measureFn: (ChartRecord sales, _) => sales.sales,
-        data: achsales,
-        colorFn: (ChartRecord sales, _) =>
-            charts.ColorUtil.fromDartColor(sales.barColor),
-        labelAccessorFn: (ChartRecord sales, _) =>
-            sales.sales.toStringAsFixed(0),
-        overlaySeries: true,
-        displayName: "atatata",
-      ),
-    ];
-  }
+  // List<charts.Series<ChartRecord, String>> cretaedChart() {
+  //   return [
+  //     new charts.Series<ChartRecord, String>(
+  //       id: 'Desktop',
+  //       domainFn: (ChartRecord sales, _) => sales.name,
+  //       measureFn: (ChartRecord sales, _) => sales.sales,
+  //       data: targetsales,
+  //       overlaySeries: true,
+  //       colorFn: (ChartRecord sales, _) =>
+  //           charts.ColorUtil.fromDartColor(sales.barColor),
+  //       labelAccessorFn: (ChartRecord sales, _) =>
+  //           sales.sales.toStringAsFixed(0),
+  //       displayName: "atatata",
+  //     ),
+  //     new charts.Series<ChartRecord, String>(
+  //       id: 'Tablet',
+  //       domainFn: (ChartRecord sales, _) => sales.name,
+  //       measureFn: (ChartRecord sales, _) => sales.sales,
+  //       data: achsales,
+  //       colorFn: (ChartRecord sales, _) =>
+  //           charts.ColorUtil.fromDartColor(sales.barColor),
+  //       labelAccessorFn: (ChartRecord sales, _) =>
+  //           sales.sales.toStringAsFixed(0),
+  //       overlaySeries: true,
+  //       displayName: "atatata",
+  //     ),
+  //   ];
+  // }
 
-  List<charts.Series<CollectionChartRecord, String>> CollectionChart() {
-    return [
-      new charts.Series<CollectionChartRecord, String>(
-        id: 'Desktop',
-        domainFn: (CollectionChartRecord sales, _) => sales.name,
-        measureFn: (CollectionChartRecord sales, _) => sales.collection,
-        data: col_targetsales,
-        colorFn: (CollectionChartRecord sales, _) =>
-            charts.ColorUtil.fromDartColor(sales.barColor),
-        overlaySeries: true,
-        labelAccessorFn: (CollectionChartRecord sales, _) =>
-            sales.collection.toStringAsFixed(0),
-        displayName: "atatata",
-      ),
-      new charts.Series<CollectionChartRecord, String>(
-        id: 'Tablet',
-        domainFn: (CollectionChartRecord sales, _) => sales.name,
-        measureFn: (CollectionChartRecord sales, _) => sales.collection,
-        colorFn: (CollectionChartRecord sales, _) =>
-            charts.ColorUtil.fromDartColor(sales.barColor),
-        labelAccessorFn: (CollectionChartRecord sales, _) =>
-            sales.collection.toStringAsFixed(0),
-        data: col_achsales,
-        overlaySeries: true,
-        displayName: "atatata",
-      ),
-    ];
-  }
+  // List<charts.Series<CollectionChartRecord, String>> CollectionChart() {
+  //   return [
+  //     new charts.Series<CollectionChartRecord, String>(
+  //       id: 'Desktop',
+  //       domainFn: (CollectionChartRecord sales, _) => sales.name,
+  //       measureFn: (CollectionChartRecord sales, _) => sales.collection,
+  //       data: col_targetsales,
+  //       colorFn: (CollectionChartRecord sales, _) =>
+  //           charts.ColorUtil.fromDartColor(sales.barColor),
+  //       overlaySeries: true,
+  //       labelAccessorFn: (CollectionChartRecord sales, _) =>
+  //           sales.collection.toStringAsFixed(0),
+  //       displayName: "atatata",
+  //     ),
+  //     new charts.Series<CollectionChartRecord, String>(
+  //       id: 'Tablet',
+  //       domainFn: (CollectionChartRecord sales, _) => sales.name,
+  //       measureFn: (CollectionChartRecord sales, _) => sales.collection,
+  //       colorFn: (CollectionChartRecord sales, _) =>
+  //           charts.ColorUtil.fromDartColor(sales.barColor),
+  //       labelAccessorFn: (CollectionChartRecord sales, _) =>
+  //           sales.collection.toStringAsFixed(0),
+  //       data: col_achsales,
+  //       overlaySeries: true,
+  //       displayName: "atatata",
+  //     ),
+  //   ];
+  // }
 
-  List<charts.Series<VolumeChartRecord, String>> VolumeChart() {
-    return [
-      new charts.Series<VolumeChartRecord, String>(
-        id: 'Desktop',
-        domainFn: (VolumeChartRecord sales, _) => sales.name,
-        measureFn: (VolumeChartRecord sales, _) => sales.volume,
-        colorFn: (VolumeChartRecord sales, _) =>
-            charts.ColorUtil.fromDartColor(sales.barColor),
-        labelAccessorFn: (VolumeChartRecord sales, _) =>
-            sales.volume.toStringAsFixed(0),
-        data: vol_targetsales,
-        overlaySeries: true,
-        displayName: "atatata",
-      ),
-      new charts.Series<VolumeChartRecord, String>(
-        id: 'Tablet',
-        domainFn: (VolumeChartRecord sales, _) => sales.name,
-        colorFn: (VolumeChartRecord sales, _) =>
-            charts.ColorUtil.fromDartColor(sales.barColor),
-        measureFn: (VolumeChartRecord sales, _) => sales.volume,
-        labelAccessorFn: (VolumeChartRecord sales, _) =>
-            sales.volume.toStringAsFixed(0),
-        data: vol_achsales,
-        overlaySeries: true,
-        displayName: "atatata",
-      ),
-    ];
-  }
+  // List<charts.Series<VolumeChartRecord, String>> VolumeChart() {
+  //   return [
+  //     new charts.Series<VolumeChartRecord, String>(
+  //       id: 'Desktop',
+  //       domainFn: (VolumeChartRecord sales, _) => sales.name,
+  //       measureFn: (VolumeChartRecord sales, _) => sales.volume,
+  //       colorFn: (VolumeChartRecord sales, _) =>
+  //           charts.ColorUtil.fromDartColor(sales.barColor),
+  //       labelAccessorFn: (VolumeChartRecord sales, _) =>
+  //           sales.volume.toStringAsFixed(0),
+  //       data: vol_targetsales,
+  //       overlaySeries: true,
+  //       displayName: "atatata",
+  //     ),
+  //     new charts.Series<VolumeChartRecord, String>(
+  //       id: 'Tablet',
+  //       domainFn: (VolumeChartRecord sales, _) => sales.name,
+  //       colorFn: (VolumeChartRecord sales, _) =>
+  //           charts.ColorUtil.fromDartColor(sales.barColor),
+  //       measureFn: (VolumeChartRecord sales, _) => sales.volume,
+  //       labelAccessorFn: (VolumeChartRecord sales, _) =>
+  //           sales.volume.toStringAsFixed(0),
+  //       data: vol_achsales,
+  //       overlaySeries: true,
+  //       displayName: "atatata",
+  //     ),
+  //   ];
+  // }
 
   //
   //
@@ -508,9 +512,11 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
     PostSAPLoginAPi.password = preff.getString('sapPassword');
     final pref2 = await pref;
     GetValues.sapDB = preff.getString('SapDB');
+    //  'InsigniaLimited';
+    //
     GetValues.slpCode = preff.getString('SlpCode');
     log("sapUrl: ${preff.getString('sapUrl')}, user:: ${preff.getString('sapUserName')}, pass ::${preff.getString('sapPassword')} ");
-    URL.url = preff.getString('sapUrl')!;
+    URL.url = preff.getString('sapUrl') ?? "";
 
     await PostSAPLoginAPi.getGlobaldData().then((value) async {
       log("SapDBdbdbdb: ${value.stCode!}::" + GetValues.sapDB.toString());
@@ -578,9 +584,7 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
     GetValues.sessionID = preff.getString('sessionId');
     GetValues.crmUserID = preff.getString('crmUserID');
     GetValues.sapUserName = preff.getString('sapUserName');
-    // print('sessionId........'+GetValues.sessionID .toString());
-    print('crmUserID........' + GetValues.crmUserID.toString());
-    //  print('sapUserName........'+ GetValues.sapUserName .toString());
+
     getSapUserID();
   }
 
@@ -657,10 +661,6 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
         loadingCompleted = loadingCompleted + 1;
         if (mounted) {
           setState(() {
-            print(
-              "approvalsvalue: " + value.approvalsvalue![0].ObjType.toString(),
-            );
-            print("FromUser: " + value.approvalsvalue![0].FromUser.toString());
             aprovals = value.approvalsvalue!;
           });
         }
@@ -703,12 +703,11 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
     GetValues.slpCode = preff.getString('SlpCode');
     GetValues.userRoll = preff.getString('userRoll');
     GetValues.U_CrpUsr = preff.getString('U_CrpUsr');
+    log('GetValues.userRollGetValues.userRoll::${GetValues.userRoll}');
     // "Yes";
     //
     //
 
-    log("U_CrpUsr::::UUUU::::" + GetValues.userName.toString());
-    log("U_CrpUsr::::UUUUBBBBB::::" + preff.getString('U_CrpUsr').toString());
     //  auth(preff);
     // }
     // );
@@ -727,13 +726,38 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
 
   bool loadingscrn = true;
   String msg = '';
+  DateTime? currentBackPressTime;
+  Future<bool> onbackpress() {
+    final now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      print('are you sure');
+      //  Get.offAllNamed<dynamic>(FurneyRoutes.salesQuotes);
+      const snackBar = SnackBar(
+        duration: Duration(seconds: 5),
+        backgroundColor: Colors.red,
+        content: Text(
+          'Are you want to exit press again!!..',
+          style: TextStyle(color: Colors.white),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return Future.value(false);
+    }
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    return exit(0);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: appBar(context, _scaffoldKey, widget.title),
-      drawer: drawer(context),
+      drawer:
+          //  GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       body: Stack(
         children: [
           ListView(
@@ -746,37 +770,43 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
               //   label:"Quick Menu" ,//AppLocalizations.of(context)!.categories,
               //   onViewAllTap: () => Get.toNamed<dynamic>(FurneyRoutes.category),
               // ),
-              BuildCategory2(itemCount: topCategoryList(context)),
+              BuildCategory2(
+                itemCount:
+                    // GetValues.userRoll == "3"
+                    // ? topCategoryList2(context)
+                    // :
+                    topCategoryList(context),
+              ),
               const SizedBox(height: Const.space12),
               // const _BuildCategoryList(),
               const SizedBox(height: Const.space25),
-              _BuildLabelSection(
-                label: notes > 0 ? 'Notes $notes/$total' : 'Notes',
-                //AppLocalizations.of(context)! .notes,
-                //com.byneetdev.ultimate_bundle
-                onViewAllTap: ()
-                    //   {
-                    //     StreamDataAPi.getGlobalData();
-                    // //   StreamDataAPi.mainss();
-                    //   }
-                    =>
-                    Get.toNamed<dynamic>(
-                  FurneyRoutes.notesPage,
-                  arguments: AppLocalizations.of(context)!.notes,
-                ),
-              ),
+              if (FurneySignInScreenState.menuListItem.contains('12') == true)
+                _BuildLabelSection(
+                  label: notes > 0 ? 'Notes $notes/$total' : 'Notes',
+                  //AppLocalizations.of(context)! .notes,
+                  //com.byneetdev.ultimate_bundle
+                  onViewAllTap: () => Get.toNamed<dynamic>(
+                    FurneyRoutes.notesPage,
+                    arguments: AppLocalizations.of(context)!.notes,
+                  ),
+                )
+              else
+                Container(),
               const SizedBox(height: Const.space12),
               _BuildScrollableList(
                 notes: notesData,
               ),
               const SizedBox(height: Const.space25),
-              _BuildLabelSection(
-                label: AppLocalizations.of(context)!.approvals,
-                onViewAllTap: () => Get.toNamed<dynamic>(
-                  FurneyRoutes.approvalsNew,
-                  arguments: AppLocalizations.of(context)!.approvals,
-                ),
-              ),
+              if (FurneySignInScreenState.menuListItem.contains('5') == true)
+                _BuildLabelSection(
+                  label: AppLocalizations.of(context)!.approvals,
+                  onViewAllTap: () => Get.toNamed<dynamic>(
+                    FurneyRoutes.approvalsNew,
+                    arguments: AppLocalizations.of(context)!.approvals,
+                  ),
+                )
+              else
+                Container(),
               const SizedBox(height: Const.space12),
               _BuildVerticalList(
                 aproval: aprovals,
@@ -796,7 +826,8 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
                     color: Colors.white,
                     child: Center(
                       child: Text(
-                          "You have no internet so you can access only checkin and checkout"),
+                        "You have no internet so you can access only checkin and checkout",
+                      ),
                     ),
                   )
                 : Container(
@@ -810,13 +841,13 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
                       ),
                     ),
                   ),
-          )
+          ),
         ],
       ),
     );
   }
 
-  Container ChartSwiper(BuildContext context) {
+  Container chartSwiper(BuildContext context) {
     return Container(
       width: Screens.width(context),
       height: Screens.width(context) / 2,
@@ -850,17 +881,18 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
                           : Screens.width(context) * s,
                       height: Screens.heigth(context) * 0.28,
                       child: Center(
-                        child: charts.BarChart(
-                          CollectionChart(),
-                          animate: true,
-                          barGroupingType: charts.BarGroupingType.grouped,
-                          barRendererDecorator: new charts.BarLabelDecorator(
-                              outsideLabelStyleSpec:
-                                  new charts.TextStyleSpec(fontSize: 10),
-                              insideLabelStyleSpec:
-                                  new charts.TextStyleSpec(fontSize: 10)),
-                        ),
-                      ),
+                          // child: charts.BarChart(
+                          //   CollectionChart(),
+                          //   animate: true,
+                          //   barGroupingType: charts.BarGroupingType.grouped,
+                          //   barRendererDecorator: new charts.BarLabelDecorator(
+                          //     outsideLabelStyleSpec:
+                          //         new charts.TextStyleSpec(fontSize: 10),
+                          //     insideLabelStyleSpec:
+                          //         new charts.TextStyleSpec(fontSize: 10),
+                          //   ),
+                          // ),
+                          ),
                     )
                   : salesdata.isNotEmpty
                       ? SizedBox(
@@ -871,18 +903,19 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
                               : Screens.width(context) * s,
                           height: Screens.heigth(context) * 0.28,
                           child: Center(
-                            child: charts.BarChart(
-                              cretaedChart(),
-                              animate: true,
-                              barGroupingType: charts.BarGroupingType.grouped,
-                              barRendererDecorator: new charts
-                                  .BarLabelDecorator(
-                                  outsideLabelStyleSpec:
-                                      new charts.TextStyleSpec(fontSize: 10),
-                                  insideLabelStyleSpec:
-                                      new charts.TextStyleSpec(fontSize: 10)),
-                            ),
-                          ),
+                              // child: charts.BarChart(
+                              //   cretaedChart(),
+                              //   animate: true,
+                              //   barGroupingType: charts.BarGroupingType.grouped,
+                              //   barRendererDecorator:
+                              //       new charts.BarLabelDecorator(
+                              //     outsideLabelStyleSpec:
+                              //         new charts.TextStyleSpec(fontSize: 10),
+                              //     insideLabelStyleSpec:
+                              //         new charts.TextStyleSpec(fontSize: 10),
+                              //   ),
+                              // ),
+                              ),
                         )
                       : volumedata.isNotEmpty
                           ? SizedBox(
@@ -893,36 +926,40 @@ class _FurneyHomeScreenState extends State<FurneyHomeScreen> {
                                   : Screens.width(context) * s,
                               height: Screens.heigth(context) * 0.28,
                               child: Center(
-                                child: charts.BarChart(
-                                  VolumeChart(),
-                                  animate: true,
-                                  barGroupingType:
-                                      charts.BarGroupingType.grouped,
-                                  barRendererDecorator:
-                                      new charts.BarLabelDecorator(
-                                          outsideLabelStyleSpec:
-                                              new charts.TextStyleSpec(
-                                                  fontSize: 10),
-                                          insideLabelStyleSpec:
-                                              new charts.TextStyleSpec(
-                                                  fontSize: 10)),
-                                ),
-                              ),
+                                  // child: charts.BarChart(
+                                  //   VolumeChart(),
+                                  //   animate: true,
+                                  //   barGroupingType:
+                                  //       charts.BarGroupingType.grouped,
+                                  //   barRendererDecorator:
+                                  //       new charts.BarLabelDecorator(
+                                  //     outsideLabelStyleSpec:
+                                  //         new charts.TextStyleSpec(
+                                  //       fontSize: 10,
+                                  //     ),
+                                  //     insideLabelStyleSpec:
+                                  //         new charts.TextStyleSpec(
+                                  //       fontSize: 10,
+                                  //     ),
+                                  //   ),
+                                  // ),
+
+                                  ),
                             )
                           : SizedBox(
                               // color: theme.primaryColor.withOpacity(0.5),
                               width: Screens.width(context),
                               height: Screens.heigth(context) * 0.28,
                               child: Center(
-                                child: charts.BarChart(
-                                  SwiperList.series,
-                                  animate: true,
-                                  animationDuration:
-                                      const Duration(milliseconds: 500),
-                                  barGroupingType:
-                                      charts.BarGroupingType.stacked,
-                                ),
-                              ),
+                                  // child: charts.BarChart(
+                                  //   SwiperList.series,
+                                  //   animate: true,
+                                  //   animationDuration:
+                                  //       const Duration(milliseconds: 500),
+                                  //   barGroupingType:
+                                  //       charts.BarGroupingType.stacked,
+                                  // ),
+                                  ),
                             ),
             ),
           );

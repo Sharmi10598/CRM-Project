@@ -17,7 +17,7 @@ class PatchPurposeVisitAPi {
         Uri.parse(  URL.url+ "Activities(${purpVisitModel.clgCode})"),
         headers: {
           'content-type': 'application/json',
-          "cookie": 'B1SESSION=' + GetValues.sessionID.toString()
+          "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
           },
          body: json.encode({ 
     "CardCode": "${purpVisitModel.cardCode}",
@@ -27,7 +27,7 @@ class PatchPurposeVisitAPi {
     "U_PlanDate": "${purpVisitModel.U_PlanDate}",
     "U_PlanTime": "${purpVisitModel.U_PlanTime}",
     "Subject": purpVisitModel.subject,
-    "U_Status":"O"
+    "U_Status":"O",
 }),);
      
       log(json.encode( { 
@@ -38,7 +38,7 @@ class PatchPurposeVisitAPi {
     "U_PlanDate": "${purpVisitModel.U_PlanDate}",
     "U_PlanTime": "${purpVisitModel.U_PlanTime}",
     "Subject": purpVisitModel.subject,
-    "U_Status":"O"
+    "U_Status":"O",
 }),);
       // print('B1SESSION='+ GetValues.sessionID.toString());
       // print('odata.maxpagesize=${GetValues.maximumfetchValue}');

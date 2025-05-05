@@ -9,27 +9,31 @@ import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
 class UnplannedVisitAPi {
-  static Future<PostPurposeVisitModel> getGlobalData(PurpVisitModel purpVisitModel) async {
+  static Future<PostPurposeVisitModel> getGlobalData(
+    PurpVisitModel purpVisitModel,
+  ) async {
     try {
       //log(URL.url+ "Activities");
       final response = await http.post(
-        Uri.parse(URL.url+ "Activities"),
+        Uri.parse(URL.url + "Activities"),
         headers: {
           'content-type': 'application/json',
-          "cookie": 'B1SESSION=' + GetValues.sessionID.toString()
-          },
-         body: json.encode({ 
-    "CardCode": "${purpVisitModel.cardCode}",
-    "Details": "${purpVisitModel.notes}",
-    "Activity": "cn_Meeting",
-    "SalesEmployee": purpVisitModel.SaleEmpCode,
-    "U_PlanDate": "${purpVisitModel.U_PlanDate}",
-    "U_PlanTime": "${purpVisitModel.U_PlanTime}",
-    "Subject": purpVisitModel.subject,
-    "U_Status":"A"
-}),);
-     
-//       log(json.encode( { 
+          "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
+        },
+        body: json.encode({
+          "CardCode": "${purpVisitModel.cardCode}",
+          "Details": "${purpVisitModel.notes}",
+          "Activity": "cn_Meeting",
+          "SalesEmployee": purpVisitModel.SaleEmpCode,
+          "U_PlanDate": "${purpVisitModel.U_PlanDate}",
+          "U_PlanTime": "${purpVisitModel.U_PlanTime}",
+          "Subject": purpVisitModel.subject,
+          "U_Status": "A",
+          "U_IsPlanned": "No",
+        }),
+      );
+
+//       log(json.encode( {
 //      "CardCode": "${purpVisitModel.cardCode}",
 //     "Details": "${purpVisitModel.notes}",
 //     "Activity": "cn_Meeting",
@@ -42,12 +46,18 @@ class UnplannedVisitAPi {
       // log("Unplanned details: " + json.decode(response.body).toString());
       // log("resp code unplan: "+response.statusCode.toString());
       if (response.statusCode == 200) {
-        return PostPurposeVisitModel.fromJson( response.body,response.statusCode);
+        return PostPurposeVisitModel.fromJson(
+          response.body,
+          response.statusCode,
+        );
       } else {
-        return PostPurposeVisitModel.fromJson( response.body,response.statusCode);
+        return PostPurposeVisitModel.fromJson(
+          response.body,
+          response.statusCode,
+        );
       }
     } catch (e) {
-      return PostPurposeVisitModel.fromJson(e.toString(),500);
+      return PostPurposeVisitModel.fromJson(e.toString(), 500);
     }
   }
 }

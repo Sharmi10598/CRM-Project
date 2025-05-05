@@ -39,7 +39,7 @@ class LoginUserAPi {
         return CheckUserLogin.issue('Restart the app or contact the admin!!..');
       }
     } catch (e) {
-      log("Exceptionsss catch: $e");
+      log('Exceptionsss catch: $e');
       //  throw Exception("Exceptionsss: $e");
       return CheckUserLogin.exception(
           'Restart the app or contact the admin!!..',);

@@ -1,20 +1,17 @@
-// ignore_for_file: prefer_single_quotes, prefer_interpolation_to_compose_strings, use_raw_strings, noop_primitive_operations, unnecessary_statements, unnecessary_parenthesis
-
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:http/http.dart' as http;
+import 'package:ultimate_bundle/helpers/uikit_model.dart';
 import 'package:ultimate_bundle/src/furney/src/Api/url/url.dart';
+import 'package:ultimate_bundle/src/furney/src/Modal/service_layer_modal/sales_quot/QuotPutModel.dart';
 import 'package:ultimate_bundle/src/furney/src/Modal/service_layer_modal/sales_quot/post_modal/post_quot_modal.dart';
-import 'package:ultimate_bundle/src/furney/src/pages/SalesQuotEdit/widget/creation/contentEdit_creation.dart';
 // import 'package:ultimate_bundle/src/furney/src/pages/sales_quot/widget/creation/content_creation.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 
-import '../../../../../../../helpers/uikit_model.dart';
-import '../../../../Modal/service_layer_modal/sales_quot/QuotPutModel.dart';
-
 class SalesQuotPutAPi {
   static QuotPutModel? quotputaval;
-  static Config config2 = Config();
+  static Configuration config2 = Configuration();
   static String? sessionID;
   static String? cardCodePost;
   static List<DocumentLineData>? docLineQout;
@@ -23,29 +20,31 @@ class SalesQuotPutAPi {
   static String? remarks;
   static void method(String? deviceTransID) {
     final data = json.encode({
-      "CardCode": "$cardCodePost",
-      "DocumentStatus": "bost_Open",
-      "DocDate": "$docDate",
-      "DocDueDate": "$dueDate",
-      "Comments": "$remarks",
-      "U_DeviceTransID": deviceTransID,
-      "DocumentLines": docLineQout!.map((e) => e.toJson()).toList(),
+      'CardCode': '$cardCodePost',
+      'DocumentStatus': 'bost_Open',
+      'DocDate': '$docDate',
+      'DocDueDate': '$dueDate',
+      'Comments': '$remarks',
+      'U_DeviceTransID': deviceTransID,
+      'DocumentLines': docLineQout!.map((e) => e.toJson()).toList(),
     });
-    // log("post q data : " + data.toString());
+    log('post q data : $data');
   }
 
   static Future<SalesQuotStatus> getGlobalData(
-      String? deviceTransID, int docentry) async {
+    String? deviceTransID,
+    int docentry,
+  ) async {
     try {
-      log(URL.url + "Quotations($docentry)");
+      log('${URL.url}Quotations($docentry)');
       final response = await http.put(
         //instead of patch
         Uri.parse(
-          URL.url + "Quotations($docentry)",
+          '${URL.url}Quotations($docentry)',
         ),
         headers: {
-          "content-type": "application/json",
-          "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
+          'content-type': 'application/json',
+          'cookie': 'B1SESSION=${GetValues.sessionID}',
           // "Prefer":"return-no-content"
         },
         body: json.encode({
@@ -60,7 +59,7 @@ class SalesQuotPutAPi {
           // "${docDate.year.toString().padLeft(4, '0')}-${docDate.month.toString().padLeft(2, '0')}-${docDate.day.toString().padLeft(2, '0')}",
           'DocDueDate': quotputaval!.docDueDate,
           //  "${docDueDate.year.toString().padLeft(4, '0')}-${docDueDate.month.toString().padLeft(2, '0')}-${docDueDate.day.toString().padLeft(2, '0')}",
-          'CardCode': "$cardCodePost",
+          'CardCode': '$cardCodePost',
           'CardName': quotputaval!.cardName,
           'Address': quotputaval!.address,
           'NumAtCard': quotputaval!.numAtCard,
@@ -87,18 +86,18 @@ class SalesQuotPutAPi {
           'PartialSupply': quotputaval!.partialSupply,
           'DocObjectCode': quotputaval!.docObjectCode,
           'ShipToCode': quotputaval!.shipToCode == null ||
-                  quotputaval!.shipToCode == "null"
+                  quotputaval!.shipToCode == 'null'
               ? null
               : quotputaval!.shipToCode,
           'Indicator': quotputaval!.indicator,
           'FederalTaxID': quotputaval!.federalTaxId == null ||
-                  quotputaval!.federalTaxId == "null"
+                  quotputaval!.federalTaxId == 'null'
               ? null
               : quotputaval!.federalTaxId,
           'DiscountPercent': quotputaval!.discountPercent,
           'PaymentReference': quotputaval!.paymentReference,
-          'CreationDate': "${quotputaval!.creationDate!}",
-          'UpdateDate': "${quotputaval!.updateDate}",
+          'CreationDate': quotputaval!.creationDate,
+          'UpdateDate': '${quotputaval!.updateDate}',
           'FinancialPeriod': quotputaval!.financialPeriod,
           'UserSign': quotputaval!.userSign,
           'TransNum': quotputaval!.transNum,
@@ -397,19 +396,18 @@ class SalesQuotPutAPi {
           'U_PosDocNo': quotputaval!.uPosDocNo,
           'TaxExtension': quotputaval!.taxExtension,
           'AddressExtension': quotputaval!.addressExtension,
-          "DocumentReferences": quotputaval!.documentReferences,
-          "DocumentLines": docLineQout!.map((e) => e.toJson()).toList(),
-          "Document_ApprovalRequests": [],
-          "ElectronicProtocols": [],
-          "DocumentAdditionalExpenses": [],
-          "DocumentSpecialLines": []
+          'DocumentReferences': quotputaval!.documentReferences,
+          'DocumentLines': docLineQout!.map((e) => e.toJson()).toList(),
+          'Document_ApprovalRequests': [],
+          'ElectronicProtocols': [],
+          'DocumentAdditionalExpenses': [],
+          'DocumentSpecialLines': [],
         }),
       );
-      log("statucCode QUT EDITS: " + response.statusCode.toString());
-  
+      log('statucCode QUT EDITS: ${response.statusCode}');
+
       log(
-        "datatatat11: " +
-            json.encode({
+        'datatatat11: ${json.encode({
               'odata.metadata': quotputaval!.odataMetadata,
               'odata.etag': quotputaval!.odataEtag,
               'DocEntry': quotputaval!.docEntry,
@@ -421,7 +419,7 @@ class SalesQuotPutAPi {
               // "${docDate.year.toString().padLeft(4, '0')}-${docDate.month.toString().padLeft(2, '0')}-${docDate.day.toString().padLeft(2, '0')}",
               'DocDueDate': quotputaval!.docDueDate,
               //  "${docDueDate.year.toString().padLeft(4, '0')}-${docDueDate.month.toString().padLeft(2, '0')}-${docDueDate.day.toString().padLeft(2, '0')}",
-              'CardCode': "$cardCodePost",
+              'CardCode': '$cardCodePost',
               'CardName': quotputaval!.cardName,
               'Address': quotputaval!.address,
               'NumAtCard': quotputaval!.numAtCard,
@@ -431,7 +429,7 @@ class SalesQuotPutAPi {
               'DocRate': quotputaval!.docRate,
               'Reference1': quotputaval!.reference1,
               'Reference2': quotputaval!.reference2,
-              'Comments': "$remarks",
+              'Comments': '$remarks',
               'JournalMemo': quotputaval!.journalMemo,
               'PaymentGroupCode': quotputaval!.paymentGroupCode,
               'DocTime': quotputaval!.docTime,
@@ -453,8 +451,8 @@ class SalesQuotPutAPi {
               'FederalTaxID': quotputaval!.federalTaxId,
               'DiscountPercent': quotputaval!.discountPercent,
               'PaymentReference': quotputaval!.paymentReference,
-              'CreationDate': "${quotputaval!.creationDate!}",
-              'UpdateDate': "${quotputaval!.updateDate}",
+              'CreationDate': quotputaval!.creationDate,
+              'UpdateDate': '${quotputaval!.updateDate}',
               'FinancialPeriod': quotputaval!.financialPeriod,
               'UserSign': quotputaval!.userSign,
               'TransNum': quotputaval!.transNum,
@@ -758,29 +756,32 @@ class SalesQuotPutAPi {
               'TaxExtension': quotputaval!.taxExtension,
 
               'AddressExtension': quotputaval!.addressExtension,
-              "Document_ApprovalRequests": [],
-              "ElectronicProtocols": [],
-              "DocumentAdditionalExpenses": [],
-              "DocumentSpecialLines": [],
-              "DocumentLines": docLineQout!.map((e) => e.toJson()).toList(),
-              "DocumentReferences": quotputaval!.documentReferences
-            }),
+              'Document_ApprovalRequests': [],
+              'ElectronicProtocols': [],
+              'DocumentAdditionalExpenses': [],
+              'DocumentSpecialLines': [],
+              'DocumentLines': docLineQout!.map((e) => e.toJson()).toList(),
+              'DocumentReferences': quotputaval!.documentReferences,
+            })}',
       );
 
       if (response.statusCode >= 200 && response.statusCode <= 204) {
         return SalesQuotStatus.fromJson(response.statusCode);
       } else {
-            log("Quotations post: " +
-          json.decode(response.body.toString()).toString());
+        log(
+          'Quotations post: ${json.decode(response.body)}',
+        );
         return SalesQuotStatus.errorIN(
-            json.decode(response.body) as Map<String, dynamic>,
-            response.statusCode);
+          json.decode(response.body) as Map<String, dynamic>,
+          response.statusCode,
+        );
       }
     } catch (e) {
       log(e.toString());
       //  throw Exception(e);
       return SalesQuotStatus.issue(
-          'Restart the app or contact the admin!!..\n');
+        'Restart the app or contact the admin!!..\n',
+      );
     }
   }
 }

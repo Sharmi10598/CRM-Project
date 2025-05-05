@@ -18,6 +18,15 @@ class SalesQuotAPi {
       String fromDate, String toDate) async {
     try {
       log("URL.dynamicUrl::" + URL.dynamicUrl);
+      log(json.encode({
+        "constr":
+            "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=${GetValues.sapPassword};",
+
+        // "constr":
+        //     "Server=INSIGNIAC03313;Database=${GetValues.sapDB};User Id=sa; Password=Insignia@2021#;",
+        "query":
+            "[BZ_CRM_GET_QUOTATION_BY_SLPCODE] '${GetValues.slpCode}','$fromDate','$toDate'" //'${GetValues.slpCode}'
+      }));
       final response = await http.post(Uri.parse(URL.dynamicUrl),
           headers: {
             'content-type': 'application/json',

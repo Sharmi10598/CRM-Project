@@ -556,7 +556,7 @@ class ClosedQuotState extends State<ClosedQuot> {
                                     backgroundColor: theme.primaryColor,
                                   ),
                                   child: Text(
-                                    "cancel",
+                                    "Cancel",
                                     style: TextStyles.whiteText(context),
                                   ),
                                 ),

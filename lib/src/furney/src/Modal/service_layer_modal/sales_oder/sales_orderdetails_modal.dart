@@ -56,9 +56,10 @@ class SalesOrderDetailsValue {
     if (jsons['DocumentLines'] != null && jsons['AddressExtension'] != null) {
       final list = jsons['DocumentLines'] as List; //jsonDecode
       // print(list);
-      List<DocumentSalesOrdeValue> dataList = list
+      final List<DocumentSalesOrdeValue> dataList = list
           .map(
-              (dynamic enquiries) => DocumentSalesOrdeValue.fromJson(enquiries))
+            (dynamic enquiries) => DocumentSalesOrdeValue.fromJson(enquiries),
+          )
           .toList();
       return SalesOrderDetailsValue(
         //  groupCode: jsons['GroupCode'] as int,
@@ -130,6 +131,10 @@ class SalesOrderDetailsValue {
 class DocumentSalesOrdeValue {
   String? ItemCode;
   String? ItemDescription;
+  double? taxValue;
+  double? taxable;
+  double? basic;
+  double? discount;
   double? Quantity;
   double? Price;
   String? TaxCode;
@@ -140,6 +145,10 @@ class DocumentSalesOrdeValue {
   double? grossTotal;
   String? warehouseCode;
   DocumentSalesOrdeValue({
+    this.taxValue,
+    this.basic,
+    this.taxable,
+    this.discount,
     this.ItemCode,
     this.ItemDescription,
     this.LineTotal,

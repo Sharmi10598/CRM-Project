@@ -12,15 +12,17 @@ class SalesQuotPostAPi {
   static String? sessionID;
   static String? saelsPerCode;
   static String? cardCodePost;
-  static List<AddItem>? docLineQout;
+  static List<AddQuotItem>? docLineQout;
   static String? docDate;
   static String? dueDate;
   static String? deviceTransID;
+  static String? cardNamePost;
   static String? remarks;
 
   static void method() {
     final data2 = json.encode({
       "CardCode": "$cardCodePost",
+      "CardName": "$cardNamePost",
       'SalesPersonCode': '$saelsPerCode',
       "DocumentStatus": "bost_Open",
       "DocDate": "$docDate",
@@ -29,13 +31,14 @@ class SalesQuotPostAPi {
       "U_DeviceTransID": deviceTransID,
       "DocumentLines": docLineQout!.map((e) => e.tojson()).toList(),
     });
-    //  log("post q data : "+data.toString());
+    log("post q data : " + data2.toString());
   }
 
   static Future<SalesQuotStatus> getGlobalData() async {
     try {
       final data = json.encode({
         "CardCode": "$cardCodePost",
+        "CardName": "$cardNamePost",
         'SalesPersonCode': '$saelsPerCode',
         "DocumentStatus": "bost_Open",
         "DocDate": "$docDate",
@@ -44,7 +47,7 @@ class SalesQuotPostAPi {
         "U_DeviceTransID": deviceTransID,
         "DocumentLines": docLineQout!.map((e) => e.tojson()).toList(),
       });
-       log("post q data : "+data.toString());
+      log("post q data : " + data.toString());
       log(URL.url + "Quotations");
       final response = await http.post(
         Uri.parse(
@@ -57,6 +60,7 @@ class SalesQuotPostAPi {
         },
         body: json.encode({
           'SalesPersonCode': '$saelsPerCode',
+          "CardName": "$cardNamePost",
           "CardCode": "$cardCodePost",
           "DocumentStatus": "bost_Open",
           "DocDate": "$docDate",
@@ -69,7 +73,7 @@ class SalesQuotPostAPi {
       );
 
       log(
-        "datatatat:22 " +
+        "datatatatQuot:22 " +
             json.encode({
               'SalesPersonCode': '$saelsPerCode',
               "CardCode": "$cardCodePost",
@@ -86,19 +90,21 @@ class SalesQuotPostAPi {
       log("statucCode: " + response.statusCode.toString());
       // log("Quotations post: "+json.decode(response.body.toString()).toString());
       if (response.statusCode >= 200 && response.statusCode <= 204) {
-        final dynamic data = json.decode(response.body.toString());
+        // final dynamic data = json.decode(response.body.toString());
         return SalesQuotStatus.fromJson(response.statusCode);
       } else {
         // throw Exception('Restart the app or contact the admin!!..');
         return SalesQuotStatus.errorIN(
-            json.decode(response.body) as Map<String, dynamic>,
-            response.statusCode);
+          json.decode(response.body) as Map<String, dynamic>,
+          response.statusCode,
+        );
       }
     } catch (e) {
       print(e);
       //  throw Exception(e);
       return SalesQuotStatus.issue(
-          'Restart the app or contact the admin!!..\n');
+        'Restart the app or contact the admin!!..\n',
+      );
     }
   }
 }

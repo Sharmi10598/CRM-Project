@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_interpolation_to_compose_strings, unnecessary_const, use_named_constants, require_trailing_commas, omit_local_variable_types, prefer_is_empty, avoid_unnecessary_containers, prefer_single_quotes, avoid_print, prefer_if_elements_to_conditional_expressions, unawaited_futures, prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -14,8 +16,6 @@ import 'package:ultimate_bundle/src/furney/src/helpers/screens.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/appBar.dart';
 
-
-
 class SelectCustomerPage extends StatefulWidget {
   const SelectCustomerPage({required this.title, Key? key}) : super(key: key);
   final String title;
@@ -29,9 +29,11 @@ class CustomerPageState extends State<SelectCustomerPage> {
 
   static bool isCameFromCreation = false;
   static bool isCameFromCreationOrder = false;
+  static bool isCameFromAgeingReport = false;
+
   List<NewCustomerData> customerData = [];
   List<NewCustomerData> customerDataFilter = [];
-  
+
   bool spin = true;
   bool searchLoading = false;
 
@@ -88,7 +90,9 @@ class CustomerPageState extends State<SelectCustomerPage> {
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
-      drawer: drawer(context),
+      drawer:
+          //  GetValues.userRoll == '3' ? drawer2(context) :
+          drawer(context),
       appBar: appBar(context, _scaffoldKey, widget.title),
       body: customerData.isEmpty && searchLoading == false
           ? Center(
@@ -165,25 +169,28 @@ class CustomerPageState extends State<SelectCustomerPage> {
                         child: ListView.builder(
                           itemCount: customerDataFilter.length,
                           itemBuilder: (BuildContext context, int i) {
-                            return  InkWell(
+                            return InkWell(
                               onTap: () {
-                                final FocusScopeNode focus = FocusScope.of(context);
+                                final FocusScopeNode focus =
+                                    FocusScope.of(context);
                                 if (!focus.hasPrimaryFocus) {
                                   focus.unfocus();
                                 }
-
-        SelectedCustModel.CustomerCode = customerDataFilter[i].cardCode;
-        SelectedCustModel.CustomerName = customerDataFilter[i].cardName;
-        SelectedCustModel.billAddress = customerDataFilter[i].BilltoDefault;
-        SelectedCustModel.shipAddress = customerDataFilter[i].ShipToDefault;
-        Get.back<dynamic>();
+                                log('choose customer::${customerDataFilter[i].cardCode}');
+                                SelectedCustModel.CustomerCode =
+                                    customerDataFilter[i].cardCode;
+                                SelectedCustModel.CustomerName =
+                                    customerDataFilter[i].cardName;
+                                SelectedCustModel.billAddress =
+                                    customerDataFilter[i].BilltoDefault;
+                                SelectedCustModel.shipAddress =
+                                    customerDataFilter[i].ShipToDefault;
+                                Get.back<dynamic>();
                               },
                               child: Container(
                                   width: Screens.width(context),
-                                  padding: const EdgeInsets.only(
-                                      ),
-                                  decoration: const BoxDecoration(
-                                      ),
+                                  padding: const EdgeInsets.only(),
+                                  decoration: const BoxDecoration(),
                                   child: Column(
                                     children: [
                                       Row(

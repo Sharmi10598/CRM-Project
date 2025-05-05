@@ -6,11 +6,17 @@ import 'package:ultimate_bundle/src/furney/src/pages/schemes/discover_page.dart'
 
 class BottomNavigationList {
   static List<Widget> pageList(BuildContext context) => [
-        const FurneyHomeScreen(title: 'DashBoard',),
-        const Schemes(title: 'Schemes',),
-        const NotificationScreen(title: 'Notifications',),
-        //FurneyCartScreen(),///notification
-        // const FurneySearchScreen(),
-        const ProfileScreen(title: 'Profile',),
+        const FurneyHomeScreen(
+          title: 'DashBoard',
+        ),
+        const Schemes(
+          title: 'Schemes',
+        ),
+        const NotificationScreen(
+          title: 'Notifications',
+        ),
+        const ProfileScreen(
+          title: 'Profile',
+        ),
       ];
 }

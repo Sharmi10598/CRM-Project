@@ -18,7 +18,7 @@ import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 class ReportApi {
   static Future<int> getGlobalData(String content, String methodname) async {
     try {
-      log("Visit log API----" + URL.reportUrl + content);
+      log("$methodname----" + URL.reportUrl + content);
       final response = await http.get(
         Uri.parse(
           URL.reportUrl + content,
@@ -27,7 +27,8 @@ class ReportApi {
           'content-type': 'application/octet-stream',
         },
       );
-      log(' response.body::${response.bodyBytes}');
+      log('$methodname statusCode::${response.statusCode}');
+      log('$methodname response::${response.bodyBytes}');
       if (response.statusCode == 200) {
         final Uint8List bytes = response.bodyBytes;
         final tempDir = await getTemporaryDirectory();

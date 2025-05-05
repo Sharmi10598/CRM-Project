@@ -81,7 +81,7 @@ class LogisticDeliveryState extends State<LogisticDelivery> {
                             //   ),
                             // )
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -128,7 +128,7 @@ class LogisticDeliveryState extends State<LogisticDelivery> {
                             //   ),
                             // )
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),

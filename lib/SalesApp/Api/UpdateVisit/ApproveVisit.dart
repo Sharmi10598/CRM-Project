@@ -16,15 +16,15 @@ class ApproveVisitAPi {
         Uri.parse(  URL.url+ "Activities(${apdata.clgCode})"),
         headers: {
           'content-type': 'application/json',
-          "cookie": 'B1SESSION=' + GetValues.sessionID.toString()
+          "cookie": 'B1SESSION=' + GetValues.sessionID.toString(),
           },
          body: json.encode({ 
-    "U_Status": "${apdata.status}"
+    "U_Status": "${apdata.status}",
 }),
       );
      
       log(json.encode( { 
-    "U_Status": "${apdata.status}"
+    "U_Status": "${apdata.status}",
 }),);
         return PatchVisitModel.fromJson(response.body, response.statusCode);
     } catch (e) {

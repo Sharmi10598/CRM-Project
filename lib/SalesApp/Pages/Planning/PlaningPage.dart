@@ -17,6 +17,8 @@ import 'package:ultimate_bundle/src/furney/src/pages/sign_in/widgets/custom_elev
 import 'package:ultimate_bundle/src/furney/src/widgets/Drawer.dart';
 import 'package:ultimate_bundle/src/furney/src/widgets/SalesAppBar.dart';
 
+import 'package:ultimate_bundle/helpers/textstyle.dart';
+
 class PlanningPage extends StatefulWidget {
   const PlanningPage({required this.title, Key? key}) : super(key: key);
   final String title;
@@ -27,14 +29,17 @@ class PlanningPage extends StatefulWidget {
 class _FirstPageState extends State<PlanningPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Config config = new Config();
+  bool disableVisitPlan = false;
+  Configuration config = new Configuration();
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
-        drawer: drawer(context),
+        drawer:
+            //  GetValues.userRoll == '3' ? drawer2(context) :
+            drawer(context),
         appBar: salesappBar(context, _scaffoldKey, widget.title),
         body: Container(
           width: Screens.width(context),
@@ -120,37 +125,47 @@ class _FirstPageState extends State<PlanningPage> {
                             purposeData!.isEmpty)
                         ? Center(child: Text(listLoadingMsg))
                         : SingleChildScrollView(
-                            child: Wrap(
-                                children: listTimeLine(theme)),
+                            child: Wrap(children: listTimeLine(theme)),
                           ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: Screens.width(context)*0.45,
-                    child: CustomSpinkitdButton(
-                      onTap: () {
-                        CreateVisitPageState.date = selectedDate;
-                        if (selectedDate.isNotEmpty) {
-                          Get.toNamed<void>(FurneyRoutes.createVisitPage)!
-                              .then((value) {
-                            listLoading = true;
-                            listLoadingMsg = '';
-                            purposeData!.clear();
-                            setState(() {});
-                            callVisitListApi(apiDate);
-                          });
-                        } else {
-                          config.showDialog("Choose Date..!!", "Alert");
-                        }
-                      },
-                      label: 'Create Visit Task',
+                    height: 47,
+                    width: Screens.width(context) * 0.45,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: theme.primaryColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      onPressed: disableVisitPlan == false
+                          ? null
+                          : () {
+                              CreateVisitPageState.date = selectedDate;
+                              if (selectedDate.isNotEmpty) {
+                                Get.toNamed<void>(FurneyRoutes.createVisitPage)!
+                                    .then((value) {
+                                  listLoading = true;
+                                  listLoadingMsg = '';
+                                  purposeData!.clear();
+                                  setState(() {});
+                                  callVisitListApi(apiDate);
+                                });
+                              } else {
+                                config.showDialog("Choose Date..!!", "Alert");
+                              }
+                            },
+                      child: Text(
+                        'Create Visit Task',
+                        style: TextStyles.whiteTextHead(context),
+                      ),
                     ),
                   ),
-
-                    SizedBox(
-                       width: Screens.width(context)*0.45,
+                  SizedBox(
+                    width: Screens.width(context) * 0.45,
                     child: CustomSpinkitdButton(
                       onTap: () {
                         UnplannedVisitPageState.date = selectedDate;
@@ -220,6 +235,10 @@ class _FirstPageState extends State<PlanningPage> {
         if (value.purposeData != null) {
           listLoadingMsg = '';
           purposeData = value.purposeData;
+          for (var i = 0; i < purposeData!.length; i++) {
+            log('messageDDDD:${purposeData![i].plannedDate}');
+            log('kkkkk');
+          }
         } else {
           listLoadingMsg = value.message!;
         }
@@ -234,41 +253,6 @@ class _FirstPageState extends State<PlanningPage> {
       }
     });
   }
-
-  // List<Data> timeLine = [
-  //   Data(
-  //       data1: 'Now Product Discussion',
-  //       title: 'BOA VIDA',
-  //       data2: 'Molding with manager'),
-  //   Data(
-  //       data1: 'New Product Discussion on',
-  //       title: 'TANZANIA HOMES',
-  //       data2: 'Molding with manager'),
-  //   Data(
-  //       data1: 'Now Product Discussion',
-  //       title: 'BOA VIDA',
-  //       data2: 'Molding with manager'),
-  //   Data(
-  //       data1: 'New Product Discussion on',
-  //       title: 'TANZANIA HOMES',
-  //       data2: 'Molding with manager'),
-  //   Data(
-  //       data1: 'Now Product Discussion',
-  //       title: 'BOA VIDA',
-  //       data2: 'Molding with manager'),
-  //   Data(
-  //       data1: 'New Product Discussion on',
-  //       title: 'TANZANIA HOMES',
-  //       data2: 'Molding with manager'),
-  //   Data(
-  //       data1: 'Now Product Discussion',
-  //       title: 'BOA VIDA',
-  //       data2: 'Molding with manager'),
-  //   Data(
-  //       data1: 'New Product Discussion on',
-  //       title: 'TANZANIA HOMES',
-  //       data2: 'Molding with manager'),
-  // ];
 
   List<Widget> listTimeLine(
     ThemeData theme,
@@ -302,38 +286,50 @@ class _FirstPageState extends State<PlanningPage> {
                 thickness: 3,
               ),
               endChild: InkWell(
-                onTap: (){
+                onTap: () {
                   log("datatattatabjksdhsjkdhs");
-              if (selectedDate.isNotEmpty) {
-                 UpdateVisitPageState.clgcode = purposeData![index].ClgCode!;
-                UpdateVisitPageState.cardcode = purposeData![index].CardCode!;
-                UpdateVisitPageState.cardname = purposeData![index].CardName!;
-                UpdateVisitPageState.codeValue = purposeData![index].CntctSbjct!;
-                UpdateVisitPageState.date =selectedDate;
-                UpdateVisitPageState.time = purposeData![index].plannedTime;
-                UpdateVisitPageState.datechosed = purposeData![index].plannedDate!;
-                UpdateVisitPageState.details = purposeData![index].Details!;
-                      Get.toNamed<void>(FurneyRoutes.updatePlan)!
-                          .then((value) {
-                        listLoading = true;
-                        listLoadingMsg = '';
-                        purposeData!.clear();
-                        setState(() {});
-                        callVisitListApi(apiDate);
-                      });
-                    } else {
-                      config.showDialog("Choose Date..!!", "Alert");
-                    }
+                  if (selectedDate.isNotEmpty) {
+                    UpdateVisitPageState.clgcode = purposeData![index].ClgCode;
+                    UpdateVisitPageState.cardcode =
+                        purposeData![index].CardCode;
+                    UpdateVisitPageState.cardname =
+                        purposeData![index].CardName;
+                    UpdateVisitPageState.codeValue =
+                        purposeData![index].CntctSbjct;
+                    UpdateVisitPageState.date = selectedDate;
+                    UpdateVisitPageState.time = purposeData![index].plannedTime;
+                    UpdateVisitPageState.datechosed =
+                        purposeData![index].plannedDate;
+                    UpdateVisitPageState.details = purposeData![index].Details;
+                    Get.toNamed<void>(FurneyRoutes.updatePlan)!.then((value) {
+                      listLoading = true;
+                      listLoadingMsg = '';
+                      purposeData!.clear();
+                      setState(() {});
+                      callVisitListApi(apiDate);
+                    });
+                  } else {
+                    config.showDialog("Choose Date..!!", "Alert");
+                  }
                 },
                 child: Container(
-                  color: purposeData![index].VisitStatus.toString()
-                  .toLowerCase().contains('up')
+                  color: purposeData![index]
+                          .VisitStatus
+                          .toString()
+                          .toLowerCase()
+                          .contains('up')
                       ? Color.fromARGB(255, 255, 212, 118)
-                      : purposeData![index].VisitStatus.toString()
-                  .toLowerCase().contains('not')
+                      : purposeData![index]
+                              .VisitStatus
+                              .toString()
+                              .toLowerCase()
+                              .contains('not')
                           ? Colors.pink.shade300
-                          : purposeData![index].VisitStatus.toString()
-                  .toLowerCase().contains('comple') 
+                          : purposeData![index]
+                                  .VisitStatus
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains('comple')
                               ? Colors.green.shade300
                               : Colors.grey[200],
                   alignment: Alignment.centerLeft,
@@ -347,16 +343,15 @@ class _FirstPageState extends State<PlanningPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: Screens.width(context) * 0.63,
+                        width: Screens.width(context) * 0.47,
                         child: Column(
                           children: [
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 "${purposeData![index].CardName} ",
-                                style: theme.textTheme.bodyMedium!.copyWith(
-                                  fontWeight: FontWeight.bold
-                                ),
+                                style: theme.textTheme.bodyMedium!
+                                    .copyWith(fontWeight: FontWeight.bold),
                               ),
                             ),
                             SizedBox(
@@ -365,7 +360,7 @@ class _FirstPageState extends State<PlanningPage> {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "${purposeData![index].Name} ",
+                                "${purposeData![index].Name}",
                                 style: theme.textTheme.bodyMedium,
                               ),
                             ),
@@ -375,19 +370,24 @@ class _FirstPageState extends State<PlanningPage> {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                  purposeData![index].LastVisit.toString() == 'null'?'':
-                                "${purposeData![index].Details} ",
+                                purposeData![index].LastVisit.toString() ==
+                                        'null'
+                                    ? ''
+                                    : "${purposeData![index].Details}",
                                 style: theme.textTheme.bodyMedium,
                               ),
                             ),
-                             SizedBox(
+                            SizedBox(
                               height: Screens.heigth(context) * 0.01,
                             ),
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                               purposeData![index].LastVisit.toString() == 'null'?'':
-                              config.alignDate("${purposeData![index].LastVisit}"),
+                                purposeData![index].plannedDate == 'null' ||
+                                        purposeData![index].plannedDate == null
+                                    ? ''
+                                    : config.alignDate(
+                                        "${purposeData![index].plannedDate}"),
                                 style: theme.textTheme.bodyMedium,
                               ),
                             ),
@@ -395,6 +395,7 @@ class _FirstPageState extends State<PlanningPage> {
                         ),
                       ),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SizedBox(
@@ -404,7 +405,16 @@ class _FirstPageState extends State<PlanningPage> {
                           Container(
                             alignment: Alignment.bottomRight,
                             child: Text(
-                              "Status: ${purposeData![index].U_Status} ",
+                              "Status: ${purposeData![index].U_Status}",
+                              style: theme.textTheme.bodyMedium,
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              purposeData![index].LastVisit.toString() == 'null'
+                                  ? ''
+                                  : "Last Visit : ${config.alignDate(purposeData![index].LastVisit.toString())}",
                               style: theme.textTheme.bodyMedium,
                             ),
                           ),
@@ -462,39 +472,51 @@ class _FirstPageState extends State<PlanningPage> {
               ),
 
               endChild: InkWell(
-                onTap: (){
+                onTap: () {
                   log("datatattatabjksdhsjkdhs");
-              if (selectedDate.isNotEmpty) {
-                 UpdateVisitPageState.clgcode = purposeData![index].ClgCode!;
-                 UpdateVisitPageState.cardcode = purposeData![index].CardCode!;
-                UpdateVisitPageState.cardname = purposeData![index].CardName!;
-                UpdateVisitPageState.codeValue = purposeData![index].CntctSbjct!;
-                UpdateVisitPageState.date =selectedDate;
-                UpdateVisitPageState.time = purposeData![index].plannedTime;
-                UpdateVisitPageState.datechosed = purposeData![index].plannedDate!;
-                UpdateVisitPageState.details = purposeData![index].Details!;
+                  if (selectedDate.isNotEmpty) {
+                    UpdateVisitPageState.clgcode = purposeData![index].ClgCode;
+                    UpdateVisitPageState.cardcode =
+                        purposeData![index].CardCode;
+                    UpdateVisitPageState.cardname =
+                        purposeData![index].CardName;
+                    UpdateVisitPageState.codeValue =
+                        purposeData![index].CntctSbjct;
+                    UpdateVisitPageState.date = selectedDate;
+                    UpdateVisitPageState.time = purposeData![index].plannedTime;
+                    UpdateVisitPageState.datechosed =
+                        purposeData![index].plannedDate;
+                    UpdateVisitPageState.details = purposeData![index].Details;
 
-                      Get.toNamed<void>(FurneyRoutes.updatePlan)!
-                          .then((value) {
-                        listLoading = true;
-                        listLoadingMsg = '';
-                        purposeData!.clear();
-                        setState(() {});
-                        callVisitListApi(apiDate);
-                      });
-                    } else {
-                      config.showDialog("Choose Date..!!", "Alert");
-                    }
+                    Get.toNamed<void>(FurneyRoutes.updatePlan)!.then((value) {
+                      listLoading = true;
+                      listLoadingMsg = '';
+                      purposeData!.clear();
+                      setState(() {});
+                      callVisitListApi(apiDate);
+                    });
+                  } else {
+                    config.showDialog("Choose Date..!!", "Alert");
+                  }
                 },
                 child: Container(
-                 color: purposeData![index].VisitStatus.toString()
-                  .toLowerCase().contains('up')
+                  color: purposeData![index]
+                          .VisitStatus
+                          .toString()
+                          .toLowerCase()
+                          .contains('up')
                       ? Color.fromARGB(255, 255, 212, 118)
-                      : purposeData![index].VisitStatus.toString()
-                  .toLowerCase().contains('not')
+                      : purposeData![index]
+                              .VisitStatus
+                              .toString()
+                              .toLowerCase()
+                              .contains('not')
                           ? Colors.pink.shade300
-                          : purposeData![index].VisitStatus.toString()
-                  .toLowerCase().contains('comple') 
+                          : purposeData![index]
+                                  .VisitStatus
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains('comple')
                               ? Colors.green.shade300
                               : Colors.grey[200],
                   alignment: Alignment.centerLeft,
@@ -508,16 +530,15 @@ class _FirstPageState extends State<PlanningPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: Screens.width(context) * 0.63,
+                        width: Screens.width(context) * 0.47,
                         child: Column(
                           children: [
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 "${purposeData![index].CardName} ",
-                                style: theme.textTheme.bodyMedium!.copyWith(
-                                  fontWeight: FontWeight.bold
-                                ),
+                                style: theme.textTheme.bodyMedium!
+                                    .copyWith(fontWeight: FontWeight.bold),
                               ),
                             ),
                             SizedBox(
@@ -536,19 +557,24 @@ class _FirstPageState extends State<PlanningPage> {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                  purposeData![index].LastVisit.toString() == 'null'?'': 
-                                "${purposeData![index].Details} ",
+                                purposeData![index].LastVisit.toString() ==
+                                        'null'
+                                    ? ''
+                                    : "${purposeData![index].Details} ",
                                 style: theme.textTheme.bodyMedium,
                               ),
                             ),
-                              SizedBox(
+                            SizedBox(
                               height: Screens.heigth(context) * 0.01,
                             ),
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                  purposeData![index].LastVisit.toString() == 'null'?'':
-                              config.alignDate("${purposeData![index].LastVisit}"),
+                                purposeData![index].plannedDate == 'null' ||
+                                        purposeData![index].plannedDate == null
+                                    ? ''
+                                    : config.alignDate(
+                                        "${purposeData![index].plannedDate}"),
                                 style: theme.textTheme.bodyMedium,
                               ),
                             ),
@@ -566,6 +592,15 @@ class _FirstPageState extends State<PlanningPage> {
                             alignment: Alignment.bottomRight,
                             child: Text(
                               "Status: ${purposeData![index].U_Status} ",
+                              style: theme.textTheme.bodyMedium,
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              purposeData![index].LastVisit.toString() == 'null'
+                                  ? ''
+                                  : "Last Visit : ${config.alignDate(purposeData![index].LastVisit.toString())}",
                               style: theme.textTheme.bodyMedium,
                             ),
                           ),
@@ -621,39 +656,51 @@ class _FirstPageState extends State<PlanningPage> {
                 thickness: 3,
               ),
               endChild: InkWell(
-                onTap: (){
+                onTap: () {
                   log("datatattatabjksdhsjkdhs");
-              if (selectedDate.isNotEmpty) {
-                UpdateVisitPageState.clgcode = purposeData![index].ClgCode!;
-                UpdateVisitPageState.cardcode = purposeData![index].CardCode!;
-                UpdateVisitPageState.cardname = purposeData![index].CardName!;
-                UpdateVisitPageState.codeValue = purposeData![index].CntctSbjct!;
-                UpdateVisitPageState.date =selectedDate;
-                UpdateVisitPageState.time = purposeData![index].plannedTime;
-                UpdateVisitPageState.datechosed = purposeData![index].plannedDate!;
-                UpdateVisitPageState.details = purposeData![index].Details!; 
+                  if (selectedDate.isNotEmpty) {
+                    UpdateVisitPageState.clgcode = purposeData![index].ClgCode;
+                    UpdateVisitPageState.cardcode =
+                        purposeData![index].CardCode;
+                    UpdateVisitPageState.cardname =
+                        purposeData![index].CardName;
+                    UpdateVisitPageState.codeValue =
+                        purposeData![index].CntctSbjct;
+                    UpdateVisitPageState.date = selectedDate;
+                    UpdateVisitPageState.time = purposeData![index].plannedTime;
+                    UpdateVisitPageState.datechosed =
+                        purposeData![index].plannedDate;
+                    UpdateVisitPageState.details = purposeData![index].Details;
 
-                      Get.toNamed<void>(FurneyRoutes.updatePlan)!
-                          .then((value) {
-                        listLoading = true;
-                        listLoadingMsg = '';
-                        purposeData!.clear();
-                        setState(() {});
-                        callVisitListApi(apiDate);
-                      });
-                    } else {
-                      config.showDialog("Choose Date..!!", "Alert");
-                    }
+                    Get.toNamed<void>(FurneyRoutes.updatePlan)!.then((value) {
+                      listLoading = true;
+                      listLoadingMsg = '';
+                      purposeData!.clear();
+                      setState(() {});
+                      callVisitListApi(apiDate);
+                    });
+                  } else {
+                    config.showDialog("Choose Date..!!", "Alert");
+                  }
                 },
                 child: Container(
-                 color: purposeData![index].VisitStatus.toString()
-                  .toLowerCase().contains('up')
+                  color: purposeData![index]
+                          .VisitStatus
+                          .toString()
+                          .toLowerCase()
+                          .contains('up')
                       ? Color.fromARGB(255, 255, 212, 118)
-                      : purposeData![index].VisitStatus.toString()
-                  .toLowerCase().contains('not')
+                      : purposeData![index]
+                              .VisitStatus
+                              .toString()
+                              .toLowerCase()
+                              .contains('not')
                           ? Colors.pink.shade300
-                          : purposeData![index].VisitStatus.toString()
-                  .toLowerCase().contains('comple') 
+                          : purposeData![index]
+                                  .VisitStatus
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains('comple')
                               ? Colors.green.shade300
                               : Colors.grey[200],
                   alignment: Alignment.centerLeft,
@@ -667,16 +714,15 @@ class _FirstPageState extends State<PlanningPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: Screens.width(context) * 0.63,
+                        width: Screens.width(context) * 0.47,
                         child: Column(
                           children: [
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 "${purposeData![index].CardName} ",
-                                style: theme.textTheme.bodyLarge?.copyWith(
-                                  fontWeight: FontWeight.bold
-                                ),
+                                style: theme.textTheme.bodyLarge
+                                    ?.copyWith(fontWeight: FontWeight.bold),
                               ),
                             ),
                             SizedBox(
@@ -695,19 +741,24 @@ class _FirstPageState extends State<PlanningPage> {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                  purposeData![index].LastVisit.toString() == 'null'?'':
-                                "${purposeData![index].Details} ",
+                                purposeData![index].LastVisit.toString() ==
+                                        'null'
+                                    ? ''
+                                    : "${purposeData![index].Details} ",
                                 style: theme.textTheme.bodyMedium,
                               ),
                             ),
-                              SizedBox(
+                            SizedBox(
                               height: Screens.heigth(context) * 0.01,
                             ),
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                  purposeData![index].LastVisit.toString() == 'null'?'':
-                              config.alignDate("${purposeData![index].LastVisit}"),
+                                purposeData![index].plannedDate.toString() ==
+                                        'null'
+                                    ? ''
+                                    : config.alignDate(
+                                        "${purposeData![index].plannedDate}"),
                                 style: theme.textTheme.bodyMedium,
                               ),
                             ),
@@ -725,6 +776,15 @@ class _FirstPageState extends State<PlanningPage> {
                             alignment: Alignment.bottomRight,
                             child: Text(
                               "Status: ${purposeData![index].U_Status} ",
+                              style: theme.textTheme.bodyMedium,
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              purposeData![index].LastVisit.toString() == 'null'
+                                  ? ''
+                                  : "Last Visit : ${config.alignDate(purposeData![index].LastVisit.toString())}",
                               style: theme.textTheme.bodyMedium,
                             ),
                           ),

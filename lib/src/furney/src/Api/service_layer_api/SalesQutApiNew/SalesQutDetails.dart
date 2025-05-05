@@ -25,23 +25,26 @@ class SalesDetailsQtAPi {
       );
       log("SalesDetails rescode::" + response.statusCode.toString());
 
-      // log("SalesDetails res::"+response.body.toString());
+      // log("SalesQDetails res::" + response.body);
 
       if (response.statusCode == 200) {
         return ApprovalDetailsValue.fromJson(
-            json.decode(response.body) as Map<String, dynamic>);
+          json.decode(response.body) as Map<String, dynamic>,
+        );
       } else {
         //  print(json.decode(response.body));
         //  print(response.statusCode);
         // throw Exception('Restart the app or contact the admin!!..');
         return ApprovalDetailsValue.issue(
-            'Restart the app or contact the admin!!..');
+          'Restart the app or contact the admin!!..',
+        );
       }
     } catch (e) {
-      log("EXXXX: ${e.toString()}");
+      log("EXXXX: $e");
       //  throw Exception('$e');
       return ApprovalDetailsValue.issue(
-          'Restart the app or contact the admin!!..');
+        'Restart the app or contact the admin!!..',
+      );
     }
   }
 }
